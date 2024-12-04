@@ -29,6 +29,8 @@ impl Player {
             self.y = 300.0;
             self.velocity = 0.0;
         }
+
+        self.velocity = self.velocity.min(0.03); // Max fall speed
     }
 
     fn draw(&self, d: &mut RaylibDrawHandle) {
