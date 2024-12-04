@@ -13,7 +13,7 @@ impl Player {
             x,
             y,
             size,
-            velocity: 0.0,
+            velocity: 0.0, // Player speed
         }
     }
 
@@ -51,7 +51,7 @@ impl Obstacle {
             y,
             width,
             height,
-            speed,
+            speed: 0.05,
         }
     }
 
