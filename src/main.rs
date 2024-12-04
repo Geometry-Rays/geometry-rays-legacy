@@ -47,7 +47,7 @@ struct Obstacle {
 }
 
 impl Obstacle {
-    fn new(x: f32, y: f32, width: f32, height: f32, speed: f32) -> Self {
+    fn new(x: f32, y: f32, width: f32, height: f32) -> Self {
         Self {
             x,
             y,
@@ -84,7 +84,7 @@ fn main() {
         .build();
 
     let mut player = Player::new(100.0, 300.0, 30.0);
-    let mut obstacle = Obstacle::new(800.0, 320.0, 30.0, 30.0, 2.0); // Slower obstacle speed
+    let mut obstacle = Obstacle::new(800.0, 320.0, 30.0, 30.0); // Slower obstacle speed
     let mut game_running = false;
 
     while !rl.window_should_close() {
