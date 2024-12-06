@@ -1,124 +1,167 @@
 use raylib::prelude::*;
+use rand::Rng;
 
-struct Player {
-    x: f32,
-    y: f32,
-    size: f32,
-    velocity: f32,
-}
-
-impl Player {
-    fn new(x: f32, y: f32, size: f32) -> Self {
-        Self {
-            x,
-            y,
-            size,
-            velocity: 0.0, // Player speed
-        }
-    }
-
-    fn update(&mut self, is_jumping: bool) {
-        if is_jumping && self.y == 300.0 {
-            self.velocity = -5.0; // Slower jump velocity
-        }
-
-        self.y += self.velocity;
-        self.velocity += 0.25; // Slower gravity effect
-
-        if self.y > 300.0 {
-            self.y = 300.0;
-            self.velocity = 0.0;
-        }
-
-        self.velocity = self.velocity.min(0.03); // Max fall speed
-    }
-
-    fn draw(&self, d: &mut RaylibDrawHandle) {
-        d.draw_rectangle(self.x as i32, self.y as i32, self.size as i32, self.size as i32, Color::BLUE);
-    }
-}
-
-struct Obstacle {
-    x: f32,
-    y: f32,
-    width: f32,
-    height: f32,
-    speed: f32,
-}
-
-impl Obstacle {
-    fn new(x: f32, y: f32, width: f32, height: f32) -> Self {
-        Self {
-            x,
-            y,
-            width,
-            height,
-            speed: 0.05,
-        }
-    }
-
-    fn update(&mut self) {
-        self.x -= self.speed;
-        if self.x < -self.width {
-            self.x = 800.0;
-        }
-    }
-
-    fn draw(&self, d: &mut RaylibDrawHandle) {
-        d.draw_rectangle(self.x as i32, self.y as i32, self.width as i32, self.height as i32, Color::RED);
-    }
-}
-
-fn reset_game(player: &mut Player, obstacle: &mut Obstacle) {
-    player.x = 100.0;
-    player.y = 300.0;
-    player.velocity = 0.0;
-    obstacle.x = 800.0;
-    obstacle.y = 320.0;
+enum GameState {
+    Menu,
+    Playing,
+    GameOver,
 }
 
 fn main() {
     let (mut rl, thread) = raylib::init()
-        .size(800, 450)
+        .size(800, 600)
         .title("Geometry Rays")
         .build();
 
-    let mut player = Player::new(100.0, 300.0, 30.0);
-    let mut obstacle = Obstacle::new(800.0, 320.0, 30.0, 30.0); // Slower obstacle speed
-    let mut game_running = false;
+    rl.set_target_fps(60);
+
+    let mut game_state = GameState::Menu;
+    let mut player = Rectangle::new(50.0, 500.0, 50.0, 50.0);
+    let mut obstacles = vec![generate_spike(800.0), generate_spike(1100.0)];
+    let mut velocity_y = 0.0;
+    let gravity = 0.8;
+    let jump_force = -15.0;
+    let mut is_on_ground = true;
+    let mut score = 0;
+    let mut high_score = 0;
+    let mut background_offset = 0.0;
 
     while !rl.window_should_close() {
-        if !game_running {
-            if rl.is_key_pressed(KeyboardKey::KEY_ENTER) {
-                reset_game(&mut player, &mut obstacle);
-                game_running = true;
+        // Handle inputs and game state logic
+        let enter_pressed = rl.is_key_pressed(KeyboardKey::KEY_ENTER);
+        let space_pressed = rl.is_key_pressed(KeyboardKey::KEY_SPACE);
+
+        match game_state {
+            GameState::Menu => {
+                if enter_pressed {
+                    game_state = GameState::Playing;
+                    score = 0;
+                    player.x = 50.0;
+                    player.y = 500.0;
+                    obstacles = vec![generate_spike(800.0), generate_spike(1100.0)];
+                }
             }
+            GameState::Playing => {
+                if is_on_ground && space_pressed {
+                    velocity_y = jump_force;
+                    is_on_ground = false;
+                }
 
-            let mut d = rl.begin_drawing(&thread);
-            d.clear_background(Color::WHITE);
-            d.draw_text("Geometry Rays", 280, 150, 40, Color::BLACK);
-            d.draw_text("Press ENTER to Start", 270, 250, 30, Color::GRAY);
-        } else {
-            let is_jumping = rl.is_key_down(KeyboardKey::KEY_SPACE);
+                velocity_y += gravity;
+                player.y += velocity_y;
 
-            player.update(is_jumping);
-            obstacle.update();
+                if player.y >= 500.0 {
+                    player.y = 500.0;
+                    velocity_y = 0.0;
+                    is_on_ground = true;
+                }
 
-            let mut d = rl.begin_drawing(&thread);
-            d.clear_background(Color::WHITE);
+                for obstacle in obstacles.iter_mut() {
+                    obstacle.x -= 5.0;
+                    if obstacle.x + 50.0 < 0.0 {
+                        *obstacle = generate_spike(800.0 + rand::thread_rng().gen_range(100.0..400.0));
+                        score += 1;
+                    }
+                }
 
-            player.draw(&mut d);
-            obstacle.draw(&mut d);
-
-            if player.x < obstacle.x + obstacle.width
-                && player.x + player.size > obstacle.x
-                && player.y < obstacle.y + obstacle.height
-                && player.y + player.size > obstacle.y
-            {
-                game_running = false;
+                for obstacle in &obstacles {
+                    if check_collision_triangle_rectangle(
+                        obstacle.x,
+                        obstacle.y,
+                        obstacle.x + 50.0,
+                        obstacle.y + 50.0,
+                        obstacle.x + 50.0,
+                        obstacle.y,
+                        player,
+                    ) {
+                        game_state = GameState::GameOver;
+                        high_score = high_score.max(score);
+                    }
+                }
             }
+            GameState::GameOver => {
+                if enter_pressed {
+                    game_state = GameState::Menu;
+                }
+            }
+        }
 
-            d.draw_text("Press ESC to Quit", 10, 10, 20, Color::GRAY);
+        // Rendering
+        let mut d = rl.begin_drawing(&thread);
+        match game_state {
+            GameState::Menu => {
+                d.clear_background(Color::BLACK);
+                d.draw_text("Geometry Rays", 220, 150, 50, Color::WHITE);
+                d.draw_text("Press ENTER to Start", 230, 300, 20, Color::GRAY);
+            }
+            GameState::Playing => {
+                d.clear_background(Color::RAYWHITE);
+
+                background_offset -= 2.0;
+                if background_offset < -800.0 {
+                    background_offset = 0.0;
+                }
+                d.draw_rectangle(background_offset as i32, 0, 800, 600, Color::DARKGRAY);
+                d.draw_rectangle((background_offset + 800.0) as i32, 0, 800, 600, Color::DARKGRAY);
+
+                d.draw_rectangle_rec(player, Color::BLUE);
+
+                for obstacle in &obstacles {
+                    d.draw_triangle(
+                        Vector2::new(obstacle.x, obstacle.y),
+                        Vector2::new(obstacle.x + 50.0, obstacle.y + 50.0),
+                        Vector2::new(obstacle.x + 50.0, obstacle.y),
+                        Color::RED,
+                    );
+                }
+
+                d.draw_text(&format!("Score: {}", score), 10, 10, 20, Color::BLACK);
+                d.draw_text(&format!("High Score: {}", high_score), 10, 40, 20, Color::BLACK);
+            }
+            GameState::GameOver => {
+                d.clear_background(Color::DARKRED);
+                d.draw_text("Game Over!", 250, 150, 50, Color::WHITE);
+                d.draw_text(&format!("Your Score: {}", score), 300, 250, 20, Color::GRAY);
+                d.draw_text(&format!("High Score: {}", high_score), 300, 280, 20, Color::GRAY);
+                d.draw_text("Press ENTER to Restart", 220, 400, 20, Color::WHITE);
+            }
         }
     }
+}
+
+fn generate_spike(x: f32) -> Rectangle {
+    Rectangle::new(x, 500.0, 50.0, 50.0)
+}
+
+fn check_collision_triangle_rectangle(
+    x1: f32,
+    y1: f32,
+    x2: f32,
+    y2: f32,
+    x3: f32,
+    y3: f32,
+    rect: Rectangle,
+) -> bool {
+    let rect_points = [
+        (rect.x, rect.y),
+        (rect.x + rect.width, rect.y),
+        (rect.x, rect.y + rect.height),
+        (rect.x + rect.width, rect.y + rect.height),
+    ];
+
+    for (rx, ry) in rect_points.iter() {
+        if point_in_triangle(*rx, *ry, x1, y1, x2, y2, x3, y3) {
+            return true;
+        }
+    }
+
+    false
+}
+
+fn point_in_triangle(px: f32, py: f32, x1: f32, y1: f32, x2: f32, y2: f32, x3: f32, y3: f32) -> bool {
+    let area_orig = ((x2 - x1) * (y3 - y1) - (x3 - x1) * (y2 - y1)).abs();
+    let area1 = ((x1 - px) * (y2 - py) - (x2 - px) * (y1 - py)).abs();
+    let area2 = ((x2 - px) * (y3 - py) - (x3 - px) * (y2 - py)).abs();
+    let area3 = ((x3 - px) * (y1 - py) - (x1 - px) * (y3 - py)).abs();
+    (area1 + area2 + area3 - area_orig).abs() < 0.01
 }
