@@ -16,7 +16,7 @@ fn main() {
     rl.set_target_fps(60);
 
     let mut game_state = GameState::Menu;
-    let mut player = Rectangle::new(50.0, 500.0, 50.0, 50.0);
+    let mut player = Rectangle::new(200.0, 500.0, 40.0, 40.0); // Player stays at fixed x position
     let mut obstacles = vec![generate_spike(800.0), generate_spike(1100.0)];
     let mut velocity_y = 0.0;
     let gravity = 0.8;
@@ -24,58 +24,73 @@ fn main() {
     let mut is_on_ground = true;
     let mut score = 0;
     let mut high_score = 0;
-    let mut background_offset = 0.0;
+    let mut world_offset = 0.0;
+    let movement_speed = 5.0;
+    let mut rotation = 0.0;
 
     while !rl.window_should_close() {
-        // Handle inputs and game state logic
         let enter_pressed = rl.is_key_pressed(KeyboardKey::KEY_ENTER);
-        let space_pressed = rl.is_key_pressed(KeyboardKey::KEY_SPACE);
+        let _space_pressed = rl.is_key_pressed(KeyboardKey::KEY_SPACE);
+        let space_down = rl.is_key_down(KeyboardKey::KEY_SPACE);
 
         match game_state {
             GameState::Menu => {
                 if enter_pressed {
                     game_state = GameState::Playing;
                     score = 0;
-                    player.x = 50.0;
                     player.y = 500.0;
+                    world_offset = 0.0;
                     obstacles = vec![generate_spike(800.0), generate_spike(1100.0)];
+                    rotation = 0.0;
                 }
             }
             GameState::Playing => {
-                if is_on_ground && space_pressed {
+                // Geometry Rays style controls - hold space to continuously jump when on ground
+                if is_on_ground && space_down {
                     velocity_y = jump_force;
                     is_on_ground = false;
                 }
 
+                // Move world instead of player
+                world_offset -= movement_speed;
+
+                // Update player physics
                 velocity_y += gravity;
                 player.y += velocity_y;
 
+                // Ground collision
                 if player.y >= 500.0 {
                     player.y = 500.0;
                     velocity_y = 0.0;
                     is_on_ground = true;
+                    rotation = 0.0;
+                } else {
+                    // Rotate player while in air
+                    rotation -= 5.0;
                 }
 
-                for obstacle in obstacles.iter_mut() {
-                    obstacle.x -= 5.0;
-                    if obstacle.x + 50.0 < 0.0 {
-                        *obstacle = generate_spike(800.0 + rand::thread_rng().gen_range(100.0..400.0));
-                        score += 1;
-                    }
-                }
-
+                // Check for collisions with adjusted obstacle positions
                 for obstacle in &obstacles {
+                    let actual_x = obstacle.x + world_offset;
                     if check_collision_triangle_rectangle(
-                        obstacle.x,
+                        actual_x,
                         obstacle.y,
-                        obstacle.x + 50.0,
+                        actual_x + 50.0,
                         obstacle.y + 50.0,
-                        obstacle.x + 50.0,
+                        actual_x + 50.0,
                         obstacle.y,
                         player,
                     ) {
                         game_state = GameState::GameOver;
                         high_score = high_score.max(score);
+                    }
+                }
+
+                // Update obstacles and score
+                for obstacle in obstacles.iter_mut() {
+                    if obstacle.x + world_offset < -50.0 {
+                        obstacle.x = 800.0 + rand::thread_rng().gen_range(100.0..400.0);
+                        score += 1;
                     }
                 }
             }
@@ -93,35 +108,45 @@ fn main() {
                 d.clear_background(Color::BLACK);
                 d.draw_text("Geometry Rays", 220, 150, 50, Color::WHITE);
                 d.draw_text("Press ENTER to Start", 230, 300, 20, Color::GRAY);
+                d.draw_text("Hold SPACE to Jump", 250, 330, 20, Color::GRAY);
             }
             GameState::Playing => {
                 d.clear_background(Color::RAYWHITE);
 
-                background_offset -= 2.0;
-                if background_offset < -800.0 {
-                    background_offset = 0.0;
-                }
-                d.draw_rectangle(background_offset as i32, 0, 800, 600, Color::DARKGRAY);
-                d.draw_rectangle((background_offset + 800.0) as i32, 0, 800, 600, Color::DARKGRAY);
+                // Draw ground
+                d.draw_rectangle(0, 540, 800, 60, Color::DARKGRAY);
 
-                d.draw_rectangle_rec(player, Color::BLUE);
+                // Draw player with rotation
+                let _player_center = Vector2::new(
+                    player.x + player.width / 2.0,
+                    player.y + player.height / 2.0,
+                );
+                d.draw_rectangle_pro(
+                    player,
+                    Vector2::new(player.width / 2.0, player.height / 2.0),
+                    rotation,
+                    Color::BLUE,
+                );
 
+                // Draw obstacles with world offset
                 for obstacle in &obstacles {
+                    let actual_x = obstacle.x + world_offset;
                     d.draw_triangle(
-                        Vector2::new(obstacle.x, obstacle.y),
-                        Vector2::new(obstacle.x + 50.0, obstacle.y + 50.0),
-                        Vector2::new(obstacle.x + 50.0, obstacle.y),
+                        Vector2::new(actual_x, obstacle.y),
+                        Vector2::new(actual_x + 50.0, obstacle.y + 50.0),
+                        Vector2::new(actual_x + 50.0, obstacle.y),
                         Color::RED,
                     );
                 }
 
+                // Draw score
                 d.draw_text(&format!("Score: {}", score), 10, 10, 20, Color::BLACK);
                 d.draw_text(&format!("High Score: {}", high_score), 10, 40, 20, Color::BLACK);
             }
             GameState::GameOver => {
                 d.clear_background(Color::DARKRED);
                 d.draw_text("Game Over!", 250, 150, 50, Color::WHITE);
-                d.draw_text(&format!("Your Score: {}", score), 300, 250, 20, Color::GRAY);
+                d.draw_text(&format!("Score: {}", score), 300, 250, 20, Color::GRAY);
                 d.draw_text(&format!("High Score: {}", high_score), 300, 280, 20, Color::GRAY);
                 d.draw_text("Press ENTER to Restart", 220, 400, 20, Color::WHITE);
             }
