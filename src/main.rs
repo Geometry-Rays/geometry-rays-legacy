@@ -66,7 +66,7 @@ fn main() {
                     rotation = 0.0;
                 } else {
                     // Rotate player while in air
-                    rotation -= 5.0;
+                    rotation += 5.0;
                 }
 
                 // Check for collisions with adjusted obstacle positions
