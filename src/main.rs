@@ -18,7 +18,7 @@ fn main() {
     // A bunch of variables for the game to function
     // What each of these are used for should be self explanatory
     let mut game_state = GameState::Menu;
-    let mut player = Rectangle::new(200.0, 500.0, 40.0, 40.0); // Player stays at fixed x position
+    let mut player = Rectangle::new(200.0, 500.0, 40.0, 40.0);
     let mut obstacles = vec![generate_spike(800.0), generate_spike(1100.0)];
     let mut velocity_y = 0.0;
     let gravity = 0.8;
