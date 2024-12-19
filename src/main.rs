@@ -15,6 +15,8 @@ fn main() {
 
     rl.set_target_fps(60);
 
+    // A bunch of variables for the game to function
+    // What each of these are used for should be self explanatory
     let mut game_state = GameState::Menu;
     let mut player = Rectangle::new(200.0, 500.0, 40.0, 40.0); // Player stays at fixed x position
     let mut obstacles = vec![generate_spike(800.0), generate_spike(1100.0)];
@@ -27,6 +29,11 @@ fn main() {
     let mut world_offset = 0.0;
     let movement_speed = 5.0;
     let mut rotation = 0.0;
+
+    // Textures
+    let game_bg = rl
+        .load_texture(&thread, "Resources/default-bg.png")
+        .expect("Failed to load background texture");
 
     while !rl.window_should_close() {
         let enter_pressed = rl.is_key_pressed(KeyboardKey::KEY_ENTER);
@@ -57,7 +64,7 @@ fn main() {
                 // Update player physics
                 velocity_y += gravity;
                 player.y += velocity_y;
-
+                
                 // Ground collision
                 if player.y >= 500.0 {
                     player.y = 500.0;
@@ -68,7 +75,7 @@ fn main() {
                     // Rotate player while in air
                     rotation += 5.0;
                 }
-
+                
                 // Check for collisions with adjusted obstacle positions
                 for obstacle in &obstacles {
                     let actual_x = obstacle.x + world_offset;
@@ -85,7 +92,7 @@ fn main() {
                         high_score = high_score.max(score);
                     }
                 }
-
+                
                 // Update obstacles and score
                 for obstacle in obstacles.iter_mut() {
                     if obstacle.x + world_offset < -50.0 {
@@ -111,7 +118,9 @@ fn main() {
                 d.draw_text("Hold SPACE to Jump", 250, 330, 20, Color::GRAY);
             }
             GameState::Playing => {
-                d.clear_background(Color::RAYWHITE);
+                // Draw background
+                d.clear_background(Color::WHITE);
+                d.draw_texture_v(&game_bg, Vector2::new(0.0, 0.0), Color::WHITE);
 
                 // Draw ground
                 d.draw_rectangle(0, 540, 800, 60, Color::DARKGRAY);
