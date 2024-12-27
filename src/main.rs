@@ -24,8 +24,6 @@ fn main() {
     let gravity = 0.8;
     let jump_force = -15.0;
     let mut is_on_ground = true;
-    let mut score = 0;
-    let mut high_score = 0;
     let mut world_offset = 0.0;
     let movement_speed = 5.0;
     let mut rotation = 0.0;
@@ -45,7 +43,6 @@ fn main() {
             GameState::Menu => {
                 if enter_pressed {
                     game_state = GameState::Playing;
-                    score = 0;
                     player.y = 500.0;
                     world_offset = 0.0;
                     obstacles = vec![generate_spike(800.0), generate_spike(1100.0)];
@@ -90,15 +87,13 @@ fn main() {
                         player,
                     ) {
                         game_state = GameState::GameOver;
-                        high_score = high_score.max(score);
                     }
                 }
                 
-                // Update obstacles and score
+                // Update obstacles
                 for obstacle in obstacles.iter_mut() {
                     if obstacle.x + world_offset < -50.0 {
                         obstacle.x = 800.0 + rand::thread_rng().gen_range(100.0..400.0);
-                        score += 1;
                     }
                 }
             }
@@ -151,10 +146,8 @@ fn main() {
                     );
                 }
 
-                // Draw score
-                d.draw_text(&format!("Score: {}", score), 10, 10, 20, Color::RED);
-                d.draw_text(&format!("High Score: {}", high_score), 10, 40, 20, Color::RED);
-                d.draw_text(&format!("Attempt: {}", attempt), 10, 70, 20, Color::RED);
+                // Draw attempt text
+                d.draw_text(&format!("Attempt: {}", attempt), 10, 10, 20, Color::RED);
             }
             GameState::GameOver => {
                 d.clear_background(Color::DARKRED);
