@@ -120,7 +120,7 @@ fn main() {
             GameState::Playing => {
                 // Draw background
                 d.clear_background(Color::WHITE);
-                d.draw_texture_v(&game_bg, Vector2::new(0.0, 0.0), Color::WHITE);
+                d.draw_texture_ex(&game_bg, Vector2::new(0.0, 0.0), 0.0, 0.5, Color::WHITE);
 
                 // Draw ground
                 d.draw_rectangle(0, 540, 800, 60, Color::DARKGRAY);
