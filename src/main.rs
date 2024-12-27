@@ -161,7 +161,8 @@ fn main() {
                 d.draw_text("Game Over!", 250, 150, 50, Color::WHITE);
                 d.draw_text(&format!("Score: {}", score), 300, 250, 20, Color::GRAY);
                 d.draw_text(&format!("High Score: {}", high_score), 300, 280, 20, Color::GRAY);
-                d.draw_text("Press ENTER to Restart", 220, 400, 20, Color::WHITE);
+                d.draw_text(&format!("Attempts: {}", attempt), 300, 310, 20, Color::GRAY);
+                d.draw_text("Press ENTER to Restart", 250, 400, 20, Color::WHITE);
             }
         }
     }
