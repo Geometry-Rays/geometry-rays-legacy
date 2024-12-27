@@ -29,6 +29,7 @@ fn main() {
     let mut world_offset = 0.0;
     let movement_speed = 5.0;
     let mut rotation = 0.0;
+    let mut attempt = 1;
 
     // Textures
     let game_bg = rl
@@ -104,6 +105,7 @@ fn main() {
             GameState::GameOver => {
                 if enter_pressed {
                     game_state = GameState::Menu;
+                    attempt += 1;
                 }
             }
         }
@@ -125,6 +127,7 @@ fn main() {
                 // Draw ground
                 d.draw_rectangle(0, 540, 800, 60, Color::DARKGRAY);
 
+                
                 // Draw player with rotation
                 let _player_center = Vector2::new(
                     player.x + player.width / 2.0,
@@ -149,8 +152,9 @@ fn main() {
                 }
 
                 // Draw score
-                d.draw_text(&format!("Score: {}", score), 10, 10, 20, Color::BLACK);
-                d.draw_text(&format!("High Score: {}", high_score), 10, 40, 20, Color::BLACK);
+                d.draw_text(&format!("Score: {}", score), 10, 10, 20, Color::RED);
+                d.draw_text(&format!("High Score: {}", high_score), 10, 40, 20, Color::RED);
+                d.draw_text(&format!("Attempt: {}", attempt), 10, 70, 20, Color::RED);
             }
             GameState::GameOver => {
                 d.clear_background(Color::DARKRED);
