@@ -1,6 +1,10 @@
 use raylib::prelude::*;
 use rand::Rng;
 
+use rodio::{Decoder, OutputStream, Sink, Source};
+use std::fs::File;
+use std::io::BufReader;
+
 enum GameState {
     Menu,
     Playing,
@@ -12,6 +16,9 @@ fn main() {
         .size(800, 600)
         .title("Geometry Rays")
         .build();
+
+    let (_stream, stream_handle) = OutputStream::try_default().unwrap();
+    let sink = Sink::try_new(&stream_handle).unwrap();
 
     rl.set_target_fps(60);
 
@@ -39,6 +46,11 @@ fn main() {
         .load_texture(&thread, "Resources/default-bg-no-gradient.png")
         .expect("Failed to load menu background texture");
 
+    // Audio
+    let menu_loop_file = BufReader::new(File::open("Resources/menu-loop.mp3").expect("Failed to open MP3 file"));
+    let menu_loop = Decoder::new(menu_loop_file).expect("Failed to decode MP3 file").repeat_infinite();
+    sink.append(menu_loop);
+
     while !rl.window_should_close() {
         let enter_pressed = rl.is_key_pressed(KeyboardKey::KEY_ENTER);
         let _space_pressed = rl.is_key_pressed(KeyboardKey::KEY_SPACE);
@@ -53,6 +65,8 @@ fn main() {
                     obstacles = vec![generate_spike(800.0), generate_spike(1100.0)];
                     rotation = 0.0;
                 }
+
+                sink.play();
             }
             GameState::Playing => {
                 // Geometry Rays style controls - hold space to continuously jump when on ground
