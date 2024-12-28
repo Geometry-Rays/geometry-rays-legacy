@@ -34,6 +34,10 @@ fn main() {
         .load_texture(&thread, "Resources/default-bg.png")
         .expect("Failed to load background texture");
 
+    let menu_bg = rl
+        .load_texture(&thread, "Resources/default-bg-no-gradient.png")
+        .expect("Failed to load menu background texture");
+
     while !rl.window_should_close() {
         let enter_pressed = rl.is_key_pressed(KeyboardKey::KEY_ENTER);
         let _space_pressed = rl.is_key_pressed(KeyboardKey::KEY_SPACE);
@@ -109,7 +113,9 @@ fn main() {
         let mut d = rl.begin_drawing(&thread);
         match game_state {
             GameState::Menu => {
-                d.clear_background(Color::BLACK);
+                d.clear_background(Color::WHITE);
+                d.draw_texture_ex(&menu_bg, Vector2::new(0.0, -100.0), 0.0, 0.8, Color { r:50, g:50, b:50, a:255 });
+
                 d.draw_text("Geometry Rays", 220, 150, 50, Color::WHITE);
                 d.draw_text("Press ENTER to Start", 230, 300, 20, Color::GRAY);
                 d.draw_text("Hold SPACE to Jump", 250, 330, 20, Color::GRAY);
