@@ -126,7 +126,7 @@ fn main() {
                 d.draw_texture_ex(&game_bg, Vector2::new(0.0, 0.0), 0.0, 0.5, Color::WHITE);
 
                 // Draw ground
-                d.draw_rectangle(0, 540, 800, 60, Color::DARKGRAY);
+                d.draw_rectangle(0, 520, 800, 100, Color::DARKGRAY);
 
                 
                 // Draw player with rotation
@@ -168,7 +168,7 @@ fn main() {
 }
 
 fn generate_spike(x: f32) -> Rectangle {
-    Rectangle::new(x, 500.0, 50.0, 50.0)
+    Rectangle::new(x, 470.0, 50.0, 50.0)
 }
 
 fn check_collision_triangle_rectangle(
