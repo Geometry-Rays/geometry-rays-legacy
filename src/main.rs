@@ -156,9 +156,11 @@ fn main() {
                 d.draw_text(&format!("Attempt: {}", attempt), 10, 10, 20, Color::RED);
             }
             GameState::GameOver => {
-                d.clear_background(Color::DARKRED);
+                d.clear_background(Color::WHITE);
+                d.draw_texture_ex(&menu_bg, Vector2::new(0.0, -100.0), 0.0, 0.8, Color::DARKRED);
+
                 d.draw_text("Game Over!", 250, 150, 50, Color::WHITE);
-                d.draw_text(&format!("Attempts: {}", attempt), 330, 250, 20, Color::GRAY);
+                d.draw_text(&format!("Attempts: {}", attempt), 330, 250, 20, Color::WHITE);
                 d.draw_text("Press ENTER to Restart", 250, 330, 20, Color::WHITE);
             }
         }
