@@ -28,6 +28,7 @@ fn main() {
     let movement_speed = 5.0;
     let mut rotation = 0.0;
     let mut attempt = 1;
+    let version = "ALPHA";
 
     // Textures
     let game_bg = rl
@@ -119,6 +120,8 @@ fn main() {
                 d.draw_text("Geometry Rays", 220, 150, 50, Color::WHITE);
                 d.draw_text("Press ENTER to Start", 230, 300, 20, Color::GRAY);
                 d.draw_text("Hold SPACE to Jump", 250, 330, 20, Color::GRAY);
+
+                d.draw_text(&format!("Version: {}", version), 10, 10, 15, Color::WHITE);
             }
             GameState::Playing => {
                 // Draw background
