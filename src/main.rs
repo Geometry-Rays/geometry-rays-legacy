@@ -48,7 +48,11 @@ fn main() {
 
     let spike_texture = rl
         .load_texture(&thread, "Resources/spike.png")
-        .expect("Failed to load menu background texture");
+        .expect("Failed to load spike texture");
+
+    let logo = rl
+        .load_texture(&thread, "Resources/logo.png")
+        .expect("Failed to load logo texture");
 
     // Audio
     let menu_loop_file = BufReader::new(File::open("Resources/menu-loop.mp3").expect("Failed to open MP3 file"));
@@ -140,6 +144,8 @@ fn main() {
                 d.draw_text("Hold SPACE to Jump", 250, 330, 20, Color::GRAY);
 
                 d.draw_text(&format!("Version: {}", version), 10, 10, 15, Color::WHITE);
+
+                d.draw_texture_ex(&logo, Vector2::new(350.0, 50.0), 0.0, 0.1, Color::WHITE);
             }
             GameState::Playing => {
                 // Draw background
