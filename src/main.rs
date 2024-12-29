@@ -46,6 +46,10 @@ fn main() {
         .load_texture(&thread, "Resources/default-bg-no-gradient.png")
         .expect("Failed to load menu background texture");
 
+    let spike_texture = rl
+        .load_texture(&thread, "Resources/spike.png")
+        .expect("Failed to load menu background texture");
+
     // Audio
     let menu_loop_file = BufReader::new(File::open("Resources/menu-loop.mp3").expect("Failed to open MP3 file"));
     let menu_loop = Decoder::new(menu_loop_file).expect("Failed to decode MP3 file").repeat_infinite();
@@ -161,12 +165,16 @@ fn main() {
                 // Draw obstacles with world offset
                 for obstacle in &obstacles {
                     let actual_x = obstacle.x + world_offset;
-                    d.draw_triangle(
-                        Vector2::new(actual_x, obstacle.y),
-                        Vector2::new(actual_x + 50.0, obstacle.y + 50.0),
-                        Vector2::new(actual_x + 50.0, obstacle.y),
-                        Color::RED,
-                    );
+                    d.draw_texture_ex(&spike_texture, Vector2::new(actual_x, 440.0), 0.0, 0.1, Color::WHITE);
+
+                    // Old way of drawing spikes
+                    // Keeping cuz why not
+                    // d.draw_triangle(
+                    //     Vector2::new(actual_x, obstacle.y),
+                    //     Vector2::new(actual_x + 50.0, obstacle.y + 50.0),
+                    //     Vector2::new(actual_x + 50.0, obstacle.y),
+                    //     Color::RED,
+                    // );
                 }
 
                 // Draw attempt text
