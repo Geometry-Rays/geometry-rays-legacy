@@ -145,6 +145,12 @@ fn main() {
 
                 d.draw_text(&format!("Version: {}", version), 10, 10, 15, Color::WHITE);
 
+                d.draw_rectangle_pro(
+                    Rectangle::new(360.0, 60.0, 100.0, 100.0),
+                    Vector2::new(player.width / 2.0, player.height / 2.0),
+                    rotation,
+                    Color::BLACK,
+                );
                 d.draw_texture_ex(&logo, Vector2::new(350.0, 50.0), 0.0, 0.1, Color::WHITE);
             }
             GameState::Playing => {
