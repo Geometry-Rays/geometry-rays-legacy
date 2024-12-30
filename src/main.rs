@@ -151,6 +151,7 @@ fn main() {
                     0.0,
                     Color::BLACK,
                 );
+                
                 d.draw_texture_ex(&logo, Vector2::new(350.0, 50.0), 0.0, 0.1, Color::WHITE);
             }
             GameState::Playing => {
