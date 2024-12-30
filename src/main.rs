@@ -155,7 +155,7 @@ fn main() {
                 
                 d.draw_text("Press ENTER to Start", 250, 300, 20, Color::WHITE);
                 d.draw_text("Hold SPACE to Jump", 250, 330, 20, Color::WHITE);
-                d.draw_text("Press E to go to the Level Editor", 250, 360, 20, Color::WHITE);
+                d.draw_text("Press E to go to the Level Editor", 250, 360, 20, Color::GRAY);
 
                 d.draw_text(&format!("Version: {}", version), 10, 10, 15, Color::WHITE);
 
