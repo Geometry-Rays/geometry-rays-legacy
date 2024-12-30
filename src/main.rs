@@ -140,8 +140,8 @@ fn main() {
                 d.draw_texture_ex(&menu_bg, Vector2::new(-200.0, -250.0), 0.0, 0.8, Color { r:50, g:50, b:50, a:255 });
 
                 d.draw_text("Geometry Rays", 220, 150, 50, Color::WHITE);
-                d.draw_text("Press ENTER to Start", 230, 300, 20, Color::GRAY);
-                d.draw_text("Hold SPACE to Jump", 250, 330, 20, Color::GRAY);
+                d.draw_text("Press ENTER to Start", 230, 300, 20, Color::WHITE);
+                d.draw_text("Hold SPACE to Jump", 250, 330, 20, Color::WHITE);
 
                 d.draw_text(&format!("Version: {}", version), 10, 10, 15, Color::WHITE);
 
