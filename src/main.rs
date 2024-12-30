@@ -9,6 +9,7 @@ enum GameState {
     Menu,
     Playing,
     GameOver,
+    Editor,
 }
 
 fn main() {
@@ -60,18 +61,24 @@ fn main() {
     sink.append(menu_loop);
 
     while !rl.window_should_close() {
-        let enter_pressed = rl.is_key_pressed(KeyboardKey::KEY_ENTER);
+        let play_button_pressed = rl.is_key_pressed(KeyboardKey::KEY_ENTER);
+        let editor_button_pressed = rl.is_key_pressed(KeyboardKey::KEY_E);
+        let menu_button_pressed = rl.is_key_pressed(KeyboardKey::KEY_M);
         let _space_pressed = rl.is_key_pressed(KeyboardKey::KEY_SPACE);
         let space_down = rl.is_key_down(KeyboardKey::KEY_SPACE);
 
         match game_state {
             GameState::Menu => {
-                if enter_pressed {
+                if play_button_pressed {
                     game_state = GameState::Playing;
                     player.y = 500.0;
                     world_offset = 0.0;
                     obstacles = vec![generate_spike(800.0), generate_spike(1100.0)];
                     rotation = 0.0;
+                }
+
+                if editor_button_pressed {
+                    game_state = GameState::Editor;
                 }
 
                 sink.play();
@@ -125,9 +132,14 @@ fn main() {
                 }
             }
             GameState::GameOver => {
-                if enter_pressed {
+                if play_button_pressed {
                     game_state = GameState::Menu;
                     attempt += 1;
+                }
+            }
+            GameState::Editor => {
+                if menu_button_pressed {
+                    game_state = GameState::Menu;
                 }
             }
         }
@@ -140,8 +152,10 @@ fn main() {
                 d.draw_texture_ex(&menu_bg, Vector2::new(-200.0, -250.0), 0.0, 0.8, Color { r:50, g:50, b:50, a:255 });
 
                 d.draw_text("Geometry Rays", 220, 150, 50, Color::WHITE);
-                d.draw_text("Press ENTER to Start", 230, 300, 20, Color::WHITE);
+                
+                d.draw_text("Press ENTER to Start", 250, 300, 20, Color::WHITE);
                 d.draw_text("Hold SPACE to Jump", 250, 330, 20, Color::WHITE);
+                d.draw_text("Press E to go to the Level Editor", 250, 360, 20, Color::WHITE);
 
                 d.draw_text(&format!("Version: {}", version), 10, 10, 15, Color::WHITE);
 
@@ -200,6 +214,13 @@ fn main() {
                 d.draw_text("Game Over!", 250, 150, 50, Color::WHITE);
                 d.draw_text(&format!("Attempts: {}", attempt), 330, 250, 20, Color::WHITE);
                 d.draw_text("Press ENTER to Restart", 250, 330, 20, Color::WHITE);
+            }
+            GameState::Editor => {
+                d.clear_background(Color::WHITE);
+                d.draw_texture_ex(&menu_bg, Vector2::new(-200.0, -250.0), 0.0, 0.8, Color { r:50, g:50, b:50, a:255 });
+                
+                d.draw_text("Editor will be added eventually!", 50, 250, 45, Color::WHITE);
+                d.draw_text("Press M to go to back to the Main Menu!", 175, 310, 20, Color::WHITE);
             }
         }
     }
