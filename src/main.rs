@@ -37,7 +37,19 @@ fn main() {
     let mut rotation = 0.0;
     let mut attempt = 1;
     let version = "ALPHA";
-    let ground_color = Color { r:0, g:0, b:100, a:255 };
+
+    // Color Channels
+    // CC stands for Color Channel
+    // 1001 is the bg
+    // 1002 is the ground
+    // 1003 is the player
+    // 1004 is used by spikes and eventually blocks by default so basically obj color in gd
+    // Everything before 1001 is just like in gd where you can use them for whatever you want
+    // But custom color channels dont exist yet
+    let cc_1001 = Color { r:0, g:0, b:50, a:255 };
+    let cc_1002 = Color { r:0, g:0, b:100, a:255 };
+    let cc_1003 = Color::BLUE;
+    let cc_1004 = Color::WHITE;
 
     // Textures
     let game_bg = rl
@@ -176,7 +188,7 @@ fn main() {
             GameState::Playing => {
                 // Draw background
                 d.clear_background(Color::WHITE);
-                d.draw_texture_ex(&game_bg, Vector2::new(0.0, 0.0), 0.0, 0.5, Color { r:0, g:0, b:50, a:255 });
+                d.draw_texture_ex(&game_bg, Vector2::new(0.0, 0.0), 0.0, 0.5, cc_1001);
                 
                 // Old way of drawing the ground cuz why not keep it here
                 // New way is drawn after the player
@@ -192,21 +204,21 @@ fn main() {
                     player,
                     Vector2::new(player.width / 2.0, player.height / 2.0),
                     rotation,
-                    Color::BLUE,
+                    cc_1003,
                 );
                 
                 // Draw ground
-                d.draw_texture_ex(&ground_texture, Vector2::new(0.0, 520.0), 0.0, 0.2, ground_color);
-                d.draw_texture_ex(&ground_texture, Vector2::new(150.0, 520.0), 0.0, 0.2, ground_color);
-                d.draw_texture_ex(&ground_texture, Vector2::new(300.0, 520.0), 0.0, 0.2, ground_color);
-                d.draw_texture_ex(&ground_texture, Vector2::new(450.0, 520.0), 0.0, 0.2, ground_color);
-                d.draw_texture_ex(&ground_texture, Vector2::new(600.0, 520.0), 0.0, 0.2, ground_color);
-                d.draw_texture_ex(&ground_texture, Vector2::new(750.0, 520.0), 0.0, 0.2, ground_color);
+                d.draw_texture_ex(&ground_texture, Vector2::new(0.0, 520.0), 0.0, 0.2, cc_1002);
+                d.draw_texture_ex(&ground_texture, Vector2::new(150.0, 520.0), 0.0, 0.2, cc_1002);
+                d.draw_texture_ex(&ground_texture, Vector2::new(300.0, 520.0), 0.0, 0.2, cc_1002);
+                d.draw_texture_ex(&ground_texture, Vector2::new(450.0, 520.0), 0.0, 0.2, cc_1002);
+                d.draw_texture_ex(&ground_texture, Vector2::new(600.0, 520.0), 0.0, 0.2, cc_1002);
+                d.draw_texture_ex(&ground_texture, Vector2::new(750.0, 520.0), 0.0, 0.2, cc_1002);
 
                 // Draw obstacles with world offset
                 for obstacle in &obstacles {
                     let actual_x = obstacle.x + world_offset;
-                    d.draw_texture_ex(&spike_texture, Vector2::new(actual_x, 440.0), 0.0, 0.1, Color::WHITE);
+                    d.draw_texture_ex(&spike_texture, Vector2::new(actual_x, 440.0), 0.0, 0.1, cc_1004);
 
                     // Old way of drawing spikes
                     // Keeping cuz why not
