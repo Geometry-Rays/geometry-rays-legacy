@@ -37,6 +37,7 @@ fn main() {
     let mut rotation = 0.0;
     let mut attempt = 1;
     let version = "ALPHA";
+    let ground_color = Color { r:0, g:0, b:100, a:255 };
 
     // Textures
     let game_bg = rl
@@ -54,6 +55,10 @@ fn main() {
     let logo = rl
         .load_texture(&thread, "Resources/logo.png")
         .expect("Failed to load logo texture");
+
+    let ground_texture = rl
+        .load_texture(&thread, "Resources/ground.png")
+        .expect("Failed to load ground texture");
 
     // Audio
     let menu_loop_file = BufReader::new(File::open("Resources/menu-loop.mp3").expect("Failed to open MP3 file"));
@@ -171,10 +176,11 @@ fn main() {
             GameState::Playing => {
                 // Draw background
                 d.clear_background(Color::WHITE);
-                d.draw_texture_ex(&game_bg, Vector2::new(0.0, 0.0), 0.0, 0.5, Color::WHITE);
-
-                // Draw ground
-                d.draw_rectangle(0, 520, 800, 100, Color::DARKGRAY);
+                d.draw_texture_ex(&game_bg, Vector2::new(0.0, 0.0), 0.0, 0.5, Color { r:0, g:0, b:50, a:255 });
+                
+                // Old way of drawing the ground cuz why not keep it here
+                // New way is drawn after the player
+                // d.draw_rectangle(0, 520, 800, 100, Color::DARKGRAY);
 
                 
                 // Draw player with rotation
@@ -188,6 +194,14 @@ fn main() {
                     rotation,
                     Color::BLUE,
                 );
+                
+                // Draw ground
+                d.draw_texture_ex(&ground_texture, Vector2::new(0.0, 520.0), 0.0, 0.2, ground_color);
+                d.draw_texture_ex(&ground_texture, Vector2::new(150.0, 520.0), 0.0, 0.2, ground_color);
+                d.draw_texture_ex(&ground_texture, Vector2::new(300.0, 520.0), 0.0, 0.2, ground_color);
+                d.draw_texture_ex(&ground_texture, Vector2::new(450.0, 520.0), 0.0, 0.2, ground_color);
+                d.draw_texture_ex(&ground_texture, Vector2::new(600.0, 520.0), 0.0, 0.2, ground_color);
+                d.draw_texture_ex(&ground_texture, Vector2::new(750.0, 520.0), 0.0, 0.2, ground_color);
 
                 // Draw obstacles with world offset
                 for obstacle in &obstacles {
