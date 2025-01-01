@@ -83,6 +83,7 @@ fn main() {
         let menu_button_pressed = rl.is_key_pressed(KeyboardKey::KEY_M);
         let _space_pressed = rl.is_key_pressed(KeyboardKey::KEY_SPACE);
         let space_down = rl.is_key_down(KeyboardKey::KEY_SPACE);
+        let mouse_down = rl.is_mouse_button_down(MouseButton::MOUSE_BUTTON_LEFT);
 
         match game_state {
             GameState::Menu => {
@@ -102,7 +103,7 @@ fn main() {
             }
             GameState::Playing => {
                 // Geometry Rays style controls - hold space to continuously jump when on ground
-                if is_on_ground && space_down {
+                if is_on_ground && space_down || is_on_ground && mouse_down {
                     velocity_y = jump_force;
                     is_on_ground = false;
                 }
