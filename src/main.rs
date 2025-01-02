@@ -44,7 +44,7 @@ impl Button {
         let is_pressed = is_hovered && rl.is_mouse_button_down(MouseButton::MOUSE_BUTTON_LEFT);
         
         // Update hover animation
-        let target_scale = if is_hovered { 1.02 } else { 1.0 };
+        let target_scale = if is_hovered { 1.1 } else { 1.0 };
         self.hover_scale += (target_scale - self.hover_scale) * (delta_time * 12.0);
         
         // Update press animation
