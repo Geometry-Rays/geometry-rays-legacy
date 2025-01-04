@@ -3,6 +3,7 @@ use rand::Rng;
 use rodio::{Decoder, OutputStream, Sink, Source};
 use std::fs::File;
 use std::io::BufReader;
+use webbrowser;
 
 enum GameState {
     Menu,
@@ -44,7 +45,7 @@ impl Button {
         let is_pressed = is_hovered && rl.is_mouse_button_down(MouseButton::MOUSE_BUTTON_LEFT);
         
         // Update hover animation
-        let target_scale = if is_hovered { 1.1 } else { 1.0 };
+        let target_scale = if is_hovered { 1.02 } else { 1.0 };
         self.hover_scale += (target_scale - self.hover_scale) * (delta_time * 12.0);
         
         // Update press animation
@@ -191,22 +192,41 @@ fn main() {
         .expect("Failed to load logo texture");
     let ground_texture = rl.load_texture(&thread, "Resources/ground.png")
         .expect("Failed to load ground texture");
+    let discord_icon = rl.load_texture(&thread, "Resources/discord-icon.png")
+        .expect("Failed to load discord icon texture");
 
     // Audio setup
     let menu_loop_file = BufReader::new(File::open("Resources/menu-loop.mp3").expect("Failed to open MP3 file"));
     let menu_loop = Decoder::new(menu_loop_file).expect("Failed to decode MP3 file").repeat_infinite();
     sink.append(menu_loop);
 
+    // Discord button setup
+    let padding = 20.0;
+    let icon_size = 32.0;
+    let discord_rect = Rectangle::new(
+        800.0 - icon_size - padding,
+        600.0 - icon_size - padding,
+        icon_size,
+        icon_size
+    );
+
     while !rl.window_should_close() {
         let space_down = rl.is_key_down(KeyboardKey::KEY_SPACE);
         let mouse_down = rl.is_mouse_button_down(MouseButton::MOUSE_BUTTON_LEFT);
         let delta_time = rl.get_frame_time();
+        let mouse_pos = rl.get_mouse_position();
 
         // Update buttons based on game state
         match game_state {
             GameState::Menu => {
                 play_button.update(&rl, delta_time);
                 editor_button.update(&rl, delta_time);
+
+                // Check for Discord icon click
+                if discord_rect.check_collision_point_rec(mouse_pos) && 
+                   rl.is_mouse_button_pressed(MouseButton::MOUSE_BUTTON_LEFT) {
+                    let _ = webbrowser::open("https://discord.gg/XV9Qsvmbfj");
+                }
 
                 if play_button.is_clicked(&rl) {
                     game_state = GameState::Playing;
@@ -301,6 +321,21 @@ fn main() {
                 );
 
                 d.draw_texture_ex(&logo, Vector2::new(350.0, 50.0), 0.0, 0.1, Color::WHITE);
+
+                // Draw Discord icon with hover effect
+                let discord_color = if discord_rect.check_collision_point_rec(mouse_pos) {
+                    Color::new(200, 200, 200, 255)
+                } else {
+                    Color::WHITE
+                };
+
+                d.draw_texture_ex(
+                    &discord_icon,
+                    Vector2::new(discord_rect.x, discord_rect.y),
+                    0.0,
+                    icon_size / discord_icon.height() as f32,
+                    discord_color,
+                );
             }
             GameState::Playing => {
                 d.clear_background(Color::WHITE);
@@ -350,34 +385,34 @@ fn main() {
             }
         }
     }
- }
- 
- fn generate_spike(x: f32) -> Rectangle {
+}
+
+fn generate_spike(x: f32) -> Rectangle {
     Rectangle::new(x, 470.0, 50.0, 50.0)
- }
- 
- fn check_collision_triangle_rectangle(
+}
+
+fn check_collision_triangle_rectangle(
     x1: f32, y1: f32, x2: f32, y2: f32, x3: f32, y3: f32, rect: Rectangle,
- ) -> bool {
+) -> bool {
     let rect_points = [
         (rect.x, rect.y),
         (rect.x + rect.width, rect.y),
         (rect.x, rect.y + rect.height),
         (rect.x + rect.width, rect.y + rect.height),
     ];
- 
+
     for (rx, ry) in rect_points.iter() {
         if point_in_triangle(*rx, *ry, x1, y1, x2, y2, x3, y3) {
             return true;
         }
     }
     false
- }
- 
- fn point_in_triangle(px: f32, py: f32, x1: f32, y1: f32, x2: f32, y2: f32, x3: f32, y3: f32) -> bool {
+}
+
+fn point_in_triangle(px: f32, py: f32, x1: f32, y1: f32, x2: f32, y2: f32, x3: f32, y3: f32) -> bool {
     let area_orig = ((x2 - x1) * (y3 - y1) - (x3 - x1) * (y2 - y1)).abs();
     let area1 = ((x1 - px) * (y2 - py) - (x2 - px) * (y1 - py)).abs();
     let area2 = ((x2 - px) * (y3 - py) - (x3 - px) * (y2 - py)).abs();
     let area3 = ((x3 - px) * (y1 - py) - (x1 - px) * (y3 - py)).abs();
     (area1 + area2 + area3 - area_orig).abs() < 0.01
- }
+}
