@@ -155,6 +155,8 @@ fn main() {
     let sink = Sink::try_new(&stream_handle).unwrap();
 
     rl.set_target_fps(60);
+    let logo_image = Image::load_image("Resources/logo.png").expect("Failed to load image");
+    rl.set_window_icon(&logo_image);
 
     // Create menu buttons with better sizing and spacing
     let mut play_button = Button::new(300.0, 250.0, 200.0, 50.0, "Play", 24);
