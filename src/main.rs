@@ -160,8 +160,13 @@ fn main() {
     // Create main menu buttons
     let mut play_button = Button::new(300.0, 250.0, 200.0, 50.0, "Play", 24);
     let mut editor_button = Button::new(300.0, 320.0, 200.0, 50.0, "Level Editor", 24);
-    let mut menu_button = Button::new(300.0, 390.0, 200.0, 50.0, "Back to Menu", 24);
     let mut restart_button = Button::new(300.0, 320.0, 200.0, 50.0, "Restart", 24);
+    
+    // Create online level buttons
+    let mut menu_button = Button::new(20.0, 20.0, 200.0, 50.0, "Back to Menu", 24);
+    let mut create_button = Button::new(120.0, 230.0, 150.0, 150.0, "Create", 30);
+    let mut featured_button = Button::new(320.0, 230.0, 150.0, 150.0, "Featured", 30);
+    let mut search_button = Button::new(520.0, 230.0, 150.0, 150.0, "Search", 30);
 
     let mut game_state = GameState::Menu;
     let mut player = Rectangle::new(200.0, 500.0, 40.0, 40.0);
@@ -175,6 +180,7 @@ fn main() {
     let mut rotation = 0.0;
     let mut attempt = 1;
     let version = "ALPHA";
+    let mut not_done_yet_text = false;
 
     // Color channels
     let cc_1001 = Color { r:0, g:0, b:50, a:255 };
@@ -222,6 +228,8 @@ fn main() {
             GameState::Menu => {
                 play_button.update(&rl, delta_time);
                 editor_button.update(&rl, delta_time);
+
+                not_done_yet_text = false;
 
                 // Check for Discord icon click
                 if discord_rect.check_collision_point_rec(mouse_pos) && 
@@ -293,9 +301,24 @@ fn main() {
             }
             GameState::Editor => {
                 menu_button.update(&rl, delta_time);
+                create_button.update(&rl, delta_time);
+                featured_button.update(&rl, delta_time);
+                search_button.update(&rl, delta_time);
                 
                 if menu_button.is_clicked(&rl) {
                     game_state = GameState::Menu;
+                }
+
+                if create_button.is_clicked(&rl) {
+                    not_done_yet_text = true;
+                }
+
+                if featured_button.is_clicked(&rl) {
+                    not_done_yet_text = true;
+                }
+
+                if search_button.is_clicked(&rl) {
+                    not_done_yet_text = true;
                 }
             }
         }
@@ -381,8 +404,15 @@ fn main() {
                 d.clear_background(Color::WHITE);
                 d.draw_texture_ex(&menu_bg, Vector2::new(-200.0, -250.0), 0.0, 0.8, Color { r:50, g:50, b:50, a:255 });
                 
-                d.draw_text("Editor will be added eventually!", 50, 250, 45, Color::WHITE);
+                // d.draw_text("Editor will be added eventually!", 50, 250, 45, Color::WHITE);
                 menu_button.draw(&mut d);
+                create_button.draw(&mut d);
+                featured_button.draw(&mut d);
+                search_button.draw(&mut d);
+
+                if not_done_yet_text {
+                    d.draw_text("This will be added eventually!", 250, 30, 30, Color::WHITE);
+                }
             }
         }
     }
