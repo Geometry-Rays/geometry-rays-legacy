@@ -102,13 +102,12 @@ impl Button {
         );
 
         // Draw border with growing alpha on hover
-        let border_alpha = (100.0 + self.animation_timer * 155.0) as u8;
         d.draw_rectangle_lines(
             scaled_rect.x as i32,
             scaled_rect.y as i32,
             scaled_rect.width as i32,
             scaled_rect.height as i32,
-            Color::new(0, 0, 0, border_alpha),
+            Color::new(0, 0, 0, 255),
         );
 
         // Draw text with perfect centering
