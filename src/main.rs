@@ -101,7 +101,7 @@ impl Button {
             current_color,
         );
 
-        // Draw border with growing alpha on hover
+        // Draw button border
         d.draw_rectangle_lines(
             scaled_rect.x as i32,
             scaled_rect.y as i32,
@@ -157,7 +157,7 @@ fn main() {
     let logo_image = Image::load_image("Resources/logo.png").expect("Failed to load image");
     rl.set_window_icon(&logo_image);
 
-    // Create menu buttons with better sizing and spacing
+    // Create main menu buttons
     let mut play_button = Button::new(300.0, 250.0, 200.0, 50.0, "Play", 24);
     let mut editor_button = Button::new(300.0, 320.0, 200.0, 50.0, "Level Editor", 24);
     let mut menu_button = Button::new(300.0, 390.0, 200.0, 50.0, "Back to Menu", 24);
