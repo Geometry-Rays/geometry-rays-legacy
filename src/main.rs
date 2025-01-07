@@ -182,6 +182,7 @@ fn main() {
     let mut edit_tab_button = Button::new(12.0, 475.0, 150.0, 50.0, "Edit", 20);
     let mut delete_tab_button = Button::new(12.0, 535.0, 150.0, 50.0, "Delete", 20);
 
+    // Variables required for the game to work
     let mut game_state = GameState::Menu;
     let mut player = Rectangle::new(200.0, 500.0, 40.0, 40.0);
     let mut obstacles = vec![generate_spike(800.0), generate_spike(1100.0)];
@@ -195,10 +196,10 @@ fn main() {
     let mut attempt = 1;
     let version = "ALPHA";
     let mut not_done_yet_text = false;
-    let mut edit_not_done_yet = false;
     
     // Variables for editor stuff
     let mut active_tab = EditorTab::Build;
+    let mut edit_not_done_yet = false;
 
     // Color channels
     let cc_1001 = Color { r:0, g:0, b:50, a:255 };
