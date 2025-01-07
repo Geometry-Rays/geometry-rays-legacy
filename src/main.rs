@@ -10,6 +10,7 @@ enum GameState {
     Playing,
     GameOver,
     CreatorMenu,
+    Editor,
 }
 
 struct Button {
@@ -323,7 +324,7 @@ fn main() {
                 }
 
                 if create_button.is_clicked(&rl) {
-                    not_done_yet_text = true;
+                    game_state = GameState::Editor;
                 }
 
                 if featured_button.is_clicked(&rl) {
@@ -333,6 +334,9 @@ fn main() {
                 if search_button.is_clicked(&rl) {
                     not_done_yet_text = true;
                 }
+            }
+            GameState::Editor => {
+                println!("Nothing here yet");
             }
         }
 
@@ -426,6 +430,10 @@ fn main() {
                 if not_done_yet_text {
                     d.draw_text("This will be added eventually!", 250, 30, 30, Color::WHITE);
                 }
+            }
+            GameState::Editor => {
+                d.clear_background(Color::WHITE);
+                d.draw_texture_ex(&game_bg, Vector2::new(0.0, -150.0), 0.0, 0.7, cc_1001);
             }
         }
     }
