@@ -434,6 +434,10 @@ fn main() {
             GameState::Editor => {
                 d.clear_background(Color::WHITE);
                 d.draw_texture_ex(&game_bg, Vector2::new(0.0, -150.0), 0.0, 0.7, cc_1001);
+
+                d.draw_rectangle(0, 400, 800, 200, Color { r:30, g:30, b:30, a:100 });
+
+                d.draw_line(175, 400, 175, 600, Color::WHITE);
             }
         }
     }
