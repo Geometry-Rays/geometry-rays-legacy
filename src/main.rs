@@ -145,16 +145,12 @@ impl Button {
     }
 }
 
-// Enums, Structs, Variables, And functions that are used by the editor
+// Enums, Structs, And functions that are used by the editor
+#[derive(PartialEq)]
 enum EditorTab {
     Build,
-    _Edit,
-    _Delete
-}
-
-// Variables put in a function so that they can be defined here
-fn define_editor_variables() -> () {
-    let mut _active_tab = EditorTab::Build;
+    Edit,
+    Delete
 }
 
 fn main() {
@@ -181,6 +177,11 @@ fn main() {
     let mut featured_button = Button::new(320.0, 230.0, 150.0, 150.0, "Featured", 30);
     let mut search_button = Button::new(520.0, 230.0, 150.0, 150.0, "Search", 30);
 
+    // Create editor buttons
+    let mut build_tab_button = Button::new(12.0, 415.0, 150.0, 50.0, "Build", 20);
+    let mut edit_tab_button = Button::new(12.0, 475.0, 150.0, 50.0, "Edit", 20);
+    let mut delete_tab_button = Button::new(12.0, 535.0, 150.0, 50.0, "Delete", 20);
+
     let mut game_state = GameState::Menu;
     let mut player = Rectangle::new(200.0, 500.0, 40.0, 40.0);
     let mut obstacles = vec![generate_spike(800.0), generate_spike(1100.0)];
@@ -194,7 +195,10 @@ fn main() {
     let mut attempt = 1;
     let version = "ALPHA";
     let mut not_done_yet_text = false;
-    define_editor_variables();
+    let mut edit_not_done_yet = false;
+    
+    // Variables for editor stuff
+    let mut active_tab = EditorTab::Build;
 
     // Color channels
     let cc_1001 = Color { r:0, g:0, b:50, a:255 };
@@ -336,7 +340,27 @@ fn main() {
                 }
             }
             GameState::Editor => {
-                println!("Nothing here yet");
+                build_tab_button.update(&rl, delta_time);
+                edit_tab_button.update(&rl, delta_time);
+                delete_tab_button.update(&rl, delta_time);
+
+                if build_tab_button.is_clicked(&rl) {
+                    active_tab = EditorTab::Build;
+                }
+
+                if edit_tab_button.is_clicked(&rl) {
+                    active_tab = EditorTab::Edit;
+                }
+
+                if delete_tab_button.is_clicked(&rl) {
+                    active_tab = EditorTab::Delete;
+                }
+
+                if active_tab == EditorTab::Edit {
+                    edit_not_done_yet = true;
+                } else {
+                    edit_not_done_yet = false;
+                }
             }
         }
 
@@ -438,6 +462,14 @@ fn main() {
                 d.draw_rectangle(0, 400, 800, 200, Color { r:30, g:30, b:30, a:100 });
 
                 d.draw_line(175, 400, 175, 600, Color::WHITE);
+
+                build_tab_button.draw(&mut d);
+                edit_tab_button.draw(&mut d);
+                delete_tab_button.draw(&mut d);
+
+                if edit_not_done_yet {
+                    d.draw_text("Edit tab coming soon!", 270, 490, 40, Color::WHITE);
+                }
             }
         }
     }
