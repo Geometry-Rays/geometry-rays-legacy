@@ -374,20 +374,20 @@ fn main() {
                 if delete_tab_button.is_clicked(&rl) {
                     active_tab = EditorTab::Delete;
                 }
-
-                if obj1_button.is_clicked(&rl) {
+                
+                if obj1_button.is_clicked(&rl) && active_tab == EditorTab::Build {
                     _current_object = 1 + _advanced_page_number;
                 }
 
-                if obj2_button.is_clicked(&rl) {
+                if obj2_button.is_clicked(&rl) && active_tab == EditorTab::Build {
                     _current_object = 2 + _advanced_page_number;
                 }
 
-                if obj3_button.is_clicked(&rl) {
+                if obj3_button.is_clicked(&rl) && active_tab == EditorTab::Build {
                     _current_object = 3 + _advanced_page_number;
                 }
 
-                if obj4_button.is_clicked(&rl) {
+                if obj4_button.is_clicked(&rl) && active_tab == EditorTab::Build {
                     _current_object = 4 + _advanced_page_number;
                 }
 
@@ -507,10 +507,12 @@ fn main() {
                 }
 
                 // Draw all the object buttons
-                obj1_button.draw(&mut d);
-                obj2_button.draw(&mut d);
-                obj3_button.draw(&mut d);
-                obj4_button.draw(&mut d);
+                if active_tab == EditorTab::Build {
+                    obj1_button.draw(&mut d);
+                    obj2_button.draw(&mut d);
+                    obj3_button.draw(&mut d);
+                    obj4_button.draw(&mut d);
+                }
             }
         }
     }
