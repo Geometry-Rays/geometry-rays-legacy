@@ -9,7 +9,7 @@ enum GameState {
     Menu,
     Playing,
     GameOver,
-    Editor,
+    CreatorMenu,
 }
 
 struct Button {
@@ -144,6 +144,18 @@ impl Button {
     }
 }
 
+// Enums, Structs, Variables, And functions that are used by the editor
+enum EditorTab {
+    Build,
+    _Edit,
+    _Delete
+}
+
+// Variables put in a function so that they can be defined here
+fn define_editor_variables() -> () {
+    let mut _active_tab = EditorTab::Build;
+}
+
 fn main() {
     let (mut rl, thread) = raylib::init()
         .size(800, 600)
@@ -181,6 +193,7 @@ fn main() {
     let mut attempt = 1;
     let version = "ALPHA";
     let mut not_done_yet_text = false;
+    define_editor_variables();
 
     // Color channels
     let cc_1001 = Color { r:0, g:0, b:50, a:255 };
@@ -246,7 +259,7 @@ fn main() {
                 }
 
                 if editor_button.is_clicked(&rl) {
-                    game_state = GameState::Editor;
+                    game_state = GameState::CreatorMenu;
                 }
 
                 sink.play();
@@ -299,7 +312,7 @@ fn main() {
                     attempt += 1;
                 }
             }
-            GameState::Editor => {
+            GameState::CreatorMenu => {
                 menu_button.update(&rl, delta_time);
                 create_button.update(&rl, delta_time);
                 featured_button.update(&rl, delta_time);
@@ -400,7 +413,7 @@ fn main() {
                 
                 restart_button.draw(&mut d);
             }
-            GameState::Editor => {
+            GameState::CreatorMenu => {
                 d.clear_background(Color::WHITE);
                 d.draw_texture_ex(&menu_bg, Vector2::new(-200.0, -250.0), 0.0, 0.8, Color { r:50, g:50, b:50, a:255 });
                 
