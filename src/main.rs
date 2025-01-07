@@ -380,7 +380,7 @@ fn main() {
             }
             GameState::Playing => {
                 d.clear_background(Color::WHITE);
-                d.draw_texture_ex(&game_bg, Vector2::new(0.0, 0.0), 0.0, 0.5, cc_1001);
+                d.draw_texture_ex(&game_bg, Vector2::new(0.0, -150.0), 0.0, 0.7, cc_1001);
                 
                 d.draw_rectangle_pro(
                     player,
