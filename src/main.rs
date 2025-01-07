@@ -256,6 +256,10 @@ fn main() {
         let delta_time = rl.get_frame_time();
         let mouse_pos = rl.get_mouse_position();
 
+        let one_pressed = rl.is_key_pressed(KeyboardKey::KEY_ONE);
+        let two_pressed = rl.is_key_pressed(KeyboardKey::KEY_TWO);
+        let three_pressed = rl.is_key_pressed(KeyboardKey::KEY_THREE);
+
         // Update buttons based on game state
         match game_state {
             GameState::Menu => {
@@ -372,6 +376,18 @@ fn main() {
                 }
 
                 if delete_tab_button.is_clicked(&rl) {
+                    active_tab = EditorTab::Delete;
+                }
+
+                if one_pressed {
+                    active_tab = EditorTab::Build;
+                }
+
+                if two_pressed {
+                    active_tab = EditorTab::Edit;
+                }
+
+                if three_pressed {
                     active_tab = EditorTab::Delete;
                 }
                 
