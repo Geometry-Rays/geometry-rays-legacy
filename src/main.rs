@@ -183,8 +183,6 @@ fn main() {
     let mut edit_tab_button = Button::new(12.0, 475.0, 150.0, 50.0, "Edit", 20);
     let mut delete_tab_button = Button::new(12.0, 535.0, 150.0, 50.0, "Delete", 20);
 
-    let mut obj1_button = Button::new(187.0, 415.0, 50.0, 50.0, "Spike", 10);
-
     // Variables required for the game to work
     let mut game_state = GameState::Menu;
     let mut player = Rectangle::new(200.0, 500.0, 40.0, 40.0);
@@ -207,10 +205,15 @@ fn main() {
     let mut _current_object = 1;
     let mut _advanced_page_number = 0;
     
-    objects.insert("spike", 1);
-    objects.insert("block", 2);
-    objects.insert("pad", 3);
-    objects.insert("orb", 4);
+    objects.insert(1, "spike");
+    objects.insert(2, "block");
+    objects.insert(3, "pad");
+    objects.insert(4, "orb");
+
+    let mut obj1_button = Button::new(187.0, 415.0, 50.0, 50.0, objects.get(&1).unwrap(), 10);
+    let mut obj2_button = Button::new(249.0, 415.0, 50.0, 50.0, objects.get(&2).unwrap(), 10);
+    let mut obj3_button = Button::new(311.0, 415.0, 50.0, 50.0, objects.get(&3).unwrap(), 10);
+    let mut obj4_button = Button::new(373.0, 415.0, 50.0, 50.0, objects.get(&4).unwrap(), 10);
 
     // Color channels
     let cc_1001 = Color { r:0, g:0, b:50, a:255 };
@@ -356,6 +359,9 @@ fn main() {
                 edit_tab_button.update(&rl, delta_time);
                 delete_tab_button.update(&rl, delta_time);
                 obj1_button.update(&rl, delta_time);
+                obj2_button.update(&rl, delta_time);
+                obj3_button.update(&rl, delta_time);
+                obj4_button.update(&rl, delta_time);
 
                 if build_tab_button.is_clicked(&rl) {
                     active_tab = EditorTab::Build;
@@ -371,6 +377,18 @@ fn main() {
 
                 if obj1_button.is_clicked(&rl) {
                     _current_object = 1 + _advanced_page_number;
+                }
+
+                if obj2_button.is_clicked(&rl) {
+                    _current_object = 2 + _advanced_page_number;
+                }
+
+                if obj3_button.is_clicked(&rl) {
+                    _current_object = 3 + _advanced_page_number;
+                }
+
+                if obj4_button.is_clicked(&rl) {
+                    _current_object = 4 + _advanced_page_number;
                 }
 
                 if active_tab == EditorTab::Edit {
@@ -490,6 +508,9 @@ fn main() {
 
                 // Draw all the object buttons
                 obj1_button.draw(&mut d);
+                obj2_button.draw(&mut d);
+                obj3_button.draw(&mut d);
+                obj4_button.draw(&mut d);
             }
         }
     }
