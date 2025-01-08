@@ -192,7 +192,7 @@ fn main() {
     let jump_force = -15.0;
     let mut is_on_ground = true;
     let mut world_offset = 0.0;
-    let movement_speed = 5.0;
+    let movement_speed = 6.0;
     let mut rotation = 0.0;
     let mut attempt = 1;
     let version = "ALPHA";
