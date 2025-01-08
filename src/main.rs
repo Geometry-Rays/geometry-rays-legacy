@@ -203,7 +203,7 @@ fn main() {
     let mut active_tab = EditorTab::Build;
     let mut edit_not_done_yet = false;
     let mut objects = HashMap::new();
-    let mut _current_object = 1;
+    let mut current_object = 1;
     let mut _advanced_page_number = 0;
     let mut cam_pos_x = 0;
     let mut cam_pos_y = 0;
@@ -405,19 +405,19 @@ fn main() {
                 }
                 
                 if obj1_button.is_clicked(&rl) && active_tab == EditorTab::Build {
-                    _current_object = 1 + _advanced_page_number;
+                    current_object = 1 + _advanced_page_number;
                 }
 
                 if obj2_button.is_clicked(&rl) && active_tab == EditorTab::Build {
-                    _current_object = 2 + _advanced_page_number;
+                    current_object = 2 + _advanced_page_number;
                 }
 
                 if obj3_button.is_clicked(&rl) && active_tab == EditorTab::Build {
-                    _current_object = 3 + _advanced_page_number;
+                    current_object = 3 + _advanced_page_number;
                 }
 
                 if obj4_button.is_clicked(&rl) && active_tab == EditorTab::Build {
-                    _current_object = 4 + _advanced_page_number;
+                    current_object = 4 + _advanced_page_number;
                 }
 
                 if active_tab == EditorTab::Edit {
@@ -511,6 +511,11 @@ fn main() {
                 }
 
                 d.draw_text(&format!("Attempt: {}", attempt), 10, 10, 20, Color::RED);
+
+                if show_debug_text {
+                    d.draw_text(&format!("Velocity Y: {}", velocity_y), 10, 40, 20, Color::GREEN);
+                    d.draw_text(&format!("On Ground: {}", is_on_ground), 10, 70, 20, Color::GREEN);
+                }
             }
             GameState::GameOver => {
                 d.clear_background(Color::WHITE);
@@ -559,9 +564,10 @@ fn main() {
                     obj4_button.draw(&mut d);
                 }
 
+                d.draw_text(&format!("Selected Object: {}", current_object), 10, 10, 20, Color::RED);
                 if show_debug_text {
-                    d.draw_text(&format!("Camera pos X: {}", cam_pos_x), 10, 10, 20, Color::GREEN);
-                    d.draw_text(&format!("Camera pos Y: {}", cam_pos_y), 10, 40, 20, Color::GREEN);
+                    d.draw_text(&format!("Camera pos X: {}", cam_pos_x), 10, 40, 20, Color::GREEN);
+                    d.draw_text(&format!("Camera pos Y: {}", cam_pos_y), 10, 70, 20, Color::GREEN);
                 }
             }
         }
