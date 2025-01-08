@@ -564,7 +564,7 @@ fn main() {
                     obj4_button.draw(&mut d);
                 }
 
-                d.draw_text(&format!("Selected Object: {}", current_object), 10, 10, 20, Color::WHITE);
+                d.draw_text(&format!("Selected Object: {}", objects.get(&current_object).unwrap()), 10, 10, 20, Color::WHITE);
                 if show_debug_text {
                     d.draw_text(&format!("Camera pos X: {}", cam_pos_x), 10, 40, 20, Color::GREEN);
                     d.draw_text(&format!("Camera pos Y: {}", cam_pos_y), 10, 70, 20, Color::GREEN);
