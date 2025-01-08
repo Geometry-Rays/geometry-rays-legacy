@@ -197,6 +197,7 @@ fn main() {
     let mut attempt = 1;
     let version = "ALPHA";
     let mut not_done_yet_text = false;
+    let mut show_debug_text = false;
     
     // Variables for editor stuff
     let mut active_tab = EditorTab::Build;
@@ -204,6 +205,8 @@ fn main() {
     let mut objects = HashMap::new();
     let mut _current_object = 1;
     let mut _advanced_page_number = 0;
+    let mut cam_pos_x = 0;
+    let mut cam_pos_y = 0;
     
     objects.insert(1, "spike");
     objects.insert(2, "block");
@@ -255,10 +258,16 @@ fn main() {
         let mouse_down = rl.is_mouse_button_down(MouseButton::MOUSE_BUTTON_LEFT);
         let delta_time = rl.get_frame_time();
         let mouse_pos = rl.get_mouse_position();
+        let slash_pressed = rl.is_key_pressed(KeyboardKey::KEY_SLASH);
 
         let one_pressed = rl.is_key_pressed(KeyboardKey::KEY_ONE);
         let two_pressed = rl.is_key_pressed(KeyboardKey::KEY_TWO);
         let three_pressed = rl.is_key_pressed(KeyboardKey::KEY_THREE);
+
+        let up_arrow_down = rl.is_key_down(KeyboardKey::KEY_UP);
+        let down_arrow_down = rl.is_key_down(KeyboardKey::KEY_DOWN);
+        let left_arrow_down = rl.is_key_down(KeyboardKey::KEY_LEFT);
+        let right_arrow_down = rl.is_key_down(KeyboardKey::KEY_RIGHT);
 
         // Update buttons based on game state
         match game_state {
@@ -284,6 +293,10 @@ fn main() {
 
                 if editor_button.is_clicked(&rl) {
                     game_state = GameState::CreatorMenu;
+                }
+
+                if slash_pressed {
+                    show_debug_text = true;
                 }
 
                 sink.play();
@@ -412,6 +425,22 @@ fn main() {
                 } else {
                     edit_not_done_yet = false;
                 }
+
+                if up_arrow_down {
+                    cam_pos_y += 1;
+                }
+
+                if down_arrow_down {
+                    cam_pos_y -= 1;
+                }
+
+                if left_arrow_down {
+                    cam_pos_x -= 1;
+                }
+
+                if right_arrow_down {
+                    cam_pos_x += 1;
+                }
             }
         }
 
@@ -528,6 +557,11 @@ fn main() {
                     obj2_button.draw(&mut d);
                     obj3_button.draw(&mut d);
                     obj4_button.draw(&mut d);
+                }
+
+                if show_debug_text {
+                    d.draw_text(&format!("Camera pos X: {}", cam_pos_x), 10, 10, 20, Color::GREEN);
+                    d.draw_text(&format!("Camera pos Y: {}", cam_pos_y), 10, 40, 20, Color::GREEN);
                 }
             }
         }
