@@ -510,7 +510,7 @@ fn main() {
                     d.draw_texture_ex(&spike_texture, Vector2::new(actual_x, 440.0), 0.0, 0.1, cc_1004);
                 }
 
-                d.draw_text(&format!("Attempt: {}", attempt), 10, 10, 20, Color::RED);
+                d.draw_text(&format!("Attempt: {}", attempt), 10, 10, 20, Color::WHITE);
 
                 if show_debug_text {
                     d.draw_text(&format!("Velocity Y: {}", velocity_y), 10, 40, 20, Color::GREEN);
@@ -564,7 +564,7 @@ fn main() {
                     obj4_button.draw(&mut d);
                 }
 
-                d.draw_text(&format!("Selected Object: {}", current_object), 10, 10, 20, Color::RED);
+                d.draw_text(&format!("Selected Object: {}", current_object), 10, 10, 20, Color::WHITE);
                 if show_debug_text {
                     d.draw_text(&format!("Camera pos X: {}", cam_pos_x), 10, 40, 20, Color::GREEN);
                     d.draw_text(&format!("Camera pos Y: {}", cam_pos_y), 10, 70, 20, Color::GREEN);
