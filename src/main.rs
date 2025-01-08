@@ -169,7 +169,7 @@ fn main() {
 
     // Create main menu buttons
     let mut play_button = Button::new(300.0, 250.0, 200.0, 50.0, "Play", 24);
-    let mut editor_button = Button::new(300.0, 320.0, 200.0, 50.0, "Level Editor", 24);
+    let mut editor_button = Button::new(300.0, 320.0, 200.0, 50.0, "Custom Levels", 24);
     let mut restart_button = Button::new(300.0, 320.0, 200.0, 50.0, "Restart", 24);
     
     // Create online level buttons
