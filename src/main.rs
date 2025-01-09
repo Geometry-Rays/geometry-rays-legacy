@@ -19,7 +19,6 @@ struct Button {
     text: String,
     font_size: i32,
     base_color: Color,
-    hover_color: Color,
     hover_scale: f32,
     press_offset: f32,
     is_pressed: bool,
@@ -33,7 +32,6 @@ impl Button {
             text: text.to_string(),
             font_size,
             base_color: Color::WHITE,
-            hover_color: Color::new(240, 240, 240, 255),
             hover_scale: 1.0,
             press_offset: 0.0,
             is_pressed: false,
@@ -85,14 +83,6 @@ impl Button {
                 Color::new(0, 0, 0, 40),
             );
         }
-
-        // Draw button background with interpolated color
-        let current_color = Color::new(
-            self.base_color.r + ((self.hover_color.r as i32 - self.base_color.r as i32) as f32 * self.animation_timer) as u8,
-            self.base_color.g + ((self.hover_color.g as i32 - self.base_color.g as i32) as f32 * self.animation_timer) as u8,
-            self.base_color.b + ((self.hover_color.b as i32 - self.base_color.b as i32) as f32 * self.animation_timer) as u8,
-            255,
-        );
         
         // Draw main button body
         d.draw_rectangle(
@@ -100,7 +90,7 @@ impl Button {
             scaled_rect.y as i32,
             scaled_rect.width as i32,
             scaled_rect.height as i32,
-            current_color,
+            self.base_color,
         );
 
         // Old way of drawing button borders
