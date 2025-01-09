@@ -103,14 +103,17 @@ impl Button {
             current_color,
         );
 
-        // Draw button border
-        d.draw_rectangle_lines(
-            scaled_rect.x as i32,
-            scaled_rect.y as i32,
-            scaled_rect.width as i32,
-            scaled_rect.height as i32,
-            Color::new(0, 0, 0, 255),
-        );
+        // Old way of drawing button borders
+        // d.draw_rectangle_lines(
+        //     scaled_rect.x as i32,
+        //     scaled_rect.y as i32,
+        //     scaled_rect.width as i32,
+        //     scaled_rect.height as i32,
+        //     Color::new(0, 0, 0, 255),
+        // );
+
+        // Draw button borders
+        d.draw_rectangle_rounded_lines(scaled_rect, 0.0, 4, 5.0, Color { r:0, g:0, b:0, a:255 });
 
         // Draw text with perfect centering
         let text_width = d.measure_text(&self.text, self.font_size);
