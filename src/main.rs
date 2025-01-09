@@ -23,10 +23,11 @@ struct Button {
     press_offset: f32,
     is_pressed: bool,
     animation_timer: f32,
+    is_disabled: bool,
 }
 
 impl Button {
-    fn new(x: f32, y: f32, width: f32, height: f32, text: &str, font_size: i32) -> Self {
+    fn new(x: f32, y: f32, width: f32, height: f32, text: &str, font_size: i32, is_disabled: bool) -> Self {
         Button {
             rect: Rectangle::new(x, y, width, height),
             text: text.to_string(),
@@ -36,6 +37,7 @@ impl Button {
             press_offset: 0.0,
             is_pressed: false,
             animation_timer: 0.0,
+            is_disabled: is_disabled,
         }
     }
 
@@ -90,7 +92,7 @@ impl Button {
             scaled_rect.y as i32,
             scaled_rect.width as i32,
             scaled_rect.height as i32,
-            self.base_color,
+            if self.is_disabled { Color::BLACK } else { self.base_color },
         );
 
         // Old way of drawing button borders
@@ -103,7 +105,7 @@ impl Button {
         // );
 
         // Draw button borders
-        d.draw_rectangle_rounded_lines(scaled_rect, 0.0, 4, 5.0, Color { r:0, g:0, b:0, a:255 });
+        d.draw_rectangle_rounded_lines(scaled_rect, 0.0, 4, 5.0, if self.is_disabled { Color::WHITE } else { Color::BLACK });
 
         // Draw text with perfect centering
         let text_width = d.measure_text(&self.text, self.font_size);
@@ -125,7 +127,7 @@ impl Button {
             text_x,
             text_y,
             self.font_size,
-            Color::BLACK,
+            if self.is_disabled { Color::WHITE } else { Color::BLACK },
         );
     }
 
@@ -161,20 +163,20 @@ fn main() {
     rl.set_window_icon(&logo_image);
 
     // Create main menu buttons
-    let mut play_button = Button::new(300.0, 250.0, 200.0, 50.0, "Play", 24);
-    let mut editor_button = Button::new(300.0, 320.0, 200.0, 50.0, "Custom Levels", 24);
-    let mut restart_button = Button::new(300.0, 320.0, 200.0, 50.0, "Restart", 24);
+    let mut play_button = Button::new(300.0, 250.0, 200.0, 50.0, "Play", 24, false);
+    let mut editor_button = Button::new(300.0, 320.0, 200.0, 50.0, "Custom Levels", 24, false);
+    let mut restart_button = Button::new(300.0, 320.0, 200.0, 50.0, "Restart", 24, false);
     
     // Create online level buttons
-    let mut menu_button = Button::new(20.0, 20.0, 200.0, 50.0, "Back to Menu", 24);
-    let mut create_button = Button::new(120.0, 230.0, 150.0, 150.0, "Create", 30);
-    let mut featured_button = Button::new(320.0, 230.0, 150.0, 150.0, "Featured", 30);
-    let mut search_button = Button::new(520.0, 230.0, 150.0, 150.0, "Search", 30);
+    let mut menu_button = Button::new(20.0, 20.0, 200.0, 50.0, "Back to Menu", 24, false);
+    let mut create_button = Button::new(120.0, 230.0, 150.0, 150.0, "Create", 30, false);
+    let mut featured_button = Button::new(320.0, 230.0, 150.0, 150.0, "Featured", 30, true);
+    let mut search_button = Button::new(520.0, 230.0, 150.0, 150.0, "Search", 30, true);
 
     // Create editor buttons
-    let mut build_tab_button = Button::new(12.0, 415.0, 150.0, 50.0, "Build", 20);
-    let mut edit_tab_button = Button::new(12.0, 475.0, 150.0, 50.0, "Edit", 20);
-    let mut delete_tab_button = Button::new(12.0, 535.0, 150.0, 50.0, "Delete", 20);
+    let mut build_tab_button = Button::new(12.0, 415.0, 150.0, 50.0, "Build", 20, false);
+    let mut edit_tab_button = Button::new(12.0, 475.0, 150.0, 50.0, "Edit", 20, false);
+    let mut delete_tab_button = Button::new(12.0, 535.0, 150.0, 50.0, "Delete", 20, false);
 
     // Variables required for the game to work
     let mut game_state = GameState::Menu;
@@ -206,10 +208,10 @@ fn main() {
     objects.insert(3, "pad");
     objects.insert(4, "orb");
 
-    let mut obj1_button = Button::new(187.0, 415.0, 50.0, 50.0, objects.get(&1).unwrap(), 10);
-    let mut obj2_button = Button::new(249.0, 415.0, 50.0, 50.0, objects.get(&2).unwrap(), 10);
-    let mut obj3_button = Button::new(311.0, 415.0, 50.0, 50.0, objects.get(&3).unwrap(), 10);
-    let mut obj4_button = Button::new(373.0, 415.0, 50.0, 50.0, objects.get(&4).unwrap(), 10);
+    let mut obj1_button = Button::new(187.0, 415.0, 50.0, 50.0, objects.get(&1).unwrap(), 10, false);
+    let mut obj2_button = Button::new(249.0, 415.0, 50.0, 50.0, objects.get(&2).unwrap(), 10, false);
+    let mut obj3_button = Button::new(311.0, 415.0, 50.0, 50.0, objects.get(&3).unwrap(), 10, false);
+    let mut obj4_button = Button::new(373.0, 415.0, 50.0, 50.0, objects.get(&4).unwrap(), 10, false);
 
     // Color channels
     let cc_1001 = Color { r:0, g:0, b:50, a:255 };
