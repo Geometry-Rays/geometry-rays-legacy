@@ -214,7 +214,14 @@ fn main() {
     let mut obj3_button = Button::new(187.0 + (obj_button_off * 2.0), 415.0, 50.0, 50.0, objects.get(&3).unwrap(), 10, false);
     let mut obj4_button = Button::new(187.0 + (obj_button_off * 3.0), 415.0, 50.0, 50.0, objects.get(&4).unwrap(), 10, false);
 
-    // Color channels
+    // Color Channels
+    // CC stands for Color Channel
+    // 1001 is the bg
+    // 1002 is the ground
+    // 1003 is the player
+    // 1004 is used by spikes and eventually blocks by default so basically obj color in gd
+    // Everything before 1001 is just like in gd where you can use them for whatever you want
+    // But custom color channels dont exist yet
     let cc_1001 = Color { r:0, g:0, b:50, a:255 };
     let cc_1002 = Color { r:0, g:0, b:100, a:255 };
     let cc_1003 = Color::BLUE;
