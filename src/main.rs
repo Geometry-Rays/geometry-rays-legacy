@@ -277,8 +277,10 @@ fn main() {
 
         let mouse_x = rl.get_mouse_x();
         let mouse_y = rl.get_mouse_y();
-        let snapped_x = (mouse_x / grid_size) * grid_size;
-        let snapped_y = (mouse_y / grid_size) * grid_size;
+        let snapped_cam_x = cam_pos_x - (cam_pos_x % 40);
+        let snapped_cam_y = cam_pos_y - (cam_pos_y % 40);
+        let snapped_x = (mouse_x / grid_size) * grid_size + snapped_cam_x;
+        let snapped_y = (mouse_y / grid_size) * grid_size + snapped_cam_y;
 
         // Update buttons based on game state
         match game_state {
@@ -588,6 +590,8 @@ fn main() {
                     d.draw_text(&format!("Object Grid: {:?}", object_grid), 10, 130, 20, Color::GREEN);
                     d.draw_text(&format!("Mouse X On Grid: {}", snapped_x), 10, 160, 20, Color::GREEN);
                     d.draw_text(&format!("Mouse Y On Grid: {}", snapped_y), 10, 190, 20, Color::GREEN);
+                    d.draw_text(&format!("Mouse X: {}", mouse_x), 10, 220, 20, Color::GREEN);
+                    d.draw_text(&format!("Mouse Y: {}", mouse_y), 10, 250, 20, Color::GREEN);
                 }
             }
         }
