@@ -208,10 +208,11 @@ fn main() {
     objects.insert(3, "pad");
     objects.insert(4, "orb");
 
+    let obj_button_off = 65.0;
     let mut obj1_button = Button::new(187.0, 415.0, 50.0, 50.0, objects.get(&1).unwrap(), 10, false);
-    let mut obj2_button = Button::new(249.0, 415.0, 50.0, 50.0, objects.get(&2).unwrap(), 10, false);
-    let mut obj3_button = Button::new(311.0, 415.0, 50.0, 50.0, objects.get(&3).unwrap(), 10, false);
-    let mut obj4_button = Button::new(373.0, 415.0, 50.0, 50.0, objects.get(&4).unwrap(), 10, false);
+    let mut obj2_button = Button::new(187.0 + (obj_button_off), 415.0, 50.0, 50.0, objects.get(&2).unwrap(), 10, false);
+    let mut obj3_button = Button::new(187.0 + (obj_button_off * 2.0), 415.0, 50.0, 50.0, objects.get(&3).unwrap(), 10, false);
+    let mut obj4_button = Button::new(187.0 + (obj_button_off * 3.0), 415.0, 50.0, 50.0, objects.get(&4).unwrap(), 10, false);
 
     // Color channels
     let cc_1001 = Color { r:0, g:0, b:50, a:255 };
