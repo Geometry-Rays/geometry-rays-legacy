@@ -149,6 +149,14 @@ enum EditorTab {
     Delete
 }
 
+#[derive(Debug)]
+#[allow(dead_code)]
+struct ObjectStruct {
+    y: i32,
+    x: i32,
+    id: u32
+}
+
 fn main() {
     let (mut rl, thread) = raylib::init()
         .size(800, 600)
@@ -210,7 +218,7 @@ fn main() {
     let mut _advanced_page_number = 0;
     let mut cam_pos_x = 0;
     let mut cam_pos_y = 0;
-    let mut object_grid = HashMap::new();
+    let mut object_grid: Vec<ObjectStruct> = vec![];
     let grid_size = 40;
     
     objects.insert(1, "spike");
@@ -439,8 +447,9 @@ fn main() {
                 }
 
                 else if grid_button.is_clicked(&rl) && active_tab == EditorTab::Build {
-                    let obj_coords = snapped_y.to_string() + ":" + &snapped_x.to_string();
-                    object_grid.insert(obj_coords, current_object);
+                    // let obj_x = snapped_x;
+                    // let obj_y = snapped_y;
+                    object_grid.push(ObjectStruct { y:snapped_y, x:snapped_x, id:current_object });
                 }
 
                 if active_tab == EditorTab::Edit {
@@ -607,11 +616,12 @@ fn main() {
                     d.draw_text(&format!("Camera pos X: {}", cam_pos_x), 10, 40, 20, Color::GREEN);
                     d.draw_text(&format!("Camera pos Y: {}", cam_pos_y), 10, 70, 20, Color::GREEN);
                     d.draw_text(&format!("Advanced Page Number: {}", _advanced_page_number), 10, 100, 20, Color::GREEN);
-                    d.draw_text(&format!("Object Grid: {:?}", object_grid), 10, 130, 20, Color::GREEN);
-                    d.draw_text(&format!("Mouse X On Grid: {}", snapped_x), 10, 160, 20, Color::GREEN);
-                    d.draw_text(&format!("Mouse Y On Grid: {}", snapped_y), 10, 190, 20, Color::GREEN);
-                    d.draw_text(&format!("Mouse X: {}", mouse_x), 10, 220, 20, Color::GREEN);
-                    d.draw_text(&format!("Mouse Y: {}", mouse_y), 10, 250, 20, Color::GREEN);
+                    d.draw_text(&format!("Mouse X On Grid: {}", snapped_x), 10, 130, 20, Color::GREEN);
+                    d.draw_text(&format!("Mouse Y On Grid: {}", snapped_y), 10, 160, 20, Color::GREEN);
+                    d.draw_text(&format!("Mouse X: {}", mouse_x), 10, 190, 20, Color::GREEN);
+                    d.draw_text(&format!("Mouse Y: {}", mouse_y), 10, 220, 20, Color::GREEN);
+
+                    d.draw_text(&format!("Object Grid: {:?}", object_grid), 10, 250, 20, Color::GREEN);
                 }
             }
         }
