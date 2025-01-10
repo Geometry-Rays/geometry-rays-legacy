@@ -162,6 +162,10 @@ fn main() {
     let logo_image = Image::load_image("Resources/logo.png").expect("Failed to load image");
     rl.set_window_icon(&logo_image);
 
+    // Loading the textures for objects here so that they can be referenced in texture_ids
+    let spike_texture = rl.load_texture(&thread, "Resources/spike.png")
+        .expect("Failed to load spike texture");
+
     // Create main menu buttons
     let mut play_button = Button::new(300.0, 250.0, 200.0, 50.0, "Play", 24, false);
     let mut editor_button = Button::new(300.0, 320.0, 200.0, 50.0, "Custom Levels", 24, false);
@@ -194,11 +198,14 @@ fn main() {
     let version = "ALPHA";
     let mut not_done_yet_text = false;
     let mut show_debug_text = false;
+    let mut texture_ids: HashMap<u32, Texture2D> = HashMap::new();
+    
+    texture_ids.insert(1, spike_texture);
     
     // Variables for editor stuff
     let mut active_tab = EditorTab::Build;
     let mut edit_not_done_yet = false;
-    let mut objects = HashMap::new();
+    let mut objects: HashMap<u32, &str> = HashMap::new();
     let mut current_object = 1;
     let mut _advanced_page_number = 0;
     let mut cam_pos_x = 0;
@@ -235,8 +242,6 @@ fn main() {
         .expect("Failed to load background texture");
     let menu_bg = rl.load_texture(&thread, "Resources/default-bg-no-gradient.png")
         .expect("Failed to load menu background texture");
-    let spike_texture = rl.load_texture(&thread, "Resources/spike.png")
-        .expect("Failed to load spike texture");
     let logo = rl.load_texture(&thread, "Resources/logo.png")
         .expect("Failed to load logo texture");
     let ground_texture = rl.load_texture(&thread, "Resources/ground.png")
@@ -525,7 +530,7 @@ fn main() {
                 // Draw obstacles
                 for obstacle in &obstacles {
                     let actual_x = obstacle.x + world_offset;
-                    d.draw_texture_ex(&spike_texture, Vector2::new(actual_x, 440.0), 0.0, 0.1, cc_1004);
+                    d.draw_texture_ex(&texture_ids.get(&1).unwrap(), Vector2::new(actual_x, 440.0), 0.0, 0.1, cc_1004);
                 }
 
                 d.draw_text(&format!("Attempt: {}", attempt), 10, 10, 20, Color::WHITE);
