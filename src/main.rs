@@ -567,6 +567,17 @@ fn main() {
                 d.clear_background(Color::WHITE);
                 d.draw_texture_ex(&game_bg, Vector2::new(0.0, -150.0), 0.0, 0.7, cc_1001);
 
+                // Draw ground
+                for i in 0..6 {
+                    d.draw_texture_ex(
+                        &ground_texture,
+                        Vector2::new(i as f32 * 150.0, cam_pos_y as f32 * 5.0 + 535.0),
+                        0.0,
+                        0.2,
+                        cc_1002,
+                    );
+                }
+                
                 d.draw_rectangle(0, 400, 800, 200, Color { r:30, g:30, b:30, a:100 });
 
                 d.draw_line(175, 400, 175, 600, Color::WHITE);
@@ -574,10 +585,11 @@ fn main() {
                 build_tab_button.draw(&mut d);
                 edit_tab_button.draw(&mut d);
                 delete_tab_button.draw(&mut d);
-
+                
                 if edit_not_done_yet {
                     d.draw_text("Edit tab coming soon!", 270, 490, 40, Color::WHITE);
                 }
+
 
                 // Draw all the object buttons
                 if active_tab == EditorTab::Build {
