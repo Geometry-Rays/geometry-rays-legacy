@@ -177,6 +177,7 @@ fn main() {
     let mut build_tab_button = Button::new(12.0, 415.0, 150.0, 50.0, "Build", 20, false);
     let mut edit_tab_button = Button::new(12.0, 475.0, 150.0, 50.0, "Edit", 20, false);
     let mut delete_tab_button = Button::new(12.0, 535.0, 150.0, 50.0, "Delete", 20, false);
+    let grid_button = Button::new(0.0, 0.0, 800.0, 400.0, "", 20, false);
 
     // Variables required for the game to work
     let mut game_state = GameState::Menu;
@@ -202,6 +203,8 @@ fn main() {
     let mut _advanced_page_number = 0;
     let mut cam_pos_x = 0;
     let mut cam_pos_y = 0;
+    let mut object_grid = HashMap::new();
+    let grid_size = 40;
     
     objects.insert(1, "spike");
     objects.insert(2, "block");
@@ -271,6 +274,11 @@ fn main() {
         let down_arrow_down = rl.is_key_down(KeyboardKey::KEY_DOWN);
         let left_arrow_down = rl.is_key_down(KeyboardKey::KEY_LEFT);
         let right_arrow_down = rl.is_key_down(KeyboardKey::KEY_RIGHT);
+
+        let mouse_x = rl.get_mouse_x();
+        let mouse_y = rl.get_mouse_y();
+        let snapped_x = (mouse_x / grid_size) * grid_size;
+        let snapped_y = (mouse_y / grid_size) * grid_size;
 
         // Update buttons based on game state
         match game_state {
@@ -411,16 +419,21 @@ fn main() {
                     current_object = 1 + _advanced_page_number;
                 }
 
-                if obj2_button.is_clicked(&rl) && active_tab == EditorTab::Build {
+                else if obj2_button.is_clicked(&rl) && active_tab == EditorTab::Build {
                     current_object = 2 + _advanced_page_number;
                 }
 
-                if obj3_button.is_clicked(&rl) && active_tab == EditorTab::Build {
+                else if obj3_button.is_clicked(&rl) && active_tab == EditorTab::Build {
                     current_object = 3 + _advanced_page_number;
                 }
 
-                if obj4_button.is_clicked(&rl) && active_tab == EditorTab::Build {
+                else if obj4_button.is_clicked(&rl) && active_tab == EditorTab::Build {
                     current_object = 4 + _advanced_page_number;
+                }
+
+                else if grid_button.is_clicked(&rl) && active_tab == EditorTab::Build {
+                    let obj_coords = snapped_y.to_string() + ":" + &snapped_x.to_string();
+                    object_grid.insert(obj_coords, current_object);
                 }
 
                 if active_tab == EditorTab::Edit {
@@ -572,6 +585,9 @@ fn main() {
                     d.draw_text(&format!("Camera pos X: {}", cam_pos_x), 10, 40, 20, Color::GREEN);
                     d.draw_text(&format!("Camera pos Y: {}", cam_pos_y), 10, 70, 20, Color::GREEN);
                     d.draw_text(&format!("Advanced Page Number: {}", _advanced_page_number), 10, 100, 20, Color::GREEN);
+                    d.draw_text(&format!("Object Grid: {:?}", object_grid), 10, 130, 20, Color::GREEN);
+                    d.draw_text(&format!("Mouse X On Grid: {}", snapped_x), 10, 160, 20, Color::GREEN);
+                    d.draw_text(&format!("Mouse Y On Grid: {}", snapped_y), 10, 190, 20, Color::GREEN);
                 }
             }
         }
