@@ -577,7 +577,10 @@ fn main() {
                         cc_1002,
                     );
                 }
-                
+
+                d.draw_rectangle_gradient_v(0, cam_pos_y * 5 + 595, 800, 100, Color { r:0, g:0, b:0, a:0 } , Color::BLACK);
+                d.draw_rectangle(0, cam_pos_y * 5 + 695, 800, 500, Color::BLACK);
+
                 d.draw_rectangle(0, 400, 800, 200, Color { r:30, g:30, b:30, a:100 });
 
                 d.draw_line(175, 400, 175, 600, Color::WHITE);
