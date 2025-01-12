@@ -3,8 +3,13 @@ use rand::Rng;
 use rodio::{Decoder, OutputStream, Sink, Source};
 use std::fs::File;
 use std::io::BufReader;
+use std::process::exit;
 use webbrowser;
 use std::collections::HashMap;
+
+use reqwest::Client;
+use reqwest::Proxy;
+use tokio::net::TcpStream;
 
 enum GameState {
     Menu,
@@ -141,6 +146,33 @@ impl Button {
     }
 }
 
+// Check to see if the tor protocol is running
+async fn is_tor_running() -> bool {
+    match TcpStream::connect("127.0.0.1:9050").await {
+        Ok(_) => true,
+        Err(_) => false,
+    }
+}
+
+async fn make_request(url: String) -> String {
+    let proxy = Proxy::all("socks5h://127.0.0.1:9050")
+        .expect("Failed to set up proxy");
+
+    let client = Client::builder()
+        .proxy(proxy)
+        .build()
+        .expect("Failed to build client");
+
+    let res = client
+        .get(url)
+        .send()
+        .await
+        .expect("Failed to send request");
+
+    let text = res.text().await.unwrap();
+    return format!("{}", text);
+}
+
 // Enums, Structs, And functions that are used by the editor
 #[derive(PartialEq)]
 enum EditorTab {
@@ -157,7 +189,15 @@ struct ObjectStruct {
     id: u32
 }
 
-fn main() {
+#[tokio::main]
+async fn main() {
+    if !is_tor_running().await {
+        println!("Tor is not running. Please start tor");
+        exit(1)
+    } else {
+        println!("Tor is already running.");
+    }
+
     let (mut rl, thread) = raylib::init()
         .size(800, 600)
         .title("Geometry Rays")
@@ -191,6 +231,9 @@ fn main() {
     let mut delete_tab_button = Button::new(12.0, 535.0, 150.0, 50.0, "Delete", 20, false);
     let grid_button = Button::new(0.0, 0.0, 800.0, 400.0, "", 20, false);
 
+    // Variables for the urls since tor urls are long af
+    let latest_version_url: String = "http://yuoqw7ywmixj55zxljkhqvcwunovze32df7pqemwacfaq2itqefbixad.onion/geometry-rays/php-code/get-latest-version.php".to_string();
+    
     // Variables required for the game to work
     let mut game_state = GameState::Menu;
     let mut player = Rectangle::new(200.0, 500.0, 40.0, 40.0);
@@ -204,6 +247,7 @@ fn main() {
     let mut rotation = 0.0;
     let mut attempt = 1;
     let version = "ALPHA";
+    let latest_version = make_request(latest_version_url).await;
     let mut not_done_yet_text = false;
     let mut show_debug_text = false;
     let mut texture_ids: HashMap<u32, Texture2D> = HashMap::new();
@@ -271,6 +315,7 @@ fn main() {
         icon_size,
         icon_size
     );
+
 
     while !rl.window_should_close() {
         let space_down = rl.is_key_down(KeyboardKey::KEY_SPACE);
@@ -489,6 +534,8 @@ fn main() {
                 editor_button.draw(&mut d);
 
                 d.draw_text(&format!("Version: {}", version), 10, 10, 15, Color::WHITE);
+                d.draw_text(&format!("Latest Version: {}", latest_version), 10, 30, 15, Color::WHITE);
+
 
                 d.draw_rectangle_pro(
                     Rectangle::new(360.0, 60.0, 100.0, 100.0),
