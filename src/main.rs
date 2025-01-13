@@ -233,8 +233,8 @@ async fn main() {
 
     // Variables for the urls since tor urls are long af
     let send_requests = true;
-    let tor_url = "http://georays.yuoqw7ywmixj55zxljkhqvcwunovze32df7pqemwacfaq2itqefbixad.onion".to_string();
-    let latest_version_url: String = format!("{}/php-code/get-latest-version.php", tor_url).to_string();
+    let tor_url = "http://georays.yuoqw7ywmixj55zxljkhqvcwunovze32df7pqemwacfaq2itqefbixad.onion/php-code/".to_string();
+    let latest_version_url: String = format!("{}get-latest-version.php", tor_url).to_string();
     
     // Variables required for the game to work
     let mut game_state = GameState::Menu;
