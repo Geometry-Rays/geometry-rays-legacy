@@ -232,6 +232,7 @@ async fn main() {
     let grid_button = Button::new(0.0, 0.0, 800.0, 400.0, "", 20, false);
 
     // Variables for the urls since tor urls are long af
+    let send_requests = true;
     let tor_url = "http://georays.yuoqw7ywmixj55zxljkhqvcwunovze32df7pqemwacfaq2itqefbixad.onion".to_string();
     let latest_version_url: String = format!("{}/php-code/get-latest-version.php", tor_url).to_string();
     
@@ -248,7 +249,7 @@ async fn main() {
     let mut rotation = 0.0;
     let mut attempt = 1;
     let version = "ALPHA";
-    let latest_version = make_request(latest_version_url).await;
+    let latest_version = if send_requests { make_request(latest_version_url).await } else { "NULL".to_string() };
     let mut not_done_yet_text = false;
     let mut show_debug_text = false;
     let mut texture_ids: HashMap<u32, Texture2D> = HashMap::new();
