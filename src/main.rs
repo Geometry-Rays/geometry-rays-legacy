@@ -625,6 +625,12 @@ async fn main() {
                 d.clear_background(Color::WHITE);
                 d.draw_texture_ex(&game_bg, Vector2::new(0.0, -150.0), 0.0, 0.7, cc_1001);
 
+                for i in &object_grid {
+                    let object_x = i.x as f32 + cam_pos_x as f32 * 5.0;
+                    let object_y = i.y as f32 + cam_pos_y as f32 * 5.0;
+                    d.draw_texture_ex(&texture_ids.get(&i.id).unwrap(), Vector2::new(object_x, object_y), 0.0, 0.1, cc_1004);
+                }
+
                 // Draw ground
                 for i in 0..6 {
                     d.draw_texture_ex(
