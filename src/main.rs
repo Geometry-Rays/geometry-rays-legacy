@@ -633,7 +633,7 @@ async fn main() {
                 for i in &object_grid {
                     let object_x = i.x as f32 - cam_pos_x as f32 * 5.0;
                     let object_y = i.y as f32 + cam_pos_y as f32 * 5.0;
-                    d.draw_texture_ex(&texture_ids.get(&i.id).unwrap(), Vector2::new(object_x, object_y), 0.0, 0.1, cc_1004);
+                    d.draw_texture_ex(&texture_ids.get(&i.id).unwrap(), Vector2::new(object_x, object_y), 0.0, 0.05, cc_1004);
                 }
 
                 // Draw ground
