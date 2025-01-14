@@ -593,7 +593,7 @@ async fn main() {
                 // Draw obstacles
                 for obstacle in &obstacles {
                     let actual_x = obstacle.x + world_offset;
-                    d.draw_texture_ex(&texture_ids.get(&1).unwrap(), Vector2::new(actual_x, 440.0), 0.0, 0.1, cc_1004);
+                    d.draw_texture_ex(&texture_ids.get(&1).unwrap(), Vector2::new(actual_x, 480.0), 0.0, 0.05, cc_1004);
                 }
 
                 d.draw_text(&format!("Attempt: {}", attempt), 10, 10, 20, Color::WHITE);
