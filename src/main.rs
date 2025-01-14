@@ -213,6 +213,8 @@ async fn main() {
     // Loading the textures for objects here so that they can be referenced in texture_ids
     let spike_texture = rl.load_texture(&thread, "Resources/spike.png")
         .expect("Failed to load spike texture");
+    let null_texture = rl.load_texture(&thread, "Resources/null.png")
+        .expect("Failed to load null texture");
 
     // Create main menu buttons
     let mut play_button = Button::new(300.0, 250.0, 200.0, 50.0, "Play", 24, false);
@@ -252,9 +254,12 @@ async fn main() {
     let latest_version = if send_requests { make_request(latest_version_url).await } else { "NULL".to_string() };
     let mut not_done_yet_text = false;
     let mut show_debug_text = false;
-    let mut texture_ids: HashMap<u32, Texture2D> = HashMap::new();
+    let mut texture_ids: HashMap<u32, &Texture2D> = HashMap::new();
     
-    texture_ids.insert(1, spike_texture);
+    texture_ids.insert(1, &spike_texture);
+    texture_ids.insert(2, &null_texture);
+    texture_ids.insert(3, &null_texture);
+    texture_ids.insert(4, &null_texture);
     
     // Variables for editor stuff
     let mut active_tab = EditorTab::Build;
