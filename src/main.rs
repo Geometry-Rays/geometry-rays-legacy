@@ -215,6 +215,8 @@ async fn main() {
         .expect("Failed to load spike texture");
     let null_texture = rl.load_texture(&thread, "Resources/null.png")
         .expect("Failed to load null texture");
+    let orb_texture = rl.load_texture(&thread, "Resources/orb.png")
+        .expect("Failed to load orb texture");
 
     // Create main menu buttons
     let mut play_button = Button::new(300.0, 250.0, 200.0, 50.0, "Play", 24, false);
@@ -259,7 +261,7 @@ async fn main() {
     texture_ids.insert(1, &spike_texture);
     texture_ids.insert(2, &null_texture);
     texture_ids.insert(3, &null_texture);
-    texture_ids.insert(4, &null_texture);
+    texture_ids.insert(4, &orb_texture);
     
     // Variables for editor stuff
     let mut active_tab = EditorTab::Build;
