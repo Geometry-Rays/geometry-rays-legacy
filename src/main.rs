@@ -342,8 +342,8 @@ async fn main() {
 
         let mouse_x = rl.get_mouse_x();
         let mouse_y = rl.get_mouse_y();
-        let snapped_cam_x = cam_pos_x - (cam_pos_x % 40);
-        let snapped_cam_y = cam_pos_y - (cam_pos_y % 40);
+        let snapped_cam_x = cam_pos_x - (cam_pos_x % 8);
+        let snapped_cam_y = cam_pos_y - (cam_pos_y % 8);
         let snapped_x = (mouse_x / grid_size) * grid_size + (snapped_cam_x * 5);
         let snapped_y = (mouse_y / grid_size) * grid_size + (snapped_cam_y * 5);
 
