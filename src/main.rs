@@ -17,6 +17,7 @@ enum GameState {
     GameOver,
     CreatorMenu,
     Editor,
+    LevelOptions,
 }
 
 struct Button {
@@ -234,7 +235,11 @@ async fn main() {
     let mut edit_tab_button = Button::new(12.0, 475.0, 150.0, 50.0, "Edit", 20, false);
     let mut delete_tab_button = Button::new(12.0, 535.0, 150.0, 50.0, "Delete", 20, false);
     let grid_button = Button::new(0.0, 0.0, 800.0, 400.0, "", 20, false);
+    let mut level_options_button = Button::new(675.0, 20.0, 100.0, 50.0, "Level Options", 13, false);
 
+    let mut level_options_back = Button::new(20.0, 20.0, 200.0, 50.0, "Back to Editor", 24, false);
+    // let red_bg_input_btn = Button::new(0.0, 0.0, 0.0, 0.0, "red", 20, false);
+    
     // Variables for the urls since tor urls are long af
     let send_requests = true;
     let tor_url = "http://georays.yuoqw7ywmixj55zxljkhqvcwunovze32df7pqemwacfaq2itqefbixad.onion/php-code/".to_string();
@@ -273,12 +278,13 @@ async fn main() {
     let mut cam_pos_y = 0;
     let mut object_grid: Vec<ObjectStruct> = vec![];
     let grid_size = 40;
+    // let mut red_bg_input = 0;
     
     objects.insert(1, "spike");
     objects.insert(2, "block");
     objects.insert(3, "pad");
     objects.insert(4, "orb");
-
+    
     let obj_button_off = 65.0;
     let mut obj1_button = Button::new(187.0, 415.0, 50.0, 50.0, objects.get(&1).unwrap(), 10, false);
     let mut obj2_button = Button::new(187.0 + (obj_button_off), 415.0, 50.0, 50.0, objects.get(&2).unwrap(), 10, false);
@@ -455,6 +461,7 @@ async fn main() {
                 build_tab_button.update(&rl, delta_time);
                 edit_tab_button.update(&rl, delta_time);
                 delete_tab_button.update(&rl, delta_time);
+                level_options_button.update(&rl, delta_time);
                 obj1_button.update(&rl, delta_time);
                 obj2_button.update(&rl, delta_time);
                 obj3_button.update(&rl, delta_time);
@@ -505,6 +512,10 @@ async fn main() {
                     // let obj_y = snapped_y;
                     object_grid.push(ObjectStruct { y:snapped_y, x:snapped_x, id:current_object });
                 }
+                
+                if level_options_button.is_clicked(&rl) {
+                    game_state = GameState::LevelOptions;
+                }
 
                 if active_tab == EditorTab::Edit {
                     edit_not_done_yet = true;
@@ -526,6 +537,13 @@ async fn main() {
 
                 if right_arrow_down {
                     cam_pos_x += 1;
+                }
+            }
+            GameState::LevelOptions => {
+                level_options_back.update(&rl, delta_time);
+
+                if level_options_back.is_clicked(&rl) {
+                    game_state = GameState::Editor;
                 }
             }
         }
@@ -659,6 +677,7 @@ async fn main() {
                 build_tab_button.draw(&mut d);
                 edit_tab_button.draw(&mut d);
                 delete_tab_button.draw(&mut d);
+                level_options_button.draw(&mut d);
                 
                 if edit_not_done_yet {
                     d.draw_text("Edit tab coming soon!", 270, 490, 40, Color::WHITE);
@@ -685,6 +704,11 @@ async fn main() {
 
                     d.draw_text(&format!("Object Grid: {:?}", object_grid), 10, 250, 20, Color::GREEN);
                 }
+            }
+            GameState::LevelOptions => {
+                d.clear_background(Color::WHITE);
+
+                level_options_back.draw(&mut d);
             }
         }
     }
