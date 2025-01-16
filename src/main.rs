@@ -238,7 +238,9 @@ async fn main() {
     let mut level_options_button = Button::new(675.0, 20.0, 100.0, 50.0, "Level Options", 13, false);
 
     let mut level_options_back = Button::new(20.0, 20.0, 200.0, 50.0, "Back to Editor", 24, false);
-    // let red_bg_input_btn = Button::new(0.0, 0.0, 0.0, 0.0, "red", 20, false);
+    let red_bg_slider = Button::new(470.0, 100.0, 10.0, 150.0, "", 20, false);
+    // let green_bg_slider = Button::new(550.0, 20.0, 100.0, 50.0, "", 20, false);
+    // let blue_bg_slider = Button::new(675.0, 20.0, 100.0, 50.0, "", 20, false);
     
     // Variables for the urls since tor urls are long af
     let send_requests = true;
@@ -278,7 +280,9 @@ async fn main() {
     let mut cam_pos_y = 0;
     let mut object_grid: Vec<ObjectStruct> = vec![];
     let grid_size = 40;
-    // let mut red_bg_input = 0;
+    let mut red_bg_color: u8 = 0;
+    // let mut green_bg_color: u8 = 0;
+    // let mut blue_bg_color: u8 = 0;
     
     objects.insert(1, "spike");
     objects.insert(2, "block");
@@ -547,6 +551,10 @@ async fn main() {
                 if level_options_back.is_clicked(&rl) {
                     game_state = GameState::Editor;
                 }
+
+                if red_bg_slider.is_clicked(&rl) {
+                    red_bg_color = mouse_y as u8 - 25;
+                }
             }
         }
 
@@ -708,9 +716,31 @@ async fn main() {
                 }
             }
             GameState::LevelOptions => {
-                d.clear_background(Color::WHITE);
+                d.clear_background(Color {r:0, g:0, b:75, a:255});
 
                 level_options_back.draw(&mut d);
+
+                d.draw_rectangle(425, 20, 100, 50, Color {r:255, g:0, b:0, a:255});
+                d.draw_rectangle(550, 20, 100, 50, Color {r:0, g:255, b:0, a:255});
+                d.draw_rectangle(675, 20, 100, 50, Color {r:0, g:0, b:255, a:255});
+
+                d.draw_rectangle_rounded_lines(Rectangle { x:425.0, y:20.0, width:100.0, height:50.0 }, 0.0, 4, 5.0, Color::BLACK);
+                d.draw_rectangle_rounded_lines(Rectangle { x:550.0, y:20.0, width:100.0, height:50.0 }, 0.0, 4, 5.0, Color::BLACK);
+                d.draw_rectangle_rounded_lines(Rectangle { x:675.0, y:20.0, width:100.0, height:50.0 }, 0.0, 4, 5.0, Color::BLACK);
+
+                d.draw_rectangle(470, 100, 10, 150, Color {r:255, g:0, b:0, a:255});
+                d.draw_rectangle(595, 100, 10, 150, Color {r:0, g:255, b:0, a:255});
+                d.draw_rectangle(720, 100, 10, 150, Color {r:0, g:0, b:255, a:255});
+
+                d.draw_rectangle_rounded_lines(Rectangle {x: 470.0, y: 100.0, width:10.0, height:150.0}, 0.0, 4, 5.0, Color::BLACK);
+                d.draw_rectangle_rounded_lines(Rectangle {x: 595.0, y: 100.0, width:10.0, height:150.0}, 0.0, 4, 5.0, Color::BLACK);
+                d.draw_rectangle_rounded_lines(Rectangle {x: 720.0, y: 100.0, width:10.0, height:150.0}, 0.0, 4, 5.0, Color::BLACK);
+
+                d.draw_rectangle(450, red_bg_color as i32, 50, 50, Color::WHITE);
+
+                d.draw_rectangle_rounded_lines(Rectangle {x: 450.0, y: red_bg_color as f32, width:50.0, height:50.0}, 0.0, 4, 5.0, Color::BLACK);
+
+                d.draw_text(&format!("{}", red_bg_color), 435, 25, 50, Color::BLACK);
             }
         }
     }
