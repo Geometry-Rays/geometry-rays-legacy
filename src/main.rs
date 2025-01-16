@@ -510,7 +510,9 @@ async fn main() {
                 else if grid_button.is_clicked(&rl) && active_tab == EditorTab::Build {
                     // let obj_x = snapped_x;
                     // let obj_y = snapped_y;
-                    object_grid.push(ObjectStruct { y:snapped_y, x:snapped_x, id:current_object });
+                    if !level_options_button.is_clicked(&rl) {
+                        object_grid.push(ObjectStruct { y:snapped_y, x:snapped_x, id:current_object });
+                    }
                 }
                 
                 if level_options_button.is_clicked(&rl) {
