@@ -239,8 +239,8 @@ async fn main() {
 
     let mut level_options_back = Button::new(20.0, 20.0, 200.0, 50.0, "Back to Editor", 24, false);
     let red_bg_slider = Button::new(470.0, 100.0, 10.0, 150.0, "", 20, false);
-    // let green_bg_slider = Button::new(550.0, 20.0, 100.0, 50.0, "", 20, false);
-    // let blue_bg_slider = Button::new(675.0, 20.0, 100.0, 50.0, "", 20, false);
+    let green_bg_slider = Button::new(595.0, 100.0, 10.0, 150.0, "", 20, false);
+    let blue_bg_slider = Button::new(720.0, 100.0, 10.0, 150.0, "", 20, false);
     
     // Variables for the urls since tor urls are long af
     let send_requests = true;
@@ -280,9 +280,9 @@ async fn main() {
     let mut cam_pos_y = 0;
     let mut object_grid: Vec<ObjectStruct> = vec![];
     let grid_size = 40;
-    let mut red_bg_color: u8 = 0;
-    // let mut green_bg_color: u8 = 0;
-    // let mut blue_bg_color: u8 = 0;
+    let mut red_bg_slider_pos: u8 = 75;
+    let mut green_bg_slider_pos: u8 = 75;
+    let mut blue_bg_slider_pos: u8 = 125;
     
     objects.insert(1, "spike");
     objects.insert(2, "block");
@@ -295,6 +295,10 @@ async fn main() {
     let mut obj3_button = Button::new(187.0 + (obj_button_off * 2.0), 415.0, 50.0, 50.0, objects.get(&3).unwrap(), 10, false);
     let mut obj4_button = Button::new(187.0 + (obj_button_off * 3.0), 415.0, 50.0, 50.0, objects.get(&4).unwrap(), 10, false);
 
+    let mut bg_red = red_bg_slider_pos - 75;
+    let mut bg_green = green_bg_slider_pos - 75;
+    let mut bg_blue = blue_bg_slider_pos - 75;
+
     // Color Channels
     // CC stands for Color Channel
     // 1001 is the bg
@@ -303,7 +307,7 @@ async fn main() {
     // 1004 is used by spikes and eventually blocks by default so basically obj color in gd
     // Everything before 1001 is just like in gd where you can use them for whatever you want
     // But custom color channels dont exist yet
-    let cc_1001 = Color { r:0, g:0, b:50, a:255 };
+    let mut _cc_1001 = Color { r:bg_red, g:bg_green, b:bg_blue, a:255 };
     let cc_1002 = Color { r:0, g:0, b:100, a:255 };
     let cc_1003 = Color::BLUE;
     let cc_1004 = Color::WHITE;
@@ -358,6 +362,8 @@ async fn main() {
         let snapped_cam_y = cam_pos_y - (cam_pos_y % 8);
         let snapped_x = (mouse_x / grid_size) * grid_size + (snapped_cam_x * 5);
         let snapped_y = (mouse_y / grid_size) * grid_size - (snapped_cam_y * 5);
+
+        _cc_1001 = Color { r:bg_red, g:bg_green, b:bg_blue, a:255 };
 
         // Update buttons based on game state
         match game_state {
@@ -553,7 +559,18 @@ async fn main() {
                 }
 
                 if red_bg_slider.is_clicked(&rl) {
-                    red_bg_color = mouse_y as u8 - 25;
+                    red_bg_slider_pos = mouse_y as u8 - 25;
+                    bg_red = red_bg_slider_pos - 75;
+                }
+
+                if green_bg_slider.is_clicked(&rl) {
+                    green_bg_slider_pos = mouse_y as u8 - 25;
+                    bg_green = green_bg_slider_pos - 75;
+                }
+
+                if blue_bg_slider.is_clicked(&rl) {
+                    blue_bg_slider_pos = mouse_y as u8 - 25;
+                    bg_blue = blue_bg_slider_pos - 75;
                 }
             }
         }
@@ -600,7 +617,7 @@ async fn main() {
             }
             GameState::Playing => {
                 d.clear_background(Color::WHITE);
-                d.draw_texture_ex(&game_bg, Vector2::new(0.0, -150.0), 0.0, 0.7, cc_1001);
+                d.draw_texture_ex(&game_bg, Vector2::new(0.0, -150.0), 0.0, 0.7, _cc_1001);
                 
                 d.draw_rectangle_pro(
                     player,
@@ -658,7 +675,7 @@ async fn main() {
             }
             GameState::Editor => {
                 d.clear_background(Color::WHITE);
-                d.draw_texture_ex(&game_bg, Vector2::new(0.0, -150.0), 0.0, 0.7, cc_1001);
+                d.draw_texture_ex(&game_bg, Vector2::new(0.0, -150.0), 0.0, 0.7, _cc_1001);
 
                 for i in &object_grid {
                     let object_x = i.x as f32 - cam_pos_x as f32 * 5.0;
@@ -736,11 +753,17 @@ async fn main() {
                 d.draw_rectangle_rounded_lines(Rectangle {x: 595.0, y: 100.0, width:10.0, height:150.0}, 0.0, 4, 5.0, Color::BLACK);
                 d.draw_rectangle_rounded_lines(Rectangle {x: 720.0, y: 100.0, width:10.0, height:150.0}, 0.0, 4, 5.0, Color::BLACK);
 
-                d.draw_rectangle(450, red_bg_color as i32, 50, 50, Color::WHITE);
+                d.draw_rectangle(450, red_bg_slider_pos as i32, 50, 50, Color::WHITE);
+                d.draw_rectangle(575, green_bg_slider_pos as i32, 50, 50, Color::WHITE);
+                d.draw_rectangle(700, blue_bg_slider_pos as i32, 50, 50, Color::WHITE);
 
-                d.draw_rectangle_rounded_lines(Rectangle {x: 450.0, y: red_bg_color as f32, width:50.0, height:50.0}, 0.0, 4, 5.0, Color::BLACK);
+                d.draw_rectangle_rounded_lines(Rectangle {x: 450.0, y: red_bg_slider_pos as f32, width:50.0, height:50.0}, 0.0, 4, 5.0, Color::BLACK);
+                d.draw_rectangle_rounded_lines(Rectangle {x: 575.0, y: green_bg_slider_pos as f32, width:50.0, height:50.0}, 0.0, 4, 5.0, Color::BLACK);
+                d.draw_rectangle_rounded_lines(Rectangle {x: 700.0, y: blue_bg_slider_pos as f32, width:50.0, height:50.0}, 0.0, 4, 5.0, Color::BLACK);
 
-                d.draw_text(&format!("{}", red_bg_color), 435, 25, 50, Color::BLACK);
+                d.draw_text(&format!("{}", bg_red), 435, 25, 50, Color::BLACK);
+                d.draw_text(&format!("{}", bg_green), 560, 25, 50, Color::BLACK);
+                d.draw_text(&format!("{}", bg_blue), 685, 25, 50, Color::BLACK);
             }
         }
     }
