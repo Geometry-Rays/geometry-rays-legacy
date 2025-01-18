@@ -2,6 +2,7 @@ use raylib::prelude::*;
 use rand::Rng;
 use rodio::{Decoder, OutputStream, Sink, Source};
 use std::fs::File;
+use std::fs;
 use std::io::BufReader;
 use std::process::exit;
 use webbrowser;
@@ -288,7 +289,8 @@ async fn main() {
     let mut red_bg_slider_pos: u8 = 75;
     let mut green_bg_slider_pos: u8 = 75;
     let mut blue_bg_slider_pos: u8 = 125;
-    let level_string = "version:ALPHA;name:Hi;desc:testing level loading;c1001:0,0,50;c1002:0,0,100;c1004:255,255,255;bg:1;grnd:1;;;480:320:1;440:640:2;400:960:3";
+    let level_string = fs::read_to_string("./save-data/levels/level.txt")
+        .expect("Failed to load level file");
     let parts: Vec<&str> = level_string.split(";;;").collect();
     let level_metadata = parts[0];
     let object_string = parts[1];
