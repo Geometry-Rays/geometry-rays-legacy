@@ -288,6 +288,10 @@ async fn main() {
     let mut red_bg_slider_pos: u8 = 75;
     let mut green_bg_slider_pos: u8 = 75;
     let mut blue_bg_slider_pos: u8 = 125;
+    let level_string = "version:ALPHA;name:Hi;desc:testing level loading;c1001:0,0,50;c1002:0,0,100;c1004:255,255,255;bg:1;grnd:1;;;480:320:1;440:640:2;400:960:3";
+    let parts: Vec<&str> = level_string.split(";;;").collect();
+    let level_metadata = parts[0];
+    let object_string = parts[1];
 
     let mut red_ground_slider_pos: i32 = 355;
     let mut green_ground_slider_pos: i32  = 355;
@@ -324,6 +328,39 @@ async fn main() {
     let mut _cc_1002 = Color { r:ground_red as u8, g:ground_green as u8, b:ground_blue as u8, a:255 };
     let cc_1003 = Color::BLUE;
     let cc_1004 = Color::WHITE;
+
+    let metadata_pairs: Vec<&str> = level_metadata.split(';').collect();
+    for pair in metadata_pairs {
+        let key_value: Vec<&str> = pair.split(':').collect();
+        let key = key_value[0];
+        let value = key_value[1];
+
+        if key == "version" {
+            if value != "ALPHA" {
+                println!("Level version not recognized");
+                break;
+            }
+        } else if key == "c1001" {
+            let colors: Vec<&str> = value.split(',').collect();
+
+            bg_red = colors[0].parse::<u8>().unwrap();
+            bg_green = colors[1].parse::<u8>().unwrap();
+            bg_blue = colors[2].parse::<u8>().unwrap();
+        } else if key == "c1002" {
+            let colors: Vec<&str> = value.split(',').collect();
+
+            ground_red = colors[0].parse::<i32>().unwrap();
+            ground_green = colors[1].parse::<i32>().unwrap();
+            ground_blue = colors[2].parse::<i32>().unwrap();
+        }
+    }
+
+    let object_list: Vec<&str> = object_string.split(';').collect();
+    for object in object_list {
+        let xyid: Vec<&str> = object.split(':').collect();
+
+        object_grid.push(ObjectStruct { y:xyid[0].parse::<i32>().unwrap(), x:xyid[1].parse::<i32>().unwrap(), id:xyid[2].parse::<u32>().unwrap() });
+    }
 
     // Load textures
     let game_bg = rl.load_texture(&thread, "Resources/default-bg.png")
