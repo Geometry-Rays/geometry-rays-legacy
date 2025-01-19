@@ -1,5 +1,4 @@
 use raylib::prelude::*;
-use rand::Rng;
 use rodio::{Decoder, OutputStream, Sink, Source};
 use std::fs::File;
 use std::fs;
@@ -256,7 +255,6 @@ async fn main() {
     // Variables required for the game to work
     let mut game_state = GameState::Menu;
     let mut player = Rectangle::new(200.0, 500.0, 40.0, 40.0);
-    let mut obstacles = vec![generate_spike(800.0), generate_spike(1100.0)];
     let mut velocity_y = 0.0;
     let gravity = 0.8;
     let jump_force = -15.0;
@@ -436,7 +434,6 @@ async fn main() {
                     game_state = GameState::Playing;
                     player.y = 500.0;
                     world_offset = 0.0;
-                    obstacles = vec![generate_spike(800.0), generate_spike(1100.0)];
                     rotation = 0.0;
                 }
 
@@ -469,26 +466,26 @@ async fn main() {
                     rotation += 5.0;
                 }
                 
-                for obstacle in &obstacles {
-                    let actual_x = obstacle.x + world_offset;
-                    if check_collision_triangle_rectangle(
-                        actual_x,
-                        obstacle.y,
-                        actual_x + 50.0,
-                        obstacle.y + 50.0,
-                        actual_x + 50.0,
-                        obstacle.y,
-                        player,
-                    ) {
-                        game_state = GameState::GameOver;
-                    }
-                }
+                // for obstacle in &obstacles {
+                //     let actual_x = obstacle.x + world_offset;
+                //     if check_collision_triangle_rectangle(
+                //         actual_x,
+                //         obstacle.y,
+                //         actual_x + 50.0,
+                //         obstacle.y + 50.0,
+                //         actual_x + 50.0,
+                //         obstacle.y,
+                //         player,
+                //     ) {
+                //         game_state = GameState::GameOver;
+                //     }
+                // }
                 
-                for obstacle in obstacles.iter_mut() {
-                    if obstacle.x + world_offset < -50.0 {
-                        obstacle.x = 800.0 + rand::thread_rng().gen_range(100.0..400.0);
-                    }
-                }
+                // for obstacle in obstacles.iter_mut() {
+                //     if obstacle.x + world_offset < -50.0 {
+                //         obstacle.x = 800.0 + rand::thread_rng().gen_range(100.0..400.0);
+                //     }
+                // }
             }
             GameState::GameOver => {
                 restart_button.update(&rl, delta_time);
@@ -711,11 +708,17 @@ async fn main() {
                     );
                 }
 
-                // Draw obstacles
-                for obstacle in &obstacles {
-                    let actual_x = obstacle.x + world_offset;
-                    d.draw_texture_ex(&texture_ids.get(&1).unwrap(), Vector2::new(actual_x, 480.0), 0.0, 0.05, cc_1004);
+                for i in &object_grid {
+                    let object_x = i.x as f32 + world_offset as f32;
+                    let object_y = i.y as f32 + 0 as f32;
+                    d.draw_texture_ex(&texture_ids.get(&i.id).unwrap(), Vector2::new(object_x, object_y), 0.0, 0.05, cc_1004);
                 }
+
+                // Draw obstacles (old)
+                // for obstacle in &obstacles {
+                //     let actual_x = obstacle.x + world_offset;
+                //     d.draw_texture_ex(&texture_ids.get(&1).unwrap(), Vector2::new(actual_x, 480.0), 0.0, 0.05, cc_1004);
+                // }
 
                 d.draw_text(&format!("Attempt: {}", attempt), 10, 10, 20, Color::WHITE);
 
@@ -870,34 +873,4 @@ async fn main() {
             }
         }
     }
-}
-
-fn generate_spike(x: f32) -> Rectangle {
-    Rectangle::new(x, 470.0, 50.0, 50.0)
-}
-
-fn check_collision_triangle_rectangle(
-    x1: f32, y1: f32, x2: f32, y2: f32, x3: f32, y3: f32, rect: Rectangle,
-) -> bool {
-    let rect_points = [
-        (rect.x, rect.y),
-        (rect.x + rect.width, rect.y),
-        (rect.x, rect.y + rect.height),
-        (rect.x + rect.width, rect.y + rect.height),
-    ];
-
-    for (rx, ry) in rect_points.iter() {
-        if point_in_triangle(*rx, *ry, x1, y1, x2, y2, x3, y3) {
-            return true;
-        }
-    }
-    false
-}
-
-fn point_in_triangle(px: f32, py: f32, x1: f32, y1: f32, x2: f32, y2: f32, x3: f32, y3: f32) -> bool {
-    let area_orig = ((x2 - x1) * (y3 - y1) - (x3 - x1) * (y2 - y1)).abs();
-    let area1 = ((x1 - px) * (y2 - py) - (x2 - px) * (y1 - py)).abs();
-    let area2 = ((x2 - px) * (y3 - py) - (x3 - px) * (y2 - py)).abs();
-    let area3 = ((x3 - px) * (y1 - py) - (x1 - px) * (y3 - py)).abs();
-    (area1 + area2 + area3 - area_orig).abs() < 0.01
 }
