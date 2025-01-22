@@ -216,6 +216,8 @@ async fn main() {
         .expect("Failed to load spike texture");
     let null_texture = rl.load_texture(&thread, "Resources/null.png")
         .expect("Failed to load null texture");
+    let pad_texture = rl.load_texture(&thread, "Resources/pad.png")
+        .expect("Failed to load orb texture");
     let orb_texture = rl.load_texture(&thread, "Resources/orb.png")
         .expect("Failed to load orb texture");
 
@@ -272,7 +274,7 @@ async fn main() {
     
     texture_ids.insert(1, &spike_texture);
     texture_ids.insert(2, &null_texture);
-    texture_ids.insert(3, &null_texture);
+    texture_ids.insert(3, &pad_texture);
     texture_ids.insert(4, &orb_texture);
     
     // Variables for editor stuff
