@@ -246,7 +246,7 @@ async fn main() {
     let red_ground_slider = Button::new(470.0, 380.0, 10.0, 150.0, "", 20, false);
     let green_ground_slider = Button::new(595.0, 380.0, 10.0, 150.0, "", 20, false);
     let blue_ground_slider = Button::new(720.0, 380.0, 10.0, 150.0, "", 20, false);
-    
+
     // Variables for the urls since tor urls are long af
     let send_requests = true;
     let tor_url = "http://georays.yuoqw7ywmixj55zxljkhqvcwunovze32df7pqemwacfaq2itqefbixad.onion/php-code/".to_string();
@@ -268,6 +268,7 @@ async fn main() {
     let mut not_done_yet_text = false;
     let mut show_debug_text = false;
     let mut texture_ids: HashMap<u32, &Texture2D> = HashMap::new();
+    let mut kill_player: bool = false;
     
     texture_ids.insert(1, &spike_texture);
     texture_ids.insert(2, &null_texture);
@@ -448,6 +449,10 @@ async fn main() {
                 sink.play();
             }
             GameState::Playing => {
+                if kill_player == true {
+                    kill_player = false;
+                }
+
                 if is_on_ground && (space_down || mouse_down) {
                     velocity_y = jump_force;
                     is_on_ground = false;
@@ -486,6 +491,21 @@ async fn main() {
                 //         obstacle.x = 800.0 + rand::thread_rng().gen_range(100.0..400.0);
                 //     }
                 // }
+
+                for object in &object_grid {
+                    if object.id == 1 {
+                        kill_player |= player.check_collision_recs(&Rectangle {
+                            x: object.x as f32 + world_offset + 20.0,
+                            y: object.y as f32 + 20.0,
+                            width: 10.0,
+                            height: 20.0
+                        });
+                    }
+                }
+
+                if kill_player {
+                    game_state = GameState::GameOver;
+                }
             }
             GameState::GameOver => {
                 restart_button.update(&rl, delta_time);
@@ -719,6 +739,20 @@ async fn main() {
                 //     let actual_x = obstacle.x + world_offset;
                 //     d.draw_texture_ex(&texture_ids.get(&1).unwrap(), Vector2::new(actual_x, 480.0), 0.0, 0.05, cc_1004);
                 // }
+
+                if show_debug_text {
+                    for object in &object_grid {
+                        if object.id == 1 {
+                            d.draw_rectangle_lines(
+                                object.x + world_offset as i32 + 15,
+                                object.y + 10,
+                                10,
+                                20,
+                                Color::RED
+                            );
+                        }
+                    }
+                }
 
                 d.draw_text(&format!("Attempt: {}", attempt), 10, 10, 20, Color::WHITE);
 
