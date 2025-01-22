@@ -800,15 +800,15 @@ async fn main() {
                 for i in 0..6 {
                     d.draw_texture_ex(
                         &ground_texture,
-                        Vector2::new(i as f32 * 150.0, cam_pos_y as f32 * 5.0 + 535.0),
+                        Vector2::new(i as f32 * 150.0, cam_pos_y as f32 * 5.0 + 520.0),
                         0.0,
                         0.2,
                         _cc_1002,
                     );
                 }
 
-                d.draw_rectangle_gradient_v(0, cam_pos_y * 5 + 595, 800, 100, Color { r:0, g:0, b:0, a:0 } , Color::BLACK);
-                d.draw_rectangle(0, cam_pos_y * 5 + 695, 800, 500, Color::BLACK);
+                d.draw_rectangle_gradient_v(0, cam_pos_y * 5 + 590, 800, 100, Color { r:0, g:0, b:0, a:0 } , Color::BLACK);
+                d.draw_rectangle(0, cam_pos_y * 5 + 690, 800, 500, Color::BLACK);
 
                 d.draw_rectangle(0, 400, 800, 200, Color { r:30, g:30, b:30, a:100 });
 
