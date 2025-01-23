@@ -16,6 +16,7 @@
 
 # Socials
  Discord: https://discord.gg/XV9Qsvmbfj
+ 
  Website: http://georays.yuoqw7ywmixj55zxljkhqvcwunovze32df7pqemwacfaq2itqefbixad.onion
 
 # Why is the website a tor website?
