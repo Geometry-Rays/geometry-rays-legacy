@@ -250,7 +250,7 @@ async fn main() {
     let blue_ground_slider = Button::new(720.0, 380.0, 10.0, 150.0, "", 20, false);
 
     // Variables for the urls since tor urls are long af
-    let send_requests = true;
+    let send_requests = false;
     let tor_url = "http://georays.yuoqw7ywmixj55zxljkhqvcwunovze32df7pqemwacfaq2itqefbixad.onion/php-code/".to_string();
     let latest_version_url: String = format!("{}get-latest-version.php", tor_url).to_string();
     
@@ -503,6 +503,27 @@ async fn main() {
                             width: 10.0,
                             height: 20.0
                         });
+                    }
+
+                    if object.id == 2 {
+                        kill_player |= player.check_collision_recs(&Rectangle {
+                            x: object.x as f32 + world_offset,
+                            y: object.y as f32 + 20.0,
+                            width: 3.0,
+                            height: 20.0
+                        });
+
+                        if player.check_collision_recs(&Rectangle {
+                            x: object.x as f32 + world_offset + 30.0,
+                            y: object.y as f32,
+                            width: 10.0,
+                            height: 3.0
+                        }) {
+                            player.y = object.y as f32 - 21.0;
+                            velocity_y = 0.0;
+                            is_on_ground = true;
+                            rotation = 0.0;
+                        }
                     }
 
                     if object.id == 3 {
@@ -778,6 +799,24 @@ async fn main() {
                                 10,
                                 20,
                                 Color::RED
+                            );
+                        }
+
+                        if object.id == 2 {
+                            d.draw_rectangle_lines(
+                                object.x + world_offset as i32,
+                                object.y + 20,
+                                3,
+                                20,
+                                Color::RED
+                            );
+
+                            d.draw_rectangle_lines(
+                                object.x + world_offset as i32 + 30,
+                                object.y,
+                                10,
+                                3,
+                                Color::BLUEVIOLET
                             );
                         }
 
