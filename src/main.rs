@@ -271,6 +271,7 @@ async fn main() {
     let mut show_debug_text = false;
     let mut texture_ids: HashMap<u32, &Texture2D> = HashMap::new();
     let mut kill_player: bool = false;
+    let mut on_orb: bool = false;
     
     texture_ids.insert(1, &spike_texture);
     texture_ids.insert(2, &null_texture);
@@ -512,6 +513,21 @@ async fn main() {
                             height: 5.0
                         }) {
                             velocity_y = -15.0;
+                        }
+                    }
+
+                    if object.id == 4 {
+                        if player.check_collision_recs(&Rectangle {
+                            x: object.x as f32 + world_offset,
+                            y: object.y as f32,
+                            width: 40.0,
+                            height: 40.0
+                        }) {
+                            on_orb = true;
+                            if on_orb && mouse_down {
+                                velocity_y = -13.0;
+                                on_orb = false
+                            }
                         }
                     }
                 }
@@ -774,6 +790,16 @@ async fn main() {
                                 Color::TEAL
                             );
                         }
+
+                        if object.id == 4 {
+                            d.draw_rectangle_lines(
+                                object.x + world_offset as i32,
+                                object.y,
+                                40,
+                                40,
+                                Color::TEAL
+                            );
+                        }
                     }
                 }
 
@@ -930,4 +956,7 @@ async fn main() {
             }
         }
     }
+
+    // Print statements to make unused variable warnings go away because rust is stupid
+    println!("{}", on_orb);
 }
