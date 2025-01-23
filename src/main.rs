@@ -214,7 +214,7 @@ async fn main() {
     // Loading the textures for objects here so that they can be referenced in texture_ids
     let spike_texture = rl.load_texture(&thread, "Resources/spike.png")
         .expect("Failed to load spike texture");
-    let null_texture = rl.load_texture(&thread, "Resources/null.png")
+    let block_texture = rl.load_texture(&thread, "Resources/block.png")
         .expect("Failed to load null texture");
     let pad_texture = rl.load_texture(&thread, "Resources/pad.png")
         .expect("Failed to load orb texture");
@@ -274,7 +274,7 @@ async fn main() {
     let mut on_orb: bool = false;
     
     texture_ids.insert(1, &spike_texture);
-    texture_ids.insert(2, &null_texture);
+    texture_ids.insert(2, &block_texture);
     texture_ids.insert(3, &pad_texture);
     texture_ids.insert(4, &orb_texture);
     
