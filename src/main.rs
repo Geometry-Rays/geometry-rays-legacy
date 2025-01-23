@@ -328,8 +328,8 @@ async fn main() {
     // 1004 is used by spikes and eventually blocks by default so basically obj color in gd
     // Everything before 1001 is just like in gd where you can use them for whatever you want
     // But custom color channels dont exist yet
-    let mut _cc_1001 = Color { r:bg_red, g:bg_green, b:bg_blue, a:255 };
-    let mut _cc_1002 = Color { r:ground_red as u8, g:ground_green as u8, b:ground_blue as u8, a:255 };
+    let mut cc_1001 = Color { r:bg_red, g:bg_green, b:bg_blue, a:255 };
+    let mut cc_1002 = Color { r:ground_red as u8, g:ground_green as u8, b:ground_blue as u8, a:255 };
     let cc_1003 = Color::BLUE;
     let cc_1004 = Color::WHITE;
 
@@ -417,8 +417,8 @@ async fn main() {
         let snapped_x = (mouse_x / grid_size) * grid_size + (snapped_cam_x * 5);
         let snapped_y = (mouse_y / grid_size) * grid_size - (snapped_cam_y * 5);
 
-        _cc_1001 = Color { r:bg_red, g:bg_green, b:bg_blue, a:255 };
-        _cc_1002 = Color { r:ground_red as u8, g:ground_green as u8, b:ground_blue as u8, a:255 };
+        cc_1001 = Color { r:bg_red, g:bg_green, b:bg_blue, a:255 };
+        cc_1002 = Color { r:ground_red as u8, g:ground_green as u8, b:ground_blue as u8, a:255 };
 
         // Update buttons based on game state
         match game_state {
@@ -737,7 +737,7 @@ async fn main() {
             }
             GameState::Playing => {
                 d.clear_background(Color::WHITE);
-                d.draw_texture_ex(&game_bg, Vector2::new(0.0, -150.0), 0.0, 0.7, _cc_1001);
+                d.draw_texture_ex(&game_bg, Vector2::new(0.0, -150.0), 0.0, 0.7, cc_1001);
                 
                 d.draw_rectangle_pro(
                     player,
@@ -753,7 +753,7 @@ async fn main() {
                         Vector2::new(i as f32 * 150.0, 520.0),
                         0.0,
                         0.2,
-                        _cc_1002,
+                        cc_1002,
                     );
                 }
 
@@ -835,7 +835,7 @@ async fn main() {
             }
             GameState::Editor => {
                 d.clear_background(Color::WHITE);
-                d.draw_texture_ex(&game_bg, Vector2::new(0.0, -150.0), 0.0, 0.7, _cc_1001);
+                d.draw_texture_ex(&game_bg, Vector2::new(0.0, -150.0), 0.0, 0.7, cc_1001);
 
                 for i in &object_grid {
                     let object_x = i.x as f32 - cam_pos_x as f32 * 5.0;
@@ -850,7 +850,7 @@ async fn main() {
                         Vector2::new(i as f32 * 150.0, cam_pos_y as f32 * 5.0 + 520.0),
                         0.0,
                         0.2,
-                        _cc_1002,
+                        cc_1002,
                     );
                 }
 
@@ -959,4 +959,6 @@ async fn main() {
 
     // Print statements to make unused variable warnings go away because rust is stupid
     println!("{}", on_orb);
+    println!("{:?}", cc_1001);
+    println!("{:?}", cc_1002);
 }
