@@ -220,6 +220,8 @@ async fn main() {
         .expect("Failed to load orb texture");
     let orb_texture = rl.load_texture(&thread, "Resources/orb.png")
         .expect("Failed to load orb texture");
+    let null_texture = rl.load_texture(&thread, "Resources/null.png")
+        .expect("Failed to load null texture");
 
     // Create main menu buttons
     let mut play_button = Button::new(300.0, 250.0, 200.0, 50.0, "Play", 24, false);
@@ -277,7 +279,8 @@ async fn main() {
     texture_ids.insert(2, &block_texture);
     texture_ids.insert(3, &pad_texture);
     texture_ids.insert(4, &orb_texture);
-    
+    texture_ids.insert(5, &null_texture);
+
     // Variables for editor stuff
     let mut active_tab = EditorTab::Build;
     let mut edit_not_done_yet = false;
@@ -305,12 +308,14 @@ async fn main() {
     objects.insert(2, "block");
     objects.insert(3, "pad");
     objects.insert(4, "orb");
-    
+    objects.insert(5, "upside down portal");
+
     let obj_button_off = 65.0;
     let mut obj1_button = Button::new(187.0, 415.0, 50.0, 50.0, objects.get(&1).unwrap(), 10, false);
     let mut obj2_button = Button::new(187.0 + (obj_button_off), 415.0, 50.0, 50.0, objects.get(&2).unwrap(), 10, false);
     let mut obj3_button = Button::new(187.0 + (obj_button_off * 2.0), 415.0, 50.0, 50.0, objects.get(&3).unwrap(), 10, false);
     let mut obj4_button = Button::new(187.0 + (obj_button_off * 3.0), 415.0, 50.0, 50.0, objects.get(&4).unwrap(), 10, false);
+    let mut obj5_button = Button::new(187.0 + (obj_button_off * 4.0), 415.0, 50.0, 50.0, objects.get(&5).unwrap(), 10, false);
 
     let mut bg_red = red_bg_slider_pos - 75;
     let mut bg_green = green_bg_slider_pos - 75;
@@ -597,6 +602,7 @@ async fn main() {
                 obj2_button.update(&rl, delta_time);
                 obj3_button.update(&rl, delta_time);
                 obj4_button.update(&rl, delta_time);
+                obj5_button.update(&rl, delta_time);
 
                 if build_tab_button.is_clicked(&rl) {
                     active_tab = EditorTab::Build;
@@ -636,6 +642,10 @@ async fn main() {
 
                 else if obj4_button.is_clicked(&rl) && active_tab == EditorTab::Build {
                     current_object = 4 + _advanced_page_number;
+                }
+
+                else if obj5_button.is_clicked(&rl) && active_tab == EditorTab::Build {
+                    current_object = 5 + _advanced_page_number;
                 }
 
                 else if grid_button.is_clicked(&rl) && active_tab == EditorTab::Build {
@@ -917,6 +927,7 @@ async fn main() {
                     obj2_button.draw(&mut d);
                     obj3_button.draw(&mut d);
                     obj4_button.draw(&mut d);
+                    obj5_button.draw(&mut d);
                 }
 
                 d.draw_text(&format!("Selected Object: {}", objects.get(&current_object).unwrap()), 10, 10, 20, Color::WHITE);
