@@ -259,7 +259,7 @@ async fn main() {
     let mut player = Rectangle::new(200.0, 500.0, 40.0, 40.0);
     let mut velocity_y = 0.0;
     let gravity = 0.8;
-    let jump_force = -15.0;
+    let jump_force = -13.0;
     let mut is_on_ground = true;
     let mut world_offset = 0.0;
     let movement_speed = 6.0;
