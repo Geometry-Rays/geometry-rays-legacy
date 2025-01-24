@@ -460,6 +460,9 @@ async fn main() {
                     show_debug_text = true;
                 }
 
+                gravity = 0.8;
+                jump_force = -13.0;
+
                 sink.play();
             }
             GameState::Playing => {
