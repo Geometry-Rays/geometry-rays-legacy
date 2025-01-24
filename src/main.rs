@@ -303,6 +303,7 @@ async fn main() {
     let parts: Vec<&str> = level_string.split(";;;").collect();
     let level_metadata = parts[0];
     let object_string = parts[1];
+    let mut been_to_editor: bool = false;
 
     let mut red_ground_slider_pos: i32 = 355;
     let mut green_ground_slider_pos: i32  = 355;
@@ -343,39 +344,6 @@ async fn main() {
     let mut cc_1002 = Color { r:ground_red as u8, g:ground_green as u8, b:ground_blue as u8, a:255 };
     let cc_1003 = Color::BLUE;
     let cc_1004 = Color::WHITE;
-
-    let metadata_pairs: Vec<&str> = level_metadata.split(';').collect();
-    for pair in metadata_pairs {
-        let key_value: Vec<&str> = pair.split(':').collect();
-        let key = key_value[0];
-        let value = key_value[1];
-
-        if key == "version" {
-            if value != "ALPHA" {
-                println!("Level version not recognized");
-                break;
-            }
-        } else if key == "c1001" {
-            let colors: Vec<&str> = value.split(',').collect();
-
-            bg_red = colors[0].parse::<u8>().unwrap();
-            bg_green = colors[1].parse::<u8>().unwrap();
-            bg_blue = colors[2].parse::<u8>().unwrap();
-        } else if key == "c1002" {
-            let colors: Vec<&str> = value.split(',').collect();
-
-            ground_red = colors[0].parse::<i32>().unwrap();
-            ground_green = colors[1].parse::<i32>().unwrap();
-            ground_blue = colors[2].parse::<i32>().unwrap();
-        }
-    }
-
-    let object_list: Vec<&str> = object_string.split(';').collect();
-    for object in object_list {
-        let xyid: Vec<&str> = object.split(':').collect();
-
-        object_grid.push(ObjectStruct { y:xyid[0].parse::<i32>().unwrap(), x:xyid[1].parse::<i32>().unwrap(), id:xyid[2].parse::<u32>().unwrap() });
-    }
 
     // Load textures
     let game_bg = rl.load_texture(&thread, "Resources/default-bg.png")
@@ -627,6 +595,39 @@ async fn main() {
                 }
 
                 if create_button.is_clicked(&rl) {
+                    let metadata_pairs: Vec<&str> = level_metadata.split(';').collect();
+                    for pair in metadata_pairs {
+                        let key_value: Vec<&str> = pair.split(':').collect();
+                        let key = key_value[0];
+                        let value = key_value[1];
+                
+                        if key == "version" {
+                            if value != "ALPHA" {
+                                println!("Level version not recognized");
+                                break;
+                            }
+                        } else if key == "c1001" {
+                            let colors: Vec<&str> = value.split(',').collect();
+                
+                            bg_red = colors[0].parse::<u8>().unwrap();
+                            bg_green = colors[1].parse::<u8>().unwrap();
+                            bg_blue = colors[2].parse::<u8>().unwrap();
+                        } else if key == "c1002" {
+                            let colors: Vec<&str> = value.split(',').collect();
+                
+                            ground_red = colors[0].parse::<i32>().unwrap();
+                            ground_green = colors[1].parse::<i32>().unwrap();
+                            ground_blue = colors[2].parse::<i32>().unwrap();
+                        }
+                    }
+                
+                    let object_list: Vec<&str> = object_string.split(';').collect();
+                    for object in object_list {
+                        let xyid: Vec<&str> = object.split(':').collect();
+                
+                        object_grid.push(ObjectStruct { y:xyid[0].parse::<i32>().unwrap(), x:xyid[1].parse::<i32>().unwrap(), id:xyid[2].parse::<u32>().unwrap() });
+                    }
+
                     game_state = GameState::Editor;
                 }
 
@@ -736,6 +737,8 @@ async fn main() {
                 if editor_back.is_clicked(&rl) {
                     game_state = GameState::CreatorMenu;
                 }
+
+                been_to_editor = true;
             }
             GameState::LevelOptions => {
                 level_options_back.update(&rl, delta_time);
@@ -1077,27 +1080,29 @@ async fn main() {
         }
     }
 
-    level_string = format!(
-        "version:ALPHA;name:hi;desc:testing level loading;c1001:{},{},{};c1002:{},{},{};c1004:255,255,255;bg:1;grnd:1;;;",
+    if been_to_editor {
+        level_string = format!(
+            "version:ALPHA;name:hi;desc:testing level loading;c1001:{},{},{};c1002:{},{},{};c1004:255,255,255;bg:1;grnd:1;;;",
 
-        bg_red,
-        bg_green,
-        bg_blue,
+            bg_red,
+            bg_green,
+            bg_blue,
 
-        ground_red,
-        ground_green,
-        ground_blue
-    ).to_string();
+            ground_red,
+            ground_green,
+            ground_blue
+        ).to_string();
 
-    for object in object_grid {
-        level_string.push_str( &format!("{}:{}:{};", object.y, object.x, object.id));
+        for object in object_grid {
+            level_string.push_str( &format!("{}:{}:{};", object.y, object.x, object.id));
+        }
+
+        level_string.pop();
+
+        let write_result = fs::write("./save-data/levels/level.txt", level_string);
+
+        println!("{:?}", write_result);
     }
-
-    level_string.pop();
-
-    let write_result = fs::write("./save-data/levels/level.txt", level_string);
-
-    println!("{:?}", write_result);
 
     // Print statements to make unused variable warnings go away because rust is stupid
     println!("{}", on_orb);
