@@ -261,6 +261,7 @@ async fn main() {
     // Variables required for the game to work
     let mut game_state = GameState::Menu;
     let mut player = Rectangle::new(200.0, 500.0, 40.0, 40.0);
+    let mut small_player = player;
     let mut velocity_y = 0.0;
     let mut gravity = 0.8;
     let mut jump_force = -13.0;
@@ -505,6 +506,12 @@ async fn main() {
                 //     }
                 // }
 
+                small_player = player;
+                small_player.x = player.x - 10.0;
+                small_player.y = player.y - 10.0;
+                small_player.width = 20.0;
+                small_player.height = 20.0;
+
                 for object in &object_grid {
                     if object.id == 1 {
                         kill_player |= player.check_collision_recs(&Rectangle {
@@ -516,7 +523,7 @@ async fn main() {
                     }
 
                     if object.id == 2 {
-                        kill_player |= player.check_collision_recs(&Rectangle {
+                        kill_player |= small_player.check_collision_recs(&Rectangle {
                             x: object.x as f32 + world_offset,
                             y: object.y as f32 + 20.0,
                             width: 3.0,
@@ -899,6 +906,14 @@ async fn main() {
                             );
                         }
                     }
+
+                    d.draw_rectangle_lines(
+                        small_player.x as i32,
+                        small_player.y as i32,
+                        small_player.width as i32,
+                        small_player.height as i32,
+                        Color::YELLOW
+                    );
                 }
 
                 d.draw_text(&format!("Attempt: {}", attempt), 10, 10, 20, Color::WHITE);
