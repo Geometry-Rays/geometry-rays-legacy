@@ -262,8 +262,8 @@ async fn main() {
     let mut game_state = GameState::Menu;
     let mut player = Rectangle::new(200.0, 500.0, 40.0, 40.0);
     let mut velocity_y = 0.0;
-    let gravity = 0.8;
-    let jump_force = -13.0;
+    let mut gravity = 0.8;
+    let mut jump_force = -13.0;
     let mut is_on_ground = true;
     let mut world_offset = 0.0;
     let movement_speed = 6.0;
@@ -561,6 +561,23 @@ async fn main() {
                             }
                         }
                     }
+
+                    if object.id == 5 || object.id == 6 {
+                        if player.check_collision_recs(&Rectangle {
+                            x: object.x as f32 + world_offset + 10.0,
+                            y: object.y as f32 + 11.0,
+                            width: 20.0,
+                            height: 80.0
+                        }) {
+                            if object.id == 5 {
+                                jump_force = 13.0;
+                                gravity = -0.8;
+                            } else {
+                                jump_force = -13.0;
+                                gravity = 0.8;
+                            }
+                        }
+                    }
                 }
 
                 if kill_player {
@@ -744,7 +761,7 @@ async fn main() {
                 d.draw_texture_ex(&menu_bg, Vector2::new(-200.0, -250.0), 0.0, 0.8, Color { r:50, g:50, b:50, a:255 });
 
                 d.draw_text("Geometry Rays", 220, 150, 50, Color::WHITE);
-                
+
                 play_button.draw(&mut d);
                 editor_button.draw(&mut d);
 
@@ -856,6 +873,16 @@ async fn main() {
                                 object.y,
                                 40,
                                 40,
+                                Color::TEAL
+                            );
+                        }
+
+                        if object.id == 5 || object.id == 6 {
+                            d.draw_rectangle_lines(
+                                object.x + world_offset as i32 + 10,
+                                object.y + 11,
+                                20,
+                                80,
                                 Color::TEAL
                             );
                         }
