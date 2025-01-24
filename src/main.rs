@@ -257,7 +257,7 @@ async fn main() {
     let send_requests = false;
     let tor_url = "http://georays.yuoqw7ywmixj55zxljkhqvcwunovze32df7pqemwacfaq2itqefbixad.onion/php-code/".to_string();
     let latest_version_url: String = format!("{}get-latest-version.php", tor_url).to_string();
-    
+
     // Variables required for the game to work
     let mut game_state = GameState::Menu;
     let mut player = Rectangle::new(200.0, 500.0, 40.0, 40.0);
@@ -307,7 +307,7 @@ async fn main() {
     let mut red_ground_slider_pos: i32 = 355;
     let mut green_ground_slider_pos: i32  = 355;
     let mut blue_ground_slider_pos: i32 = 455;
-    
+
     objects.insert(1, "spike");
     objects.insert(2, "block");
     objects.insert(3, "pad");
@@ -484,7 +484,7 @@ async fn main() {
                 } else {
                     rotation += 5.0;
                 }
-                
+
                 // for obstacle in &obstacles {
                 //     let actual_x = obstacle.x + world_offset;
                 //     if check_collision_triangle_rectangle(
@@ -605,7 +605,7 @@ async fn main() {
             }
             GameState::GameOver => {
                 restart_button.update(&rl, delta_time);
-                
+
                 if restart_button.is_clicked(&rl) {
                     game_state = GameState::Menu;
                     attempt += 1;
