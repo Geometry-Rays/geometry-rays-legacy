@@ -1073,6 +1073,8 @@ async fn main() {
         level_string.push_str( &format!("{}:{}:{};", object.y, object.x, object.id));
     }
 
+    level_string.pop();
+
     let write_result = fs::write("./save-data/levels/level.txt", level_string);
 
     println!("{:?}", write_result);
