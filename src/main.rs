@@ -422,10 +422,10 @@ async fn main() {
 
         let mouse_x = rl.get_mouse_x();
         let mouse_y = rl.get_mouse_y();
-        let snapped_cam_x = cam_pos_x - (cam_pos_x % 8);
-        let snapped_cam_y = cam_pos_y - (cam_pos_y % 8);
-        let snapped_x = (mouse_x / grid_size) * grid_size + (snapped_cam_x * 5);
-        let snapped_y = (mouse_y / grid_size) * grid_size - (snapped_cam_y * 5);
+        let snapped_cam_x = cam_pos_x as i32;
+        let snapped_cam_y = cam_pos_y as i32;
+        let snapped_x = ((mouse_x + (snapped_cam_x * 5)) / grid_size) * grid_size;
+        let snapped_y = ((mouse_y - (snapped_cam_y * 5)) / grid_size) * grid_size;
 
         cc_1001 = Color { r:bg_red, g:bg_green, b:bg_blue, a:255 };
         cc_1002 = Color { r:ground_red as u8, g:ground_green as u8, b:ground_blue as u8, a:255 };
