@@ -536,14 +536,16 @@ async fn main() {
                             width: 10.0,
                             height: 61.0
                         }) {
-                            if gravity > 0.0 {
-                                player.y = object.y as f32 - 21.0;
-                            } else {
-                                player.y = object.y as f32 + 61.0;
-                            }
-                            velocity_y = 0.0;
                             is_on_ground = true;
                             rotation = 0.0;
+                            if !mouse_down {
+                                if gravity > 0.0 {
+                                    player.y = object.y as f32 - 21.0;
+                                } else {
+                                    player.y = object.y as f32 + 61.0;
+                                }
+                                velocity_y = 0.0;
+                            }
                         }
                     }
 
