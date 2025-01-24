@@ -320,7 +320,7 @@ async fn main() {
     let mut obj3_button = Button::new(187.0 + (obj_button_off * 2.0), 415.0, 50.0, 50.0, objects.get(&3).unwrap(), 10, false);
     let mut obj4_button = Button::new(187.0 + (obj_button_off * 3.0), 415.0, 50.0, 50.0, objects.get(&4).unwrap(), 10, false);
     let mut obj5_button = Button::new(187.0 + (obj_button_off * 4.0), 415.0, 50.0, 50.0, objects.get(&5).unwrap(), 10, false);
-    let mut obj6_button = Button::new(187.0 + (obj_button_off * 5.0), 415.0, 50.0, 50.0, objects.get(&5).unwrap(), 10, false);
+    let mut obj6_button = Button::new(187.0 + (obj_button_off * 5.0), 415.0, 50.0, 50.0, objects.get(&6).unwrap(), 10, false);
 
     let mut bg_red = red_bg_slider_pos - 75;
     let mut bg_green = green_bg_slider_pos - 75;
