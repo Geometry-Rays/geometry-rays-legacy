@@ -527,9 +527,13 @@ async fn main() {
                             x: object.x as f32 + world_offset + 30.0,
                             y: object.y as f32,
                             width: 10.0,
-                            height: 3.0
+                            height: 61.0
                         }) {
-                            player.y = object.y as f32 - 21.0;
+                            if gravity > 0.0 {
+                                player.y = object.y as f32 - 21.0;
+                            } else {
+                                player.y = object.y as f32 + 61.0;
+                            }
                             velocity_y = 0.0;
                             is_on_ground = true;
                             rotation = 0.0;
