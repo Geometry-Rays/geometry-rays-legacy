@@ -297,7 +297,7 @@ async fn main() {
     let mut red_bg_slider_pos: u8 = 75;
     let mut green_bg_slider_pos: u8 = 75;
     let mut blue_bg_slider_pos: u8 = 125;
-    let level_string = fs::read_to_string("./save-data/levels/level.txt")
+    let mut level_string = fs::read_to_string("./save-data/levels/level.txt")
         .expect("Failed to load level file");
     let parts: Vec<&str> = level_string.split(";;;").collect();
     let level_metadata = parts[0];
@@ -1056,6 +1056,26 @@ async fn main() {
             }
         }
     }
+
+    level_string = format!(
+        "version:ALPHA;name:hi;desc:testing level loading;c1001:{},{},{};c1002:{},{},{};c1004:255,255,255;bg:1;grnd:1;;;",
+
+        bg_red,
+        bg_green,
+        bg_blue,
+
+        ground_red,
+        ground_green,
+        ground_blue
+    ).to_string();
+
+    for object in object_grid {
+        level_string.push_str( &format!("{}:{}:{};", object.y, object.x, object.id));
+    }
+
+    let write_result = fs::write("./save-data/levels/level.txt", level_string);
+
+    println!("{:?}", write_result);
 
     // Print statements to make unused variable warnings go away because rust is stupid
     println!("{}", on_orb);
