@@ -604,6 +604,10 @@ async fn main() {
                 if kill_player {
                     game_state = GameState::GameOver;
                 }
+
+                if rl.is_key_pressed(KeyboardKey::KEY_B) {
+                    game_state = GameState::LevelSelect;
+                }
             }
             GameState::GameOver => {
                 restart_button.update(&rl, delta_time);
@@ -867,6 +871,10 @@ async fn main() {
                     sink.play();
 
                     game_state = GameState::Playing;
+                }
+
+                if rl.is_key_pressed(KeyboardKey::KEY_B) {
+                    game_state = GameState::Menu;
                 }
             }
         }
