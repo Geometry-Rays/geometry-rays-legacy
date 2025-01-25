@@ -253,6 +253,7 @@ async fn main() {
     let grid_button = Button::new(0.0, 0.0, 800.0, 400.0, "", 20, false);
     let mut editor_back = Button::new(675.0, 20.0, 100.0, 50.0, "Back to Menu", 13, false);
     let mut level_options_button = Button::new(675.0, 90.0, 100.0, 50.0, "Level Options", 13, false);
+    let mut playtest_button = Button::new(20.0, 100.0, 75.0, 75.0, "Playtest", 20, false);
 
     let mut level_options_back = Button::new(20.0, 20.0, 200.0, 50.0, "Back to Editor", 24, false);
     let red_bg_slider = Button::new(470.0, 100.0, 10.0, 150.0, "", 20, false);
@@ -703,6 +704,7 @@ async fn main() {
                 delete_tab_button.update(&rl, delta_time);
                 level_options_button.update(&rl, delta_time);
                 editor_back.update(&rl, delta_time);
+                playtest_button.update(&rl, delta_time);
                 obj1_button.update(&rl, delta_time);
                 obj2_button.update(&rl, delta_time);
                 obj3_button.update(&rl, delta_time);
@@ -766,7 +768,7 @@ async fn main() {
                 else if grid_button.is_clicked(&rl) && active_tab == EditorTab::Build {
                     // let obj_x = snapped_x;
                     // let obj_y = snapped_y;
-                    if !level_options_button.is_clicked(&rl) && !editor_back.is_clicked(&rl) {
+                    if !level_options_button.is_clicked(&rl) && !editor_back.is_clicked(&rl) && !playtest_button.is_clicked(&rl) {
                         object_grid.push(ObjectStruct { y:snapped_y, x:snapped_x, id:current_object });
                     }
                 }
@@ -799,6 +801,10 @@ async fn main() {
 
                 if editor_back.is_clicked(&rl) {
                     game_state = GameState::CreatorMenu;
+                }
+
+                if playtest_button.is_clicked(&rl) {
+                    game_state = GameState::Playing;
                 }
 
                 been_to_editor = true;
@@ -1137,6 +1143,7 @@ async fn main() {
                 delete_tab_button.draw(&mut d);
                 level_options_button.draw(&mut d);
                 editor_back.draw(&mut d);
+                playtest_button.draw(&mut d);
 
                 if edit_not_done_yet {
                     d.draw_text("Edit tab coming soon!", 270, 490, 40, Color::WHITE);
