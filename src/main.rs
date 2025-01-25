@@ -182,6 +182,12 @@ struct MainLevel {
     data: String
 }
 
+#[derive(PartialEq)]
+enum GameMode {
+    Cube,
+    Ship
+}
+
 // Enums, Structs, And functions that are used by the editor
 #[derive(PartialEq)]
 enum EditorTab {
@@ -311,6 +317,7 @@ async fn main() {
     ];
     let mut current_level = 0;
     let mut reset_menu_music = false;
+    let mut current_gamemode = GameMode::Cube;
 
     texture_ids.insert(1, &spike_texture);
     texture_ids.insert(2, &block_texture);
@@ -489,15 +496,33 @@ async fn main() {
                     kill_player = false;
                 }
 
-                if is_on_ground && (space_down || mouse_down) {
-                    velocity_y = jump_force;
-                    is_on_ground = false;
+                if current_gamemode == GameMode::Cube {
+                    if is_on_ground && (space_down || mouse_down) {
+                        velocity_y = jump_force;
+                        is_on_ground = false;
+                    }
+                } else if current_gamemode == GameMode::Ship {
+                    if mouse_down {
+                        for _ in 0..10 {
+                            if velocity_y > -10.0 {
+                                velocity_y -= 0.1
+                            }
+                        }
+                    } else {
+                        for _ in 0..10 {
+                            if velocity_y < 10.0 {
+                                velocity_y += 0.1
+                            }
+                        }
+                    }
                 }
 
                 world_offset -= movement_speed;
-                velocity_y += gravity;
+                if current_gamemode == GameMode::Cube {
+                    velocity_y += gravity;
+                }
                 player.y += velocity_y;
-                
+
                 if player.y >= 500.0 {
                     player.y = 500.0;
                     velocity_y = 0.0;
@@ -629,6 +654,21 @@ async fn main() {
                             width: 10.0,
                             height: 10.0
                         });
+                    }
+
+                    if object.id == 8 || object.id == 9 {
+                        if player.check_collision_recs(&Rectangle {
+                            x: object.x as f32 + world_offset + 10.0,
+                            y: object.y as f32 + 11.0,
+                            width: 20.0,
+                            height: 80.0
+                        }) {
+                            if object.id == 8 {
+                                current_gamemode = GameMode::Cube;
+                            } else {
+                                current_gamemode = GameMode::Ship;
+                            }
+                        }
                     }
                 }
 
@@ -1087,6 +1127,16 @@ async fn main() {
                                 10,
                                 10,
                                 Color::RED
+                            );
+                        }
+
+                        if object.id == 8 || object.id == 9 {
+                            d.draw_rectangle_lines(
+                                object.x + world_offset as i32 + 10,
+                                object.y + 11,
+                                20,
+                                80,
+                                Color::TEAL
                             );
                         }
                     }
