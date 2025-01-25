@@ -234,6 +234,10 @@ async fn main() {
         .expect("Failed to load right side up portal texture");
     let short_spike_texture = rl.load_texture(&thread, "Resources/short-spike.png")
         .expect("Failed to load short spike texture");
+    let cube_portal_texture = rl.load_texture(&thread, "Resources/cube-portal.png")
+        .expect("Failed to load cube portal texture");
+    let ship_portal_texture = rl.load_texture(&thread, "Resources/ship-portal.png")
+        .expect("Failed to load ship portal texture");
 
     // Create main menu buttons
     let mut play_button = Button::new(300.0, 250.0, 200.0, 50.0, "Play", 24, false);
@@ -315,6 +319,8 @@ async fn main() {
     texture_ids.insert(5, &upside_down_portal_texture);
     texture_ids.insert(6, &right_side_up_portal_texture);
     texture_ids.insert(7, &short_spike_texture);
+    texture_ids.insert(8, &cube_portal_texture);
+    texture_ids.insert(9, &ship_portal_texture);
 
     // Variables for editor stuff
     let mut active_tab = EditorTab::Build;
@@ -347,6 +353,8 @@ async fn main() {
     objects.insert(5, "upside down");
     objects.insert(6, "right side up");
     objects.insert(7, "short spike");
+    objects.insert(8, "cube portal");
+    objects.insert(9, "ship portal");
 
     let obj_button_off = 65.0;
     let mut obj1_button = Button::new(187.0, 415.0, 50.0, 50.0, objects.get(&1).unwrap(), 10, false);
@@ -356,6 +364,8 @@ async fn main() {
     let mut obj5_button = Button::new(187.0 + (obj_button_off * 4.0), 415.0, 50.0, 50.0, objects.get(&5).unwrap(), 10, false);
     let mut obj6_button = Button::new(187.0 + (obj_button_off * 5.0), 415.0, 50.0, 50.0, objects.get(&6).unwrap(), 10, false);
     let mut obj7_button = Button::new(187.0 + (obj_button_off * 6.0), 415.0, 50.0, 50.0, objects.get(&7).unwrap(), 10, false);
+    let mut obj8_button = Button::new(187.0 + (obj_button_off * 7.0), 415.0, 50.0, 50.0, objects.get(&8).unwrap(), 10, false);
+    let mut obj9_button = Button::new(187.0 + (obj_button_off * 8.0), 415.0, 50.0, 50.0, objects.get(&9).unwrap(), 10, false);
 
     let mut bg_red = red_bg_slider_pos - 75;
     let mut bg_green = green_bg_slider_pos - 75;
@@ -712,6 +722,8 @@ async fn main() {
                 obj5_button.update(&rl, delta_time);
                 obj6_button.update(&rl, delta_time);
                 obj7_button.update(&rl, delta_time);
+                obj8_button.update(&rl, delta_time);
+                obj9_button.update(&rl, delta_time);
 
                 if build_tab_button.is_clicked(&rl) {
                     active_tab = EditorTab::Build;
@@ -763,6 +775,14 @@ async fn main() {
 
                 else if obj7_button.is_clicked(&rl) && active_tab == EditorTab::Build {
                     current_object = 7 + _advanced_page_number;
+                }
+
+                else if obj8_button.is_clicked(&rl) && active_tab == EditorTab::Build {
+                    current_object = 8 + _advanced_page_number;
+                }
+
+                else if obj9_button.is_clicked(&rl) && active_tab == EditorTab::Build {
+                    current_object = 9 + _advanced_page_number;
                 }
 
                 else if grid_button.is_clicked(&rl) && active_tab == EditorTab::Build {
@@ -1159,6 +1179,8 @@ async fn main() {
                     obj5_button.draw(&mut d);
                     obj6_button.draw(&mut d);
                     obj7_button.draw(&mut d);
+                    obj8_button.draw(&mut d);
+                    obj9_button.draw(&mut d);
                 }
 
                 d.draw_text(&format!("Selected Object: {}", objects.get(&current_object).unwrap()), 10, 10, 20, Color::WHITE);
