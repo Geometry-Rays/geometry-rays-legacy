@@ -388,6 +388,9 @@ async fn main() {
     let menu_loop = Decoder::new(menu_loop_file).expect("Failed to decode MP3 file").repeat_infinite();
     sink.append(menu_loop);
 
+    let mut level_music_file = BufReader::new(File::open("Resources/main-level-songs/0.mp3").expect("Failed to open MP3 file"));
+    let mut level_music = Decoder::new(level_music_file).expect("Failed to decode MP3 file");
+
     // Discord button setup
     let padding = 20.0;
     let icon_size = 32.0;
@@ -856,6 +859,12 @@ async fn main() {
 
                         object_grid.push(ObjectStruct { y:xyid[0].parse::<i32>().unwrap(), x:xyid[1].parse::<i32>().unwrap(), id:xyid[2].parse::<u32>().unwrap() });
                     }
+
+                    level_music_file = BufReader::new(File::open(format!("Resources/main-level-songs/{}.mp3", current_level)).expect("Failed to open MP3 file"));
+                    level_music = Decoder::new(level_music_file).expect("Failed to decode MP3 file");
+                    sink.stop();
+                    sink.append(level_music);
+                    sink.play();
 
                     game_state = GameState::Playing;
                 }
