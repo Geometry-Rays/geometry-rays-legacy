@@ -290,7 +290,7 @@ async fn main() {
             name: "Plummet".to_string(),
             difficulty: 1,
             song: "./Resources/main-level-songs/Plummet.mp3".to_string(),
-            data: fs::read_to_string("./save-data/main-levels/plummet.txt")
+            data: fs::read_to_string("./save-data/main-levels/0.txt")
                 .expect("Failed to load main level")
         },
 
@@ -298,7 +298,7 @@ async fn main() {
             name: "Color Blockade".to_string(),
             difficulty: 1,
             song: "./Resources/main-level-songs/Color Blockade.mp3".to_string(),
-            data: fs::read_to_string("./save-data/main-levels/color-blockade.txt")
+            data: fs::read_to_string("./save-data/main-levels/1.txt")
                 .expect("Failed to load main level")
         }
     ];
@@ -326,9 +326,9 @@ async fn main() {
     let mut blue_bg_slider_pos: u8 = 125;
     let mut level_string = fs::read_to_string("./save-data/levels/level.txt")
         .expect("Failed to load level file");
-    let parts: Vec<&str> = level_string.split(";;;").collect();
-    let level_metadata = parts[0];
-    let object_string = parts[1];
+    let mut parts: Vec<&str> = level_string.split(";;;").collect();
+    let mut level_metadata = parts[0];
+    let mut object_string = parts[1];
     let mut been_to_editor: bool = false;
 
     let mut red_ground_slider_pos: i32 = 355;
@@ -621,6 +621,9 @@ async fn main() {
                 }
 
                 if create_button.is_clicked(&rl) {
+                    parts = level_string.split(";;;").collect();
+                    level_metadata = parts[0];
+                    object_string = parts[1];
                     let metadata_pairs: Vec<&str> = level_metadata.split(';').collect();
                     for pair in metadata_pairs {
                         let key_value: Vec<&str> = pair.split(':').collect();
@@ -818,6 +821,42 @@ async fn main() {
                 }
 
                 if rl.is_key_pressed(KeyboardKey::KEY_SPACE) {
+                    parts = main_levels[current_level].data.split(";;;").collect();
+                    level_metadata = parts[0];
+                    object_string = parts[1];
+                    let metadata_pairs: Vec<&str> = level_metadata.split(';').collect();
+                    for pair in metadata_pairs {
+                        let key_value: Vec<&str> = pair.split(':').collect();
+                        let key = key_value[0];
+                        let value = key_value[1];
+
+                        if key == "version" {
+                            if value != "ALPHA" {
+                                println!("Level version not recognized");
+                                break;
+                            }
+                        } else if key == "c1001" {
+                            let colors: Vec<&str> = value.split(',').collect();
+
+                            bg_red = colors[0].parse::<u8>().unwrap();
+                            bg_green = colors[1].parse::<u8>().unwrap();
+                            bg_blue = colors[2].parse::<u8>().unwrap();
+                        } else if key == "c1002" {
+                            let colors: Vec<&str> = value.split(',').collect();
+
+                            ground_red = colors[0].parse::<i32>().unwrap();
+                            ground_green = colors[1].parse::<i32>().unwrap();
+                            ground_blue = colors[2].parse::<i32>().unwrap();
+                        }
+                    }
+
+                    let object_list: Vec<&str> = object_string.split(';').collect();
+                    for object in object_list {
+                        let xyid: Vec<&str> = object.split(':').collect();
+
+                        object_grid.push(ObjectStruct { y:xyid[0].parse::<i32>().unwrap(), x:xyid[1].parse::<i32>().unwrap(), id:xyid[2].parse::<u32>().unwrap() });
+                    }
+
                     game_state = GameState::Playing;
                 }
             }
