@@ -503,15 +503,31 @@ async fn main() {
                     }
                 } else if current_gamemode == GameMode::Ship {
                     if mouse_down {
-                        for _ in 0..10 {
-                            if velocity_y > -10.0 {
-                                velocity_y -= 0.1
+                        if gravity == 0.8 {
+                            for _ in 0..10 {
+                                if velocity_y > -10.0 {
+                                    velocity_y -= 0.1
+                                }
+                            }
+                        } else {
+                            for _ in 0..10 {
+                                if velocity_y < 10.0 {
+                                    velocity_y += 0.1
+                                }
                             }
                         }
                     } else {
-                        for _ in 0..10 {
-                            if velocity_y < 10.0 {
-                                velocity_y += 0.1
+                        if gravity == 0.8 {
+                            for _ in 0..10 {
+                                if velocity_y < 10.0 {
+                                    velocity_y += 0.1
+                                }
+                            }
+                        } else {
+                            for _ in 0..10 {
+                                if velocity_y > -10.0 {
+                                    velocity_y -= 0.1
+                                }
                             }
                         }
                     }
