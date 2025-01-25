@@ -831,6 +831,7 @@ async fn main() {
                     parts = main_levels[current_level].data.split(";;;").collect();
                     level_metadata = parts[0];
                     object_string = parts[1];
+                    object_grid.clear();
                     let metadata_pairs: Vec<&str> = level_metadata.split(';').collect();
                     for pair in metadata_pairs {
                         let key_value: Vec<&str> = pair.split(':').collect();
@@ -869,6 +870,12 @@ async fn main() {
                     sink.stop();
                     sink.append(level_music);
                     sink.play();
+
+                    player.y = 500.0;
+                    world_offset = 0.0;
+                    rotation = 0.0;
+                    gravity = 0.8;
+                    jump_force = -13.0;
 
                     game_state = GameState::Playing;
                 }
