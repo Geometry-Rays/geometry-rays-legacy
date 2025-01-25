@@ -615,7 +615,7 @@ async fn main() {
                     if object.id == 7 {
                         kill_player |= player.check_collision_recs(&Rectangle {
                             x: object.x as f32 + world_offset + 20.0,
-                            y: object.y as f32 + 10.0,
+                            y: object.y as f32 + 25.0,
                             width: 10.0,
                             height: 10.0
                         });
@@ -1063,7 +1063,7 @@ async fn main() {
                         if object.id == 7 {
                             d.draw_rectangle_lines(
                                 object.x + world_offset as i32 + 15,
-                                object.y + 10,
+                                object.y + 25,
                                 10,
                                 10,
                                 Color::RED
