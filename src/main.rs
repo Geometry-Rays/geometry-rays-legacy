@@ -18,6 +18,7 @@ enum GameState {
     CreatorMenu,
     Editor,
     LevelOptions,
+    LevelSelect,
 }
 
 struct Button {
@@ -174,6 +175,13 @@ async fn make_request(url: String) -> String {
     return format!("{}", text);
 }
 
+struct MainLevel {
+    name: String,
+    difficulty: u8,
+    song: String,
+    data: String
+}
+
 // Enums, Structs, And functions that are used by the editor
 #[derive(PartialEq)]
 enum EditorTab {
@@ -277,6 +285,24 @@ async fn main() {
     let mut texture_ids: HashMap<u32, &Texture2D> = HashMap::new();
     let mut kill_player: bool = false;
     let mut on_orb: bool = false;
+    let main_levels: Vec<MainLevel> = vec![
+        MainLevel {
+            name: "Plummet".to_string(),
+            difficulty: 1,
+            song: "./Resources/main-level-songs/Plummet.mp3".to_string(),
+            data: fs::read_to_string("./save-data/main-levels/plummet.txt")
+                .expect("Failed to load main level")
+        },
+
+        MainLevel {
+            name: "Color Blockade".to_string(),
+            difficulty: 1,
+            song: "./Resources/main-level-songs/Color Blockade.mp3".to_string(),
+            data: fs::read_to_string("./save-data/main-levels/color-blockade.txt")
+                .expect("Failed to load main level")
+        }
+    ];
+    let mut current_level = 0;
     
     texture_ids.insert(1, &spike_texture);
     texture_ids.insert(2, &block_texture);
@@ -414,7 +440,7 @@ async fn main() {
                 }
 
                 if play_button.is_clicked(&rl) {
-                    game_state = GameState::Playing;
+                    game_state = GameState::LevelSelect;
                     player.y = 500.0;
                     world_offset = 0.0;
                     rotation = 0.0;
@@ -778,6 +804,23 @@ async fn main() {
                     ground_blue = blue_ground_slider_pos - 355;
                 }
             }
+            GameState::LevelSelect => {
+                if rl.is_key_pressed(KeyboardKey::KEY_LEFT) {
+                    if current_level > 0 {
+                        current_level -= 1;
+                    }
+                }
+
+                if rl.is_key_pressed(KeyboardKey::KEY_RIGHT) {
+                    if current_level < main_levels.len() - 1 {
+                        current_level += 1;
+                    }
+                }
+
+                if rl.is_key_pressed(KeyboardKey::KEY_SPACE) {
+                    game_state = GameState::Playing;
+                }
+            }
         }
 
         // Rendering
@@ -1076,6 +1119,10 @@ async fn main() {
                 d.draw_text(&format!("{}", ground_red), 435, 305, 50, Color::BLACK);
                 d.draw_text(&format!("{}", ground_green), 560, 305, 50, Color::BLACK);
                 d.draw_text(&format!("{}", ground_blue), 685, 305, 50, Color::BLACK);
+            }
+            GameState::LevelSelect => {
+                d.clear_background(Color::BLACK);
+                d.draw_text(&format!("{}", main_levels[current_level].name), 275, 275, 50, Color::WHITE);
             }
         }
     }
