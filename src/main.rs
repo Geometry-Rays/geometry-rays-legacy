@@ -275,7 +275,7 @@ async fn main() {
     let blue_ground_slider = Button::new(720.0, 380.0, 10.0, 150.0, "", 20, false);
 
     // Variables for the urls since tor urls are long af
-    let send_requests = false;
+    let send_requests = true;
     let tor_url = "http://georays.yuoqw7ywmixj55zxljkhqvcwunovze32df7pqemwacfaq2itqefbixad.onion/php-code/".to_string();
     let latest_version_url: String = format!("{}get-latest-version.php", tor_url).to_string();
 
@@ -291,7 +291,7 @@ async fn main() {
     let movement_speed = 6.0;
     let mut rotation = 0.0;
     let mut attempt = 1;
-    let version = "ALPHA";
+    let version = "BETA";
     let latest_version = if send_requests { make_request(latest_version_url).await } else { "NULL".to_string() };
     let mut not_done_yet_text = false;
     let mut show_debug_text = false;
