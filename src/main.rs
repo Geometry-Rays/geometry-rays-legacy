@@ -232,6 +232,8 @@ async fn main() {
         .expect("Failed to load upside down portal texture");
     let right_side_up_portal_texture = rl.load_texture(&thread, "Resources/right-side-up-portal.png")
         .expect("Failed to load right side up portal texture");
+    let short_spike_texture = rl.load_texture(&thread, "Resources/short-spike.png")
+        .expect("Failed to load short spike texture");
 
     // Create main menu buttons
     let mut play_button = Button::new(300.0, 250.0, 200.0, 50.0, "Play", 24, false);
@@ -311,6 +313,7 @@ async fn main() {
     texture_ids.insert(4, &orb_texture);
     texture_ids.insert(5, &upside_down_portal_texture);
     texture_ids.insert(6, &right_side_up_portal_texture);
+    texture_ids.insert(7, &short_spike_texture);
 
     // Variables for editor stuff
     let mut active_tab = EditorTab::Build;
@@ -342,6 +345,7 @@ async fn main() {
     objects.insert(4, "orb");
     objects.insert(5, "upside down");
     objects.insert(6, "right side up");
+    objects.insert(7, "short spike");
 
     let obj_button_off = 65.0;
     let mut obj1_button = Button::new(187.0, 415.0, 50.0, 50.0, objects.get(&1).unwrap(), 10, false);
@@ -350,6 +354,7 @@ async fn main() {
     let mut obj4_button = Button::new(187.0 + (obj_button_off * 3.0), 415.0, 50.0, 50.0, objects.get(&4).unwrap(), 10, false);
     let mut obj5_button = Button::new(187.0 + (obj_button_off * 4.0), 415.0, 50.0, 50.0, objects.get(&5).unwrap(), 10, false);
     let mut obj6_button = Button::new(187.0 + (obj_button_off * 5.0), 415.0, 50.0, 50.0, objects.get(&6).unwrap(), 10, false);
+    let mut obj7_button = Button::new(187.0 + (obj_button_off * 6.0), 415.0, 50.0, 50.0, objects.get(&7).unwrap(), 10, false);
 
     let mut bg_red = red_bg_slider_pos - 75;
     let mut bg_green = green_bg_slider_pos - 75;
@@ -605,6 +610,15 @@ async fn main() {
                             }
                         }
                     }
+
+                    if object.id == 7 {
+                        kill_player |= player.check_collision_recs(&Rectangle {
+                            x: object.x as f32 + world_offset + 20.0,
+                            y: object.y as f32 + 10.0,
+                            width: 10.0,
+                            height: 10.0
+                        });
+                    }
                 }
 
                 if kill_player {
@@ -695,6 +709,7 @@ async fn main() {
                 obj4_button.update(&rl, delta_time);
                 obj5_button.update(&rl, delta_time);
                 obj6_button.update(&rl, delta_time);
+                obj7_button.update(&rl, delta_time);
 
                 if build_tab_button.is_clicked(&rl) {
                     active_tab = EditorTab::Build;
@@ -742,6 +757,10 @@ async fn main() {
 
                 else if obj6_button.is_clicked(&rl) && active_tab == EditorTab::Build {
                     current_object = 6 + _advanced_page_number;
+                }
+
+                else if obj7_button.is_clicked(&rl) && active_tab == EditorTab::Build {
+                    current_object = 7 + _advanced_page_number;
                 }
 
                 else if grid_button.is_clicked(&rl) && active_tab == EditorTab::Build {
@@ -1034,6 +1053,16 @@ async fn main() {
                                 Color::TEAL
                             );
                         }
+
+                        if object.id == 7 {
+                            d.draw_rectangle_lines(
+                                object.x + world_offset as i32 + 15,
+                                object.y + 10,
+                                10,
+                                10,
+                                Color::RED
+                            );
+                        }
                     }
 
                     d.draw_rectangle_lines(
@@ -1122,6 +1151,7 @@ async fn main() {
                     obj4_button.draw(&mut d);
                     obj5_button.draw(&mut d);
                     obj6_button.draw(&mut d);
+                    obj7_button.draw(&mut d);
                 }
 
                 d.draw_text(&format!("Selected Object: {}", objects.get(&current_object).unwrap()), 10, 10, 20, Color::WHITE);
