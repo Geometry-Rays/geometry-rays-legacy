@@ -303,7 +303,8 @@ async fn main() {
         }
     ];
     let mut current_level = 0;
-    
+    let mut reset_menu_music = false;
+
     texture_ids.insert(1, &spike_texture);
     texture_ids.insert(2, &block_texture);
     texture_ids.insert(3, &pad_texture);
@@ -386,7 +387,7 @@ async fn main() {
     // Audio setup
     let menu_loop_file = BufReader::new(File::open("Resources/menu-loop.mp3").expect("Failed to open MP3 file"));
     let menu_loop = Decoder::new(menu_loop_file).expect("Failed to decode MP3 file").repeat_infinite();
-    sink.append(menu_loop);
+    sink.append(menu_loop.clone());
 
     let mut level_music_file = BufReader::new(File::open("Resources/main-level-songs/0.mp3").expect("Failed to open MP3 file"));
     let mut level_music = Decoder::new(level_music_file).expect("Failed to decode MP3 file");
@@ -460,7 +461,12 @@ async fn main() {
                 gravity = 0.8;
                 jump_force = -13.0;
 
-                sink.play();
+                if reset_menu_music {
+                    sink.stop();
+                    sink.append(menu_loop.clone());
+                    sink.play();
+                    reset_menu_music = false;
+                }
             }
             GameState::Playing => {
                 if kill_player == true {
@@ -608,6 +614,8 @@ async fn main() {
                 if rl.is_key_pressed(KeyboardKey::KEY_B) {
                     game_state = GameState::LevelSelect;
                 }
+
+                reset_menu_music = true;
             }
             GameState::GameOver => {
                 restart_button.update(&rl, delta_time);
@@ -878,6 +886,13 @@ async fn main() {
                     jump_force = -13.0;
 
                     game_state = GameState::Playing;
+                }
+
+                if reset_menu_music {
+                    sink.stop();
+                    sink.append(menu_loop.clone());
+                    sink.play();
+                    reset_menu_music = false;
                 }
 
                 if rl.is_key_pressed(KeyboardKey::KEY_B) {
