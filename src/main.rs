@@ -344,8 +344,8 @@ async fn main() {
     let mut level_string = fs::read_to_string("./save-data/levels/level.txt")
         .expect("Failed to load level file");
     let mut parts: Vec<&str> = level_string.split(";;;").collect();
-    let mut level_metadata = parts[0];
-    let mut object_string = parts[1];
+    let mut _level_metadata = parts[0];
+    let mut _object_string = parts[1];
     let mut been_to_editor: bool = false;
 
     let mut red_ground_slider_pos: i32 = 355;
@@ -412,7 +412,7 @@ async fn main() {
     sink.append(menu_loop.clone());
 
     let mut level_music_file = BufReader::new(File::open("Resources/main-level-songs/0.mp3").expect("Failed to open MP3 file"));
-    let mut level_music = Decoder::new(level_music_file).expect("Failed to decode MP3 file");
+    let mut _level_music = Decoder::new(level_music_file).expect("Failed to decode MP3 file");
 
     // Discord button setup
     let padding = 20.0;
@@ -728,9 +728,9 @@ async fn main() {
 
                 if create_button.is_clicked(&rl) {
                     parts = level_string.split(";;;").collect();
-                    level_metadata = parts[0];
-                    object_string = parts[1];
-                    let metadata_pairs: Vec<&str> = level_metadata.split(';').collect();
+                    _level_metadata = parts[0];
+                    _object_string = parts[1];
+                    let metadata_pairs: Vec<&str> = _level_metadata.split(';').collect();
                     for pair in metadata_pairs {
                         let key_value: Vec<&str> = pair.split(':').collect();
                         let key = key_value[0];
@@ -756,7 +756,7 @@ async fn main() {
                         }
                     }
                 
-                    let object_list: Vec<&str> = object_string.split(';').collect();
+                    let object_list: Vec<&str> = _object_string.split(';').collect();
                     for object in object_list {
                         let xyid: Vec<&str> = object.split(':').collect();
                 
@@ -948,10 +948,10 @@ async fn main() {
 
                 if rl.is_key_pressed(KeyboardKey::KEY_SPACE) {
                     parts = main_levels[current_level].data.split(";;;").collect();
-                    level_metadata = parts[0];
-                    object_string = parts[1];
+                    _level_metadata = parts[0];
+                    _object_string = parts[1];
                     object_grid.clear();
-                    let metadata_pairs: Vec<&str> = level_metadata.split(';').collect();
+                    let metadata_pairs: Vec<&str> = _level_metadata.split(';').collect();
                     for pair in metadata_pairs {
                         let key_value: Vec<&str> = pair.split(':').collect();
                         let key = key_value[0];
@@ -977,7 +977,7 @@ async fn main() {
                         }
                     }
 
-                    let object_list: Vec<&str> = object_string.split(';').collect();
+                    let object_list: Vec<&str> = _object_string.split(';').collect();
                     for object in object_list {
                         let xyid: Vec<&str> = object.split(':').collect();
 
@@ -985,9 +985,9 @@ async fn main() {
                     }
 
                     level_music_file = BufReader::new(File::open(format!("Resources/main-level-songs/{}.mp3", current_level)).expect("Failed to open MP3 file"));
-                    level_music = Decoder::new(level_music_file).expect("Failed to decode MP3 file");
+                    _level_music = Decoder::new(level_music_file).expect("Failed to decode MP3 file");
                     sink.stop();
-                    sink.append(level_music);
+                    sink.append(_level_music);
                     sink.play();
 
                     player.y = 500.0;
