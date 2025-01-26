@@ -619,19 +619,37 @@ async fn main() {
                             x: object.x as f32 + world_offset + 30.0,
                             y: object.y as f32 - player_cam_y as f32,
                             width: 10.0,
-                            height: 61.0
+                            height: 3.0
                         }) {
                             is_on_ground = true;
                             rotation = 0.0;
                             if !mouse_down {
-                                if gravity > 0.0 {
-                                    player.y = object.y as f32 - 21.0;
-                                } else {
-                                    player.y = object.y as f32 + 61.0;
-                                }
+                                player.y = object.y as f32 - 21.0;
                                 velocity_y = 0.0;
                             }
                         }
+
+                        if player.check_collision_recs(&Rectangle {
+                            x: object.x as f32 + world_offset + 30.0,
+                            y: object.y as f32 + 58.0 - player_cam_y as f32,
+                            width: 10.0,
+                            height: 3.0
+                        }) {
+                            is_on_ground = true;
+                            rotation = 0.0;
+                            if !mouse_down {
+                                player.y = object.y as f32 + 61.0;
+                                velocity_y = 0.0;
+                            }
+                        }
+
+                        // d.draw_rectangle_lines(
+                        //     object.x + world_offset as i32 + 30,
+                        //     object.y + 58 - player_cam_y,
+                        //     10,
+                        //     3,
+                        //     Color::BLUEVIOLET
+                        // );
                     }
 
                     if object.id == 3 {
@@ -1129,6 +1147,14 @@ async fn main() {
                             d.draw_rectangle_lines(
                                 object.x + world_offset as i32 + 30,
                                 object.y - player_cam_y,
+                                10,
+                                3,
+                                Color::BLUEVIOLET
+                            );
+
+                            d.draw_rectangle_lines(
+                                object.x + world_offset as i32 + 30,
+                                object.y + 58 - player_cam_y,
                                 10,
                                 3,
                                 Color::BLUEVIOLET
