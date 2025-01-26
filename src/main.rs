@@ -513,7 +513,7 @@ async fn main() {
                         is_on_ground = false;
                     }
                 } else if current_gamemode == GameMode::Ship {
-                    if mouse_down {
+                    if mouse_down || space_down {
                         if gravity == 0.8 {
                             for _ in 0..10 {
                                 if velocity_y > -10.0 {
