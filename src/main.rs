@@ -601,7 +601,7 @@ async fn main() {
                     if object.id == 1 {
                         kill_player |= player.check_collision_recs(&Rectangle {
                             x: object.x as f32 + world_offset + 20.0,
-                            y: object.y as f32 + 20.0,
+                            y: object.y as f32 + 20.0 - player_cam_y as f32,
                             width: 10.0,
                             height: 20.0
                         });
@@ -610,14 +610,14 @@ async fn main() {
                     if object.id == 2 {
                         kill_player |= small_player.check_collision_recs(&Rectangle {
                             x: object.x as f32 + world_offset,
-                            y: object.y as f32 + 20.0,
+                            y: object.y as f32 + 20.0 - player_cam_y as f32,
                             width: 3.0,
                             height: 20.0
                         });
 
                         if player.check_collision_recs(&Rectangle {
                             x: object.x as f32 + world_offset + 30.0,
-                            y: object.y as f32,
+                            y: object.y as f32 - player_cam_y as f32,
                             width: 10.0,
                             height: 61.0
                         }) {
@@ -637,7 +637,7 @@ async fn main() {
                     if object.id == 3 {
                         if player.check_collision_recs(&Rectangle {
                             x: object.x as f32 + world_offset,
-                            y: object.y as f32 + 35.0,
+                            y: object.y as f32 + 35.0 - player_cam_y as f32,
                             width: 40.0,
                             height: 5.0
                         }) {
@@ -652,7 +652,7 @@ async fn main() {
                     if object.id == 4 {
                         if player.check_collision_recs(&Rectangle {
                             x: object.x as f32 + world_offset,
-                            y: object.y as f32,
+                            y: object.y as f32 - player_cam_y as f32,
                             width: 40.0,
                             height: 40.0
                         }) {
@@ -671,7 +671,7 @@ async fn main() {
                     if object.id == 5 || object.id == 6 {
                         if player.check_collision_recs(&Rectangle {
                             x: object.x as f32 + world_offset + 10.0,
-                            y: object.y as f32 + 11.0,
+                            y: object.y as f32 + 11.0 - player_cam_y as f32,
                             width: 20.0,
                             height: 80.0
                         }) {
@@ -688,7 +688,7 @@ async fn main() {
                     if object.id == 7 {
                         kill_player |= player.check_collision_recs(&Rectangle {
                             x: object.x as f32 + world_offset + 20.0,
-                            y: object.y as f32 + 25.0,
+                            y: object.y as f32 + 25.0 - player_cam_y as f32,
                             width: 10.0,
                             height: 10.0
                         });
@@ -697,7 +697,7 @@ async fn main() {
                     if object.id == 8 || object.id == 9 {
                         if player.check_collision_recs(&Rectangle {
                             x: object.x as f32 + world_offset + 10.0,
-                            y: object.y as f32 + 11.0,
+                            y: object.y as f32 + 11.0 - player_cam_y as f32,
                             width: 20.0,
                             height: 80.0
                         }) {
@@ -1096,7 +1096,7 @@ async fn main() {
                 for i in &object_grid {
                     let object_x = i.x as f32 + world_offset as f32;
                     let object_y = i.y as f32 + 0 as f32;
-                    d.draw_texture_ex(&texture_ids.get(&i.id).unwrap(), Vector2::new(object_x, object_y), 0.0, 0.05, cc_1004);
+                    d.draw_texture_ex(&texture_ids.get(&i.id).unwrap(), Vector2::new(object_x, object_y - player_cam_y as f32), 0.0, 0.05, cc_1004);
                 }
 
                 // Draw obstacles (old)
@@ -1110,7 +1110,7 @@ async fn main() {
                         if object.id == 1 {
                             d.draw_rectangle_lines(
                                 object.x + world_offset as i32 + 15,
-                                object.y + 10,
+                                object.y + 10 - player_cam_y,
                                 10,
                                 20,
                                 Color::RED
@@ -1120,7 +1120,7 @@ async fn main() {
                         if object.id == 2 {
                             d.draw_rectangle_lines(
                                 object.x + world_offset as i32,
-                                object.y + 20,
+                                object.y + 20 - player_cam_y,
                                 3,
                                 20,
                                 Color::RED
@@ -1128,7 +1128,7 @@ async fn main() {
 
                             d.draw_rectangle_lines(
                                 object.x + world_offset as i32 + 30,
-                                object.y,
+                                object.y - player_cam_y,
                                 10,
                                 3,
                                 Color::BLUEVIOLET
@@ -1138,7 +1138,7 @@ async fn main() {
                         if object.id == 3 {
                             d.draw_rectangle_lines(
                                 object.x + world_offset as i32,
-                                object.y + 35,
+                                object.y + 35 - player_cam_y,
                                 40,
                                 5,
                                 Color::TEAL
@@ -1148,7 +1148,7 @@ async fn main() {
                         if object.id == 4 {
                             d.draw_rectangle_lines(
                                 object.x + world_offset as i32,
-                                object.y,
+                                object.y - player_cam_y,
                                 40,
                                 40,
                                 Color::TEAL
@@ -1158,7 +1158,7 @@ async fn main() {
                         if object.id == 5 || object.id == 6 {
                             d.draw_rectangle_lines(
                                 object.x + world_offset as i32 + 10,
-                                object.y + 11,
+                                object.y + 11 - player_cam_y,
                                 20,
                                 80,
                                 Color::TEAL
@@ -1168,7 +1168,7 @@ async fn main() {
                         if object.id == 7 {
                             d.draw_rectangle_lines(
                                 object.x + world_offset as i32 + 15,
-                                object.y + 25,
+                                object.y + 25 - player_cam_y,
                                 10,
                                 10,
                                 Color::RED
@@ -1178,7 +1178,7 @@ async fn main() {
                         if object.id == 8 || object.id == 9 {
                             d.draw_rectangle_lines(
                                 object.x + world_offset as i32 + 10,
-                                object.y + 11,
+                                object.y + 11 - player_cam_y,
                                 20,
                                 80,
                                 Color::TEAL
