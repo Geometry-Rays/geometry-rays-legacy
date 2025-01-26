@@ -481,6 +481,9 @@ async fn main() {
                     player.y = 500.0;
                     world_offset = 0.0;
                     rotation = 0.0;
+                    gravity = 0.8;
+                    jump_force = -13.0;
+                    current_gamemode = GameMode::Cube;
                 }
 
                 if editor_button.is_clicked(&rl) {
@@ -491,8 +494,6 @@ async fn main() {
                     show_debug_text = true;
                 }
 
-                gravity = 0.8;
-                jump_force = -13.0;
 
                 if reset_menu_music {
                     sink.stop();
@@ -890,6 +891,13 @@ async fn main() {
                 }
 
                 if playtest_button.is_clicked(&rl) {
+                    player.y = 500.0;
+                    world_offset = 0.0;
+                    rotation = 0.0;
+                    gravity = 0.8;
+                    jump_force = -13.0;
+                    current_gamemode = GameMode::Cube;
+
                     game_state = GameState::Playing;
                 }
 
@@ -995,6 +1003,7 @@ async fn main() {
                     rotation = 0.0;
                     gravity = 0.8;
                     jump_force = -13.0;
+                    current_gamemode = GameMode::Cube;
 
                     game_state = GameState::Playing;
                 }
