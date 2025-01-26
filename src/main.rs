@@ -317,6 +317,7 @@ async fn main() {
     let mut current_level = 0;
     let mut reset_menu_music = false;
     let mut current_gamemode = GameMode::Cube;
+    let mut player_cam_y: i32 = 0;
 
     texture_ids.insert(1, &spike_texture);
     texture_ids.insert(2, &block_texture);
@@ -550,13 +551,23 @@ async fn main() {
                 }
                 player.y += velocity_y;
 
-                if player.y >= 500.0 {
+                if player.y >= 500.0 - player_cam_y as f32 {
                     player.y = 500.0;
                     velocity_y = 0.0;
                     is_on_ground = true;
                     rotation = 0.0;
                 } else {
                     rotation += 5.0;
+                }
+
+                if player.y >= 501.0 {
+                    player_cam_y += velocity_y as i32;
+                    player.y = 502.0
+                }
+
+                if player.y <= 50.0 {
+                    player_cam_y += velocity_y as i32;
+                    player.y = 49.0
                 }
 
                 // for obstacle in &obstacles {
@@ -1075,7 +1086,7 @@ async fn main() {
                 for i in 0..6 {
                     d.draw_texture_ex(
                         &ground_texture,
-                        Vector2::new(i as f32 * 150.0, 520.0),
+                        Vector2::new(i as f32 * 150.0, 520.0 - player_cam_y as f32),
                         0.0,
                         0.2,
                         cc_1002,
