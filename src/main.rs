@@ -301,15 +301,15 @@ async fn main() {
         MainLevel {
             name: "Plummet".to_string(),
             difficulty: 1,
-            song: "./Resources/main-level-songs/Plummet.mp3".to_string(),
+            song: "./Resources/main-level-songs/0.mp3".to_string(),
             data: fs::read_to_string("./save-data/main-levels/0.txt")
                 .expect("Failed to load main level")
         },
 
         MainLevel {
             name: "Color Blockade".to_string(),
-            difficulty: 1,
-            song: "./Resources/main-level-songs/Color Blockade.mp3".to_string(),
+            difficulty: 3,
+            song: "./Resources/main-level-songs/1.mp3".to_string(),
             data: fs::read_to_string("./save-data/main-levels/1.txt")
                 .expect("Failed to load main level")
         }
@@ -1043,7 +1043,7 @@ async fn main() {
                         object_grid.push(ObjectStruct { y:xyid[0].parse::<i32>().unwrap(), x:xyid[1].parse::<i32>().unwrap(), id:xyid[2].parse::<u32>().unwrap() });
                     }
 
-                    level_music_file = BufReader::new(File::open(format!("Resources/main-level-songs/{}.mp3", current_level)).expect("Failed to open MP3 file"));
+                    level_music_file = BufReader::new(File::open(format!("{}", main_levels[current_level].song)).expect("Failed to open MP3 file"));
                     _level_music = Decoder::new(level_music_file).expect("Failed to decode MP3 file");
                     sink.stop();
                     sink.append(_level_music);
@@ -1404,6 +1404,7 @@ async fn main() {
             GameState::LevelSelect => {
                 d.clear_background(Color::BLACK);
                 d.draw_text(&format!("{}", main_levels[current_level].name), 275, 275, 50, Color::WHITE);
+                d.draw_text(&format!("{}", main_levels[current_level].difficulty), 350, 200, 50, Color::WHITE);
             }
         }
     }
