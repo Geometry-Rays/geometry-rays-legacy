@@ -318,6 +318,7 @@ async fn main() {
     let mut reset_menu_music = false;
     let mut current_gamemode = GameMode::Cube;
     let mut player_cam_y: i32 = 0;
+    let mut touching_block_ceiling: bool = false;
 
     texture_ids.insert(1, &spike_texture);
     texture_ids.insert(2, &block_texture);
@@ -514,34 +515,38 @@ async fn main() {
                         is_on_ground = false;
                     }
                 } else if current_gamemode == GameMode::Ship {
-                    if mouse_down || space_down {
-                        if gravity == 0.8 {
-                            for _ in 0..10 {
-                                if velocity_y > -10.0 {
-                                    velocity_y -= 0.1
+                    if !touching_block_ceiling {
+                        if mouse_down || space_down {
+                            if gravity == 0.8 {
+                                for _ in 0..10 {
+                                    if velocity_y > -10.0 {
+                                        velocity_y -= 0.1
+                                    }
+                                }
+                            } else {
+                                for _ in 0..10 {
+                                    if velocity_y < 10.0 {
+                                        velocity_y += 0.1
+                                    }
                                 }
                             }
                         } else {
-                            for _ in 0..10 {
-                                if velocity_y < 10.0 {
-                                    velocity_y += 0.1
+                            if gravity == 0.8 {
+                                for _ in 0..10 {
+                                    if velocity_y < 10.0 {
+                                        velocity_y += 0.1
+                                    }
+                                }
+                            } else {
+                                for _ in 0..10 {
+                                    if velocity_y > -10.0 {
+                                        velocity_y -= 0.1
+                                    }
                                 }
                             }
                         }
                     } else {
-                        if gravity == 0.8 {
-                            for _ in 0..10 {
-                                if velocity_y < 10.0 {
-                                    velocity_y += 0.1
-                                }
-                            }
-                        } else {
-                            for _ in 0..10 {
-                                if velocity_y > -10.0 {
-                                    velocity_y -= 0.1
-                                }
-                            }
-                        }
+                        velocity_y = 0.0
                     }
                 }
 
@@ -626,7 +631,14 @@ async fn main() {
                             if !mouse_down {
                                 player.y = object.y as f32 - 21.0;
                                 velocity_y = 0.0;
+                            } else {
+                                if gravity < 0.0 {
+                                    touching_block_ceiling = true;
+                                    player.y = object.y as f32 - 21.0;
+                                }
                             }
+                        } else {
+                            touching_block_ceiling = false;
                         }
 
                         if player.check_collision_recs(&Rectangle {
@@ -640,7 +652,14 @@ async fn main() {
                             if !mouse_down {
                                 player.y = object.y as f32 + 61.0;
                                 velocity_y = 0.0;
+                            } else {
+                                if gravity > 0.0 {
+                                    touching_block_ceiling = true;
+                                    player.y = object.y as f32 + 61.0;
+                                }
                             }
+                        } else {
+                            touching_block_ceiling = false;
                         }
 
                         // d.draw_rectangle_lines(
@@ -1226,6 +1245,7 @@ async fn main() {
                 if show_debug_text {
                     d.draw_text(&format!("Velocity Y: {}", velocity_y), 10, 40, 20, Color::GREEN);
                     d.draw_text(&format!("On Ground: {}", is_on_ground), 10, 70, 20, Color::GREEN);
+                    d.draw_text(&format!("Touching block ceiling: {}", touching_block_ceiling), 10, 100, 20, Color::GREEN);
                 }
             }
             GameState::GameOver => {
