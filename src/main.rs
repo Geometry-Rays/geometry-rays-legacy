@@ -900,14 +900,25 @@ async fn main() {
                     current_object = 9 + _advanced_page_number;
                 }
 
-                else if grid_button.is_clicked(&rl) && active_tab == EditorTab::Build {
+                else if grid_button.is_clicked(&rl) {
                     // let obj_x = snapped_x;
                     // let obj_y = snapped_y;
                     if !level_options_button.is_clicked(&rl) && !editor_back.is_clicked(&rl) && !playtest_button.is_clicked(&rl) {
-                        object_grid.push(ObjectStruct { y:snapped_y, x:snapped_x, id:current_object });
+                        if active_tab == EditorTab::Build {
+                            object_grid.push(ObjectStruct { y:snapped_y, x:snapped_x, id:current_object });
+                        } else if active_tab == EditorTab::Delete {
+                            let mut obj_index = 0;
+                            while obj_index < object_grid.len() {
+                                if object_grid[obj_index].x == snapped_x && object_grid[obj_index].y == snapped_y {
+                                    object_grid.remove(obj_index);
+                                } else {
+                                    obj_index += 1;
+                                }
+                            }
+                        }
                     }
                 }
-                
+
                 if level_options_button.is_clicked(&rl) {
                     game_state = GameState::LevelOptions;
                 }
