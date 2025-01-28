@@ -661,14 +661,6 @@ async fn main() {
                         } else {
                             touching_block_ceiling = false;
                         }
-
-                        // d.draw_rectangle_lines(
-                        //     object.x + world_offset as i32 + 30,
-                        //     object.y + 58 - player_cam_y,
-                        //     10,
-                        //     3,
-                        //     Color::BLUEVIOLET
-                        // );
                     }
 
                     if object.id == 3 {
