@@ -407,6 +407,13 @@ async fn main() {
         .expect("Failed to load ground texture");
     let discord_icon = rl.load_texture(&thread, "Resources/discord-icon.png")
         .expect("Failed to load discord icon texture");
+    
+    let difficulties: Vec<Texture2D> = vec![
+        rl.load_texture(&thread, "./Resources/null.png").expect("Failed to load difficulty face"),
+        rl.load_texture(&thread, "./Resources/difficulties/1.png").expect("Failed to load difficulty face"),
+        rl.load_texture(&thread, "./Resources/difficulties/2.png").expect("Failed to load difficulty face"),
+        rl.load_texture(&thread, "./Resources/difficulties/3.png").expect("Failed to load difficulty face")
+    ];
 
     // Audio setup
     let menu_loop_file = BufReader::new(File::open("Resources/menu-loop.mp3").expect("Failed to open MP3 file"));
@@ -1405,6 +1412,13 @@ async fn main() {
                 d.clear_background(Color::BLACK);
                 d.draw_text(&format!("{}", main_levels[current_level].name), 275, 275, 50, Color::WHITE);
                 d.draw_text(&format!("{}", main_levels[current_level].difficulty), 350, 200, 50, Color::WHITE);
+                d.draw_texture_ex(
+                    &difficulties[main_levels[current_level].difficulty as usize],
+                    Vector2::new(100.0, 100.0),
+                    0.0,
+                    0.1,
+                    Color::WHITE
+                );
             }
         }
     }
