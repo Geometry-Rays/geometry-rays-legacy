@@ -201,7 +201,8 @@ enum EditorTab {
 struct ObjectStruct {
     y: i32,
     x: i32,
-    id: u32
+    id: u32,
+    selected: bool
 }
 
 #[tokio::main]
@@ -816,7 +817,7 @@ async fn main() {
                     for object in object_list {
                         let xyid: Vec<&str> = object.split(':').collect();
                 
-                        object_grid.push(ObjectStruct { y:xyid[0].parse::<i32>().unwrap(), x:xyid[1].parse::<i32>().unwrap(), id:xyid[2].parse::<u32>().unwrap() });
+                        object_grid.push(ObjectStruct { y:xyid[0].parse::<i32>().unwrap(), x:xyid[1].parse::<i32>().unwrap(), id:xyid[2].parse::<u32>().unwrap(), selected:false });
                     }
 
                     game_state = GameState::Editor;
@@ -912,12 +913,22 @@ async fn main() {
                     // let obj_y = snapped_y;
                     if !level_options_button.is_clicked(&rl) && !editor_back.is_clicked(&rl) && !playtest_button.is_clicked(&rl) {
                         if active_tab == EditorTab::Build {
-                            object_grid.push(ObjectStruct { y:snapped_y, x:snapped_x, id:current_object });
+                            object_grid.push(ObjectStruct { y:snapped_y, x:snapped_x, id:current_object, selected:false });
                         } else if active_tab == EditorTab::Delete {
                             let mut obj_index = 0;
                             while obj_index < object_grid.len() {
                                 if object_grid[obj_index].x == snapped_x && object_grid[obj_index].y == snapped_y {
                                     object_grid.remove(obj_index);
+                                } else {
+                                    obj_index += 1;
+                                }
+                            }
+                        } else if active_tab == EditorTab::Edit {
+                            let mut obj_index = 0;
+                            while obj_index < object_grid.len() {
+                                if object_grid[obj_index].x == snapped_x && object_grid[obj_index].y == snapped_y {
+                                    object_grid[obj_index].selected = true;
+                                    obj_index += 1;
                                 } else {
                                     obj_index += 1;
                                 }
@@ -1055,7 +1066,7 @@ async fn main() {
                     for object in object_list {
                         let xyid: Vec<&str> = object.split(':').collect();
 
-                        object_grid.push(ObjectStruct { y:xyid[0].parse::<i32>().unwrap(), x:xyid[1].parse::<i32>().unwrap(), id:xyid[2].parse::<u32>().unwrap() });
+                        object_grid.push(ObjectStruct { y:xyid[0].parse::<i32>().unwrap(), x:xyid[1].parse::<i32>().unwrap(), id:xyid[2].parse::<u32>().unwrap(), selected:false });
                     }
 
                     level_music_file = BufReader::new(File::open(format!("{}", main_levels[current_level].song)).expect("Failed to open MP3 file"));
@@ -1296,7 +1307,13 @@ async fn main() {
                 for i in &object_grid {
                     let object_x = i.x as f32 - cam_pos_x as f32 * 5.0;
                     let object_y = i.y as f32 + cam_pos_y as f32 * 5.0;
-                    d.draw_texture_ex(&texture_ids.get(&i.id).unwrap(), Vector2::new(object_x, object_y), 0.0, 0.05, cc_1004);
+                    d.draw_texture_ex(
+                        &texture_ids.get(&i.id).unwrap(),
+                        Vector2::new(object_x, object_y),
+                        0.0,
+                        0.05,
+                        if i.selected { Color::GREEN } else { cc_1004 }
+                    );
                 }
 
                 // Draw ground
