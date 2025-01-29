@@ -1342,9 +1342,8 @@ async fn main() {
                 playtest_button.draw(&mut d);
 
                 if edit_not_done_yet {
-                    d.draw_text("Edit tab coming soon!", 270, 490, 40, Color::WHITE);
+                    d.draw_text("Click to select!", 270, 490, 40, Color::WHITE);
                 }
-
 
                 // Draw all the object buttons
                 if active_tab == EditorTab::Build {
