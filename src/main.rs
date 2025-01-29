@@ -312,6 +312,14 @@ async fn main() {
             song: "./Resources/main-level-songs/1.mp3".to_string(),
             data: fs::read_to_string("./save-data/main-levels/1.txt")
                 .expect("Failed to load main level")
+        },
+
+        MainLevel {
+            name: "Ultimate Destruction".to_string(),
+            difficulty: 3,
+            song: "./Resources/main-level-songs/2.mp3".to_string(),
+            data: fs::read_to_string("./save-data/main-levels/2.txt")
+                .expect("Failed to load main level")
         }
     ];
     let mut current_level = 0;
