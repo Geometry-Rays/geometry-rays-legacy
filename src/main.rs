@@ -978,6 +978,17 @@ async fn main() {
                     game_state = GameState::Playing;
                 }
 
+                if rl.is_key_pressed(KeyboardKey::KEY_DELETE) {
+                    let mut obj_index = 0;
+                    while obj_index < object_grid.len() {
+                        if object_grid[obj_index].selected {
+                            object_grid.remove(obj_index);
+                        } else {
+                            obj_index += 1;
+                        }
+                    }
+                }
+
                 been_to_editor = true;
             }
             GameState::LevelOptions => {
