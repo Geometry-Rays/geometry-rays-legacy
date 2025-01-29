@@ -989,6 +989,54 @@ async fn main() {
                     }
                 }
 
+                if rl.is_key_pressed(KeyboardKey::KEY_A) {
+                    let mut obj_index = 0;
+                    while obj_index < object_grid.len() {
+                        if object_grid[obj_index].selected {
+                            object_grid[obj_index].x -= 40;
+                            obj_index += 1;
+                        } else {
+                            obj_index += 1;
+                        }
+                    }
+                }
+
+                if rl.is_key_pressed(KeyboardKey::KEY_D) {
+                    let mut obj_index = 0;
+                    while obj_index < object_grid.len() {
+                        if object_grid[obj_index].selected {
+                            object_grid[obj_index].x += 40;
+                            obj_index += 1;
+                        } else {
+                            obj_index += 1;
+                        }
+                    }
+                }
+
+                if rl.is_key_pressed(KeyboardKey::KEY_W) {
+                    let mut obj_index = 0;
+                    while obj_index < object_grid.len() {
+                        if object_grid[obj_index].selected {
+                            object_grid[obj_index].y -= 40;
+                            obj_index += 1;
+                        } else {
+                            obj_index += 1;
+                        }
+                    }
+                }
+
+                if rl.is_key_pressed(KeyboardKey::KEY_S) {
+                    let mut obj_index = 0;
+                    while obj_index < object_grid.len() {
+                        if object_grid[obj_index].selected {
+                            object_grid[obj_index].y += 40;
+                            obj_index += 1;
+                        } else {
+                            obj_index += 1;
+                        }
+                    }
+                }
+
                 been_to_editor = true;
             }
             GameState::LevelOptions => {
