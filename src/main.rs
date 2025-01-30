@@ -965,6 +965,15 @@ async fn main() {
                 }
 
                 if editor_back.is_clicked(&rl) {
+                    let mut obj_index = 0;
+                    while obj_index < object_grid.len() {
+                        if object_grid[obj_index].selected {
+                            object_grid[obj_index].selected = false
+                        } else {
+                            obj_index += 1;
+                        }
+                    }
+
                     game_state = GameState::CreatorMenu;
                 }
 
@@ -975,6 +984,15 @@ async fn main() {
                     gravity = 0.8;
                     jump_force = -13.0;
                     current_gamemode = GameMode::Cube;
+
+                    let mut obj_index = 0;
+                    while obj_index < object_grid.len() {
+                        if object_grid[obj_index].selected {
+                            object_grid[obj_index].selected = false
+                        } else {
+                            obj_index += 1;
+                        }
+                    }
 
                     game_state = GameState::Playing;
                 }
