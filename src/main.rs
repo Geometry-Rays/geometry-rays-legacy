@@ -1389,14 +1389,28 @@ async fn main() {
                 d.draw_texture_ex(&game_bg, Vector2::new(0.0, -150.0), 0.0, 0.7, cc_1001);
 
                 for i in &object_grid {
-                    let object_x = i.x as f32 - cam_pos_x as f32 * 5.0;
-                    let object_y = i.y as f32 + cam_pos_y as f32 * 5.0;
-                    d.draw_texture_ex(
-                        &texture_ids.get(&i.id).unwrap(),
-                        Vector2::new(object_x, object_y),
+                    let object_x = i.x as f32 - cam_pos_x as f32 * 5.0 + 20.0;
+                    let object_y = i.y as f32 + cam_pos_y as f32 * 5.0 + 20.0;
+                    d.draw_texture_pro(
+                        &texture_ids.get(&i.id).unwrap(), 
+                        Rectangle::new(
+                            0.0,
+                            0.0,
+                            texture_ids.get(&i.id).unwrap().width as f32,
+                            texture_ids.get(&i.id).unwrap().width as f32
+                        ),
+                        Rectangle::new(
+                            object_x,
+                            object_y,
+                            texture_ids.get(&i.id).unwrap().width as f32 * 0.05,
+                            texture_ids.get(&i.id).unwrap().height as f32 * 0.05
+                        ),
+                        Vector2::new(
+                            texture_ids.get(&i.id).unwrap().width as f32 / 2.0 * 0.05,
+                            texture_ids.get(&i.id).unwrap().height as f32 / 2.0 * 0.05
+                        ),
                         i.rotation as f32,
-                        0.05,
-                        if i.selected { Color::GREEN } else { cc_1004 }
+                        Color::WHITE
                     );
                 }
 
