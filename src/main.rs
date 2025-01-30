@@ -914,11 +914,17 @@ async fn main() {
                     // let obj_y = snapped_y;
                     if !level_options_button.is_clicked(&rl) && !editor_back.is_clicked(&rl) && !playtest_button.is_clicked(&rl) {
                         if active_tab == EditorTab::Build {
-                            object_grid.push(ObjectStruct { y:snapped_y, x:snapped_x, id:current_object, rotation:0, selected:false });
+                            object_grid.push(ObjectStruct {
+                                y: if snapped_y < 0 { snapped_y - 40 } else { snapped_y },
+                                x: if snapped_x < 0 { snapped_x - 40 } else { snapped_x },
+                                id: current_object,
+                                rotation: 0,
+                                selected: false 
+                            });
                         } else if active_tab == EditorTab::Delete {
                             let mut obj_index = 0;
                             while obj_index < object_grid.len() {
-                                if object_grid[obj_index].x == snapped_x && object_grid[obj_index].y == snapped_y {
+                                if object_grid[obj_index].x == if snapped_x < 0 { snapped_x - 40 } else { snapped_x } && object_grid[obj_index].y == if snapped_y < 0 { snapped_y - 40 } else { snapped_y } {
                                     object_grid.remove(obj_index);
                                 } else {
                                     obj_index += 1;
@@ -927,7 +933,7 @@ async fn main() {
                         } else if active_tab == EditorTab::Edit {
                             let mut obj_index = 0;
                             while obj_index < object_grid.len() {
-                                if object_grid[obj_index].x == snapped_x && object_grid[obj_index].y == snapped_y {
+                                if object_grid[obj_index].x == if snapped_x < 0 { snapped_x - 40 } else { snapped_x } && object_grid[obj_index].y == if snapped_y < 0 { snapped_y - 40 } else { snapped_y } {
                                     object_grid[obj_index].selected = true;
                                     obj_index += 1;
                                 } else {
