@@ -926,6 +926,7 @@ async fn main() {
                             while obj_index < object_grid.len() {
                                 if object_grid[obj_index].x == if snapped_x < 0 { snapped_x - 40 } else { snapped_x } && object_grid[obj_index].y == if snapped_y < 0 { snapped_y - 40 } else { snapped_y } {
                                     object_grid.remove(obj_index);
+                                    break;
                                 } else {
                                     obj_index += 1;
                                 }
@@ -935,7 +936,7 @@ async fn main() {
                             while obj_index < object_grid.len() {
                                 if object_grid[obj_index].x == if snapped_x < 0 { snapped_x - 40 } else { snapped_x } && object_grid[obj_index].y == if snapped_y < 0 { snapped_y - 40 } else { snapped_y } {
                                     object_grid[obj_index].selected = true;
-                                    obj_index += 1;
+                                    break;
                                 } else {
                                     obj_index += 1;
                                 }
