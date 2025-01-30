@@ -816,9 +816,9 @@ async fn main() {
                 
                     let object_list: Vec<&str> = _object_string.split(';').collect();
                     for object in object_list {
-                        let xyid: Vec<&str> = object.split(':').collect();
+                        let xyrid: Vec<&str> = object.split(':').collect();
                 
-                        object_grid.push(ObjectStruct { y:xyid[0].parse::<i32>().unwrap(), x:xyid[1].parse::<i32>().unwrap(), rotation:0, id:xyid[2].parse::<u32>().unwrap(), selected:false });
+                        object_grid.push(ObjectStruct { y:xyrid[0].parse::<i32>().unwrap(), x:xyrid[1].parse::<i32>().unwrap(), rotation:xyrid[2].parse::<i16>().unwrap(), id:xyrid[3].parse::<u32>().unwrap(), selected:false });
                     }
 
                     game_state = GameState::Editor;
@@ -1172,9 +1172,9 @@ async fn main() {
 
                     let object_list: Vec<&str> = _object_string.split(';').collect();
                     for object in object_list {
-                        let xyid: Vec<&str> = object.split(':').collect();
-
-                        object_grid.push(ObjectStruct { y:xyid[0].parse::<i32>().unwrap(), x:xyid[1].parse::<i32>().unwrap(), rotation:0, id:xyid[2].parse::<u32>().unwrap(), selected:false });
+                        let xyrid: Vec<&str> = object.split(':').collect();
+                
+                        object_grid.push(ObjectStruct { y:xyrid[0].parse::<i32>().unwrap(), x:xyrid[1].parse::<i32>().unwrap(), rotation:xyrid[2].parse::<i16>().unwrap(), id:xyrid[3].parse::<u32>().unwrap(), selected:false });
                     }
 
                     level_music_file = BufReader::new(File::open(format!("{}", main_levels[current_level].song)).expect("Failed to open MP3 file"));
@@ -1603,7 +1603,7 @@ async fn main() {
         ).to_string();
 
         for object in object_grid {
-            level_string.push_str( &format!("{}:{}:{};", object.y, object.x, object.id));
+            level_string.push_str( &format!("{}:{}:{}:{};", object.y, object.x, object.rotation, object.id));
         }
 
         level_string.pop();
