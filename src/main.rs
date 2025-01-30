@@ -1397,7 +1397,7 @@ async fn main() {
                             0.0,
                             0.0,
                             texture_ids.get(&i.id).unwrap().width as f32,
-                            texture_ids.get(&i.id).unwrap().width as f32
+                            texture_ids.get(&i.id).unwrap().height as f32
                         ),
                         Rectangle::new(
                             object_x,
