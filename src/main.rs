@@ -654,7 +654,12 @@ async fn main() {
                         });
                     }
 
-                    if object.id == 2 {
+                    if object.id == 2 ||
+                    object.id == 10 ||
+                    object.id == 11 ||
+                    object.id == 12 ||
+                    object.id == 13 ||
+                    object.id == 14 {
                         kill_player |= small_player.check_collision_recs(&Rectangle {
                             x: object.x as f32 + world_offset,
                             y: object.y as f32 + 10.0 - player_cam_y as f32,
@@ -1362,7 +1367,12 @@ async fn main() {
                             );
                         }
 
-                        if object.id == 2 {
+                        if object.id == 2 ||
+                        object.id == 10 ||
+                        object.id == 11 ||
+                        object.id == 12 ||
+                        object.id == 13 ||
+                        object.id == 14 {
                             d.draw_rectangle_lines(
                                 object.x + world_offset as i32,
                                 object.y + 10 - player_cam_y,
