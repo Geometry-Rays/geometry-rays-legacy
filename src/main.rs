@@ -275,7 +275,7 @@ async fn main() {
     let grid_button = Button::new(0.0, 0.0, 800.0, 400.0, "", 20, false);
     let mut editor_back = Button::new(675.0, 20.0, 100.0, 50.0, "Back to Menu", 13, false);
     let mut level_options_button = Button::new(675.0, 90.0, 100.0, 50.0, "Level Options", 13, false);
-    let mut playtest_button = Button::new(20.0, 100.0, 75.0, 75.0, "Playtest", 20, false);
+    let mut playtest_button = Button::new(20.0, 150.0, 75.0, 75.0, "Playtest", 20, false);
 
     let mut level_options_back = Button::new(20.0, 20.0, 200.0, 50.0, "Back to Editor", 24, false);
     let red_bg_slider = Button::new(470.0, 100.0, 10.0, 150.0, "", 20, false);
