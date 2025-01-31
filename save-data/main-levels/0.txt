@@ -1,1 +1,1 @@
-version:ALPHA;name:Plummet;desc:testing level loading;c1001:0,0,50;c1002:0,0,100;c1004:255,255,255;bg:1;grnd:1;;;480:320:0:1;440:640:0:2;400:960:0:3;400:320:0:4
+version:BETA;name:Plummet;desc:testing level loading;c1001:0,0,50;c1002:0,0,100;c1004:255,255,255;bg:1;grnd:1;;;480:320:0:1;440:640:0:2;400:960:0:3;400:320:0:4
