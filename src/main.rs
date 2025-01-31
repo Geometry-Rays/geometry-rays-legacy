@@ -851,6 +851,8 @@ async fn main() {
                             ground_red = colors[0].parse::<i32>().unwrap();
                             ground_green = colors[1].parse::<i32>().unwrap();
                             ground_blue = colors[2].parse::<i32>().unwrap();
+                        } else if key == "song" {
+                            current_level = value.parse::<usize>().unwrap();
                         }
                     }
                 
@@ -1065,6 +1067,12 @@ async fn main() {
                             obj_index += 1;
                         }
                     }
+
+                    level_music_file = BufReader::new(File::open(format!("{}", main_levels[current_level].song)).expect("Failed to open MP3 file"));
+                    _level_music = Decoder::new(level_music_file).expect("Failed to decode MP3 file");
+                    sink.stop();
+                    sink.append(_level_music);
+                    sink.play();
 
                     game_state = GameState::Playing;
                 }
@@ -1674,7 +1682,9 @@ async fn main() {
 
     if been_to_editor {
         level_string = format!(
-            "version:BETA;name:hi;desc:testing level loading;c1001:{},{},{};c1002:{},{},{};c1004:255,255,255;bg:1;grnd:1;;;",
+            "version:BETA;name:hi;desc:testing level loading;song:{};c1001:{},{},{};c1002:{},{},{};c1004:255,255,255;bg:1;grnd:1;;;",
+
+            current_level,
 
             bg_red,
             bg_green,

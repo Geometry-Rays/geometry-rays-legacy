@@ -1,1 +1,1 @@
-version:BETA;name:hi;desc:testing level loading;c1001:0,0,50;c1002:0,0,100;c1004:255,255,255;bg:1;grnd:1;;;480:320:0:1;440:640:0:2;480:920:0:3
+version:BETA;name:hi;desc:testing level loading;song:0;c1001:0,0,50;c1002:0,0,100;c1004:255,255,255;bg:1;grnd:1;;;480:320:0:1;440:640:0:2;480:920:0:3
