@@ -428,7 +428,7 @@ async fn main() {
     // But custom color channels dont exist yet
     let mut cc_1001 = Color { r:bg_red, g:bg_green, b:bg_blue, a:255 };
     let mut cc_1002 = Color { r:ground_red as u8, g:ground_green as u8, b:ground_blue as u8, a:255 };
-    let cc_1003 = Color::BLUE;
+    let mut cc_1003 = Color::LIME;
     let cc_1004 = Color::WHITE;
 
     // Load textures
@@ -779,8 +779,10 @@ async fn main() {
                         }) {
                             if object.id == 8 {
                                 current_gamemode = GameMode::Cube;
+                                cc_1003 = Color::LIME;
                             } else {
                                 current_gamemode = GameMode::Ship;
+                                cc_1003 = Color::MAGENTA;
                             }
                         }
                     }
