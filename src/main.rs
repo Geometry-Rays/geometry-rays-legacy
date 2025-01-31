@@ -825,8 +825,15 @@ async fn main() {
                         let value = key_value[1];
                 
                         if key == "version" {
-                            if value != "ALPHA" {
-                                println!("Level version not recognized");
+                            if value == "ALPHA" {
+                                println!("Old level version detected.");
+                                println!("Please pick a level thats a newer version as that version isnt supported anymore.");
+                                break;
+                            } else if value == "BETA" {
+                                println!("Loading level...");
+                            } else {
+                                println!("Level version not recognized.");
+                                println!("Is this level made in a newer version?");
                                 break;
                             }
                         } else if key == "c1001" {
@@ -1207,8 +1214,15 @@ async fn main() {
                         let value = key_value[1];
 
                         if key == "version" {
-                            if value != "ALPHA" {
-                                println!("Level version not recognized");
+                            if value == "ALPHA" {
+                                println!("Old level version detected.");
+                                println!("Please pick a level thats a newer version as that version isnt supported anymore.");
+                                break;
+                            } else if value == "BETA" {
+                                println!("Loading level...");
+                            } else {
+                                println!("Level version not recognized.");
+                                println!("Is this level made in a newer version?");
                                 break;
                             }
                         } else if key == "c1001" {
@@ -1657,7 +1671,7 @@ async fn main() {
 
     if been_to_editor {
         level_string = format!(
-            "version:ALPHA;name:hi;desc:testing level loading;c1001:{},{},{};c1002:{},{},{};c1004:255,255,255;bg:1;grnd:1;;;",
+            "version:BETA;name:hi;desc:testing level loading;c1001:{},{},{};c1002:{},{},{};c1004:255,255,255;bg:1;grnd:1;;;",
 
             bg_red,
             bg_green,
