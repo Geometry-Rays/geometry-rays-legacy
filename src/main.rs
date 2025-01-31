@@ -818,6 +818,7 @@ async fn main() {
                     parts = level_string.split(";;;").collect();
                     _level_metadata = parts[0];
                     _object_string = parts[1];
+                    object_grid.clear();
                     let metadata_pairs: Vec<&str> = _level_metadata.split(';').collect();
                     for pair in metadata_pairs {
                         let key_value: Vec<&str> = pair.split(':').collect();
