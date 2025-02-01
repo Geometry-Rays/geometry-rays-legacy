@@ -275,6 +275,7 @@ async fn main() {
     let grid_button = Button::new(0.0, 0.0, 800.0, 400.0, "", 20, false);
     let mut editor_back = Button::new(675.0, 20.0, 100.0, 50.0, "Back to Menu", 13, false);
     let mut level_options_button = Button::new(675.0, 90.0, 100.0, 50.0, "Level Options", 13, false);
+    let mut level_save_button = Button::new(675.0, 160.0, 100.0, 50.0, "Save", 20, false);
     let mut playtest_button = Button::new(20.0, 150.0, 75.0, 75.0, "Playtest", 20, false);
 
     let mut level_options_back = Button::new(20.0, 20.0, 200.0, 50.0, "Back to Editor", 24, false);
@@ -880,6 +881,7 @@ async fn main() {
                 delete_tab_button.update(&rl, delta_time);
                 level_options_button.update(&rl, delta_time);
                 editor_back.update(&rl, delta_time);
+                level_save_button.update(&rl, delta_time);
                 playtest_button.update(&rl, delta_time);
                 obj1_button.update(&rl, delta_time);
                 obj2_button.update(&rl, delta_time);
@@ -979,7 +981,7 @@ async fn main() {
                 else if grid_button.is_clicked(&rl) {
                     // let obj_x = snapped_x;
                     // let obj_y = snapped_y;
-                    if !level_options_button.is_clicked(&rl) && !editor_back.is_clicked(&rl) && !playtest_button.is_clicked(&rl) {
+                    if !level_options_button.is_clicked(&rl) && !editor_back.is_clicked(&rl) && !playtest_button.is_clicked(&rl) && !level_save_button.is_clicked(&rl) {
                         if active_tab == EditorTab::Build {
                             object_grid.push(ObjectStruct {
                                 y: if snapped_y < 0 { snapped_y - 40 } else { snapped_y },
@@ -1049,6 +1051,32 @@ async fn main() {
                     }
 
                     game_state = GameState::CreatorMenu;
+                }
+
+                if level_save_button.is_clicked(&rl) {
+                    level_string = format!(
+                        "version:BETA;name:hi;desc:testing level loading;song:{};c1001:{},{},{};c1002:{},{},{};c1004:255,255,255;bg:1;grnd:1;;;",
+
+                        current_level,
+
+                        bg_red,
+                        bg_green,
+                        bg_blue,
+
+                        ground_red,
+                        ground_green,
+                        ground_blue
+                    ).to_string();
+
+                    for object in &object_grid {
+                        level_string.push_str( &format!("{}:{}:{}:{};", object.y, object.x, object.rotation, object.id));
+                    }
+
+                    level_string.pop();
+
+                    let write_result = fs::write("./save-data/levels/level.txt", &level_string);
+
+                    println!("{:?}", write_result);
                 }
 
                 if playtest_button.is_clicked(&rl) {
@@ -1567,6 +1595,7 @@ async fn main() {
                 delete_tab_button.draw(&mut d);
                 level_options_button.draw(&mut d);
                 editor_back.draw(&mut d);
+                level_save_button.draw(&mut d);
                 playtest_button.draw(&mut d);
 
                 if edit_not_done_yet {
