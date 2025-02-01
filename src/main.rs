@@ -1086,6 +1086,7 @@ async fn main() {
                     gravity = 0.8;
                     jump_force = -13.0;
                     current_gamemode = GameMode::Cube;
+                    cc_1003 = Color::LIME;
 
                     let mut obj_index = 0;
                     while obj_index < object_grid.len() {
@@ -1298,6 +1299,7 @@ async fn main() {
                     gravity = 0.8;
                     jump_force = -13.0;
                     current_gamemode = GameMode::Cube;
+                    cc_1003 = Color::LIME;
 
                     game_state = GameState::Playing;
                 }
