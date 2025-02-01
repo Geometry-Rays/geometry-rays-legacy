@@ -861,7 +861,13 @@ async fn main() {
                     for object in object_list {
                         let xyrid: Vec<&str> = object.split(':').collect();
                 
-                        object_grid.push(ObjectStruct { y:xyrid[0].parse::<i32>().unwrap(), x:xyrid[1].parse::<i32>().unwrap(), rotation:xyrid[2].parse::<i16>().unwrap(), id:xyrid[3].parse::<u32>().unwrap(), selected:false });
+                        object_grid.push(ObjectStruct {
+                            y:xyrid[0].parse::<i32>().unwrap(),
+                            x:xyrid[1].parse::<i32>().unwrap(),
+                            rotation:xyrid[2].parse::<i16>().unwrap(),
+                            id:xyrid[3].parse::<u32>().unwrap(),
+                            selected:false
+                        });
                     }
 
                     game_state = GameState::Editor;
@@ -1284,7 +1290,13 @@ async fn main() {
                     for object in object_list {
                         let xyrid: Vec<&str> = object.split(':').collect();
                 
-                        object_grid.push(ObjectStruct { y:xyrid[0].parse::<i32>().unwrap(), x:xyrid[1].parse::<i32>().unwrap(), rotation:xyrid[2].parse::<i16>().unwrap(), id:xyrid[3].parse::<u32>().unwrap(), selected:false });
+                        object_grid.push(ObjectStruct {
+                            y:xyrid[0].parse::<i32>().unwrap(),
+                            x:xyrid[1].parse::<i32>().unwrap(),
+                            rotation:xyrid[2].parse::<i16>().unwrap(),
+                            id:xyrid[3].parse::<u32>().unwrap(),
+                            selected:false
+                        });
                     }
 
                     level_music_file = BufReader::new(File::open(format!("{}", main_levels[current_level].song)).expect("Failed to open MP3 file"));
