@@ -12,6 +12,8 @@
 
  Thats it! Well you have to run it of course but like thats obvious.
 
+ If you want to build an entire release with builds for multiple platforms run the build-release.sh file!
+
  If you get issues then let us know in the discord!
 
 # Socials
