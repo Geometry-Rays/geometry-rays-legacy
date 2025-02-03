@@ -19,6 +19,7 @@ enum GameState {
     Editor,
     LevelOptions,
     LevelSelect,
+    LevelComplete,
 }
 
 struct Button {
@@ -793,6 +794,17 @@ async fn main() {
                             }
                         }
                     }
+
+                    if object.id == 15 {
+                        if player.check_collision_recs(&Rectangle {
+                            x: object.x as f32 + world_offset,
+                            y: object.y as f32 - player_cam_y as f32,
+                            width: 40.0,
+                            height: 40.0
+                        }) {
+                            game_state = GameState::LevelComplete;
+                        }
+                    }
                 }
 
                 if kill_player {
@@ -1338,6 +1350,9 @@ async fn main() {
                     game_state = GameState::Menu;
                 }
             }
+            GameState::LevelComplete => {
+
+            }
         }
 
         // Rendering
@@ -1739,6 +1754,18 @@ async fn main() {
                     Vector2::new(100.0, 100.0),
                     0.0,
                     0.1,
+                    Color::WHITE
+                );
+            }
+            GameState::LevelComplete => {
+                d.clear_background(Color::WHITE);
+                d.draw_texture_ex(&menu_bg, Vector2::new(0.0, -100.0), 0.0, 0.8, Color::DARKGREEN);
+
+                d.draw_text(
+                    "Level Complete!",
+                    200,
+                    300,
+                    40,
                     Color::WHITE
                 );
             }
