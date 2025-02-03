@@ -723,6 +723,7 @@ async fn main() {
                             } else {
                                 velocity_y = 15.0
                             }
+                            is_on_ground = false;
                         }
                     }
 
