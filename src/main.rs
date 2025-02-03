@@ -1362,7 +1362,9 @@ async fn main() {
                 }
             }
             GameState::LevelComplete => {
-
+                if rl.is_key_pressed(KeyboardKey::KEY_B) {
+                    game_state = GameState::Menu;
+                }
             }
         }
 
