@@ -343,6 +343,7 @@ async fn main() {
     let mut current_gamemode = GameMode::Cube;
     let mut player_cam_y: i32 = 0;
     let mut touching_block_ceiling: bool = false;
+    let mut stars: u32 = 0;
 
     texture_ids.insert(1, &spike_texture);
     texture_ids.insert(2, &block_texture);
@@ -802,6 +803,7 @@ async fn main() {
                             width: 40.0,
                             height: 40.0
                         }) {
+                            stars += main_levels[current_level].difficulty as u32;
                             game_state = GameState::LevelComplete;
                         }
                     }
@@ -1369,6 +1371,7 @@ async fn main() {
 
                 d.draw_text(&format!("Version: {}", version), 10, 10, 15, Color::WHITE);
                 d.draw_text(&format!("Latest Version: {}", *latest_version.lock().unwrap()), 10, 30, 15, Color::WHITE);
+                d.draw_text(&format!("Stars: {}", stars), 10, 50, 15, Color::WHITE);
 
                 d.draw_rectangle_pro(
                     Rectangle::new(360.0, 60.0, 100.0, 100.0),
