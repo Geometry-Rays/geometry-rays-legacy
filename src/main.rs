@@ -381,6 +381,7 @@ async fn main() {
     let mut _object_string = parts[1];
     let mut been_to_editor: bool = false;
     let mut current_song: u8 = 0;
+    let mut song_selected: bool = false;
 
     let mut red_ground_slider_pos: i32 = 355;
     let mut green_ground_slider_pos: i32  = 355;
@@ -874,7 +875,9 @@ async fn main() {
                             ground_green = colors[1].parse::<i32>().unwrap();
                             ground_blue = colors[2].parse::<i32>().unwrap();
                         } else if key == "song" {
-                            current_song = value.parse::<u8>().unwrap();
+                            if !song_selected {
+                                current_song = value.parse::<u8>().unwrap();
+                            }
                         }
                     }
                 
@@ -1355,6 +1358,7 @@ async fn main() {
 
                 if rl.is_key_pressed(KeyboardKey::KEY_S) {
                     current_song = current_level as u8;
+                    song_selected = true;
                 }
             }
             GameState::LevelComplete => {
