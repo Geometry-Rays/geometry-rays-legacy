@@ -380,6 +380,7 @@ async fn main() {
     let mut _level_metadata = parts[0];
     let mut _object_string = parts[1];
     let mut been_to_editor: bool = false;
+    let mut current_song: u8 = 0;
 
     let mut red_ground_slider_pos: i32 = 355;
     let mut green_ground_slider_pos: i32  = 355;
@@ -873,7 +874,7 @@ async fn main() {
                             ground_green = colors[1].parse::<i32>().unwrap();
                             ground_blue = colors[2].parse::<i32>().unwrap();
                         } else if key == "song" {
-                            current_level = value.parse::<usize>().unwrap();
+                            current_song = value.parse::<u8>().unwrap();
                         }
                     }
                 
@@ -1088,7 +1089,7 @@ async fn main() {
                     level_string = format!(
                         "version:BETA;name:hi;desc:testing level loading;song:{};c1001:{},{},{};c1002:{},{},{};c1004:255,255,255;bg:1;grnd:1;;;",
 
-                        current_level,
+                        current_song,
 
                         bg_red,
                         bg_green,
@@ -1128,7 +1129,7 @@ async fn main() {
                         }
                     }
 
-                    level_music_file = BufReader::new(File::open(format!("{}", main_levels[current_level].song)).expect("Failed to open MP3 file"));
+                    level_music_file = BufReader::new(File::open(format!("{}", main_levels[current_song as usize].song)).expect("Failed to open MP3 file"));
                     _level_music = Decoder::new(level_music_file).expect("Failed to decode MP3 file");
                     sink.stop();
                     sink.append(_level_music);
@@ -1350,6 +1351,10 @@ async fn main() {
 
                 if rl.is_key_pressed(KeyboardKey::KEY_B) {
                     game_state = GameState::Menu;
+                }
+
+                if rl.is_key_pressed(KeyboardKey::KEY_S) {
+                    current_song = current_level as u8;
                 }
             }
             GameState::LevelComplete => {
@@ -1779,7 +1784,7 @@ async fn main() {
         level_string = format!(
             "version:BETA;name:hi;desc:testing level loading;song:{};c1001:{},{},{};c1002:{},{},{};c1004:255,255,255;bg:1;grnd:1;;;",
 
-            current_level,
+            current_song,
 
             bg_red,
             bg_green,
