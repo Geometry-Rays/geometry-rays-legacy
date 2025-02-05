@@ -1828,6 +1828,16 @@ async fn main() {
         println!("{:?}", write_result);
     }
 
+    let save_string = format!(
+        "stars:{}",
+
+        stars
+    );
+
+    let write_save_result = fs::write("./save-data/save.txt", save_string);
+
+    println!("{:?}", write_save_result);
+
     // Print statements to make unused variable warnings go away because rust is stupid
     println!("{}", on_orb);
     println!("{:?}", cc_1001);
