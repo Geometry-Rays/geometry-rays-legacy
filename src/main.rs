@@ -346,6 +346,8 @@ async fn main() {
     let mut player_cam_y: i32 = 0;
     let mut touching_block_ceiling: bool = false;
     let mut stars: u32 = 0;
+    let save_data = fs::read_to_string("./save-data/save.txt")
+        .expect("Failed to read save file");
 
     texture_ids.insert(1, &spike_texture);
     texture_ids.insert(2, &block_texture);
@@ -480,6 +482,14 @@ async fn main() {
         icon_size
     );
 
+    let save_pairs: Vec<&str> = save_data.split(";").collect();
+    for pair in save_pairs {
+        let key_value: Vec<&str> = pair.split(":").collect();
+
+        if key_value[0] == "stars" {
+            stars = key_value[1].parse::<u32>().unwrap();
+        }
+    }
 
     while !rl.window_should_close() {
         let space_down = rl.is_key_down(KeyboardKey::KEY_SPACE);
