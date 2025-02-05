@@ -582,29 +582,29 @@ async fn main() {
                     if !touching_block_ceiling {
                         if mouse_down || space_down {
                             if gravity == 0.8 {
-                                for _ in 0..10 {
+                                for _ in 0..15 {
                                     if velocity_y > -10.0 {
-                                        velocity_y -= 0.1
+                                        velocity_y -= 0.05
                                     }
                                 }
                             } else {
-                                for _ in 0..10 {
+                                for _ in 0..15 {
                                     if velocity_y < 10.0 {
-                                        velocity_y += 0.1
+                                        velocity_y += 0.05
                                     }
                                 }
                             }
                         } else {
                             if gravity == 0.8 {
-                                for _ in 0..10 {
+                                for _ in 0..15 {
                                     if velocity_y < 10.0 {
-                                        velocity_y += 0.1
+                                        velocity_y += 0.05
                                     }
                                 }
                             } else {
-                                for _ in 0..10 {
+                                for _ in 0..15 {
                                     if velocity_y > -10.0 {
-                                        velocity_y -= 0.1
+                                        velocity_y -= 0.05
                                     }
                                 }
                             }
