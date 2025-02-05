@@ -290,6 +290,8 @@ async fn main() {
     let green_ground_slider = Button::new(595.0, 380.0, 10.0, 150.0, "", 20, false);
     let blue_ground_slider = Button::new(720.0, 380.0, 10.0, 150.0, "", 20, false);
 
+    let mut level_complete_back_button = Button::new(300.0, 320.0, 200.0, 50.0, "Back To Menu", 24, false);
+
     // Variables for the urls since tor urls are long af
     let tor_url = "http://georays.yuoqw7ywmixj55zxljkhqvcwunovze32df7pqemwacfaq2itqefbixad.onion/php-code/".to_string();
     let latest_version_url: String = format!("{}get-latest-version.php", tor_url).to_string();
@@ -1362,7 +1364,9 @@ async fn main() {
                 }
             }
             GameState::LevelComplete => {
-                if rl.is_key_pressed(KeyboardKey::KEY_B) {
+                level_complete_back_button.update(&rl, delta_time);
+
+                if level_complete_back_button.is_pressed {
                     game_state = GameState::Menu;
                 }
             }
@@ -1777,11 +1781,13 @@ async fn main() {
 
                 d.draw_text(
                     "Level Complete!",
-                    200,
-                    300,
-                    40,
+                    250,
+                    150,
+                    50,
                     Color::WHITE
                 );
+
+                level_complete_back_button.draw(&mut d);
             }
         }
     }
