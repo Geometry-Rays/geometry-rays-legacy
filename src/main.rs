@@ -180,6 +180,7 @@ struct MainLevel {
     name: String,
     difficulty: u8,
     song: String,
+    artist: String,
     data: String
 }
 
@@ -320,6 +321,7 @@ async fn main() {
             name: "Plummet".to_string(),
             difficulty: 1,
             song: "./Resources/main-level-songs/0.mp3".to_string(),
+            artist: "1f1n1ty".to_string(),
             data: fs::read_to_string("./save-data/main-levels/0.txt")
                 .expect("Failed to load main level")
         },
@@ -328,6 +330,7 @@ async fn main() {
             name: "Color Blockade".to_string(),
             difficulty: 3,
             song: "./Resources/main-level-songs/1.mp3".to_string(),
+            artist: "Waterflame".to_string(),
             data: fs::read_to_string("./save-data/main-levels/1.txt")
                 .expect("Failed to load main level")
         },
@@ -336,6 +339,7 @@ async fn main() {
             name: "Ultimate Destruction".to_string(),
             difficulty: 3,
             song: "./Resources/main-level-songs/2.mp3".to_string(),
+            artist: "TMM43".to_string(),
             data: fs::read_to_string("./save-data/main-levels/2.txt")
                 .expect("Failed to load main level")
         }
@@ -1782,6 +1786,7 @@ async fn main() {
                 d.clear_background(Color::BLACK);
                 d.draw_text(&format!("{}", main_levels[current_level].name), 275, 275, 50, Color::WHITE);
                 d.draw_text(&format!("{}", main_levels[current_level].difficulty), 350, 200, 50, Color::WHITE);
+                d.draw_text(&format!("{}", main_levels[current_level].artist), 330, 500, 50, Color::WHITE);
                 d.draw_texture_ex(
                     &difficulties[main_levels[current_level].difficulty as usize],
                     Vector2::new(100.0, 100.0),
