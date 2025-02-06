@@ -698,12 +698,12 @@ async fn main() {
                             is_on_ground = true;
                             rotation = 0.0;
                             if !mouse_down {
-                                player.y = object.y as f32 - 21.0;
+                                player.y = object.y as f32 - 21.0 - player_cam_y as f32;
                                 velocity_y = 0.0;
                             } else {
                                 if gravity < 0.0 {
                                     touching_block_ceiling = true;
-                                    player.y = object.y as f32 - 21.0;
+                                    player.y = object.y as f32 - 21.0 - player_cam_y as f32;
                                 }
                             }
                         } else {
@@ -719,12 +719,12 @@ async fn main() {
                             is_on_ground = true;
                             rotation = 0.0;
                             if !mouse_down {
-                                player.y = object.y as f32 + 61.0;
+                                player.y = object.y as f32 + 61.0 - player_cam_y as f32;
                                 velocity_y = 0.0;
                             } else {
                                 if gravity > 0.0 {
                                     touching_block_ceiling = true;
-                                    player.y = object.y as f32 + 61.0;
+                                    player.y = object.y as f32 + 61.0 - player_cam_y as f32;
                                 }
                             }
                         } else {
