@@ -352,6 +352,7 @@ async fn main() {
     let mut stars: u32 = 0;
     let save_data = fs::read_to_string("./save-data/save.txt")
         .expect("Failed to read save file");
+    let mut in_custom_level: bool = false;
 
     texture_ids.insert(1, &spike_texture);
     texture_ids.insert(2, &block_texture);
@@ -823,7 +824,9 @@ async fn main() {
                             width: 40.0,
                             height: 40.0
                         }) {
-                            stars += main_levels[current_level].difficulty as u32;
+                            if !in_custom_level {
+                                stars += main_levels[current_level].difficulty as u32;
+                            }
                             game_state = GameState::LevelComplete;
                         }
                     }
@@ -1145,6 +1148,7 @@ async fn main() {
                     jump_force = -13.0;
                     current_gamemode = GameMode::Cube;
                     cc_1003 = Color::LIME;
+                    in_custom_level = true;
 
                     let mut obj_index = 0;
                     while obj_index < object_grid.len() {
@@ -1364,6 +1368,7 @@ async fn main() {
                     jump_force = -13.0;
                     current_gamemode = GameMode::Cube;
                     cc_1003 = Color::LIME;
+                    in_custom_level = false;
 
                     game_state = GameState::Playing;
                 }
