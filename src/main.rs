@@ -1791,7 +1791,7 @@ async fn main() {
                 d.draw_text(&format!("{}", main_levels[current_level].artist), 330, 500, 50, Color::WHITE);
                 d.draw_texture_ex(
                     &difficulties[main_levels[current_level].difficulty as usize],
-                    Vector2::new(100.0, 100.0),
+                    Vector2::new(210.0, 120.0),
                     0.0,
                     0.1,
                     Color::WHITE
@@ -1799,9 +1799,9 @@ async fn main() {
 
                 d.draw_texture_ex(
                     &star_texture,
-                    Vector2::new(150.0, 50.0),
+                    Vector2::new(275.0, 160.0),
                     0.0,
-                    0.2,
+                    0.13,
                     Color::WHITE
                 );
             }
