@@ -3,13 +3,11 @@ use rodio::{Decoder, OutputStream, Sink, Source};
 use std::fs::File;
 use std::fs;
 use std::io::BufReader;
-use std::process::exit;
 use webbrowser;
 use std::collections::HashMap;
 
 use reqwest::Client;
 use reqwest::Proxy;
-use tokio::net::TcpStream;
 
 enum GameState {
     Menu,
@@ -150,12 +148,13 @@ impl Button {
 }
 
 // Check to see if the tor protocol is running
-async fn is_tor_running() -> bool {
-    match TcpStream::connect("127.0.0.1:9050").await {
-        Ok(_) => true,
-        Err(_) => false,
-    }
-}
+// This has been removed
+// async fn is_tor_running() -> bool {
+//     match TcpStream::connect("127.0.0.1:9050").await {
+//         Ok(_) => true,
+//         Err(_) => false,
+//     }
+// }
 
 async fn make_request(url: String) -> String {
     let proxy = Proxy::all("socks5h://127.0.0.1:9050")
@@ -210,12 +209,14 @@ struct ObjectStruct {
 
 #[tokio::main]
 async fn main() {
-    if !is_tor_running().await {
-        println!("Tor is not running. Please start tor");
-        exit(1)
-    } else {
-        println!("Tor is already running.");
-    }
+    // I removed this check because the requests run in a seperate thread now.
+    // 
+    // if !is_tor_running().await {
+    //     println!("Tor is not running. Please start tor");
+    //     exit(1)
+    // } else {
+    //     println!("Tor is already running.");
+    // }
 
     let (mut rl, thread) = raylib::init()
         .size(800, 600)
