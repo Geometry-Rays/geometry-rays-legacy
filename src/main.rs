@@ -755,7 +755,7 @@ async fn main() {
                             width: 40.0,
                             height: 40.0
                         }) {
-                            on_orb = true;
+                            // on_orb = true;
                             if on_orb && mouse_down {
                                 if gravity > 0.0 {
                                     velocity_y = -13.0;
@@ -829,6 +829,11 @@ async fn main() {
 
                 if rl.is_key_pressed(KeyboardKey::KEY_B) {
                     game_state = GameState::LevelSelect;
+                }
+
+                if rl.is_mouse_button_released(MouseButton::MOUSE_BUTTON_LEFT) ||
+                rl.is_key_released(KeyboardKey::KEY_SPACE) {
+                    on_orb = true
                 }
 
                 reset_menu_music = true;
