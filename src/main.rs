@@ -460,6 +460,8 @@ async fn main() {
         .expect("Failed to load ground texture");
     let discord_icon = rl.load_texture(&thread, "Resources/discord-icon.png")
         .expect("Failed to load discord icon texture");
+    let star_texture = rl.load_texture(&thread, "Resources/star.png")
+        .expect("Failed to load star texture");
     
     let difficulties: Vec<Texture2D> = vec![
         rl.load_texture(&thread, "./Resources/null.png").expect("Failed to load difficulty face"),
@@ -1792,6 +1794,14 @@ async fn main() {
                     Vector2::new(100.0, 100.0),
                     0.0,
                     0.1,
+                    Color::WHITE
+                );
+
+                d.draw_texture_ex(
+                    &star_texture,
+                    Vector2::new(150.0, 50.0),
+                    0.0,
+                    0.2,
                     Color::WHITE
                 );
             }
