@@ -634,7 +634,11 @@ async fn main() {
                     is_on_ground = true;
                     rotation = 0.0;
                 } else {
-                    rotation += 5.0;
+                    if gravity > 0.0 {
+                        rotation += 5.0;
+                    } else {
+                        rotation -= 5.0;
+                    }
                 }
 
                 if player.y >= 501.0 {
