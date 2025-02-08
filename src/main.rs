@@ -338,7 +338,7 @@ async fn main() {
 
         MainLevel {
             name: "Ultimate Destruction".to_string(),
-            difficulty: 3,
+            difficulty: 2,
             song: "./Resources/main-level-songs/2.mp3".to_string(),
             artist: "TMM43".to_string(),
             data: fs::read_to_string("./save-data/main-levels/2.txt")
