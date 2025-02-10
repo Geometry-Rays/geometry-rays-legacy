@@ -1080,6 +1080,12 @@ async fn main() {
                             let mut obj_index = 0;
                             while obj_index < object_grid.len() {
                                 if object_grid[obj_index].x == if snapped_x < 0 { snapped_x - 40 } else { snapped_x } && object_grid[obj_index].y == if snapped_y < 0 { snapped_y - 40 } else { snapped_y } {
+                                    let mut objj_index = 0;
+                                    while objj_index < object_grid.len() {
+                                        object_grid[objj_index].selected = false;
+                                        objj_index += 1
+                                    }
+
                                     object_grid[obj_index].selected = true;
                                     break;
                                 } else {
