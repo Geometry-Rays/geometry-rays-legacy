@@ -143,7 +143,7 @@ impl Button {
 
     fn is_clicked(&self, rl: &RaylibHandle) -> bool {
         let mouse_pos = rl.get_mouse_position();
-        self.is_hovered(mouse_pos) && rl.is_mouse_button_pressed(MouseButton::MOUSE_BUTTON_LEFT)
+        self.is_hovered(mouse_pos) && rl.is_mouse_button_released(MouseButton::MOUSE_BUTTON_LEFT)
     }
 }
 
