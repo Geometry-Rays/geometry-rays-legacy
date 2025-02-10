@@ -261,6 +261,8 @@ async fn main() {
         .expect("Failed to load outline block variant 4");
     let end_trigger_texture = rl.load_texture(&thread, "Resources/null.png")
         .expect("Failed to load outline block variant 4");
+    let black_block_texture = rl.load_texture(&thread, "Resources/blocks/black-block.png")
+        .expect("Failed to load outline block variant 4");
 
     // Create main menu buttons
     let mut play_button = Button::new(300.0, 250.0, 200.0, 50.0, "Play", 24, false);
@@ -370,6 +372,7 @@ async fn main() {
     texture_ids.insert(13, &outline_block4);
     texture_ids.insert(14, &outline_block5);
     texture_ids.insert(15, &end_trigger_texture);
+    texture_ids.insert(16, &black_block_texture);
 
     // Variables for editor stuff
     let mut active_tab = EditorTab::Build;
@@ -412,6 +415,7 @@ async fn main() {
     objects.insert(13, "outline block 4");
     objects.insert(14, "outline block 5");
     objects.insert(15, "end trigger");
+    objects.insert(16, "black block");
 
     let obj_button_off = 65.0;
     let mut obj1_button = Button::new(187.0, 415.0, 50.0, 50.0, objects.get(&1).unwrap(), 10, false);
@@ -429,6 +433,7 @@ async fn main() {
     let mut obj13_button = Button::new(187.0 + (obj_button_off * 3.0), 415.0 + obj_button_off, 50.0, 50.0, objects.get(&13).unwrap(), 10, false);
     let mut obj14_button = Button::new(187.0 + (obj_button_off * 4.0), 415.0 + obj_button_off, 50.0, 50.0, objects.get(&14).unwrap(), 10, false);
     let mut obj15_button = Button::new(187.0 + (obj_button_off * 5.0), 415.0 + obj_button_off, 50.0, 50.0, objects.get(&15).unwrap(), 10, false);
+    let mut obj16_button = Button::new(187.0 + (obj_button_off * 6.0), 415.0 + obj_button_off, 50.0, 50.0, objects.get(&16).unwrap(), 10, false);
 
     let mut bg_red = red_bg_slider_pos - 75;
     let mut bg_green = green_bg_slider_pos - 75;
@@ -959,6 +964,7 @@ async fn main() {
                 obj13_button.update(&rl, delta_time);
                 obj14_button.update(&rl, delta_time);
                 obj15_button.update(&rl, delta_time);
+                obj16_button.update(&rl, delta_time);
 
                 if build_tab_button.is_clicked(&rl) {
                     active_tab = EditorTab::Build;
@@ -1042,6 +1048,10 @@ async fn main() {
 
                 else if obj15_button.is_clicked(&rl) && active_tab == EditorTab::Build {
                     current_object = 15 + _advanced_page_number;
+                }
+
+                else if obj16_button.is_clicked(&rl) && active_tab == EditorTab::Build {
+                    current_object = 16 + _advanced_page_number;
                 }
 
                 else if grid_button.is_clicked(&rl) {
@@ -1718,6 +1728,7 @@ async fn main() {
                     obj13_button.draw(&mut d);
                     obj14_button.draw(&mut d);
                     obj15_button.draw(&mut d);
+                    obj16_button.draw(&mut d);
                 }
 
                 d.draw_text(&format!("Selected Object: {}", objects.get(&current_object).unwrap()), 10, 10, 20, Color::WHITE);
