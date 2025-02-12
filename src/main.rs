@@ -772,7 +772,6 @@ async fn main() {
                             width: 40.0,
                             height: 40.0
                         }) {
-                            // on_orb = true;
                             if on_orb && mouse_down {
                                 if gravity > 0.0 {
                                     velocity_y = -13.0;
