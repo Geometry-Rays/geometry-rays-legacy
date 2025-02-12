@@ -356,6 +356,8 @@ async fn main() {
     let save_data = fs::read_to_string("./save-data/save.txt")
         .expect("Failed to read save file");
     let mut in_custom_level: bool = false;
+    let ship_power: f32 = 0.7;
+    let ship_falling_speed: f32 = 0.5;
 
     texture_ids.insert(1, &spike_texture);
     texture_ids.insert(2, &block_texture);
@@ -596,21 +598,21 @@ async fn main() {
                         if mouse_down || space_down {
                             if gravity == 0.8 {
                                 if velocity_y > -10.0 {
-                                    velocity_y -= 0.7
+                                    velocity_y -= ship_power
                                 }
                             } else {
                                 if velocity_y < 10.0 {
-                                    velocity_y += 0.7
+                                    velocity_y += ship_power
                                 }
                             }
                         } else {
                             if gravity == 0.8 {
                                 if velocity_y < 10.0 {
-                                    velocity_y += 0.7
+                                    velocity_y += ship_falling_speed
                                 }
                             } else {
                                 if velocity_y > -10.0 {
-                                    velocity_y -= 0.7
+                                    velocity_y -= ship_falling_speed
                                 }
                             }
                         }
