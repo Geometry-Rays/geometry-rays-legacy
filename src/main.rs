@@ -1495,27 +1495,30 @@ async fn main() {
                 for i in &object_grid {
                     let object_x = i.x as f32 + world_offset as f32 + 20.0;
                     let object_y = i.y as f32 - player_cam_y as f32 + 20.0;
-                    d.draw_texture_pro(
-                        &texture_ids.get(&i.id).unwrap(), 
-                        Rectangle::new(
-                            0.0,
-                            0.0,
-                            texture_ids.get(&i.id).unwrap().width as f32,
-                            texture_ids.get(&i.id).unwrap().height as f32
-                        ),
-                        Rectangle::new(
-                            object_x,
-                            object_y,
-                            texture_ids.get(&i.id).unwrap().width as f32 * 0.05,
-                            texture_ids.get(&i.id).unwrap().height as f32 * 0.05
-                        ),
-                        Vector2::new(
-                            texture_ids.get(&i.id).unwrap().width as f32 / 2.0 * 0.05,
-                            texture_ids.get(&i.id).unwrap().height as f32 / 2.0 * 0.05
-                        ),
-                        i.rotation as f32,
-                        cc_1004
-                    );
+                    if i.x as f32 + world_offset < d.get_screen_width() as f32 &&
+                    i.x as f32 + world_offset > -40.0 {
+                        d.draw_texture_pro(
+                            &texture_ids.get(&i.id).unwrap(),
+                            Rectangle::new(
+                                0.0,
+                                0.0,
+                                texture_ids.get(&i.id).unwrap().width as f32,
+                                texture_ids.get(&i.id).unwrap().height as f32
+                            ),
+                            Rectangle::new(
+                                object_x,
+                                object_y,
+                                texture_ids.get(&i.id).unwrap().width as f32 * 0.05,
+                                texture_ids.get(&i.id).unwrap().height as f32 * 0.05
+                            ),
+                            Vector2::new(
+                                texture_ids.get(&i.id).unwrap().width as f32 / 2.0 * 0.05,
+                                texture_ids.get(&i.id).unwrap().height as f32 / 2.0 * 0.05
+                            ),
+                            i.rotation as f32,
+                            cc_1004
+                        );
+                    }
                 }
 
                 // Draw obstacles (old)
