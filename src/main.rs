@@ -844,6 +844,7 @@ async fn main() {
                         }) {
                             if !in_custom_level && !levels_completed_vec[current_level] {
                                 stars += main_levels[current_level].difficulty as u32;
+                                levels_completed_vec[current_level] = true
                             }
                             game_state = GameState::LevelComplete;
                         }
@@ -1885,11 +1886,24 @@ async fn main() {
         println!("{:?}", write_result);
     }
 
-    let save_string = format!(
-        "stars:{}",
+    let mut save_string = format!(
+        "stars:{};;;",
 
         stars
     );
+
+    let mut saving_index: u8 = 0;
+    for completed in levels_completed_vec {
+        if completed {
+            save_string.push_str(&format!("{}:1;", saving_index));
+        } else {
+            save_string.push_str(&format!("{}:0;", saving_index));
+        }
+
+        saving_index += 1
+    }
+
+    save_string.pop();
 
     let write_save_result = fs::write("./save-data/save.txt", save_string);
 
