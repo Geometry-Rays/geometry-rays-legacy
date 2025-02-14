@@ -358,6 +358,11 @@ async fn main() {
     let mut in_custom_level: bool = false;
     let ship_power: f32 = 0.7;
     let ship_falling_speed: f32 = 0.5;
+    let mut levels_completed_vec: Vec<bool> = vec![
+        false,
+        false,
+        false
+    ];
 
     texture_ids.insert(1, &spike_texture);
     texture_ids.insert(2, &block_texture);
@@ -497,12 +502,22 @@ async fn main() {
         icon_size
     );
 
-    let save_pairs: Vec<&str> = save_data.split(";").collect();
+    let values_levels: Vec<&str> = save_data.split(";;;").collect();
+    let save_pairs: Vec<&str> = values_levels[0].split(";").collect();
+    let levels_completed: Vec<&str> = values_levels[1].split(";").collect();
     for pair in save_pairs {
         let key_value: Vec<&str> = pair.split(":").collect();
 
         if key_value[0] == "stars" {
             stars = key_value[1].parse::<u32>().unwrap();
+        }
+    }
+
+    let level_index: u8 = 0;
+    for level in levels_completed {
+        let key_value: Vec<&str> = level.split(":").collect();
+        if key_value[1] == "1" {
+            levels_completed_vec[level_index as usize] = true
         }
     }
 
@@ -827,7 +842,7 @@ async fn main() {
                             width: 40.0,
                             height: 40.0
                         }) {
-                            if !in_custom_level {
+                            if !in_custom_level && !levels_completed_vec[current_level] {
                                 stars += main_levels[current_level].difficulty as u32;
                             }
                             game_state = GameState::LevelComplete;
