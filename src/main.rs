@@ -693,160 +693,163 @@ async fn main() {
                 small_player.height = 20.0;
 
                 for object in &object_grid {
-                    if object.id == 1 {
-                        kill_player |= player.check_collision_recs(&Rectangle {
-                            x: object.x as f32 + world_offset + 20.0,
-                            y: object.y as f32 + 20.0 - player_cam_y as f32,
-                            width: 10.0,
-                            height: 20.0
-                        });
-                    }
+                    if object.x as f32 + world_offset < rl.get_screen_width() as f32 &&
+                    object.x as f32 + world_offset > -40.0 {
+                        if object.id == 1 {
+                            kill_player |= player.check_collision_recs(&Rectangle {
+                                x: object.x as f32 + world_offset + 20.0,
+                                y: object.y as f32 + 20.0 - player_cam_y as f32,
+                                width: 10.0,
+                                height: 20.0
+                            });
+                        }
 
-                    if object.id == 2 ||
-                    object.id == 10 ||
-                    object.id == 11 ||
-                    object.id == 12 ||
-                    object.id == 13 ||
-                    object.id == 14 {
-                        kill_player |= small_player.check_collision_recs(&Rectangle {
-                            x: object.x as f32 + world_offset,
-                            y: object.y as f32 + 10.0 - player_cam_y as f32,
-                            width: 3.0,
-                            height: 20.0
-                        });
+                        if object.id == 2 ||
+                        object.id == 10 ||
+                        object.id == 11 ||
+                        object.id == 12 ||
+                        object.id == 13 ||
+                        object.id == 14 {
+                            kill_player |= small_player.check_collision_recs(&Rectangle {
+                                x: object.x as f32 + world_offset,
+                                y: object.y as f32 + 10.0 - player_cam_y as f32,
+                                width: 3.0,
+                                height: 20.0
+                            });
 
-                        if player.check_collision_recs(&Rectangle {
-                            x: object.x as f32 + world_offset + 3.0,
-                            y: object.y as f32 - player_cam_y as f32,
-                            width: 37.0,
-                            height: 3.0
-                        }) {
-                            is_on_ground = true;
-                            rotation = 0.0;
-                            if !mouse_down {
-                                player.y = object.y as f32 - 21.0 - player_cam_y as f32;
-                                velocity_y = 0.0;
-                            } else {
-                                if gravity < 0.0 {
-                                    touching_block_ceiling = true;
+                            if player.check_collision_recs(&Rectangle {
+                                x: object.x as f32 + world_offset + 3.0,
+                                y: object.y as f32 - player_cam_y as f32,
+                                width: 37.0,
+                                height: 3.0
+                            }) {
+                                is_on_ground = true;
+                                rotation = 0.0;
+                                if !mouse_down {
                                     player.y = object.y as f32 - 21.0 - player_cam_y as f32;
-                                }
-                            }
-                        } else {
-                            touching_block_ceiling = false;
-                        }
-
-                        if player.check_collision_recs(&Rectangle {
-                            x: object.x as f32 + world_offset + 3.0,
-                            y: object.y as f32 + 58.0 - player_cam_y as f32,
-                            width: 37.0,
-                            height: 3.0
-                        }) {
-                            is_on_ground = true;
-                            rotation = 0.0;
-                            if !mouse_down {
-                                player.y = object.y as f32 + 61.0 - player_cam_y as f32;
-                                velocity_y = 0.0;
-                            } else {
-                                if gravity > 0.0 {
-                                    touching_block_ceiling = true;
-                                    player.y = object.y as f32 + 61.0 - player_cam_y as f32;
-                                }
-                            }
-                        } else {
-                            touching_block_ceiling = false;
-                        }
-                    }
-
-                    if object.id == 3 {
-                        if player.check_collision_recs(&Rectangle {
-                            x: object.x as f32 + world_offset,
-                            y: object.y as f32 + 35.0 - player_cam_y as f32,
-                            width: 40.0,
-                            height: 5.0
-                        }) {
-                            if gravity > 0.0 {
-                                velocity_y = -15.0;
-                            } else {
-                                velocity_y = 15.0
-                            }
-                            is_on_ground = false;
-                        }
-                    }
-
-                    if object.id == 4 {
-                        if player.check_collision_recs(&Rectangle {
-                            x: object.x as f32 + world_offset,
-                            y: object.y as f32 - player_cam_y as f32,
-                            width: 40.0,
-                            height: 40.0
-                        }) {
-                            if on_orb && mouse_down {
-                                if gravity > 0.0 {
-                                    velocity_y = -13.0;
+                                    velocity_y = 0.0;
                                 } else {
-                                    velocity_y = 13.0
+                                    if gravity < 0.0 {
+                                        touching_block_ceiling = true;
+                                        player.y = object.y as f32 - 21.0 - player_cam_y as f32;
+                                    }
                                 }
-                                on_orb = false
-                            }
-                        }
-                    }
-
-                    if object.id == 5 || object.id == 6 {
-                        if player.check_collision_recs(&Rectangle {
-                            x: object.x as f32 + world_offset + 10.0,
-                            y: object.y as f32 + 11.0 - player_cam_y as f32,
-                            width: 20.0,
-                            height: 80.0
-                        }) {
-                            if object.id == 5 {
-                                jump_force = 13.0;
-                                gravity = -0.8;
                             } else {
-                                jump_force = -13.0;
-                                gravity = 0.8;
+                                touching_block_ceiling = false;
                             }
-                        }
-                    }
 
-                    if object.id == 7 {
-                        kill_player |= player.check_collision_recs(&Rectangle {
-                            x: object.x as f32 + world_offset + 20.0,
-                            y: object.y as f32 + 25.0 - player_cam_y as f32,
-                            width: 10.0,
-                            height: 10.0
-                        });
-                    }
-
-                    if object.id == 8 || object.id == 9 {
-                        if player.check_collision_recs(&Rectangle {
-                            x: object.x as f32 + world_offset + 10.0,
-                            y: object.y as f32 + 11.0 - player_cam_y as f32,
-                            width: 20.0,
-                            height: 80.0
-                        }) {
-                            if object.id == 8 {
-                                current_gamemode = GameMode::Cube;
-                                cc_1003 = Color::LIME;
+                            if player.check_collision_recs(&Rectangle {
+                                x: object.x as f32 + world_offset + 3.0,
+                                y: object.y as f32 + 58.0 - player_cam_y as f32,
+                                width: 37.0,
+                                height: 3.0
+                            }) {
+                                is_on_ground = true;
+                                rotation = 0.0;
+                                if !mouse_down {
+                                    player.y = object.y as f32 + 61.0 - player_cam_y as f32;
+                                    velocity_y = 0.0;
+                                } else {
+                                    if gravity > 0.0 {
+                                        touching_block_ceiling = true;
+                                        player.y = object.y as f32 + 61.0 - player_cam_y as f32;
+                                    }
+                                }
                             } else {
-                                current_gamemode = GameMode::Ship;
-                                cc_1003 = Color::MAGENTA;
+                                touching_block_ceiling = false;
                             }
                         }
-                    }
 
-                    if object.id == 15 {
-                        if player.check_collision_recs(&Rectangle {
-                            x: object.x as f32 + world_offset,
-                            y: object.y as f32 - player_cam_y as f32,
-                            width: 40.0,
-                            height: 40.0
-                        }) {
-                            if !in_custom_level && !levels_completed_vec[current_level] {
-                                stars += main_levels[current_level].difficulty as u32;
-                                levels_completed_vec[current_level] = true
+                        if object.id == 3 {
+                            if player.check_collision_recs(&Rectangle {
+                                x: object.x as f32 + world_offset,
+                                y: object.y as f32 + 35.0 - player_cam_y as f32,
+                                width: 40.0,
+                                height: 5.0
+                            }) {
+                                if gravity > 0.0 {
+                                    velocity_y = -15.0;
+                                } else {
+                                    velocity_y = 15.0
+                                }
+                                is_on_ground = false;
                             }
-                            game_state = GameState::LevelComplete;
+                        }
+
+                        if object.id == 4 {
+                            if player.check_collision_recs(&Rectangle {
+                                x: object.x as f32 + world_offset,
+                                y: object.y as f32 - player_cam_y as f32,
+                                width: 40.0,
+                                height: 40.0
+                            }) {
+                                if on_orb && mouse_down {
+                                    if gravity > 0.0 {
+                                        velocity_y = -13.0;
+                                    } else {
+                                        velocity_y = 13.0
+                                    }
+                                    on_orb = false
+                                }
+                            }
+                        }
+
+                        if object.id == 5 || object.id == 6 {
+                            if player.check_collision_recs(&Rectangle {
+                                x: object.x as f32 + world_offset + 10.0,
+                                y: object.y as f32 + 11.0 - player_cam_y as f32,
+                                width: 20.0,
+                                height: 80.0
+                            }) {
+                                if object.id == 5 {
+                                    jump_force = 13.0;
+                                    gravity = -0.8;
+                                } else {
+                                    jump_force = -13.0;
+                                    gravity = 0.8;
+                                }
+                            }
+                        }
+
+                        if object.id == 7 {
+                            kill_player |= player.check_collision_recs(&Rectangle {
+                                x: object.x as f32 + world_offset + 20.0,
+                                y: object.y as f32 + 25.0 - player_cam_y as f32,
+                                width: 10.0,
+                                height: 10.0
+                            });
+                        }
+
+                        if object.id == 8 || object.id == 9 {
+                            if player.check_collision_recs(&Rectangle {
+                                x: object.x as f32 + world_offset + 10.0,
+                                y: object.y as f32 + 11.0 - player_cam_y as f32,
+                                width: 20.0,
+                                height: 80.0
+                            }) {
+                                if object.id == 8 {
+                                    current_gamemode = GameMode::Cube;
+                                    cc_1003 = Color::LIME;
+                                } else {
+                                    current_gamemode = GameMode::Ship;
+                                    cc_1003 = Color::MAGENTA;
+                                }
+                            }
+                        }
+
+                        if object.id == 15 {
+                            if player.check_collision_recs(&Rectangle {
+                                x: object.x as f32 + world_offset,
+                                y: object.y as f32 - player_cam_y as f32,
+                                width: 40.0,
+                                height: 40.0
+                            }) {
+                                if !in_custom_level && !levels_completed_vec[current_level] {
+                                    stars += main_levels[current_level].difficulty as u32;
+                                    levels_completed_vec[current_level] = true
+                                }
+                                game_state = GameState::LevelComplete;
+                            }
                         }
                     }
                 }
