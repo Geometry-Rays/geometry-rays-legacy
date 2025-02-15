@@ -402,6 +402,8 @@ async fn main() {
     let mut been_to_editor: bool = false;
     let mut current_song: u8 = 0;
     let mut song_selected: bool = false;
+    let mut from_editor: bool = false;
+    let mut player_path: Vec<Vector2> = vec![];
 
     let mut red_ground_slider_pos: i32 = 355;
     let mut green_ground_slider_pos: i32  = 355;
@@ -865,6 +867,10 @@ async fn main() {
                     }
                 }
 
+                if from_editor {
+                    player_path.push(Vector2 { x: 200.0 - world_offset, y: player.y });
+                }
+
                 if kill_player {
                     game_state = GameState::GameOver;
                 }
@@ -952,6 +958,9 @@ async fn main() {
                             selected:false
                         });
                     }
+
+                    from_editor = true;
+                    player_path.clear();
 
                     game_state = GameState::Editor;
                 }
@@ -1416,6 +1425,9 @@ async fn main() {
                     cc_1003 = Color::LIME;
                     in_custom_level = false;
 
+                    from_editor = false;
+                    player_path.clear();
+
                     game_state = GameState::Playing;
                 }
 
@@ -1660,6 +1672,17 @@ async fn main() {
                         small_player.height as i32,
                         Color::YELLOW
                     );
+                }
+
+                if from_editor {
+                    for point in &player_path {
+                        d.draw_circle(
+                            point.x as i32 + world_offset as i32,
+                            point.y as i32,
+                            5.0,
+                            Color::GREEN
+                        );
+                    }
                 }
 
                 d.draw_text(&format!("Attempt: {}", attempt), 10, 10, 20, Color::WHITE);
