@@ -870,7 +870,7 @@ async fn main() {
                 }
 
                 if from_editor {
-                    player_path.push(Vector2 { x: 200.0 - world_offset, y: player.y });
+                    player_path.push(Vector2 { x: 200.0 - world_offset, y: player.y + player_cam_y as f32 });
                 }
 
                 if kill_player {
@@ -1681,7 +1681,7 @@ async fn main() {
                     for point in &player_path {
                         d.draw_circle(
                             point.x as i32 + world_offset as i32,
-                            point.y as i32,
+                            point.y as i32 - player_cam_y,
                             5.0,
                             Color::GREEN
                         );
