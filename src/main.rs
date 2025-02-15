@@ -821,6 +821,8 @@ async fn main() {
                                     jump_force = -13.0;
                                     gravity = 0.8;
                                 }
+
+                                is_on_ground = false
                             }
                         }
 
