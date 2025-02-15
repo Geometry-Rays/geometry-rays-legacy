@@ -758,6 +758,15 @@ async fn main() {
                             } else {
                                 touching_block_ceiling = false;
                             }
+
+                            if player.check_collision_recs(&Rectangle {
+                                x: object.x as f32 + world_offset + 80.0,
+                                y: object.y as f32 - player_cam_y as f32 + 10.0,
+                                width: 3.0,
+                                height: 20.0,
+                            }) {
+                                is_on_ground = false;
+                            }
                         }
 
                         if object.id == 3 {
@@ -1572,6 +1581,14 @@ async fn main() {
                                 37,
                                 3,
                                 Color::BLUEVIOLET
+                            );
+
+                            d.draw_rectangle_lines(
+                                object.x + world_offset as i32 + 80,
+                                object.y - player_cam_y + 10,
+                                3,
+                                20,
+                                Color::GREEN
                             );
                         }
 
