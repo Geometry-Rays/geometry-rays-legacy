@@ -639,7 +639,7 @@ async fn main() {
                 }
 
                 world_offset -= movement_speed;
-                if current_gamemode == GameMode::Cube {
+                if current_gamemode == GameMode::Cube && velocity_y < 20.0 && velocity_y > -20.0 {
                     velocity_y += gravity;
                 }
                 player.y += velocity_y;
