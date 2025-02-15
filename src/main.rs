@@ -791,6 +791,8 @@ async fn main() {
                                     }
                                     on_orb = false
                                 }
+
+                                is_on_ground = false
                             }
                         }
 
