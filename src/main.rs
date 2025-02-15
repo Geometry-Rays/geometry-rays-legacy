@@ -960,7 +960,6 @@ async fn main() {
                     }
 
                     from_editor = true;
-                    player_path.clear();
 
                     game_state = GameState::Editor;
                 }
@@ -1219,6 +1218,8 @@ async fn main() {
                     sink.stop();
                     sink.append(_level_music);
                     sink.play();
+
+                    player_path.clear();
 
                     game_state = GameState::Playing;
                 }
@@ -1759,6 +1760,15 @@ async fn main() {
 
                 d.draw_rectangle_gradient_v(0, cam_pos_y * 5 + 590, 800, 100, Color { r:0, g:0, b:0, a:0 } , Color::BLACK);
                 d.draw_rectangle(0, cam_pos_y * 5 + 690, 800, 500, Color::BLACK);
+
+                for point in &player_path {
+                    d.draw_circle(
+                        point.x as i32 - cam_pos_x * 5,
+                        point.y as i32 + cam_pos_y * 5,
+                        5.0,
+                        Color::GREEN
+                    );
+                }
 
                 d.draw_rectangle(0, 400, 800, 200, Color { r:30, g:30, b:30, a:100 });
 
