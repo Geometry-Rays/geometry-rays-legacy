@@ -1694,6 +1694,7 @@ async fn main() {
                     d.draw_text(&format!("Velocity Y: {}", velocity_y), 10, 40, 20, Color::GREEN);
                     d.draw_text(&format!("On Ground: {}", is_on_ground), 10, 70, 20, Color::GREEN);
                     d.draw_text(&format!("Touching block ceiling: {}", touching_block_ceiling), 10, 100, 20, Color::GREEN);
+                    d.draw_text(&format!("Points in path: {}", player_path.len()), 10, 130, 20, Color::GREEN);
                 }
             }
             GameState::GameOver => {
