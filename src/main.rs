@@ -1702,10 +1702,10 @@ async fn main() {
                 d.draw_text(&format!("Attempt: {}", attempt), 10, 10, 20, Color::WHITE);
 
                 if show_debug_text {
-                    d.draw_text(&format!("Velocity Y: {}", velocity_y), 10, 40, 20, Color::GREEN);
-                    d.draw_text(&format!("On Ground: {}", is_on_ground), 10, 70, 20, Color::GREEN);
-                    d.draw_text(&format!("Touching block ceiling: {}", touching_block_ceiling), 10, 100, 20, Color::GREEN);
-                    d.draw_text(&format!("Points in path: {}", player_path.len()), 10, 130, 20, Color::GREEN);
+                    d.draw_text(&format!("Velocity Y: {}", velocity_y), 10, 40, 20, Color::LIME);
+                    d.draw_text(&format!("On Ground: {}", is_on_ground), 10, 70, 20, Color::LIME);
+                    d.draw_text(&format!("Touching block ceiling: {}", touching_block_ceiling), 10, 100, 20, Color::LIME);
+                    d.draw_text(&format!("Points in path: {}", player_path.len()), 10, 130, 20, Color::LIME);
                 }
             }
             GameState::GameOver => {
@@ -1822,15 +1822,15 @@ async fn main() {
 
                 d.draw_text(&format!("Selected Object: {}", objects.get(&current_object).unwrap()), 10, 10, 20, Color::WHITE);
                 if show_debug_text {
-                    d.draw_text(&format!("Camera pos X: {}", cam_pos_x), 10, 40, 20, Color::GREEN);
-                    d.draw_text(&format!("Camera pos Y: {}", cam_pos_y), 10, 70, 20, Color::GREEN);
-                    d.draw_text(&format!("Advanced Page Number: {}", _advanced_page_number), 10, 100, 20, Color::GREEN);
-                    d.draw_text(&format!("Mouse X On Grid: {}", snapped_x), 10, 130, 20, Color::GREEN);
-                    d.draw_text(&format!("Mouse Y On Grid: {}", snapped_y), 10, 160, 20, Color::GREEN);
-                    d.draw_text(&format!("Mouse X: {}", mouse_x), 10, 190, 20, Color::GREEN);
-                    d.draw_text(&format!("Mouse Y: {}", mouse_y), 10, 220, 20, Color::GREEN);
+                    d.draw_text(&format!("Camera pos X: {}", cam_pos_x), 10, 40, 20, Color::LIME);
+                    d.draw_text(&format!("Camera pos Y: {}", cam_pos_y), 10, 70, 20, Color::LIME);
+                    d.draw_text(&format!("Advanced Page Number: {}", _advanced_page_number), 10, 100, 20, Color::LIME);
+                    d.draw_text(&format!("Mouse X On Grid: {}", snapped_x), 10, 130, 20, Color::LIME);
+                    d.draw_text(&format!("Mouse Y On Grid: {}", snapped_y), 10, 160, 20, Color::LIME);
+                    d.draw_text(&format!("Mouse X: {}", mouse_x), 10, 190, 20, Color::LIME);
+                    d.draw_text(&format!("Mouse Y: {}", mouse_y), 10, 220, 20, Color::LIME);
 
-                    d.draw_text(&format!("Object Grid: {:?}", object_grid), 10, 250, 20, Color::GREEN);
+                    d.draw_text(&format!("Object Grid: {:?}", object_grid), 10, 250, 20, Color::LIME);
                 }
             }
             GameState::LevelOptions => {
