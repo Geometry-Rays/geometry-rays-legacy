@@ -1216,6 +1216,7 @@ async fn main() {
                     current_gamemode = GameMode::Cube;
                     cc_1003 = Color::LIME;
                     in_custom_level = true;
+                    velocity_y = 0.0;
 
                     let mut obj_index = 0;
                     while obj_index < object_grid.len() {
@@ -1438,6 +1439,7 @@ async fn main() {
                     current_gamemode = GameMode::Cube;
                     cc_1003 = Color::LIME;
                     in_custom_level = false;
+                    velocity_y = 0.0;
 
                     from_editor = false;
                     player_path.clear();
