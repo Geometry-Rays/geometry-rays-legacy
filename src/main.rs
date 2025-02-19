@@ -873,17 +873,6 @@ async fn main() {
                     player_path.push(Vector2 { x: 200.0 - world_offset, y: player.y + player_cam_y as f32 });
                 }
 
-                let mut pointindex: u32 = 0;
-                while pointindex < player_path.len().try_into().unwrap() {
-                    if player_path[pointindex as usize].x + world_offset < rl.get_screen_width() as f32 &&
-                    player_path[pointindex as usize].x + world_offset > -40.0 {
-                    } else {
-                        player_path.remove(pointindex as usize);
-                    }
-
-                    pointindex += 1
-                }
-
                 if kill_player {
                     game_state = GameState::GameOver;
                 }
@@ -1692,12 +1681,15 @@ async fn main() {
 
                 if from_editor {
                     for point in &player_path {
-                        d.draw_circle(
-                            point.x as i32 + world_offset as i32,
-                            point.y as i32 - player_cam_y,
-                            5.0,
-                            Color::GREEN
-                        );
+                        if point.x as f32 + world_offset < d.get_screen_width() as f32 &&
+                        point.x as f32 + world_offset > -40.0 {
+                            d.draw_circle(
+                                point.x as i32 + world_offset as i32,
+                                point.y as i32 - player_cam_y,
+                                5.0,
+                                Color::GREEN
+                            );
+                        }
                     }
                 }
 
