@@ -728,7 +728,7 @@ async fn main() {
                                 is_on_ground = true;
                                 rotation = 0.0;
                                 if !mouse_down {
-                                    player.y = object.y as f32 - 21.0 - player_cam_y as f32;
+                                    player.y = object.y as f32 - 19.0 - player_cam_y as f32;
                                     velocity_y = 0.0;
                                 } else {
                                     if gravity < 0.0 {
