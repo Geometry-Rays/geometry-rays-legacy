@@ -1682,7 +1682,7 @@ async fn main() {
                 if from_editor {
                     for point in &player_path {
                         if point.x as f32 + world_offset < d.get_screen_width() as f32 &&
-                        point.x as f32 + world_offset > -40.0 {
+                        point.x as f32 + world_offset > 60.0 {
                             d.draw_circle(
                                 point.x as i32 + world_offset as i32,
                                 point.y as i32 - player_cam_y,
