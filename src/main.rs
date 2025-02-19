@@ -1890,7 +1890,7 @@ async fn main() {
             }
             GameState::LevelSelect => {
                 d.clear_background(Color::BLACK);
-                d.draw_text(&format!("{}", main_levels[current_level].name), 320, 275, 50, Color::WHITE);
+                d.draw_text(&format!("{}", main_levels[current_level].name), d.get_screen_width() / 2 - d.measure_text(&main_levels[current_level].name, 50) / 2, 275, 50, Color::WHITE);
                 d.draw_text(&format!("{}", main_levels[current_level].difficulty), 375, 200, 50, Color::WHITE);
                 d.draw_text(&format!("{}", main_levels[current_level].artist), d.get_screen_width() / 2 - d.measure_text(&main_levels[current_level].artist, 50) / 2, 500, 50, Color::WHITE);
                 d.draw_texture_ex(
