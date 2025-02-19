@@ -1892,7 +1892,7 @@ async fn main() {
                 d.clear_background(Color::BLACK);
                 d.draw_text(&format!("{}", main_levels[current_level].name), 320, 275, 50, Color::WHITE);
                 d.draw_text(&format!("{}", main_levels[current_level].difficulty), 375, 200, 50, Color::WHITE);
-                d.draw_text(&format!("{}", main_levels[current_level].artist), 330, 500, 50, Color::WHITE);
+                d.draw_text(&format!("{}", main_levels[current_level].artist), d.get_screen_width() / 2 - d.measure_text(&main_levels[current_level].artist, 50) / 2, 500, 50, Color::WHITE);
                 d.draw_texture_ex(
                     &difficulties[main_levels[current_level].difficulty as usize],
                     Vector2::new(210.0, 120.0),
