@@ -721,7 +721,7 @@ async fn main() {
 
                             if player.check_collision_recs(&Rectangle {
                                 x: object.x as f32 + world_offset + 3.0,
-                                y: object.y as f32 - player_cam_y as f32,
+                                y: object.y as f32 + 21.0 - player_cam_y as f32,
                                 width: 37.0,
                                 height: 3.0
                             }) {
@@ -1595,7 +1595,7 @@ async fn main() {
 
                             d.draw_rectangle_lines(
                                 object.x + world_offset as i32 + 3,
-                                object.y - player_cam_y,
+                                object.y + 21 - player_cam_y,
                                 37,
                                 3,
                                 Color::BLUEVIOLET
