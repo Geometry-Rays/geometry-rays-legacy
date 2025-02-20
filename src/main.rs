@@ -1891,7 +1891,7 @@ async fn main() {
             GameState::LevelSelect => {
                 d.clear_background(Color::BLACK);
                 d.draw_text(&format!("{}", main_levels[current_level].name), d.get_screen_width() / 2 - d.measure_text(&main_levels[current_level].name, 50) / 2, 275, 50, Color::WHITE);
-                d.draw_text(&format!("{}", main_levels[current_level].difficulty), 375, 200, 50, Color::WHITE);
+                d.draw_text(&format!("{}", main_levels[current_level].difficulty), 400, 430, 50, Color::WHITE);
                 d.draw_text(&format!("{}", main_levels[current_level].artist), d.get_screen_width() / 2 - d.measure_text(&main_levels[current_level].artist, 50) / 2, 500, 50, Color::WHITE);
                 d.draw_text(&format!("Level {}", current_level + 1), d.get_screen_width() / 2 - d.measure_text(&format!("Level {}", current_level + 1), 50) / 2, 20, 50, Color::WHITE);
                 d.draw_rectangle_rounded_lines(
@@ -1916,7 +1916,7 @@ async fn main() {
 
                 d.draw_texture_ex(
                     &star_texture,
-                    Vector2::new(275.0, 160.0),
+                    Vector2::new(260.0, 350.0),
                     0.0,
                     0.13,
                     Color::WHITE
