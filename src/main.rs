@@ -1908,7 +1908,7 @@ async fn main() {
                 );
                 d.draw_texture_ex(
                     &difficulties[main_levels[current_level].difficulty as usize],
-                    Vector2::new(210.0, 120.0),
+                    Vector2::new(280.0, 120.0),
                     0.0,
                     0.1,
                     Color::WHITE
