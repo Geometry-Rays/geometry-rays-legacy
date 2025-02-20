@@ -1894,6 +1894,18 @@ async fn main() {
                 d.draw_text(&format!("{}", main_levels[current_level].difficulty), 375, 200, 50, Color::WHITE);
                 d.draw_text(&format!("{}", main_levels[current_level].artist), d.get_screen_width() / 2 - d.measure_text(&main_levels[current_level].artist, 50) / 2, 500, 50, Color::WHITE);
                 d.draw_text(&format!("Level {}", current_level + 1), d.get_screen_width() / 2 - d.measure_text(&format!("Level {}", current_level + 1), 50) / 2, 20, 50, Color::WHITE);
+                d.draw_rectangle_rounded_lines(
+                    Rectangle {
+                        x: 150.0,
+                        y: 150.0,
+                        width: 500.0,
+                        height: 200.0
+                    },
+                    0.0,
+                    4,
+                    10.0,
+                    Color::WHITE
+                );
                 d.draw_texture_ex(
                     &difficulties[main_levels[current_level].difficulty as usize],
                     Vector2::new(210.0, 120.0),
