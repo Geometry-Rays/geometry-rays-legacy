@@ -1470,6 +1470,12 @@ async fn main() {
                 }
             }
             GameState::EditorKeybinds => {
+                menu_button.update(&rl, delta_time);
+
+                if menu_button.is_clicked(&rl) {
+                    game_state = GameState::CreatorMenu
+                }
+
                 if rl.get_mouse_wheel_move() < 0.0 {
                     editor_guide_scroll += 50
                 } else if rl.get_mouse_wheel_move() > 0.0 &&
@@ -1965,6 +1971,8 @@ async fn main() {
                     50,
                     Color::WHITE
                 );
+
+                menu_button.draw(&mut d);
             }
         }
     }
