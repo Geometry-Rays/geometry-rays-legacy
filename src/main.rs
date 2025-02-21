@@ -18,6 +18,7 @@ enum GameState {
     LevelOptions,
     LevelSelect,
     LevelComplete,
+    EditorKeybinds,
 }
 
 struct Button {
@@ -274,6 +275,7 @@ async fn main() {
     let mut create_button = Button::new(120.0, 230.0, 150.0, 150.0, "Create", 30, false);
     let mut featured_button = Button::new(320.0, 230.0, 150.0, 150.0, "Featured", 30, true);
     let mut search_button = Button::new(520.0, 230.0, 150.0, 150.0, "Search", 30, true);
+    let mut keybinds_button = Button::new(rl.get_screen_width() as f32 - 220.0, 20.0, 200.0, 50.0, "Editor Keybinds", 24, false);
 
     // Create editor buttons
     let mut build_tab_button = Button::new(12.0, 415.0, 150.0, 50.0, "Build", 20, false);
@@ -404,6 +406,7 @@ async fn main() {
     let mut song_selected: bool = false;
     let mut from_editor: bool = false;
     let mut player_path: Vec<Vector2> = vec![];
+    let mut editor_guide_scroll: u16 = 0;
 
     let mut red_ground_slider_pos: i32 = 355;
     let mut green_ground_slider_pos: i32  = 355;
@@ -901,6 +904,7 @@ async fn main() {
                 create_button.update(&rl, delta_time);
                 featured_button.update(&rl, delta_time);
                 search_button.update(&rl, delta_time);
+                keybinds_button.update(&rl, delta_time);
                 
                 if menu_button.is_clicked(&rl) {
                     game_state = GameState::Menu;
@@ -972,6 +976,10 @@ async fn main() {
 
                 if search_button.is_clicked(&rl) {
                     not_done_yet_text = true;
+                }
+
+                if keybinds_button.is_clicked(&rl) {
+                    game_state = GameState::EditorKeybinds
                 }
             }
             GameState::Editor => {
@@ -1461,6 +1469,14 @@ async fn main() {
                     game_state = GameState::Menu;
                 }
             }
+            GameState::EditorKeybinds => {
+                if rl.get_mouse_wheel_move() < 0.0 {
+                    editor_guide_scroll += 50
+                } else if rl.get_mouse_wheel_move() > 0.0 &&
+                editor_guide_scroll > 0 {
+                    editor_guide_scroll -= 50
+                }
+            }
         }
 
         // Rendering
@@ -1722,6 +1738,7 @@ async fn main() {
                 create_button.draw(&mut d);
                 featured_button.draw(&mut d);
                 search_button.draw(&mut d);
+                keybinds_button.draw(&mut d);
 
                 if not_done_yet_text {
                     d.draw_text("This will be added eventually!", 250, 30, 30, Color::WHITE);
@@ -1937,6 +1954,17 @@ async fn main() {
                 );
 
                 level_complete_back_button.draw(&mut d);
+            }
+            GameState::EditorKeybinds => {
+                d.clear_background(Color::BLACK);
+
+                d.draw_text(
+                    "Editor Keybinds:",
+                    d.get_screen_width() / 2 - 150,
+                    d.get_screen_height() / 2 - editor_guide_scroll as i32,
+                    50,
+                    Color::WHITE
+                );
             }
         }
     }
