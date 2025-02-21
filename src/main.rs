@@ -1914,6 +1914,7 @@ async fn main() {
                 d.draw_text(&format!("{}", ground_blue), 685, 305, 50, Color::BLACK);
 
                 d.draw_rectangle(300, 20, 75, 50, cc_1001);
+                d.draw_rectangle(300, 300, 75, 50, cc_1002);
             }
             GameState::LevelSelect => {
                 d.clear_background(Color::BLACK);
