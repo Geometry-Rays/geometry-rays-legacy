@@ -260,7 +260,7 @@ async fn main() {
         .expect("Failed to load outline block variant 3");
     let outline_block5 = rl.load_texture(&thread, "Resources/blocks/outline-block-variant4.png")
         .expect("Failed to load outline block variant 4");
-    let end_trigger_texture = rl.load_texture(&thread, "Resources/null.png")
+    let end_trigger_texture = rl.load_texture(&thread, "Resources/end-trigger.png")
         .expect("Failed to load outline block variant 4");
     let black_block_texture = rl.load_texture(&thread, "Resources/blocks/black-block.png")
         .expect("Failed to load outline block variant 4");
