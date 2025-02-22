@@ -7,7 +7,6 @@ use webbrowser;
 use std::collections::HashMap;
 
 use reqwest::Client;
-use reqwest::Proxy;
 
 enum GameState {
     Menu,
@@ -158,11 +157,7 @@ impl Button {
 // }
 
 async fn make_request(url: String) -> String {
-    let proxy = Proxy::all("socks5h://127.0.0.1:9050")
-        .expect("Failed to set up proxy");
-
     let client = Client::builder()
-        .proxy(proxy)
         .build()
         .expect("Failed to build client");
 
@@ -298,8 +293,7 @@ async fn main() {
 
     let mut level_complete_back_button = Button::new(300.0, 320.0, 200.0, 50.0, "Back To Menu", 24, false);
 
-    // Variables for the urls since tor urls are long af
-    let tor_url = "http://georays.yuoqw7ywmixj55zxljkhqvcwunovze32df7pqemwacfaq2itqefbixad.onion/php-code/".to_string();
+    let tor_url = "http://georays.puppet57.xyz/php-code/".to_string();
     let latest_version_url: String = format!("{}get-latest-version.php", tor_url).to_string();
 
     // Variables required for the game to work
