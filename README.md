@@ -19,7 +19,7 @@
 # Socials
  Discord: https://discord.gg/XV9Qsvmbfj
  
- Website: http://georays.yuoqw7ywmixj55zxljkhqvcwunovze32df7pqemwacfaq2itqefbixad.onion
+ Website: http://georays.puppet57.xyz
 
 # Why is the website a tor website?
  I dont have money for a url or web hosting.
