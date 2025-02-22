@@ -845,9 +845,11 @@ async fn main() {
                                 if object.id == 8 {
                                     current_gamemode = GameMode::Cube;
                                     cc_1003 = Color::LIME;
+                                    is_on_ground = false
                                 } else {
                                     current_gamemode = GameMode::Ship;
                                     cc_1003 = Color::MAGENTA;
+                                    is_on_ground = false
                                 }
                             }
                         }
