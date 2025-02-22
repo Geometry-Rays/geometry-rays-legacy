@@ -305,6 +305,7 @@ async fn main() {
     // Variables required for the game to work
     let mut game_state = GameState::Menu;
     let mut player = Rectangle::new(200.0, 500.0, 40.0, 40.0);
+    let mut centered_player = Rectangle::new(player.x + player.width / 2.0, player.y + player.height / 2.0, player.width, player.height);
     let mut small_player = player;
     let mut velocity_y = 0.0;
     let mut gravity = 0.8;
@@ -697,11 +698,13 @@ async fn main() {
                 small_player.width = 20.0;
                 small_player.height = 20.0;
 
+                centered_player = Rectangle::new(player.x - player.width / 2.0, player.y - player.height / 2.0, player.width, player.height);
+
                 for object in &object_grid {
                     if object.x as f32 + world_offset < rl.get_screen_width() as f32 &&
                     object.x as f32 + world_offset > -40.0 {
                         if object.id == 1 {
-                            kill_player |= player.check_collision_recs(&Rectangle {
+                            kill_player |= centered_player.check_collision_recs(&Rectangle {
                                 x: object.x as f32 + world_offset + 20.0,
                                 y: object.y as f32 + 20.0 - player_cam_y as f32,
                                 width: 10.0,
@@ -722,7 +725,7 @@ async fn main() {
                                 height: 20.0
                             });
 
-                            if player.check_collision_recs(&Rectangle {
+                            if centered_player.check_collision_recs(&Rectangle {
                                 x: object.x as f32 + world_offset + 3.0,
                                 y: object.y as f32 + 21.0 - player_cam_y as f32,
                                 width: 37.0,
@@ -743,7 +746,7 @@ async fn main() {
                                 touching_block_ceiling = false;
                             }
 
-                            if player.check_collision_recs(&Rectangle {
+                            if centered_player.check_collision_recs(&Rectangle {
                                 x: object.x as f32 + world_offset + 3.0,
                                 y: object.y as f32 + 58.0 - player_cam_y as f32,
                                 width: 37.0,
@@ -764,7 +767,7 @@ async fn main() {
                                 touching_block_ceiling = false;
                             }
 
-                            if player.check_collision_recs(&Rectangle {
+                            if centered_player.check_collision_recs(&Rectangle {
                                 x: object.x as f32 + world_offset + 80.0,
                                 y: object.y as f32 - player_cam_y as f32 + 10.0,
                                 width: 3.0,
@@ -775,7 +778,7 @@ async fn main() {
                         }
 
                         if object.id == 3 {
-                            if player.check_collision_recs(&Rectangle {
+                            if centered_player.check_collision_recs(&Rectangle {
                                 x: object.x as f32 + world_offset,
                                 y: object.y as f32 + 35.0 - player_cam_y as f32,
                                 width: 40.0,
@@ -791,7 +794,7 @@ async fn main() {
                         }
 
                         if object.id == 4 {
-                            if player.check_collision_recs(&Rectangle {
+                            if centered_player.check_collision_recs(&Rectangle {
                                 x: object.x as f32 + world_offset,
                                 y: object.y as f32 - player_cam_y as f32,
                                 width: 40.0,
@@ -811,7 +814,7 @@ async fn main() {
                         }
 
                         if object.id == 5 || object.id == 6 {
-                            if player.check_collision_recs(&Rectangle {
+                            if centered_player.check_collision_recs(&Rectangle {
                                 x: object.x as f32 + world_offset + 10.0,
                                 y: object.y as f32 + 11.0 - player_cam_y as f32,
                                 width: 20.0,
@@ -830,7 +833,7 @@ async fn main() {
                         }
 
                         if object.id == 7 {
-                            kill_player |= player.check_collision_recs(&Rectangle {
+                            kill_player |= centered_player.check_collision_recs(&Rectangle {
                                 x: object.x as f32 + world_offset + 20.0,
                                 y: object.y as f32 + 25.0 - player_cam_y as f32,
                                 width: 10.0,
@@ -839,7 +842,7 @@ async fn main() {
                         }
 
                         if object.id == 8 || object.id == 9 {
-                            if player.check_collision_recs(&Rectangle {
+                            if centered_player.check_collision_recs(&Rectangle {
                                 x: object.x as f32 + world_offset + 10.0,
                                 y: object.y as f32 + 11.0 - player_cam_y as f32,
                                 width: 20.0,
@@ -856,7 +859,7 @@ async fn main() {
                         }
 
                         if object.id == 15 {
-                            if player.check_collision_recs(&Rectangle {
+                            if centered_player.check_collision_recs(&Rectangle {
                                 x: object.x as f32 + world_offset,
                                 y: object.y as f32 - player_cam_y as f32,
                                 width: 40.0,
