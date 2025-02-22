@@ -2040,4 +2040,5 @@ async fn main() {
     println!("{}", on_orb);
     println!("{:?}", cc_1001);
     println!("{:?}", cc_1002);
+    println!("{:?}", centered_player)
 }
