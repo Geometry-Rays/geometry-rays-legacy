@@ -721,7 +721,7 @@ async fn main() {
 
                             if centered_player.check_collision_recs(&Rectangle {
                                 x: object.x as f32 + world_offset + 3.0,
-                                y: object.y as f32 - player_cam_y as f32,
+                                y: object.y as f32 + 1.0 - player_cam_y as f32,
                                 width: 37.0,
                                 height: 3.0
                             }) {
