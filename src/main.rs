@@ -256,9 +256,9 @@ async fn main() {
     let outline_block5 = rl.load_texture(&thread, "Resources/blocks/outline-block-variant4.png")
         .expect("Failed to load outline block variant 4");
     let end_trigger_texture = rl.load_texture(&thread, "Resources/end-trigger.png")
-        .expect("Failed to load outline block variant 4");
+        .expect("Failed to load end trigger texture");
     let black_block_texture = rl.load_texture(&thread, "Resources/blocks/black-block.png")
-        .expect("Failed to load outline block variant 4");
+        .expect("Failed to load black block texture");
 
     // Create main menu buttons
     let mut play_button = Button::new(300.0, 250.0, 200.0, 50.0, "Play", 24, false);
