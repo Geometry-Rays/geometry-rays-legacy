@@ -611,7 +611,7 @@ async fn main() {
                 } else if current_gamemode == GameMode::Ship {
                     if !touching_block_ceiling {
                         if mouse_down || space_down {
-                            if gravity == 0.8 {
+                            if gravity > 0.0 {
                                 if velocity_y > -10.0 {
                                     velocity_y -= ship_power
                                 }
@@ -621,7 +621,7 @@ async fn main() {
                                 }
                             }
                         } else {
-                            if gravity == 0.8 {
+                            if gravity > 0.0 {
                                 if velocity_y < 10.0 {
                                     velocity_y += ship_falling_speed
                                 }
