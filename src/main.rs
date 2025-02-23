@@ -303,6 +303,7 @@ async fn main() {
     let mut small_player = player;
     let mut velocity_y = 0.0;
     let mut gravity = 0.8;
+    let default_gravity = gravity;
     let mut jump_force = -13.0;
     let mut is_on_ground = true;
     let mut world_offset = 0.0;
@@ -1207,7 +1208,7 @@ async fn main() {
                     player.y = 500.0;
                     world_offset = 0.0;
                     rotation = 0.0;
-                    gravity = 0.8;
+                    gravity = default_gravity;
                     jump_force = -13.0;
                     current_gamemode = GameMode::Cube;
                     cc_1003 = Color::LIME;
@@ -1431,7 +1432,7 @@ async fn main() {
                     player.y = 500.0;
                     world_offset = 0.0;
                     rotation = 0.0;
-                    gravity = 0.8;
+                    gravity = default_gravity;
                     jump_force = -13.0;
                     current_gamemode = GameMode::Cube;
                     cc_1003 = Color::LIME;
