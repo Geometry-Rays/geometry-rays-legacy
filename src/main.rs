@@ -1948,6 +1948,14 @@ async fn main() {
                     0.13,
                     Color::WHITE
                 );
+
+                d.draw_text(
+                    "Press Space to Play!",
+                    20,
+                    20,
+                    20,
+                    Color::WHITE
+                );
             }
             GameState::LevelComplete => {
                 d.clear_background(Color::WHITE);
