@@ -305,6 +305,7 @@ async fn main() {
     let mut gravity = 0.8;
     let default_gravity = gravity;
     let mut jump_force = -13.0;
+    let default_jump_force = jump_force;
     let mut is_on_ground = true;
     let mut world_offset = 0.0;
     let movement_speed = 6.0;
@@ -579,7 +580,7 @@ async fn main() {
                     world_offset = 0.0;
                     rotation = 0.0;
                     gravity = 0.8;
-                    jump_force = -13.0;
+                    jump_force = default_jump_force;
                     current_gamemode = GameMode::Cube;
                 }
 
@@ -816,10 +817,10 @@ async fn main() {
                                 height: 80.0
                             }) {
                                 if object.id == 5 {
-                                    jump_force = 13.0;
+                                    jump_force = -default_jump_force;
                                     gravity = -default_gravity;
                                 } else {
-                                    jump_force = -13.0;
+                                    jump_force = default_jump_force;
                                     gravity = default_gravity;
                                 }
 
@@ -1209,7 +1210,7 @@ async fn main() {
                     world_offset = 0.0;
                     rotation = 0.0;
                     gravity = default_gravity;
-                    jump_force = -13.0;
+                    jump_force = default_jump_force;
                     current_gamemode = GameMode::Cube;
                     cc_1003 = Color::LIME;
                     in_custom_level = true;
@@ -1433,7 +1434,7 @@ async fn main() {
                     world_offset = 0.0;
                     rotation = 0.0;
                     gravity = default_gravity;
-                    jump_force = -13.0;
+                    jump_force = default_jump_force;
                     current_gamemode = GameMode::Cube;
                     cc_1003 = Color::LIME;
                     in_custom_level = false;
