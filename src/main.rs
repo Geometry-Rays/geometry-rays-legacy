@@ -817,10 +817,10 @@ async fn main() {
                             }) {
                                 if object.id == 5 {
                                     jump_force = 13.0;
-                                    gravity = -0.8;
+                                    gravity = -default_gravity;
                                 } else {
                                     jump_force = -13.0;
-                                    gravity = 0.8;
+                                    gravity = default_gravity;
                                 }
 
                                 is_on_ground = false
