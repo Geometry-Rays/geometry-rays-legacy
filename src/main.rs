@@ -791,10 +791,10 @@ async fn main() {
 
                         if object.id == 4 {
                             if centered_player.check_collision_recs(&Rectangle {
-                                x: object.x as f32 + world_offset,
-                                y: object.y as f32 - player_cam_y as f32,
-                                width: 40.0,
-                                height: 40.0
+                                x: object.x as f32 - 10.0 + world_offset,
+                                y: object.y as f32 - 10.0 - player_cam_y as f32,
+                                width: 60.0,
+                                height: 60.0
                             }) {
                                 if on_orb && mouse_down {
                                     if gravity > 0.0 {
@@ -1648,10 +1648,10 @@ async fn main() {
 
                         if object.id == 4 {
                             d.draw_rectangle_lines(
-                                object.x + world_offset as i32,
-                                object.y - player_cam_y,
-                                40,
-                                40,
+                                object.x - 10 + world_offset as i32,
+                                object.y - 10 - player_cam_y,
+                                60,
+                                60,
                                 Color::TEAL
                             );
                         }
