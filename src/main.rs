@@ -1502,6 +1502,8 @@ async fn main() {
                 d.draw_text(&format!("Latest Version: {}", *latest_version.lock().unwrap()), 10, 30, 15, Color::WHITE);
                 d.draw_text(&format!("Stars: {}", stars), 10, 50, 15, Color::WHITE);
 
+                d.draw_text(&format!("Made by Thepuppet57"), 10, d.get_screen_height() - 30, 25, Color::WHITE);
+
                 d.draw_rectangle_pro(
                     Rectangle::new(360.0, 60.0, 100.0, 100.0),
                     Vector2::new(40.0 / 2.0, 40.0 / 2.0),
