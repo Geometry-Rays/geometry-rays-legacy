@@ -1151,19 +1151,35 @@ async fn main() {
                 }
 
                 if up_arrow_down {
-                    cam_pos_y += 1;
+                    if rl.is_key_down(KeyboardKey::KEY_LEFT_CONTROL) {
+                        cam_pos_y += 5
+                    } else {
+                        cam_pos_y += 1
+                    }
                 }
 
                 if down_arrow_down {
-                    cam_pos_y -= 1;
+                    if rl.is_key_down(KeyboardKey::KEY_LEFT_CONTROL) {
+                        cam_pos_y -= 5
+                    } else {
+                        cam_pos_y -= 1
+                    }
                 }
 
                 if left_arrow_down {
-                    cam_pos_x -= 1;
+                    if rl.is_key_down(KeyboardKey::KEY_LEFT_CONTROL) {
+                        cam_pos_x -= 5
+                    } else {
+                        cam_pos_x -= 1
+                    }
                 }
 
                 if right_arrow_down {
-                    cam_pos_x += 1;
+                    if rl.is_key_down(KeyboardKey::KEY_LEFT_CONTROL) {
+                        cam_pos_x += 5
+                    } else {
+                        cam_pos_x += 1
+                    }
                 }
 
                 if editor_back.is_clicked(&rl) {
