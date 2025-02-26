@@ -1720,6 +1720,14 @@ async fn main() {
                         small_player.height as i32,
                         Color::YELLOW
                     );
+
+                    d.draw_rectangle_lines(
+                        centered_player.x as i32,
+                        centered_player.y as i32,
+                        centered_player.width as i32,
+                        centered_player.height as i32,
+                        Color::WHITE
+                    );
                 }
 
                 if from_editor {
