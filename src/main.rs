@@ -1718,7 +1718,7 @@ async fn main() {
                         small_player.y as i32,
                         small_player.width as i32,
                         small_player.height as i32,
-                        Color::YELLOW
+                        Color::BLUE
                     );
 
                     d.draw_rectangle_lines(
