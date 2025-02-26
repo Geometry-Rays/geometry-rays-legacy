@@ -293,8 +293,8 @@ async fn main() {
 
     let mut level_complete_back_button = Button::new(300.0, 320.0, 200.0, 50.0, "Back To Menu", 24, false);
 
-    let tor_url = "http://georays.puppet57.xyz/php-code/".to_string();
-    let latest_version_url: String = format!("{}get-latest-version.php", tor_url).to_string();
+    let main_url = "http://georays.puppet57.xyz/php-code/".to_string();
+    let latest_version_url: String = format!("{}get-latest-version.php", main_url).to_string();
 
     // Variables required for the game to work
     let mut game_state = GameState::Menu;
