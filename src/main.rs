@@ -362,6 +362,7 @@ async fn main() {
         false,
         false
     ];
+    let mut get_latest_version = true;
 
     texture_ids.insert(1, &spike_texture);
     texture_ids.insert(2, &block_texture);
@@ -555,7 +556,7 @@ async fn main() {
                 play_button.update(&rl, delta_time);
                 editor_button.update(&rl, delta_time);
 
-                if *latest_version.lock().unwrap() == "Loading..." {
+                if *latest_version.lock().unwrap() == "Loading..." && get_latest_version {
                     let latest_version_clone = std::sync::Arc::clone(&latest_version);
                     let latest_version_url = latest_version_url.to_owned();
                     
@@ -564,6 +565,8 @@ async fn main() {
                         let mut latest_version = latest_version_clone.lock().unwrap();
                         *latest_version = version;
                     });
+
+                    get_latest_version = false
                 }
 
                 not_done_yet_text = false;
