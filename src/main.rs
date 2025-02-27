@@ -1803,7 +1803,7 @@ async fn main() {
                             texture_ids.get(&i.id).unwrap().height as f32 / 2.0 * 0.05
                         ),
                         i.rotation as f32,
-                        if i.selected { Color::GREEN } else { cc_1004 }
+                        if i.selected { Color::LIME } else { cc_1004 }
                     );
                 }
 
