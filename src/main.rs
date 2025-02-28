@@ -1608,113 +1608,116 @@ async fn main() {
 
                 if show_debug_text {
                     for object in &object_grid {
-                        if object.id == 1 {
-                            d.draw_rectangle_lines(
-                                object.x + world_offset as i32 + 15,
-                                object.y + 10 - player_cam_y,
-                                10,
-                                20,
-                                Color::RED
-                            );
-                        }
-
-                        if object.id == 2 ||
-                        object.id == 10 ||
-                        object.id == 11 ||
-                        object.id == 12 ||
-                        object.id == 13 ||
-                        object.id == 14 {
-                            d.draw_rectangle_lines(
-                                object.x + world_offset as i32,
-                                object.y + 10 - player_cam_y,
-                                3,
-                                20,
-                                Color::RED
-                            );
-
-                            d.draw_rectangle_lines(
-                                object.x + world_offset as i32 + 3,
-                                object.y - player_cam_y,
-                                37,
-                                3,
-                                Color::BLUEVIOLET
-                            );
-
-                            d.draw_rectangle_lines(
-                                object.x + world_offset as i32 + 3,
-                                object.y + 38 - player_cam_y,
-                                37,
-                                3,
-                                Color::BLUEVIOLET
-                            );
-
-                            d.draw_rectangle_lines(
-                                object.x + world_offset as i32 + 80,
-                                object.y - player_cam_y + 10,
-                                3,
-                                20,
-                                Color::GREEN
-                            );
-                        }
-
-                        if object.id == 3 {
-                            d.draw_rectangle_lines(
-                                object.x + world_offset as i32,
-                                object.y + 35 - player_cam_y,
-                                40,
-                                5,
-                                Color::TEAL
-                            );
-                        }
-
-                        if object.id == 4 {
-                            d.draw_rectangle_lines(
-                                object.x - 10 + world_offset as i32,
-                                object.y - 10 - player_cam_y,
-                                60,
-                                60,
-                                Color::TEAL
-                            );
-                        }
-
-                        if object.id == 5 || object.id == 6 {
-                            d.draw_rectangle_lines(
-                                object.x + world_offset as i32 + 10,
-                                object.y - 11 - player_cam_y,
-                                20,
-                                80,
-                                Color::TEAL
-                            );
-                        }
-
-                        if object.id == 7 {
-                            d.draw_rectangle_lines(
-                                object.x + world_offset as i32 + 15,
-                                object.y + 25 - player_cam_y,
-                                10,
-                                10,
-                                Color::RED
-                            );
-                        }
-
-                        if object.id == 8 || object.id == 9 {
-                            d.draw_rectangle_lines(
-                                object.x + world_offset as i32 + 10,
-                                object.y - 11 - player_cam_y,
-                                20,
-                                80,
-                                Color::TEAL
-                            );
-                        }
-
-                        if object.id == 15 {
-                            d.draw_rectangle_lines(
-                                object.x + world_offset as i32,
-                                object.y - player_cam_y,
-                                40,
-                                40,
-                                Color::TEAL
-                            );
+                        if object.x as f32 + world_offset < d.get_screen_width() as f32 &&
+                        object.x as f32 + world_offset > -40.0 {
+                            if object.id == 1 {
+                                d.draw_rectangle_lines(
+                                    object.x + world_offset as i32 + 15,
+                                    object.y + 10 - player_cam_y,
+                                    10,
+                                    20,
+                                    Color::RED
+                                );
+                            }
+    
+                            if object.id == 2 ||
+                            object.id == 10 ||
+                            object.id == 11 ||
+                            object.id == 12 ||
+                            object.id == 13 ||
+                            object.id == 14 {
+                                d.draw_rectangle_lines(
+                                    object.x + world_offset as i32,
+                                    object.y + 10 - player_cam_y,
+                                    3,
+                                    20,
+                                    Color::RED
+                                );
+    
+                                d.draw_rectangle_lines(
+                                    object.x + world_offset as i32 + 3,
+                                    object.y - player_cam_y,
+                                    37,
+                                    3,
+                                    Color::BLUEVIOLET
+                                );
+    
+                                d.draw_rectangle_lines(
+                                    object.x + world_offset as i32 + 3,
+                                    object.y + 38 - player_cam_y,
+                                    37,
+                                    3,
+                                    Color::BLUEVIOLET
+                                );
+    
+                                d.draw_rectangle_lines(
+                                    object.x + world_offset as i32 + 80,
+                                    object.y - player_cam_y + 10,
+                                    3,
+                                    20,
+                                    Color::GREEN
+                                );
+                            }
+    
+                            if object.id == 3 {
+                                d.draw_rectangle_lines(
+                                    object.x + world_offset as i32,
+                                    object.y + 35 - player_cam_y,
+                                    40,
+                                    5,
+                                    Color::TEAL
+                                );
+                            }
+    
+                            if object.id == 4 {
+                                d.draw_rectangle_lines(
+                                    object.x - 10 + world_offset as i32,
+                                    object.y - 10 - player_cam_y,
+                                    60,
+                                    60,
+                                    Color::TEAL
+                                );
+                            }
+    
+                            if object.id == 5 || object.id == 6 {
+                                d.draw_rectangle_lines(
+                                    object.x + world_offset as i32 + 10,
+                                    object.y - 11 - player_cam_y,
+                                    20,
+                                    80,
+                                    Color::TEAL
+                                );
+                            }
+    
+                            if object.id == 7 {
+                                d.draw_rectangle_lines(
+                                    object.x + world_offset as i32 + 15,
+                                    object.y + 25 - player_cam_y,
+                                    10,
+                                    10,
+                                    Color::RED
+                                );
+                            }
+    
+                            if object.id == 8 || object.id == 9 {
+                                d.draw_rectangle_lines(
+                                    object.x + world_offset as i32 + 10,
+                                    object.y - 11 - player_cam_y,
+                                    20,
+                                    80,
+                                    Color::TEAL
+                                );
+                            }
+    
+                            if object.id == 15 {
+                                d.draw_rectangle_lines(
+                                    object.x + world_offset as i32,
+                                    object.y - player_cam_y,
+                                    40,
+                                    40,
+                                    Color::TEAL
+                                );
+                            }
                         }
                     }
 
