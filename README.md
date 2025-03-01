@@ -21,12 +21,5 @@
  
  Website: http://georays.puppet57.xyz
 
-# Why is the website a tor website?
- I dont have money for a url or web hosting.
-
- The website is hosted on my raspberry pi 3
-
- The raspberry pi was a gift btw. I don't have money for a raspberry pi either.
-
 # Credits
  Kazakh (kk_kazakh_khanate on discord) - Made art for the game
