@@ -834,7 +834,7 @@ async fn main() {
                         if object.id == 7 {
                             kill_player |= centered_player.check_collision_recs(&Rectangle {
                                 x: object.x as f32 + world_offset + 20.0,
-                                y: object.y as f32 + 25.0 - player_cam_y as f32,
+                                y: object.y as f32 + if object.rotation > 145 || object.rotation < -145 { 5.0 } else { 25.0 } - player_cam_y as f32,
                                 width: 10.0,
                                 height: 10.0
                             });
@@ -1692,7 +1692,7 @@ async fn main() {
                             if object.id == 7 {
                                 d.draw_rectangle_lines(
                                     object.x + world_offset as i32 + 15,
-                                    object.y + 25 - player_cam_y,
+                                    object.y + if object.rotation > 145 || object.rotation < -145 { 5 } else { 25 } - player_cam_y,
                                     10,
                                     10,
                                     Color::RED
