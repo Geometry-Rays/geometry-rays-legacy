@@ -1319,7 +1319,12 @@ async fn main() {
                     let mut obj_index = 0;
                     while obj_index < object_grid.len() {
                         if object_grid[obj_index].selected {
-                            object_grid[obj_index].rotation -= 90;
+                            if object_grid[obj_index].rotation != -270 {
+                                object_grid[obj_index].rotation -= 90;
+                            } else {
+                                object_grid[obj_index].rotation = 0;
+                            }
+
                             obj_index += 1;
                         } else {
                             obj_index += 1;
@@ -1331,7 +1336,12 @@ async fn main() {
                     let mut obj_index = 0;
                     while obj_index < object_grid.len() {
                         if object_grid[obj_index].selected {
-                            object_grid[obj_index].rotation += 90;
+                            if object_grid[obj_index].rotation != 270 {
+                                object_grid[obj_index].rotation += 90;
+                            } else {
+                                object_grid[obj_index].rotation = 0;
+                            }
+
                             obj_index += 1;
                         } else {
                             obj_index += 1;
