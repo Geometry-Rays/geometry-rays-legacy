@@ -814,10 +814,10 @@ async fn main() {
 
                         if object.id == 5 || object.id == 6 {
                             if centered_player.check_collision_recs(&Rectangle {
-                                x: object.x as f32 + world_offset + 10.0,
-                                y: object.y as f32 - 11.0 - player_cam_y as f32,
-                                width: 20.0,
-                                height: 80.0
+                                x: object.x as f32 + world_offset + if object.rotation == 0 || object.rotation == 180 || object.rotation == -180 { 10.0 } else { -20.0 },
+                                y: object.y as f32 - if object.rotation == 0 || object.rotation == 180 || object.rotation == -180 { 11.0 } else { -11.0 } - player_cam_y as f32,
+                                width: if object.rotation == 0 || object.rotation == 180 || object.rotation == -180 { 20.0 } else { 80.0 },
+                                height: if object.rotation == 0 || object.rotation == 180 || object.rotation == -180 { 80.0 } else { 20.0 }
                             }) {
                                 if object.id == 5 {
                                     jump_force = -default_jump_force;
@@ -1691,10 +1691,10 @@ async fn main() {
     
                             if object.id == 5 || object.id == 6 {
                                 d.draw_rectangle_lines(
-                                    object.x + world_offset as i32 + 10,
-                                    object.y - 11 - player_cam_y,
-                                    20,
-                                    80,
+                                    object.x + world_offset as i32 + if object.rotation == 0 || object.rotation == 180 || object.rotation == -180 { 10 } else { -20 },
+                                    object.y - if object.rotation == 0 || object.rotation == 180 || object.rotation == -180 { 11 } else { -11 } - player_cam_y,
+                                    if object.rotation == 0 || object.rotation == 180 || object.rotation == -180 { 20 } else { 80 },
+                                    if object.rotation == 0 || object.rotation == 180 || object.rotation == -180 { 80 } else { 20 },
                                     Color::TEAL
                                 );
                             }
