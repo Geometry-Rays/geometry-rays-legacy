@@ -1091,6 +1091,7 @@ async fn main() {
                     in_custom_level = true;
                     velocity_y = 0.0;
                     player_cam_y = 0;
+                    movement_speed = default_movement_speed;
 
                     let mut obj_index = 0;
                     while obj_index < object_grid.len() {
@@ -1325,6 +1326,7 @@ async fn main() {
                     in_custom_level = false;
                     velocity_y = 0.0;
                     player_cam_y = 0;
+                    movement_speed = default_movement_speed;
 
                     from_editor = false;
                     player_path.clear();
