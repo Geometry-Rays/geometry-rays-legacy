@@ -183,6 +183,8 @@ async fn main() {
     texture_ids.insert(15, &end_trigger_texture);
     texture_ids.insert(16, &black_block_texture);
     texture_ids.insert(17, &_null_texture);
+    texture_ids.insert(18, &_null_texture);
+    texture_ids.insert(19, &_null_texture);
 
     // Variables for editor stuff
     let mut active_tab = EditorTab::Build;
@@ -230,6 +232,8 @@ async fn main() {
     objects.insert(15, "end trigger");
     objects.insert(16, "black block");
     objects.insert(17, "1x speed");
+    objects.insert(18, "2x speed");
+    objects.insert(19, "3x speed");
 
     let obj_button_off = 65.0;
     let mut obj1_button = Button::new(187.0, 415.0, 50.0, 50.0, objects.get(&1).unwrap(), 10, false);
@@ -249,6 +253,8 @@ async fn main() {
     let mut obj15_button = Button::new(187.0 + (obj_button_off * 5.0), 415.0 + obj_button_off, 50.0, 50.0, objects.get(&15).unwrap(), 10, false);
     let mut obj16_button = Button::new(187.0 + (obj_button_off * 6.0), 415.0 + obj_button_off, 50.0, 50.0, objects.get(&16).unwrap(), 10, false);
     let mut obj17_button = Button::new(187.0 + (obj_button_off * 7.0), 415.0 + obj_button_off, 50.0, 50.0, objects.get(&17).unwrap(), 10, false);
+    let mut obj18_button = Button::new(187.0 + (obj_button_off * 8.0), 415.0 + obj_button_off, 50.0, 50.0, objects.get(&18).unwrap(), 10, false);
+    let mut obj19_button = Button::new(187.0, 415.0 + (obj_button_off * 2.0), 50.0, 50.0, objects.get(&19).unwrap(), 10, false);
 
     let mut bg_red = red_bg_slider_pos - 75;
     let mut bg_green = green_bg_slider_pos - 75;
@@ -679,14 +685,22 @@ async fn main() {
                             }
                         }
 
-                        if object.id == 17 {
+                        if object.id == 17 ||
+                        object.id == 18 ||
+                        object.id == 19 {
                             if centered_player.check_collision_recs(&Rectangle {
                                 x: object.x as f32 + world_offset + if object.rotation == 0 || object.rotation == 180 || object.rotation == -180 { 10.0 } else { -20.0 },
                                 y: object.y as f32 - if object.rotation == 0 || object.rotation == 180 || object.rotation == -180 { 11.0 } else { -11.0 } - player_cam_y as f32,
                                 width: if object.rotation == 0 || object.rotation == 180 || object.rotation == -180 { 20.0 } else { 80.0 },
                                 height: if object.rotation == 0 || object.rotation == 180 || object.rotation == -180 { 80.0 } else { 20.0 }
                             }) {
-                                movement_speed = default_movement_speed
+                                movement_speed = if object.id == 17 {
+                                    default_movement_speed
+                                } else if object.id == 18 {
+                                    default_movement_speed * 1.4
+                                } else {
+                                    default_movement_speed * 1.8
+                                }
                             }
                         }
                     }
@@ -827,6 +841,8 @@ async fn main() {
                 obj15_button.update(&rl, delta_time);
                 obj16_button.update(&rl, delta_time);
                 obj17_button.update(&rl, delta_time);
+                obj18_button.update(&rl, delta_time);
+                obj19_button.update(&rl, delta_time);
 
                 if build_tab_button.is_clicked(&rl) {
                     active_tab = EditorTab::Build;
@@ -918,6 +934,14 @@ async fn main() {
 
                 else if obj17_button.is_clicked(&rl) && active_tab == EditorTab::Build {
                     current_object = 17 + _advanced_page_number;
+                }
+
+                else if obj18_button.is_clicked(&rl) && active_tab == EditorTab::Build {
+                    current_object = 18 + _advanced_page_number;
+                }
+
+                else if obj19_button.is_clicked(&rl) && active_tab == EditorTab::Build {
+                    current_object = 19 + _advanced_page_number;
                 }
 
                 else if grid_button.is_clicked(&rl) {
@@ -1550,7 +1574,9 @@ async fn main() {
                                 );
                             }
 
-                            if object.id == 17 {
+                            if object.id == 17 ||
+                            object.id == 18 ||
+                            object.id == 19 {
                                 d.draw_rectangle_lines(
                                     object.x + world_offset as i32 + if object.rotation == 0 || object.rotation == 180 || object.rotation == -180 { 10 } else { -20 },
                                     object.y - if object.rotation == 0 || object.rotation == 180 || object.rotation == -180 { 11 } else { -11 } - player_cam_y,
@@ -1714,6 +1740,8 @@ async fn main() {
                     obj15_button.draw(&mut d);
                     obj16_button.draw(&mut d);
                     obj17_button.draw(&mut d);
+                    obj18_button.draw(&mut d);
+                    obj19_button.draw(&mut d);
                 }
 
                 d.draw_text(&format!("Selected Object: {}", objects.get(&current_object).unwrap()), 10, 10, 20, Color::WHITE);
