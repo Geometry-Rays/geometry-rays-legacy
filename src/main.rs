@@ -60,6 +60,14 @@ async fn main() {
         .expect("Failed to load end trigger texture");
     let black_block_texture = rl.load_texture(&thread, "Resources/blocks/black-block.png")
         .expect("Failed to load black block texture");
+    let half_speed_texture = rl.load_texture(&thread, "Resources/speed/05x.png")
+        .expect("Failed to load 0.5x speed portal texture");
+    let normal_speed_texture = rl.load_texture(&thread, "Resources/speed/1x.png")
+        .expect("Failed to load 1x speed portal texture");
+    let double_speed_texture = rl.load_texture(&thread, "Resources/speed/2x.png")
+        .expect("Failed to load 2x speed portal texture");
+    let triple_speed_texture = rl.load_texture(&thread, "Resources/speed/3x.png")
+        .expect("Failed to load 3x speed portal texture");
 
     // Create main menu buttons
     let mut play_button = Button::new(300.0, 250.0, 200.0, 50.0, "Play", 24, false);
@@ -182,10 +190,10 @@ async fn main() {
     texture_ids.insert(14, &outline_block5);
     texture_ids.insert(15, &end_trigger_texture);
     texture_ids.insert(16, &black_block_texture);
-    texture_ids.insert(17, &_null_texture);
-    texture_ids.insert(18, &_null_texture);
-    texture_ids.insert(19, &_null_texture);
-    texture_ids.insert(20, &_null_texture);
+    texture_ids.insert(17, &normal_speed_texture);
+    texture_ids.insert(18, &double_speed_texture);
+    texture_ids.insert(19, &triple_speed_texture);
+    texture_ids.insert(20, &half_speed_texture);
 
     // Variables for editor stuff
     let mut active_tab = EditorTab::Build;
