@@ -1,8 +1,6 @@
 # Geometry Rays
  Recreation of [Geometry Dash](https://store.steampowered.com/app/322170/Geometry_Dash) made in rust bindings of raylib.
 
- As of writing this readme this game is in a pretty early state and is still in beta. I invision a full game with online levels in the future but thats very far away.
-
 # Compiling
  As of writing this no pre-made executables have been made since theres no real point right now.
 
