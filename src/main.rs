@@ -1483,14 +1483,14 @@ async fn main() {
                                         texture_ids.get(&i.id).unwrap().height as f32
                                     ),
                                     Rectangle::new(
-                                        object_x,
+                                        object_x + 10.0,
                                         object_y,
                                         texture_ids.get(&i.id).unwrap().width as f32 * 0.1,
                                         texture_ids.get(&i.id).unwrap().height as f32 * 0.1
                                     ),
                                     Vector2::new(
-                                        texture_ids.get(&i.id).unwrap().width as f32 / 2.0 * 0.05,
-                                        texture_ids.get(&i.id).unwrap().height as f32 / 2.0 * 0.05
+                                        texture_ids.get(&i.id).unwrap().width as f32 / 2.0 * 0.1,
+                                        texture_ids.get(&i.id).unwrap().height as f32 / 2.0 * 0.1
                                     ),
                                     i.rotation as f32,
                                     cc_1004
@@ -1737,14 +1737,14 @@ async fn main() {
                                 texture_ids.get(&i.id).unwrap().height as f32
                             ),
                             Rectangle::new(
-                                object_x,
+                                object_x + 10.0,
                                 object_y,
                                 texture_ids.get(&i.id).unwrap().width as f32 * 0.1,
                                 texture_ids.get(&i.id).unwrap().height as f32 * 0.1
                             ),
                             Vector2::new(
-                                texture_ids.get(&i.id).unwrap().width as f32 / 2.0 * 0.05,
-                                texture_ids.get(&i.id).unwrap().height as f32 / 2.0 * 0.05
+                                texture_ids.get(&i.id).unwrap().width as f32 / 2.0 * 0.1,
+                                texture_ids.get(&i.id).unwrap().height as f32 / 2.0 * 0.1
                             ),
                             i.rotation as f32,
                             cc_1004
