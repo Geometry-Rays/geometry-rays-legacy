@@ -1451,27 +1451,51 @@ async fn main() {
                     if i.x as f32 + world_offset < d.get_screen_width() as f32 &&
                     i.x as f32 + world_offset > -40.0 {
                         if from_editor || i.id != 15 {
-                            d.draw_texture_pro(
-                                &texture_ids.get(&i.id).unwrap(),
-                                Rectangle::new(
-                                    0.0,
-                                    0.0,
-                                    texture_ids.get(&i.id).unwrap().width as f32,
-                                    texture_ids.get(&i.id).unwrap().height as f32
-                                ),
-                                Rectangle::new(
-                                    object_x,
-                                    object_y,
-                                    texture_ids.get(&i.id).unwrap().width as f32 * 0.05,
-                                    texture_ids.get(&i.id).unwrap().height as f32 * 0.05
-                                ),
-                                Vector2::new(
-                                    texture_ids.get(&i.id).unwrap().width as f32 / 2.0 * 0.05,
-                                    texture_ids.get(&i.id).unwrap().height as f32 / 2.0 * 0.05
-                                ),
-                                i.rotation as f32,
-                                cc_1004
-                            );
+                            if i.id != 17 && i.id != 18 && i.id != 19 && i.id != 20 {
+                                d.draw_texture_pro(
+                                    &texture_ids.get(&i.id).unwrap(),
+                                    Rectangle::new(
+                                        0.0,
+                                        0.0,
+                                        texture_ids.get(&i.id).unwrap().width as f32,
+                                        texture_ids.get(&i.id).unwrap().height as f32
+                                    ),
+                                    Rectangle::new(
+                                        object_x,
+                                        object_y,
+                                        texture_ids.get(&i.id).unwrap().width as f32 * 0.05,
+                                        texture_ids.get(&i.id).unwrap().height as f32 * 0.05
+                                    ),
+                                    Vector2::new(
+                                        texture_ids.get(&i.id).unwrap().width as f32 / 2.0 * 0.05,
+                                        texture_ids.get(&i.id).unwrap().height as f32 / 2.0 * 0.05
+                                    ),
+                                    i.rotation as f32,
+                                    cc_1004
+                                );
+                            } else {
+                                d.draw_texture_pro(
+                                    &texture_ids.get(&i.id).unwrap(),
+                                    Rectangle::new(
+                                        0.0,
+                                        0.0,
+                                        texture_ids.get(&i.id).unwrap().width as f32,
+                                        texture_ids.get(&i.id).unwrap().height as f32
+                                    ),
+                                    Rectangle::new(
+                                        object_x,
+                                        object_y,
+                                        texture_ids.get(&i.id).unwrap().width as f32 * 0.1,
+                                        texture_ids.get(&i.id).unwrap().height as f32 * 0.1
+                                    ),
+                                    Vector2::new(
+                                        texture_ids.get(&i.id).unwrap().width as f32 / 2.0 * 0.05,
+                                        texture_ids.get(&i.id).unwrap().height as f32 / 2.0 * 0.05
+                                    ),
+                                    i.rotation as f32,
+                                    cc_1004
+                                );
+                            }
                         }
                     }
                 }
@@ -1681,27 +1705,51 @@ async fn main() {
                 for i in &object_grid {
                     let object_x = i.x as f32 - cam_pos_x as f32 * 5.0 + 20.0;
                     let object_y = i.y as f32 + cam_pos_y as f32 * 5.0 + 20.0;
-                    d.draw_texture_pro(
-                        &texture_ids.get(&i.id).unwrap(), 
-                        Rectangle::new(
-                            0.0,
-                            0.0,
-                            texture_ids.get(&i.id).unwrap().width as f32,
-                            texture_ids.get(&i.id).unwrap().height as f32
-                        ),
-                        Rectangle::new(
-                            object_x,
-                            object_y,
-                            texture_ids.get(&i.id).unwrap().width as f32 * 0.05,
-                            texture_ids.get(&i.id).unwrap().height as f32 * 0.05
-                        ),
-                        Vector2::new(
-                            texture_ids.get(&i.id).unwrap().width as f32 / 2.0 * 0.05,
-                            texture_ids.get(&i.id).unwrap().height as f32 / 2.0 * 0.05
-                        ),
-                        i.rotation as f32,
-                        if i.selected { Color::LIME } else { cc_1004 }
-                    );
+                    if i.id != 17 && i.id != 18 && i.id != 19 && i.id != 20 {
+                        d.draw_texture_pro(
+                            &texture_ids.get(&i.id).unwrap(),
+                            Rectangle::new(
+                                0.0,
+                                0.0,
+                                texture_ids.get(&i.id).unwrap().width as f32,
+                                texture_ids.get(&i.id).unwrap().height as f32
+                            ),
+                            Rectangle::new(
+                                object_x,
+                                object_y,
+                                texture_ids.get(&i.id).unwrap().width as f32 * 0.05,
+                                texture_ids.get(&i.id).unwrap().height as f32 * 0.05
+                            ),
+                            Vector2::new(
+                                texture_ids.get(&i.id).unwrap().width as f32 / 2.0 * 0.05,
+                                texture_ids.get(&i.id).unwrap().height as f32 / 2.0 * 0.05
+                            ),
+                            i.rotation as f32,
+                            cc_1004
+                        );
+                    } else {
+                        d.draw_texture_pro(
+                            &texture_ids.get(&i.id).unwrap(),
+                            Rectangle::new(
+                                0.0,
+                                0.0,
+                                texture_ids.get(&i.id).unwrap().width as f32,
+                                texture_ids.get(&i.id).unwrap().height as f32
+                            ),
+                            Rectangle::new(
+                                object_x,
+                                object_y,
+                                texture_ids.get(&i.id).unwrap().width as f32 * 0.1,
+                                texture_ids.get(&i.id).unwrap().height as f32 * 0.1
+                            ),
+                            Vector2::new(
+                                texture_ids.get(&i.id).unwrap().width as f32 / 2.0 * 0.05,
+                                texture_ids.get(&i.id).unwrap().height as f32 / 2.0 * 0.05
+                            ),
+                            i.rotation as f32,
+                            cc_1004
+                        );
+                    }
                 }
 
                 // Draw ground
