@@ -103,6 +103,21 @@ async fn main() {
 
     let mut level_complete_back_button = Button::new(300.0, 320.0, 200.0, 50.0, "Back To Menu", 24, false);
 
+    // Account page textboxes and buttons
+    let mut username_textbox = TextBox {
+        rect: Rectangle {
+            x: rl.get_screen_width() as f32 / 2.0 - 20.0 * 30.0 / 1.9 / 2.0,
+            y: rl.get_screen_height() as f32 / 2.0,
+            width: 20.0 * 30.0 / 1.9,
+            height: 50.0
+        },
+        text: "Username".to_string(),
+        text_size: 30,
+        max_length: 20,
+        spaces_allowed: false,
+        active: false
+    };
+
     let main_url = "http://georays.puppet57.xyz/php-code/".to_string();
     let latest_version_url: String = format!("{}get-latest-version.php", main_url).to_string();
 
@@ -346,6 +361,9 @@ async fn main() {
             levels_completed_vec[level_index as usize] = true
         }
     }
+
+    // Variables for text boxes
+    let mut username: String = "".to_string();
 
     while !rl.window_should_close() {
         let space_down = rl.is_key_down(KeyboardKey::KEY_SPACE);
@@ -1392,6 +1410,12 @@ async fn main() {
                 if menu_button.is_clicked(&rl) {
                     game_state = GameState::Menu
                 }
+
+                if username_textbox.is_clicked(&rl) {
+                    username_textbox.active = true
+                }
+
+                username_textbox.input(&mut username, &rl);
             }
         }
 
@@ -2021,6 +2045,8 @@ async fn main() {
                 d.clear_background(Color::BLACK);
 
                 menu_button.draw(&mut d);
+
+                username_textbox.draw(username.clone(), &mut d);
             }
         }
     }
