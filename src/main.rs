@@ -73,7 +73,7 @@ async fn main() {
     let mut play_button = Button::new(300.0, 250.0, 200.0, 50.0, "Play", 24, false);
     let mut editor_button = Button::new(300.0, 320.0, 200.0, 50.0, "Custom Levels", 24, false);
     let mut restart_button = Button::new(300.0, 320.0, 200.0, 50.0, "Restart", 24, false);
-    
+
     // Create online level buttons
     let mut menu_button = Button::new(20.0, 20.0, 200.0, 50.0, "Back to Menu", 24, false);
     let mut create_button = Button::new(120.0, 230.0, 150.0, 150.0, "Create", 30, false);

@@ -55,3 +55,12 @@ pub struct ObjectStruct {
     pub id: u32,
     pub selected: bool
 }
+
+pub struct TextBox {
+    pub rect: Rectangle,
+    pub text: String,
+    pub text_size: u8,
+    pub max_length: u8,
+    pub spaces_allowed: bool,
+    pub active: bool
+}
