@@ -1387,7 +1387,11 @@ async fn main() {
                 }
             }
             GameState::AccountPage => {
+                menu_button.update(&rl, delta_time);
 
+                if menu_button.is_clicked(&rl) {
+                    game_state = GameState::Menu
+                }
             }
         }
 
@@ -2015,6 +2019,8 @@ async fn main() {
             }
             GameState::AccountPage => {
                 d.clear_background(Color::BLACK);
+
+                menu_button.draw(&mut d);
             }
         }
     }
