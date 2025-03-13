@@ -132,6 +132,16 @@ async fn main() {
         active: false
     };
 
+    let mut login_button = Button::new(
+        rl.get_screen_width() as f32 / 2.0 - 100.0,
+        rl.get_screen_height() as f32 - 70.0,
+        200.0,
+        50.0,
+        "Login",
+        20,
+        false
+    );
+
     let main_url = "http://georays.puppet57.xyz/php-code/".to_string();
     let latest_version_url: String = format!("{}get-latest-version.php", main_url).to_string();
 
@@ -1421,9 +1431,14 @@ async fn main() {
             }
             GameState::AccountPage => {
                 menu_button.update(&rl, delta_time);
+                login_button.update(&rl, delta_time);
 
                 if menu_button.is_clicked(&rl) {
                     game_state = GameState::Menu
+                }
+
+                if login_button.is_clicked(&rl) {
+                    println!("no logging in just yet");
                 }
 
                 if username_textbox.is_clicked(&rl) {
@@ -2073,6 +2088,7 @@ async fn main() {
                 d.clear_background(Color::BLACK);
 
                 menu_button.draw(&mut d);
+                login_button.draw(&mut d);
 
                 username_textbox.draw(username.clone(), &mut d);
                 password_textbox.draw(password.clone(), &mut d);
