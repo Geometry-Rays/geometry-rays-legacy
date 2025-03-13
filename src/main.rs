@@ -1983,6 +1983,22 @@ async fn main() {
                     Color::WHITE
                 );
 
+                d.draw_text(
+                    "Use Q and E to rotate selected objects!",
+                    d.get_screen_width() / 2 - d.measure_text("Use Q and E to rotate selected objects!", 30) / 2,
+                    350 - editor_guide_scroll as i32,
+                    30,
+                    Color::WHITE
+                );
+
+                d.draw_text(
+                    "Use S on level select to pick the song for your level!",
+                    d.get_screen_width() / 2 - d.measure_text("Use S on level select to pick the song for your level!", 28) / 2,
+                    400 - editor_guide_scroll as i32,
+                    28,
+                    Color::WHITE
+                );
+
                 menu_button.draw(&mut d);
             }
         }
