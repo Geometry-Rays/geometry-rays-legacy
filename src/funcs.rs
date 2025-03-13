@@ -143,7 +143,7 @@ impl TextBox {
         );
 
         d.draw_text(
-            if self.active { text.as_str() } else { self.text.as_str() },
+            if !text.is_empty() { text.as_str() } else { self.text.as_str() },
             self.rect.x as i32 + 10,
             self.rect.y as i32 + self.rect.height as i32 / 2 - self.text_size as i32 / 2,
             self.text_size as i32,
