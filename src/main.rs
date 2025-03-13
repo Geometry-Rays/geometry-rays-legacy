@@ -1434,6 +1434,14 @@ async fn main() {
                     password_textbox.active = true
                 }
 
+                if username_textbox.is_not_clicked(&rl) {
+                    username_textbox.active = false
+                }
+
+                if password_textbox.is_not_clicked(&rl) {
+                    password_textbox.active = false
+                }
+
                 username_textbox.input(&mut username, &rl);
                 password_textbox.input(&mut password, &rl);
             }

@@ -123,6 +123,11 @@ impl TextBox {
         self.rect.check_collision_point_rec(mouse_pos) && rl.is_mouse_button_pressed(MouseButton::MOUSE_BUTTON_LEFT)
     }
 
+    pub fn is_not_clicked(&self, rl: &RaylibHandle) -> bool {
+        let mouse_pos = rl.get_mouse_position();
+        !self.rect.check_collision_point_rec(mouse_pos) && rl.is_mouse_button_pressed(MouseButton::MOUSE_BUTTON_LEFT)
+    }
+
     pub fn draw(&self, text: String, d: &mut RaylibDrawHandle) {
         d.draw_rectangle(
             self.rect.x as i32,
