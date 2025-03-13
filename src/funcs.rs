@@ -132,8 +132,8 @@ impl TextBox {
             Color {
                 r: 50,
                 g: 50,
-                b: 100,
-                a: 200
+                b: 50,
+                a: if self.active { 100 } else { 200 }
             }
         );
 
