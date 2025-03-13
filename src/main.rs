@@ -121,7 +121,7 @@ async fn main() {
     let default_movement_speed = movement_speed;
     let mut rotation = 0.0;
     let mut attempt = 1;
-    let version = "1.1";
+    let version = "1.11";
     let latest_version = std::sync::Arc::new(std::sync::Mutex::new(String::from("Loading...")));
     let mut not_done_yet_text = false;
     let mut show_debug_text = false;
