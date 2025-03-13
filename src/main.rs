@@ -107,11 +107,25 @@ async fn main() {
     let mut username_textbox = TextBox {
         rect: Rectangle {
             x: rl.get_screen_width() as f32 / 2.0 - 20.0 * 30.0 / 1.9 / 2.0,
-            y: rl.get_screen_height() as f32 / 2.0,
+            y: rl.get_screen_height() as f32 / 2.0 - 50.0,
             width: 20.0 * 30.0 / 1.9,
             height: 50.0
         },
         text: "Username".to_string(),
+        text_size: 30,
+        max_length: 20,
+        spaces_allowed: false,
+        active: false
+    };
+
+    let mut password_textbox = TextBox {
+        rect: Rectangle {
+            x: rl.get_screen_width() as f32 / 2.0 - 20.0 * 30.0 / 1.9 / 2.0,
+            y: rl.get_screen_height() as f32 / 2.0 + 50.0,
+            width: 20.0 * 30.0 / 1.9,
+            height: 50.0
+        },
+        text: "Password".to_string(),
         text_size: 30,
         max_length: 20,
         spaces_allowed: false,
@@ -364,6 +378,7 @@ async fn main() {
 
     // Variables for text boxes
     let mut username: String = "".to_string();
+    let mut password: String = "".to_string();
 
     while !rl.window_should_close() {
         let space_down = rl.is_key_down(KeyboardKey::KEY_SPACE);
@@ -1415,7 +1430,12 @@ async fn main() {
                     username_textbox.active = true
                 }
 
+                if password_textbox.is_clicked(&rl) {
+                    password_textbox.active = true
+                }
+
                 username_textbox.input(&mut username, &rl);
+                password_textbox.input(&mut password, &rl);
             }
         }
 
@@ -2047,6 +2067,7 @@ async fn main() {
                 menu_button.draw(&mut d);
 
                 username_textbox.draw(username.clone(), &mut d);
+                password_textbox.draw(password.clone(), &mut d);
             }
         }
     }
