@@ -1961,9 +1961,9 @@ async fn main() {
 
                 d.draw_text(
                     "Press 1, 2, and 3 to switch tabs",
-                    d.get_screen_width() / 2 - d.measure_text("Press 1, 2, and 3 to switch tabs", 40) / 2,
+                    d.get_screen_width() / 2 - d.measure_text("Press 1, 2, and 3 to switch tabs", 30) / 2,
                     200 - editor_guide_scroll as i32,
-                    40,
+                    30,
                     Color::WHITE
                 );
 
@@ -1971,6 +1971,14 @@ async fn main() {
                     "Click on an object in the edit tab to select it!",
                     d.get_screen_width() / 2 - d.measure_text("Click on an object in the edit tab to select it!", 30) / 2,
                     250 - editor_guide_scroll as i32,
+                    30,
+                    Color::WHITE
+                );
+
+                d.draw_text(
+                    "Use WASD to move selected objects!",
+                    d.get_screen_width() / 2 - d.measure_text("Use WASD to move selected objects!", 30) / 2,
+                    300 - editor_guide_scroll as i32,
                     30,
                     Color::WHITE
                 );
