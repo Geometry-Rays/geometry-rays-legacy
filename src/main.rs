@@ -73,6 +73,7 @@ async fn main() {
     let mut play_button = Button::new(300.0, 250.0, 200.0, 50.0, "Play", 24, false);
     let mut editor_button = Button::new(300.0, 320.0, 200.0, 50.0, "Custom Levels", 24, false);
     let mut restart_button = Button::new(300.0, 320.0, 200.0, 50.0, "Restart", 24, false);
+    let mut account_page_button = Button::new(rl.get_screen_width() as f32 - 220.0, 20.0, 200.0, 50.0, "Account Page", 24, false);
 
     // Create online level buttons
     let mut menu_button = Button::new(20.0, 20.0, 200.0, 50.0, "Back to Menu", 24, false);
@@ -424,6 +425,12 @@ async fn main() {
                     sink.play();
                     reset_menu_music = false;
                 }
+
+                if account_page_button.is_clicked(&rl) {
+                    game_state = GameState::AccountPage
+                }
+
+                account_page_button.update(&rl, delta_time);
             }
             GameState::Playing => {
                 if kill_player == true {
@@ -1379,6 +1386,9 @@ async fn main() {
                     editor_guide_scroll -= 50
                 }
             }
+            GameState::AccountPage => {
+
+            }
         }
 
         // Rendering
@@ -1422,6 +1432,8 @@ async fn main() {
                     icon_size / discord_icon.height() as f32,
                     discord_color,
                 );
+
+                account_page_button.draw(&mut d);
             }
             GameState::Playing => {
                 d.clear_background(Color::WHITE);
@@ -2000,6 +2012,9 @@ async fn main() {
                 );
 
                 menu_button.draw(&mut d);
+            }
+            GameState::AccountPage => {
+                d.clear_background(Color::BLACK);
             }
         }
     }
