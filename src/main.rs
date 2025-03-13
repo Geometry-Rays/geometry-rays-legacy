@@ -1954,7 +1954,7 @@ async fn main() {
                 d.draw_text(
                     "Editor Keybinds:",
                     d.get_screen_width() / 2 - d.measure_text("Editor Keybinds:", 50) / 2,
-                    d.get_screen_height() / 2 - editor_guide_scroll as i32,
+                    100 - editor_guide_scroll as i32,
                     50,
                     Color::WHITE
                 );
@@ -1962,8 +1962,16 @@ async fn main() {
                 d.draw_text(
                     "Press 1, 2, and 3 to switch tabs",
                     d.get_screen_width() / 2 - d.measure_text("Press 1, 2, and 3 to switch tabs", 40) / 2,
-                    1300 - editor_guide_scroll as i32,
+                    200 - editor_guide_scroll as i32,
                     40,
+                    Color::WHITE
+                );
+
+                d.draw_text(
+                    "Click on an object in the edit tab to select it!",
+                    d.get_screen_width() / 2 - d.measure_text("Click on an object in the edit tab to select it!", 30) / 2,
+                    250 - editor_guide_scroll as i32,
+                    30,
                     Color::WHITE
                 );
 
