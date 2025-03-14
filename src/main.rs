@@ -155,6 +155,7 @@ async fn main() {
     let main_url = "http://georays.puppet57.xyz/php-code/".to_string();
     let latest_version_url: String = format!("{}get-latest-version.php", main_url).to_string();
     let register_url: String = format!("{}register.php", main_url).to_string();
+    let login_url: String = format!("{}login.php", main_url).to_string();
 
     // Variables required for the game to work
     let mut game_state = GameState::Menu;
@@ -225,6 +226,7 @@ async fn main() {
     ];
     let mut get_latest_version = true;
     let mut register_result = "".to_string();
+    let mut login_result = "".to_string();
 
     texture_ids.insert(1, &spike_texture);
     texture_ids.insert(2, &block_texture);
@@ -1451,7 +1453,16 @@ async fn main() {
                 }
 
                 if login_button.is_clicked(&rl) {
-                    println!("no logging in just yet");
+                    let login_url = login_url.to_owned();
+
+                    let login_result_string = post_request(
+                        login_url,
+                        Some(hashmap! {
+                            "user".to_string() => username.clone(),
+                            "pass".to_string() => password.clone()
+                        })
+                    ).await;
+                    login_result = login_result_string;
                 }
 
                 if register_button.is_clicked(&rl) {
@@ -2123,6 +2134,14 @@ async fn main() {
                 d.draw_text(
                     &register_result,
                     d.get_screen_width() / 2 - d.measure_text(&register_result, 50) / 2,
+                    100,
+                    50,
+                    Color::WHITE
+                );
+
+                d.draw_text(
+                    &login_result,
+                    d.get_screen_width() / 2 - d.measure_text(&login_result, 50) / 2,
                     100,
                     50,
                     Color::WHITE
