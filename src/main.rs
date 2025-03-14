@@ -224,6 +224,7 @@ async fn main() {
         false
     ];
     let mut get_latest_version = true;
+    let mut register_result = "".to_string();
 
     texture_ids.insert(1, &spike_texture);
     texture_ids.insert(2, &block_texture);
@@ -1454,7 +1455,6 @@ async fn main() {
                 }
 
                 if register_button.is_clicked(&rl) {
-                    let register_result = std::sync::Arc::clone(&latest_version);
                     let register_url = register_url.to_owned();
 
                     let register_result_string = post_request(
@@ -1464,9 +1464,7 @@ async fn main() {
                             "pass".to_string() => password.clone()
                         })
                     ).await;
-
-                    let mut register_result = register_result.lock().unwrap();
-                    *register_result = register_result_string;
+                    register_result = register_result_string;
                 };
 
                 if username_textbox.is_clicked(&rl) {
@@ -2121,6 +2119,14 @@ async fn main() {
 
                 username_textbox.draw(username.clone(), &mut d);
                 password_textbox.draw(password.clone(), &mut d);
+
+                d.draw_text(
+                    &register_result,
+                    d.get_screen_width() / 2 - d.measure_text(&register_result, 50) / 2,
+                    100,
+                    50,
+                    Color::WHITE
+                );
             }
         }
     }
