@@ -264,6 +264,43 @@ impl TextBox {
             else if rl.is_key_pressed(KeyboardKey::KEY_SPACE) && self.spaces_allowed {
                 text.push(' ');
             }
+            else if rl.is_key_pressed(KeyboardKey::KEY_ONE) {
+                text.push('1');
+            else if rl.is_key_pressed(KeyboardKey::KEY_TWO) {
+                text.push('2');
+            }
+
+            else if rl.is_key_pressed(KeyboardKey::KEY_THREE) {
+                text.push('3');
+            }
+
+            else if rl.is_key_pressed(KeyboardKey::KEY_FOUR) {
+                text.push('4');
+            }
+
+            else if rl.is_key_pressed(KeyboardKey::KEY_FIVE) {
+                text.push('5');
+            }
+
+            else if rl.is_key_pressed(KeyboardKey::KEY_SIX) {
+                text.push('6');
+            }
+
+            else if rl.is_key_pressed(KeyboardKey::KEY_SEVEN) {
+                text.push('7');
+            }
+
+            else if rl.is_key_pressed(KeyboardKey::KEY_EIGHT) {
+                text.push('8');
+            }
+
+            else if rl.is_key_pressed(KeyboardKey::KEY_NINE) {
+                text.push('9');
+            }
+
+            else if rl.is_key_pressed(KeyboardKey::KEY_ZERO) {
+                text.push('0');
+            }
         }
     }
 }
