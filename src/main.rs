@@ -134,10 +134,20 @@ async fn main() {
 
     let mut login_button = Button::new(
         rl.get_screen_width() as f32 / 2.0 - 100.0,
-        rl.get_screen_height() as f32 - 70.0,
+        rl.get_screen_height() as f32 - 140.0,
         200.0,
         50.0,
         "Login",
+        20,
+        false
+    );
+
+    let mut register_button = Button::new(
+        rl.get_screen_width() as f32 / 2.0 - 100.0,
+        rl.get_screen_height() as f32 - 70.0,
+        200.0,
+        50.0,
+        "Register",
         20,
         false
     );
@@ -1432,6 +1442,7 @@ async fn main() {
             GameState::AccountPage => {
                 menu_button.update(&rl, delta_time);
                 login_button.update(&rl, delta_time);
+                register_button.update(&rl, delta_time);
 
                 if menu_button.is_clicked(&rl) {
                     game_state = GameState::Menu
@@ -1439,6 +1450,10 @@ async fn main() {
 
                 if login_button.is_clicked(&rl) {
                     println!("no logging in just yet");
+                }
+
+                if register_button.is_clicked(&rl) {
+                    println!("no making accounts yet");
                 }
 
                 if username_textbox.is_clicked(&rl) {
@@ -2089,6 +2104,7 @@ async fn main() {
 
                 menu_button.draw(&mut d);
                 login_button.draw(&mut d);
+                register_button.draw(&mut d);
 
                 username_textbox.draw(username.clone(), &mut d);
                 password_textbox.draw(password.clone(), &mut d);
