@@ -154,6 +154,7 @@ async fn main() {
 
     let main_url = "http://georays.puppet57.xyz/php-code/".to_string();
     let latest_version_url: String = format!("{}get-latest-version.php", main_url).to_string();
+    let register_url: String = format!("{}register.php", main_url).to_string();
 
     // Variables required for the game to work
     let mut game_state = GameState::Menu;
@@ -437,7 +438,7 @@ async fn main() {
                     let latest_version_url = latest_version_url.to_owned();
                     
                     let _ = tokio::task::spawn(async move {
-                        let version = make_request(latest_version_url).await;
+                        let version = get_request(latest_version_url, None).await;
                         let mut latest_version = latest_version_clone.lock().unwrap();
                         *latest_version = version;
                     });
@@ -1453,8 +1454,20 @@ async fn main() {
                 }
 
                 if register_button.is_clicked(&rl) {
-                    println!("no making accounts yet");
-                }
+                    let register_result = std::sync::Arc::clone(&latest_version);
+                    let register_url = register_url.to_owned();
+
+                    let register_result_string = post_request(
+                        register_url,
+                        Some(hashmap! {
+                            "user".to_string() => username.clone(),
+                            "pass".to_string() => password.clone()
+                        })
+                    ).await;
+
+                    let mut register_result = register_result.lock().unwrap();
+                    *register_result = register_result_string;
+                };
 
                 if username_textbox.is_clicked(&rl) {
                     username_textbox.active = true

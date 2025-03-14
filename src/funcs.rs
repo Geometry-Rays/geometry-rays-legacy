@@ -1,6 +1,7 @@
 use raylib::prelude::*;
 use crate::types::*;
 use reqwest::Client;
+use std::collections::HashMap;
 
 impl Button {
     pub fn new(x: f32, y: f32, width: f32, height: f32, text: &str, font_size: i32, is_disabled: bool) -> Self {
@@ -264,8 +265,11 @@ impl TextBox {
             else if rl.is_key_pressed(KeyboardKey::KEY_SPACE) && self.spaces_allowed {
                 text.push(' ');
             }
+
             else if rl.is_key_pressed(KeyboardKey::KEY_ONE) {
                 text.push('1');
+            }
+
             else if rl.is_key_pressed(KeyboardKey::KEY_TWO) {
                 text.push('2');
             }
@@ -305,17 +309,59 @@ impl TextBox {
     }
 }
 
-pub async fn make_request(url: String) -> String {
+pub async fn get_request(url: String, params: Option<HashMap<String, String>>) -> String {
     let client = Client::builder()
         .build()
         .expect("Failed to build client");
 
-    let res = client
-        .get(url)
+    let mut request = client.get(url);
+
+    if let Some(p) = params {
+        request = request.query(&p);
+    }
+
+    let res = request
         .send()
         .await
         .expect("Failed to send request");
 
     let text = res.text().await.unwrap();
     return format!("{}", text);
+}
+
+pub async fn post_request(url: String, params: Option<HashMap<String, String>>) -> String {
+    let client = Client::builder()
+        .build()
+        .expect("Failed to build client");
+
+    let mut request = client.post(url);
+
+    if let Some(p) = params {
+        request = request.form(&p);
+    }
+
+    let res = request
+        .send()
+        .await
+        .expect("Failed to send request");
+
+    let text = res.text().await.unwrap();
+    return format!("{}", text);
+}
+
+#[macro_export]
+macro_rules! hashmap {
+    ( $( $x:expr => $x1:expr ),* ) => {
+        {
+            let mut _temp_hashmap = HashMap::new();
+            $(
+                _temp_hashmap.insert($x, $x1);
+            )*
+            _temp_hashmap
+        }
+    };
+
+    () => {
+        HashMap::new()
+    }
 }
