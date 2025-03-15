@@ -1281,7 +1281,7 @@ async fn main() {
                 }
 
                 if level_upload_button.is_clicked(&rl) {
-                    println!("no upload menu yet")
+                    game_state = GameState::LevelUpload
                 }
 
                 been_to_editor = true;
@@ -1502,6 +1502,13 @@ async fn main() {
 
                 username_textbox.input(&mut username, &rl);
                 password_textbox.input(&mut password, &rl);
+            }
+            GameState::LevelUpload => {
+                menu_button.update(&rl, delta_time);
+
+                if menu_button.is_clicked(&rl) {
+                    game_state = GameState::CreatorMenu
+                }
             }
         }
 
@@ -2153,6 +2160,11 @@ async fn main() {
                     50,
                     Color::WHITE
                 );
+            }
+            GameState::LevelUpload => {
+                d.clear_background(Color::BLACK);
+
+                menu_button.draw(&mut d);
             }
         }
     }
