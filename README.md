@@ -2,8 +2,6 @@
  Recreation of [Geometry Dash](https://store.steampowered.com/app/322170/Geometry_Dash) made in rust bindings of raylib.
 
 # Compiling
- As of writing this no pre-made executables have been made since theres no real point right now.
-
  So to compile it run cargo build --release
 
  Then move the binary to the root folder.
