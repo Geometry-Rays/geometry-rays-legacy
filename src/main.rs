@@ -402,10 +402,12 @@ async fn main() {
         .expect("Failed to load star texture");
     
     let difficulties: Vec<Texture2D> = vec![
-        rl.load_texture(&thread, "./Resources/null.png").expect("Failed to load difficulty face"),
+        rl.load_texture(&thread, "./Resources/difficulties/0.png").expect("Failed to load difficulty face"),
         rl.load_texture(&thread, "./Resources/difficulties/1.png").expect("Failed to load difficulty face"),
         rl.load_texture(&thread, "./Resources/difficulties/2.png").expect("Failed to load difficulty face"),
-        rl.load_texture(&thread, "./Resources/difficulties/3.png").expect("Failed to load difficulty face")
+        rl.load_texture(&thread, "./Resources/difficulties/3.png").expect("Failed to load difficulty face"),
+        rl.load_texture(&thread, "./Resources/difficulties/4.png").expect("Failed to load difficulty face"),
+        rl.load_texture(&thread, "./Resources/difficulties/5.png").expect("Failed to load difficulty face"),
     ];
 
     // Audio setup
