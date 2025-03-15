@@ -1129,25 +1129,16 @@ async fn main() {
                 }
 
                 if level_save_button.is_clicked(&rl) {
-                    level_string = format!(
-                        "version:BETA;name:hi;desc:testing level loading;song:{};c1001:{},{},{};c1002:{},{},{};c1004:255,255,255;bg:1;grnd:1;;;",
-
+                    level_string = get_level_text(
                         current_song,
-
                         bg_red,
                         bg_green,
                         bg_blue,
-
-                        ground_red,
-                        ground_green,
-                        ground_blue
-                    ).to_string();
-
-                    for object in &object_grid {
-                        level_string.push_str( &format!("{}:{}:{}:{};", object.y, object.x, object.rotation, object.id));
-                    }
-
-                    level_string.pop();
+                        ground_red as u8,
+                        ground_green as u8,
+                        ground_blue as u8,
+                        &object_grid
+                    );
 
                     let write_result = fs::write("./save-data/levels/level.txt", &level_string);
 
@@ -2178,7 +2169,7 @@ async fn main() {
             ground_red as u8,
             ground_green as u8,
             ground_blue as u8,
-            object_grid
+            &object_grid
         );
 
         let write_result = fs::write("./save-data/levels/level.txt", level_string);
