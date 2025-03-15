@@ -91,6 +91,7 @@ async fn main() {
     let mut level_options_button = Button::new(675.0, 90.0, 100.0, 50.0, "Level Options", 13, false);
     let mut level_save_button = Button::new(675.0, 160.0, 100.0, 50.0, "Save", 20, false);
     let mut playtest_button = Button::new(20.0, 150.0, 75.0, 75.0, "Playtest", 20, false);
+    let mut level_upload_button = Button::new(675.0, 230.0, 100.0, 50.0, "Upload", 20, false);
 
     let mut level_options_back = Button::new(20.0, 20.0, 200.0, 50.0, "Back to Editor", 24, false);
     let red_bg_slider = Button::new(470.0, 100.0, 10.0, 150.0, "", 20, false);
@@ -902,6 +903,7 @@ async fn main() {
                 editor_back.update(&rl, delta_time);
                 level_save_button.update(&rl, delta_time);
                 playtest_button.update(&rl, delta_time);
+                level_upload_button.update(&rl, delta_time);
                 obj1_button.update(&rl, delta_time);
                 obj2_button.update(&rl, delta_time);
                 obj3_button.update(&rl, delta_time);
@@ -1030,7 +1032,7 @@ async fn main() {
                 else if grid_button.is_clicked(&rl) {
                     // let obj_x = snapped_x;
                     // let obj_y = snapped_y;
-                    if !level_options_button.is_clicked(&rl) && !editor_back.is_clicked(&rl) && !playtest_button.is_clicked(&rl) && !level_save_button.is_clicked(&rl) {
+                    if !level_options_button.is_clicked(&rl) && !editor_back.is_clicked(&rl) && !playtest_button.is_clicked(&rl) && !level_save_button.is_clicked(&rl) && !level_upload_button.is_clicked(&rl) {
                         if active_tab == EditorTab::Build {
                             object_grid.push(ObjectStruct {
                                 y: if snapped_y < 0 { snapped_y - 40 } else { snapped_y },
@@ -1276,6 +1278,10 @@ async fn main() {
                             obj_index += 1;
                         }
                     }
+                }
+
+                if level_upload_button.is_clicked(&rl) {
+                    println!("no upload menu yet")
                 }
 
                 been_to_editor = true;
@@ -1906,6 +1912,7 @@ async fn main() {
                 editor_back.draw(&mut d);
                 level_save_button.draw(&mut d);
                 playtest_button.draw(&mut d);
+                level_upload_button.draw(&mut d);
 
                 if edit_not_done_yet {
                     d.draw_text("Click to select!", 270, 490, 40, Color::WHITE);
