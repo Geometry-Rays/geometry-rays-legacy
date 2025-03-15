@@ -365,3 +365,27 @@ macro_rules! hashmap {
         HashMap::new()
     }
 }
+
+pub fn get_level_text(current_song: u8, bg_red: u8, bg_green: u8, bg_blue: u8, ground_red: u8, ground_green: u8, ground_blue: u8, object_grid: Vec<ObjectStruct>) -> String {
+    let mut level_string = format!(
+        "version:BETA;name:hi;desc:testing level loading;song:{};c1001:{},{},{};c1002:{},{},{};c1004:255,255,255;bg:1;grnd:1;;;",
+
+        current_song,
+
+        bg_red,
+        bg_green,
+        bg_blue,
+
+        ground_red,
+        ground_green,
+        ground_blue
+    ).to_string();
+
+    for object in object_grid {
+        level_string.push_str( &format!("{}:{}:{}:{};", object.y, object.x, object.rotation, object.id));
+    }
+
+    level_string.pop();
+
+    level_string
+}
