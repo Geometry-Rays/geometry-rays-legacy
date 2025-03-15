@@ -153,6 +153,36 @@ async fn main() {
         false
     );
 
+
+
+    let mut level_name_textbox = TextBox {
+        rect: Rectangle {
+            x: rl.get_screen_width() as f32 / 2.0 - 20.0 * 30.0 / 1.9 / 2.0,
+            y: rl.get_screen_height() as f32 / 2.0 - 50.0,
+            width: 20.0 * 30.0 / 1.9,
+            height: 50.0
+        },
+        text: "Level Name".to_string(),
+        text_size: 30,
+        max_length: 20,
+        spaces_allowed: true,
+        active: false
+    };
+
+    let mut level_desc_textbox = TextBox {
+        rect: Rectangle {
+            x: rl.get_screen_width() as f32 / 2.0 - 50.0 * 30.0 / 1.9 / 2.0,
+            y: rl.get_screen_height() as f32 / 2.0 + 50.0,
+            width: 50.0 * 30.0 / 1.9,
+            height: 50.0
+        },
+        text: "Level Description".to_string(),
+        text_size: 30,
+        max_length: 50,
+        spaces_allowed: true,
+        active: false
+    };
+
     let main_url = "http://georays.puppet57.xyz/php-code/".to_string();
     let latest_version_url: String = format!("{}get-latest-version.php", main_url).to_string();
     let register_url: String = format!("{}register.php", main_url).to_string();
@@ -404,6 +434,9 @@ async fn main() {
     // Variables for text boxes
     let mut username: String = "".to_string();
     let mut password: String = "".to_string();
+
+    let mut level_name: String = "".to_string();
+    let mut level_desc: String = "".to_string();
 
     while !rl.window_should_close() {
         let space_down = rl.is_key_down(KeyboardKey::KEY_SPACE);
@@ -1500,6 +1533,25 @@ async fn main() {
                 if menu_button.is_clicked(&rl) {
                     game_state = GameState::CreatorMenu
                 }
+
+                if level_name_textbox.is_clicked(&rl) {
+                    level_name_textbox.active = true
+                }
+
+                if level_name_textbox.is_not_clicked(&rl) {
+                    level_name_textbox.active = false
+                }
+
+                if level_desc_textbox.is_clicked(&rl) {
+                    level_desc_textbox.active = true
+                }
+
+                if level_desc_textbox.is_not_clicked(&rl) {
+                    level_desc_textbox.active = false
+                }
+
+                level_name_textbox.input(&mut level_name, &rl);
+                level_desc_textbox.input(&mut level_desc, &rl);
             }
         }
 
@@ -2156,6 +2208,8 @@ async fn main() {
                 d.clear_background(Color::BLACK);
 
                 menu_button.draw(&mut d);
+                level_name_textbox.draw(level_name.clone(), &mut d);
+                level_desc_textbox.draw(level_desc.clone(), &mut d);
             }
         }
     }
