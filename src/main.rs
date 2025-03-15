@@ -183,10 +183,21 @@ async fn main() {
         active: false
     };
 
+    let mut upload_button = Button::new(
+        rl.get_screen_width() as f32 / 2.0 - 100.0,
+        rl.get_screen_height() as f32 - 140.0,
+        200.0,
+        50.0,
+        "Upload",
+        20,
+        false
+    );
+
     let main_url = "http://georays.puppet57.xyz/php-code/".to_string();
     let latest_version_url: String = format!("{}get-latest-version.php", main_url).to_string();
     let register_url: String = format!("{}register.php", main_url).to_string();
     let login_url: String = format!("{}login.php", main_url).to_string();
+    let upload_url: String = format!("{}upload-level.php", main_url).to_string();
 
     // Variables required for the game to work
     let mut game_state = GameState::Menu;
@@ -255,9 +266,12 @@ async fn main() {
         false,
         false
     ];
+    let mut logged_in: bool = false;
+
     let mut get_latest_version = true;
     let mut register_result = "".to_string();
     let mut login_result = "".to_string();
+    let mut level_upload_result = "".to_string();
 
     texture_ids.insert(1, &spike_texture);
     texture_ids.insert(2, &block_texture);
@@ -1493,6 +1507,11 @@ async fn main() {
                         })
                     ).await;
                     login_result = login_result_string;
+
+
+                    if login_result == "Logged in!" {
+                        logged_in = true
+                    }
                 }
 
                 if register_button.is_clicked(&rl) {
@@ -1529,9 +1548,39 @@ async fn main() {
             }
             GameState::LevelUpload => {
                 menu_button.update(&rl, delta_time);
+                upload_button.update(&rl, delta_time);
 
                 if menu_button.is_clicked(&rl) {
                     game_state = GameState::CreatorMenu
+                }
+
+                if upload_button.is_clicked(&rl) {
+                    if logged_in {
+                        let level_data = get_level_text(
+                            current_song,
+                            bg_red,
+                            bg_green,
+                            bg_blue,
+                            ground_red as u8,
+                            ground_green as u8,
+                            ground_blue as u8,
+                            &object_grid
+                        );
+    
+                        level_upload_result = post_request(
+                            upload_url.clone(),
+                            Some(hashmap! {
+                                "name".to_string() => level_name.clone(),
+                                "desc".to_string() => level_desc.clone(),
+                                "data".to_string() => level_data,
+                                "creator".to_string() => username.clone()
+                            })
+                        ).await;
+                        
+                        println!("{}", level_upload_result);
+                    } else {
+                        level_upload_result = "Not logged in!".to_string();
+                    }
                 }
 
                 if level_name_textbox.is_clicked(&rl) {
@@ -2208,8 +2257,17 @@ async fn main() {
                 d.clear_background(Color::BLACK);
 
                 menu_button.draw(&mut d);
+                upload_button.draw(&mut d);
                 level_name_textbox.draw(level_name.clone(), &mut d);
                 level_desc_textbox.draw(level_desc.clone(), &mut d);
+
+                d.draw_text(
+                    &level_upload_result,
+                    d.get_screen_width() / 2 - d.measure_text(&level_upload_result, 50) / 2,
+                    100,
+                    50,
+                    Color::WHITE
+                );
             }
         }
     }
