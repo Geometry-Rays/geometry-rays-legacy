@@ -153,12 +153,12 @@ impl TextBox {
     }
 
     pub fn input(&self, text: &mut String, rl: &RaylibHandle) {
-        if self.active && text.len() < self.max_length as usize {
-            if rl.is_key_pressed(KeyboardKey::KEY_BACKSPACE) && text.len() > 0 {
-                text.pop();
-            }
+        if rl.is_key_pressed(KeyboardKey::KEY_BACKSPACE) && text.len() > 0 {
+            text.pop();
+        }
 
-            else if rl.is_key_pressed(KeyboardKey::KEY_A) {
+        if self.active && text.len() < self.max_length as usize {
+            if rl.is_key_pressed(KeyboardKey::KEY_A) {
                 text.push(if rl.is_key_down(KeyboardKey::KEY_LEFT_SHIFT) { 'A' } else { 'a' });
             }
 
