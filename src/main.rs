@@ -213,6 +213,7 @@ async fn main() {
     let register_url: String = format!("{}register.php", main_url).to_string();
     let login_url: String = format!("{}login.php", main_url).to_string();
     let upload_url: String = format!("{}upload-level.php", main_url).to_string();
+    let download_url: String = format!("{}download-level.php", main_url);
 
     // Variables required for the game to work
     let mut game_state = GameState::Menu;
@@ -287,6 +288,7 @@ async fn main() {
     let mut register_result = "".to_string();
     let mut login_result = "".to_string();
     let mut level_upload_result = "".to_string();
+    let mut level_download_result = "".to_string();
 
     texture_ids.insert(1, &spike_texture);
     texture_ids.insert(2, &block_texture);
@@ -937,7 +939,14 @@ async fn main() {
                 level_id_textbox.input(&mut level_id, &rl);
 
                 if download_level_button.is_clicked(&rl) && level_id.len() > 0 {
-                    println!("No downloading levels yet!");
+                    level_download_result = get_request(
+                        download_url.clone(),
+                        Some(hashmap! {
+                            "id".to_string() => level_id.clone()
+                        })
+                    ).await;
+
+                    println!("{}", level_download_result);
                 }
             }
             GameState::Editor => {
