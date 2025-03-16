@@ -892,56 +892,20 @@ async fn main() {
                     parts = level_string.split(";;;").collect();
                     _level_metadata = parts[0];
                     _object_string = parts[1];
-                    object_grid.clear();
-                    let metadata_pairs: Vec<&str> = _level_metadata.split(';').collect();
-                    for pair in metadata_pairs {
-                        let key_value: Vec<&str> = pair.split(':').collect();
-                        let key = key_value[0];
-                        let value = key_value[1];
-                
-                        if key == "version" {
-                            if value == "ALPHA" {
-                                println!("Old level version detected.");
-                                println!("Please pick a level thats a newer version as that version isnt supported anymore.");
-                                break;
-                            } else if value == "BETA" {
-                                println!("Loading level...");
-                            } else {
-                                println!("Level version not recognized.");
-                                println!("Is this level made in a newer version?");
-                                break;
-                            }
-                        } else if key == "c1001" {
-                            let colors: Vec<&str> = value.split(',').collect();
-                
-                            bg_red = colors[0].parse::<u8>().unwrap();
-                            bg_green = colors[1].parse::<u8>().unwrap();
-                            bg_blue = colors[2].parse::<u8>().unwrap();
-                        } else if key == "c1002" {
-                            let colors: Vec<&str> = value.split(',').collect();
-                
-                            ground_red = colors[0].parse::<i32>().unwrap();
-                            ground_green = colors[1].parse::<i32>().unwrap();
-                            ground_blue = colors[2].parse::<i32>().unwrap();
-                        } else if key == "song" {
-                            if !song_selected {
-                                current_song = value.parse::<u8>().unwrap();
-                            }
-                        }
-                    }
-                
-                    let object_list: Vec<&str> = _object_string.split(';').collect();
-                    for object in object_list {
-                        let xyrid: Vec<&str> = object.split(':').collect();
-                
-                        object_grid.push(ObjectStruct {
-                            y:xyrid[0].parse::<i32>().unwrap(),
-                            x:xyrid[1].parse::<i32>().unwrap(),
-                            rotation:xyrid[2].parse::<i16>().unwrap(),
-                            id:xyrid[3].parse::<u32>().unwrap(),
-                            selected:false
-                        });
-                    }
+                    load_level(
+                        &mut _level_metadata.to_string(),
+                        &mut _object_string.to_string(),
+                        &mut object_grid,
+                        &mut bg_red,
+                        &mut bg_green,
+                        &mut bg_blue,
+                        &mut ground_red,
+                        &mut ground_green,
+                        &mut ground_blue,
+                        song_selected,
+                        &mut current_song,
+                        true
+                    );
 
                     from_editor = true;
 
@@ -1407,52 +1371,20 @@ async fn main() {
                     parts = main_levels[current_level].data.split(";;;").collect();
                     _level_metadata = parts[0];
                     _object_string = parts[1];
-                    object_grid.clear();
-                    let metadata_pairs: Vec<&str> = _level_metadata.split(';').collect();
-                    for pair in metadata_pairs {
-                        let key_value: Vec<&str> = pair.split(':').collect();
-                        let key = key_value[0];
-                        let value = key_value[1];
-
-                        if key == "version" {
-                            if value == "ALPHA" {
-                                println!("Old level version detected.");
-                                println!("Please pick a level thats a newer version as that version isnt supported anymore.");
-                                break;
-                            } else if value == "BETA" {
-                                println!("Loading level...");
-                            } else {
-                                println!("Level version not recognized.");
-                                println!("Is this level made in a newer version?");
-                                break;
-                            }
-                        } else if key == "c1001" {
-                            let colors: Vec<&str> = value.split(',').collect();
-
-                            bg_red = colors[0].parse::<u8>().unwrap();
-                            bg_green = colors[1].parse::<u8>().unwrap();
-                            bg_blue = colors[2].parse::<u8>().unwrap();
-                        } else if key == "c1002" {
-                            let colors: Vec<&str> = value.split(',').collect();
-
-                            ground_red = colors[0].parse::<i32>().unwrap();
-                            ground_green = colors[1].parse::<i32>().unwrap();
-                            ground_blue = colors[2].parse::<i32>().unwrap();
-                        }
-                    }
-
-                    let object_list: Vec<&str> = _object_string.split(';').collect();
-                    for object in object_list {
-                        let xyrid: Vec<&str> = object.split(':').collect();
-                
-                        object_grid.push(ObjectStruct {
-                            y:xyrid[0].parse::<i32>().unwrap(),
-                            x:xyrid[1].parse::<i32>().unwrap(),
-                            rotation:xyrid[2].parse::<i16>().unwrap(),
-                            id:xyrid[3].parse::<u32>().unwrap(),
-                            selected:false
-                        });
-                    }
+                    load_level(
+                        &mut _level_metadata.to_string(),
+                        &mut _object_string.to_string(),
+                        &mut object_grid,
+                        &mut bg_red,
+                        &mut bg_green,
+                        &mut bg_blue,
+                        &mut ground_red,
+                        &mut ground_green,
+                        &mut ground_blue,
+                        song_selected,
+                        &mut current_song,
+                        false
+                    );
 
                     level_music_file = BufReader::new(File::open(format!("{}", main_levels[current_level].song)).expect("Failed to open MP3 file"));
                     _level_music = Decoder::new(level_music_file).expect("Failed to decode MP3 file");

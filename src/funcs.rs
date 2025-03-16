@@ -389,3 +389,72 @@ pub fn get_level_text(current_song: u8, bg_red: u8, bg_green: u8, bg_blue: u8, g
 
     level_string
 }
+
+pub fn load_level(
+    _level_metadata: &mut String,
+    _object_string: &mut String,
+    object_grid: &mut Vec<ObjectStruct>,
+
+    bg_red: &mut u8,
+    bg_green: &mut u8,
+    bg_blue: &mut u8,
+
+    ground_red: &mut i32,
+    ground_green: &mut i32,
+    ground_blue: &mut i32,
+
+    song_selected: bool,
+    current_song: &mut u8,
+    load_song: bool
+) {
+    object_grid.clear();
+    let metadata_pairs: Vec<&str> = _level_metadata.split(';').collect();
+    for pair in metadata_pairs {
+        let key_value: Vec<&str> = pair.split(':').collect();
+        let key = key_value[0];
+        let value = key_value[1];
+
+        if key == "version" {
+            if value == "ALPHA" {
+                println!("Old level version detected.");
+                println!("Please pick a level thats a newer version as that version isnt supported anymore.");
+                break;
+            } else if value == "BETA" {
+                println!("Loading level...");
+            } else {
+                println!("Level version not recognized.");
+                println!("Is this level made in a newer version?");
+                break;
+            }
+        } else if key == "c1001" {
+            let colors: Vec<&str> = value.split(',').collect();
+
+            *bg_red = colors[0].parse::<u8>().unwrap();
+            *bg_green = colors[1].parse::<u8>().unwrap();
+            *bg_blue = colors[2].parse::<u8>().unwrap();
+        } else if key == "c1002" {
+            let colors: Vec<&str> = value.split(',').collect();
+
+            *ground_red = colors[0].parse::<i32>().unwrap();
+            *ground_green = colors[1].parse::<i32>().unwrap();
+            *ground_blue = colors[2].parse::<i32>().unwrap();
+        } else if key == "song" {
+            if !song_selected && load_song {
+                *current_song = value.parse::<u8>().unwrap();
+            }
+        }
+    }
+
+    let object_list: Vec<&str> = _object_string.split(';').collect();
+    for object in object_list {
+        let xyrid: Vec<&str> = object.split(':').collect();
+
+        object_grid.push(ObjectStruct {
+            y:xyrid[0].parse::<i32>().unwrap(),
+            x:xyrid[1].parse::<i32>().unwrap(),
+            rotation:xyrid[2].parse::<i16>().unwrap(),
+            id:xyrid[3].parse::<u32>().unwrap(),
+            selected:false
+        });
+    }
+}
