@@ -12,6 +12,7 @@ pub enum GameState {
     EditorKeybinds,
     AccountPage,
     LevelUpload,
+    LevelPage,
 }
 
 pub struct Button {

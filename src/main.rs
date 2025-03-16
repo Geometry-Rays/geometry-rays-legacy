@@ -208,6 +208,18 @@ async fn main() {
         false
     );
 
+
+
+    let mut level_play_button = Button::new(
+        rl.get_screen_width() as f32 / 2.0 - 100.0,
+        rl.get_screen_height() as f32 / 2.0 - 100.0,
+        200.0,
+        200.0,
+        "Play",
+        20,
+        false
+    );
+
     let main_url = "http://georays.puppet57.xyz/php-code/".to_string();
     let latest_version_url: String = format!("{}get-latest-version.php", main_url).to_string();
     let register_url: String = format!("{}register.php", main_url).to_string();
@@ -946,7 +958,11 @@ async fn main() {
                         })
                     ).await;
 
-                    println!("{}", level_download_result);
+                    if level_download_result != "Level doesn't exist!" {
+                        game_state = GameState::LevelPage
+                    } else {
+                        println!("{}", level_download_result);
+                    }
                 }
             }
             GameState::Editor => {
@@ -1576,6 +1592,50 @@ async fn main() {
 
                 level_name_textbox.input(&mut level_name, &rl);
                 level_desc_textbox.input(&mut level_desc, &rl);
+            }
+            GameState::LevelPage => {
+                level_play_button.update(&rl, delta_time);
+
+                if level_play_button.is_clicked(&rl) {
+                    let parts: Vec<&str> = level_download_result.split(";;;").collect();
+                    load_level(
+                        &mut parts[0].to_string(),
+                        &mut parts[1].to_string(),
+                        &mut object_grid,
+                        &mut bg_red,
+                        &mut bg_green,
+                        &mut bg_blue,
+                        &mut ground_red,
+                        &mut ground_green,
+                        &mut ground_blue,
+                        song_selected,
+                        &mut current_song,
+                        true
+                    );
+
+                    level_music_file = BufReader::new(File::open(format!("{}", main_levels[current_level].song)).expect("Failed to open MP3 file"));
+                    _level_music = Decoder::new(level_music_file).expect("Failed to decode MP3 file");
+                    sink.stop();
+                    sink.append(_level_music);
+                    sink.play();
+
+                    player.y = 500.0;
+                    world_offset = 0.0;
+                    rotation = 0.0;
+                    gravity = default_gravity;
+                    jump_force = default_jump_force;
+                    current_gamemode = GameMode::Cube;
+                    cc_1003 = Color::LIME;
+                    in_custom_level = false;
+                    velocity_y = 0.0;
+                    player_cam_y = 0;
+                    movement_speed = default_movement_speed;
+
+                    from_editor = false;
+                    player_path.clear();
+
+                    game_state = GameState::Playing;
+                }
             }
         }
 
@@ -2246,6 +2306,19 @@ async fn main() {
                     50,
                     Color::WHITE
                 );
+            }
+            GameState::LevelPage => {
+                d.clear_background(Color::BLACK);
+
+                d.draw_text(
+                    "",
+                    d.get_screen_width() / 2 - d.measure_text("", 50),
+                    100,
+                    50,
+                    Color::WHITE
+                );
+
+                level_play_button.draw(&mut d);
             }
         }
     }
