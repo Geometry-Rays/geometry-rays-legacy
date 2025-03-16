@@ -81,6 +81,7 @@ async fn main() {
     let mut featured_button = Button::new(320.0, 230.0, 150.0, 150.0, "Featured", 30, true);
     let mut search_button = Button::new(520.0, 230.0, 150.0, 150.0, "Search", 30, true);
     let mut keybinds_button = Button::new(rl.get_screen_width() as f32 - 220.0, 20.0, 200.0, 50.0, "Editor Keybinds", 24, false);
+    let mut download_level_button = Button::new(rl.get_screen_width() as f32 - 220.0, 140.0, 200.0, 50.0, "Download Level", 24, false);
 
     let mut level_id_textbox = TextBox {
         rect: Rectangle {
@@ -883,7 +884,8 @@ async fn main() {
                 featured_button.update(&rl, delta_time);
                 search_button.update(&rl, delta_time);
                 keybinds_button.update(&rl, delta_time);
-                
+                download_level_button.update(&rl, delta_time);
+
                 if menu_button.is_clicked(&rl) {
                     game_state = GameState::Menu;
                 }
@@ -933,6 +935,10 @@ async fn main() {
                 }
 
                 level_id_textbox.input(&mut level_id, &rl);
+
+                if download_level_button.is_clicked(&rl) && level_id.len() > 0 {
+                    println!("No downloading levels yet!");
+                }
             }
             GameState::Editor => {
                 build_tab_button.update(&rl, delta_time);
@@ -1878,6 +1884,7 @@ async fn main() {
                 featured_button.draw(&mut d);
                 search_button.draw(&mut d);
                 keybinds_button.draw(&mut d);
+                download_level_button.draw(&mut d);
 
                 if not_done_yet_text {
                     d.draw_text("This will be added eventually!", 250, 30, 30, Color::WHITE);
