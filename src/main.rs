@@ -301,6 +301,9 @@ async fn main() {
     let mut login_result = "".to_string();
     let mut level_upload_result = "".to_string();
     let mut level_download_result = "".to_string();
+    let mut online_level_name = "".to_string();
+    let mut online_level_desc = "".to_string();
+    let mut online_level_data = "".to_string();
 
     texture_ids.insert(1, &spike_texture);
     texture_ids.insert(2, &block_texture);
@@ -959,6 +962,12 @@ async fn main() {
                     ).await;
 
                     if level_download_result != "Level doesn't exist!" {
+                        parse_level_download_response(
+                            level_download_result.clone(),
+                            &mut online_level_name,
+                            &mut online_level_desc,
+                            &mut online_level_data
+                        );
                         game_state = GameState::LevelPage
                     } else {
                         println!("{}", level_download_result);
@@ -1597,7 +1606,7 @@ async fn main() {
                 level_play_button.update(&rl, delta_time);
 
                 if level_play_button.is_clicked(&rl) {
-                    let parts: Vec<&str> = level_download_result.split(";;;").collect();
+                    let parts: Vec<&str> = online_level_data.split(";;;").collect();
                     load_level(
                         &mut parts[0].to_string(),
                         &mut parts[1].to_string(),
@@ -2311,8 +2320,8 @@ async fn main() {
                 d.clear_background(Color::BLACK);
 
                 d.draw_text(
-                    "",
-                    d.get_screen_width() / 2 - d.measure_text("", 50),
+                    &online_level_name,
+                    d.get_screen_width() / 2 - d.measure_text(&online_level_name, 50) / 2,
                     100,
                     50,
                     Color::WHITE
