@@ -82,6 +82,20 @@ async fn main() {
     let mut search_button = Button::new(520.0, 230.0, 150.0, 150.0, "Search", 30, true);
     let mut keybinds_button = Button::new(rl.get_screen_width() as f32 - 220.0, 20.0, 200.0, 50.0, "Editor Keybinds", 24, false);
 
+    let mut level_id_textbox = TextBox {
+        rect: Rectangle {
+            x: rl.get_screen_width() as f32 - 10.0 * 30.0 / 1.9 - 20.0,
+            y: 80.0,
+            width: 10.0 * 30.0 / 1.9,
+            height: 50.0
+        },
+        text: "Level ID".to_string(),
+        text_size: 30,
+        max_length: 5,
+        spaces_allowed: false,
+        active: false
+    };
+
     // Create editor buttons
     let mut build_tab_button = Button::new(12.0, 415.0, 150.0, 50.0, "Build", 20, false);
     let mut edit_tab_button = Button::new(12.0, 475.0, 150.0, 50.0, "Edit", 20, false);
@@ -453,6 +467,8 @@ async fn main() {
 
     let mut level_name: String = "".to_string();
     let mut level_desc: String = "".to_string();
+
+    let mut level_id: String = "".to_string();
 
     while !rl.window_should_close() {
         let space_down = rl.is_key_down(KeyboardKey::KEY_SPACE);
@@ -943,6 +959,16 @@ async fn main() {
                 if keybinds_button.is_clicked(&rl) {
                     game_state = GameState::EditorKeybinds
                 }
+
+                if level_id_textbox.is_clicked(&rl) {
+                    level_id_textbox.active = true
+                }
+
+                if level_id_textbox.is_not_clicked(&rl) {
+                    level_id_textbox.active = false
+                }
+
+                level_id_textbox.input(&mut level_id, &rl);
             }
             GameState::Editor => {
                 build_tab_button.update(&rl, delta_time);
@@ -1924,6 +1950,8 @@ async fn main() {
                 if not_done_yet_text {
                     d.draw_text("This will be added eventually!", 250, 30, 30, Color::WHITE);
                 }
+
+                level_id_textbox.draw(level_id.clone(), &mut d);
             }
             GameState::Editor => {
                 d.clear_background(Color::WHITE);
