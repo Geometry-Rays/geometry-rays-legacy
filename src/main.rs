@@ -212,9 +212,9 @@ async fn main() {
 
     let mut level_play_button = Button::new(
         rl.get_screen_width() as f32 / 2.0 - 100.0,
-        rl.get_screen_height() as f32 / 2.0 - 100.0,
+        rl.get_screen_height() as f32 / 2.0 - 50.0,
         200.0,
-        200.0,
+        100.0,
         "Play",
         20,
         false
