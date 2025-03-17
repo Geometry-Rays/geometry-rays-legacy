@@ -304,6 +304,8 @@ async fn main() {
     let mut online_level_name = "".to_string();
     let mut online_level_desc = "".to_string();
     let mut online_level_data = "".to_string();
+    let mut online_level_diff: u8 = 0;
+    let mut online_level_rated: bool = false;
 
     texture_ids.insert(1, &spike_texture);
     texture_ids.insert(2, &block_texture);
@@ -966,6 +968,8 @@ async fn main() {
                             level_download_result.clone(),
                             &mut online_level_name,
                             &mut online_level_desc,
+                            &mut online_level_diff,
+                            &mut online_level_rated,
                             &mut online_level_data
                         );
                         game_state = GameState::LevelPage
@@ -2347,6 +2351,32 @@ async fn main() {
                     30,
                     Color::WHITE
                 );
+
+                d.draw_texture_ex(
+                    &difficulties[online_level_diff as usize],
+                    Vector2::new(-50.0, 0.0),
+                    0.0,
+                    0.2,
+                    Color::WHITE
+                );
+
+                if online_level_rated {
+                    d.draw_text(
+                        &format!("{}", online_level_diff),
+                        175,
+                        260,
+                        50,
+                        Color::WHITE
+                    );
+
+                    d.draw_texture_ex(
+                        &star_texture,
+                        Vector2::new(30.0, 175.0),
+                        0.0,
+                        0.13,
+                        Color::WHITE
+                    );
+                }
 
                 level_play_button.draw(&mut d);
             }
