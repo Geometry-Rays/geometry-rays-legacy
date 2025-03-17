@@ -467,11 +467,25 @@ async fn main() {
     let save_pairs: Vec<&str> = values_levels[0].split(";").collect();
     let levels_completed: Vec<&str> = values_levels[1].split(";").collect();
     let online_levels_completed: Vec<&str> = values_levels[2].split(";").collect();
+    let mut user = "0".to_string();
+    let mut pass = "0".to_string();
     for pair in save_pairs {
         let key_value: Vec<&str> = pair.split(":").collect();
 
         if key_value[0] == "stars" {
             stars = key_value[1].parse::<u32>().unwrap();
+        }
+
+        if key_value[0] == "user" {
+            if key_value[1] != "0" {
+                user = key_value[1].to_string();
+            }
+        }
+
+        if key_value[0] == "pass" {
+            if key_value[1] != "0" {
+                pass = key_value[1].to_string();
+            }
         }
     }
 
@@ -485,6 +499,20 @@ async fn main() {
 
     for level in online_levels_completed {
         online_levels_beaten.push(level.parse().unwrap());
+    }
+
+    if user != "0" && pass != "0" {
+        login_result = post_request(
+            login_url.clone(),
+            Some(hashmap! {
+                "user".to_string() => user.clone(),
+                "pass".to_string() => pass.clone()
+            })
+        ).await;
+
+        if login_result == "Logged in!" {
+            logged_in = true
+        }
     }
 
     // Variables for text boxes
@@ -1492,7 +1520,9 @@ async fn main() {
 
 
                     if login_result == "Logged in!" {
-                        logged_in = true
+                        logged_in = true;
+                        user = username.clone();
+                        pass = password.clone();
                     }
                 }
 
@@ -2430,9 +2460,11 @@ async fn main() {
     }
 
     let mut save_string = format!(
-        "stars:{};;;",
+        "stars:{};user:{};pass:{};;;",
 
-        stars
+        stars,
+        user,
+        pass
     );
 
     let mut saving_index: u8 = 0;
