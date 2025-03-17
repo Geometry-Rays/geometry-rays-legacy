@@ -1586,6 +1586,7 @@ async fn main() {
             }
             GameState::LevelPage => {
                 level_play_button.update(&rl, delta_time);
+                menu_button.update(&rl, delta_time);
 
                 if level_play_button.is_clicked(&rl) {
                     let parts: Vec<&str> = online_level_data.split(";;;").collect();
@@ -1626,6 +1627,10 @@ async fn main() {
                     player_path.clear();
 
                     game_state = GameState::Playing;
+                }
+
+                if menu_button.is_clicked(&rl) {
+                    game_state = GameState::SearchPage
                 }
             }
             GameState::SearchPage => {
@@ -2395,6 +2400,7 @@ async fn main() {
                 }
 
                 level_play_button.draw(&mut d);
+                menu_button.draw(&mut d);
             }
             GameState::SearchPage => {
                 d.clear_background(Color::BLACK);
