@@ -841,6 +841,8 @@ async fn main() {
                                 if !in_custom_level && !levels_completed_vec[current_level] {
                                     stars += main_levels[current_level].difficulty as u32;
                                     levels_completed_vec[current_level] = true
+                                } else if online_level_rated && in_custom_level {
+                                    stars += online_level_diff as u32;
                                 }
                                 game_state = GameState::LevelComplete;
                             }
@@ -1639,7 +1641,7 @@ async fn main() {
                     jump_force = default_jump_force;
                     current_gamemode = GameMode::Cube;
                     cc_1003 = Color::LIME;
-                    in_custom_level = false;
+                    in_custom_level = true;
                     velocity_y = 0.0;
                     player_cam_y = 0;
                     movement_speed = default_movement_speed;
