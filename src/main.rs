@@ -295,6 +295,7 @@ async fn main() {
         false
     ];
     let mut logged_in: bool = false;
+    let mut online_levels_beaten: Vec<u16> = vec![];
 
     let mut get_latest_version = true;
     let mut register_result = "".to_string();
@@ -465,6 +466,7 @@ async fn main() {
     let values_levels: Vec<&str> = save_data.split(";;;").collect();
     let save_pairs: Vec<&str> = values_levels[0].split(";").collect();
     let levels_completed: Vec<&str> = values_levels[1].split(";").collect();
+    let online_levels_completed: Vec<&str> = values_levels[2].split(";").collect();
     for pair in save_pairs {
         let key_value: Vec<&str> = pair.split(":").collect();
 
@@ -479,6 +481,10 @@ async fn main() {
         if key_value[1] == "1" {
             levels_completed_vec[level_index as usize] = true
         }
+    }
+
+    for level in online_levels_completed {
+        online_levels_beaten.push(level.parse().unwrap());
     }
 
     // Variables for text boxes
@@ -842,7 +848,10 @@ async fn main() {
                                     stars += main_levels[current_level].difficulty as u32;
                                     levels_completed_vec[current_level] = true
                                 } else if online_level_rated && in_custom_level {
-                                    stars += online_level_diff as u32;
+                                    if !online_levels_beaten.contains(&level_id.parse().unwrap()) {
+                                        stars += online_level_diff as u32;
+                                        online_levels_beaten.push(level_id.parse().unwrap());
+                                    }
                                 }
                                 game_state = GameState::LevelComplete;
                             }
@@ -2417,6 +2426,11 @@ async fn main() {
         }
 
         saving_index += 1
+    }
+
+    save_string.push_str(";;0;");
+    for id in online_levels_beaten {
+        save_string.push_str(&format!("{};", id));
     }
 
     save_string.pop();
