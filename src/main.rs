@@ -79,7 +79,7 @@ async fn main() {
     let mut menu_button = Button::new(20.0, 20.0, 200.0, 50.0, "Back to Menu", 24, false);
     let mut create_button = Button::new(120.0, 230.0, 150.0, 150.0, "Create", 30, false);
     let mut featured_button = Button::new(320.0, 230.0, 150.0, 150.0, "Featured", 30, true);
-    let mut search_button = Button::new(520.0, 230.0, 150.0, 150.0, "Search", 30, true);
+    let mut search_button = Button::new(520.0, 230.0, 150.0, 150.0, "Search", 30, false);
     let mut keybinds_button = Button::new(rl.get_screen_width() as f32 - 220.0, 20.0, 200.0, 50.0, "Editor Keybinds", 24, false);
     let mut download_level_button = Button::new(rl.get_screen_width() as f32 - 220.0, 140.0, 200.0, 50.0, "Download Level", 24, false);
 
@@ -949,44 +949,11 @@ async fn main() {
                 }
 
                 if search_button.is_clicked(&rl) {
-                    not_done_yet_text = true;
+                    game_state = GameState::SearchPage
                 }
 
                 if keybinds_button.is_clicked(&rl) {
                     game_state = GameState::EditorKeybinds
-                }
-
-                if level_id_textbox.is_clicked(&rl) {
-                    level_id_textbox.active = true
-                }
-
-                if level_id_textbox.is_not_clicked(&rl) {
-                    level_id_textbox.active = false
-                }
-
-                level_id_textbox.input(&mut level_id, &rl);
-
-                if download_level_button.is_clicked(&rl) && level_id.len() > 0 {
-                    level_download_result = get_request(
-                        download_url.clone(),
-                        Some(hashmap! {
-                            "id".to_string() => level_id.clone()
-                        })
-                    ).await;
-
-                    if level_download_result != "Level doesn't exist!" {
-                        parse_level_download_response(
-                            level_download_result.clone(),
-                            &mut online_level_name,
-                            &mut online_level_desc,
-                            &mut online_level_diff,
-                            &mut online_level_rated,
-                            &mut online_level_data
-                        );
-                        game_state = GameState::LevelPage
-                    } else {
-                        println!("{}", level_download_result);
-                    }
                 }
             }
             GameState::Editor => {
@@ -1661,6 +1628,47 @@ async fn main() {
                     game_state = GameState::Playing;
                 }
             }
+            GameState::SearchPage => {
+                menu_button.update(&rl, delta_time);
+                download_level_button.update(&rl, delta_time);
+
+                if menu_button.is_clicked(&rl) {
+                    game_state = GameState::CreatorMenu
+                }
+
+                if level_id_textbox.is_clicked(&rl) {
+                    level_id_textbox.active = true
+                }
+
+                if level_id_textbox.is_not_clicked(&rl) {
+                    level_id_textbox.active = false
+                }
+
+                level_id_textbox.input(&mut level_id, &rl);
+
+                if download_level_button.is_clicked(&rl) && level_id.len() > 0 {
+                    level_download_result = get_request(
+                        download_url.clone(),
+                        Some(hashmap! {
+                            "id".to_string() => level_id.clone()
+                        })
+                    ).await;
+
+                    if level_download_result != "Level doesn't exist!" {
+                        parse_level_download_response(
+                            level_download_result.clone(),
+                            &mut online_level_name,
+                            &mut online_level_desc,
+                            &mut online_level_diff,
+                            &mut online_level_rated,
+                            &mut online_level_data
+                        );
+                        game_state = GameState::LevelPage
+                    } else {
+                        println!("{}", level_download_result);
+                    }
+                }
+            }
         }
 
         // Rendering
@@ -1977,13 +1985,10 @@ async fn main() {
                 featured_button.draw(&mut d);
                 search_button.draw(&mut d);
                 keybinds_button.draw(&mut d);
-                download_level_button.draw(&mut d);
 
                 if not_done_yet_text {
                     d.draw_text("This will be added eventually!", 250, 30, 30, Color::WHITE);
                 }
-
-                level_id_textbox.draw(level_id.clone(), &mut d);
             }
             GameState::Editor => {
                 d.clear_background(Color::WHITE);
@@ -2390,6 +2395,13 @@ async fn main() {
                 }
 
                 level_play_button.draw(&mut d);
+            }
+            GameState::SearchPage => {
+                d.clear_background(Color::BLACK);
+
+                download_level_button.draw(&mut d);
+                level_id_textbox.draw(level_id.clone(), &mut d);
+                menu_button.draw(&mut d);
             }
         }
     }
