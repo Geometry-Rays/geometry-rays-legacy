@@ -81,12 +81,12 @@ async fn main() {
     let mut featured_button = Button::new(320.0, 230.0, 150.0, 150.0, "Featured", 30, true);
     let mut search_button = Button::new(520.0, 230.0, 150.0, 150.0, "Search", 30, false);
     let mut keybinds_button = Button::new(rl.get_screen_width() as f32 - 220.0, 20.0, 200.0, 50.0, "Editor Keybinds", 24, false);
-    let mut download_level_button = Button::new(rl.get_screen_width() as f32 - 220.0, 140.0, 200.0, 50.0, "Download Level", 24, false);
+    let mut download_level_button = Button::new(rl.get_screen_width() as f32 - 220.0, 80.0, 200.0, 50.0, "Download Level", 24, false);
 
     let mut level_id_textbox = TextBox {
         rect: Rectangle {
             x: rl.get_screen_width() as f32 - 10.0 * 30.0 / 1.9 - 20.0,
-            y: 80.0,
+            y: 20.0,
             width: 10.0 * 30.0 / 1.9,
             height: 50.0
         },
