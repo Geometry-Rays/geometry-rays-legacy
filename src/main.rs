@@ -2327,7 +2327,42 @@ async fn main() {
                     Color::WHITE
                 );
 
+                d.draw_rectangle(
+                    d.get_screen_width() / 2 - 394,
+                    d.get_screen_height() / 2 + 100,
+                    789,
+                    50,
+                    Color {
+                        r: 50,
+                        g: 50,
+                        b: 50,
+                        a: 100
+                    }
+                );
+
+                d.draw_text(
+                    &online_level_desc,
+                    d.get_screen_width() / 2 - 394,
+                    d.get_screen_height() / 2 + 100 + 10,
+                    30,
+                    Color::WHITE
+                );
+
                 level_play_button.draw(&mut d);
+
+                // let mut level_desc_textbox = TextBox {
+                //     rect: Rectangle {
+                //         x: rl.get_screen_width() as f32 / 2.0 - 50.0 * 30.0 / 1.9 / 2.0,
+                //         y: rl.get_screen_height() as f32 / 2.0 + 50.0,
+                //         width: 50.0 * 30.0 / 1.9,
+                //         height: 50.0
+                //     },
+                //     text: "Level Description".to_string(),
+                //     text_size: 30,
+                //     max_length: 50,
+                //     spaces_allowed: true,
+                //     active: false
+                // };
             }
         }
     }
