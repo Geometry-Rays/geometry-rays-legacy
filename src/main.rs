@@ -2429,7 +2429,7 @@ async fn main() {
     }
 
     save_string.push_str(";;0;");
-    for id in online_levels_beaten {
+    for id in online_levels_beaten.iter().skip(1) {
         save_string.push_str(&format!("{};", id));
     }
 
