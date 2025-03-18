@@ -2408,9 +2408,9 @@ async fn main() {
 
                 d.draw_texture_ex(
                     &difficulties[online_level_diff as usize],
-                    Vector2::new(-50.0, 0.0),
+                    if online_level_diff == 0 { Vector2::new(10.0, 60.0) } else { Vector2::new(-50.0, 0.0) },
                     0.0,
-                    0.2,
+                    if online_level_diff == 0 { 0.3 } else { 0.2 },
                     Color::WHITE
                 );
 
