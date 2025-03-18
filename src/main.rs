@@ -307,6 +307,7 @@ async fn main() {
     let mut online_level_data = "".to_string();
     let mut online_level_diff: u8 = 0;
     let mut online_level_rated: bool = false;
+    let mut online_level_creator = "".to_string();
 
     texture_ids.insert(1, &spike_texture);
     texture_ids.insert(2, &block_texture);
@@ -1697,6 +1698,7 @@ async fn main() {
                             &mut online_level_desc,
                             &mut online_level_diff,
                             &mut online_level_rated,
+                            &mut online_level_creator,
                             &mut online_level_data
                         );
                         game_state = GameState::LevelPage
