@@ -1585,7 +1585,8 @@ async fn main() {
                                 "name".to_string() => level_name.clone(),
                                 "desc".to_string() => level_desc.clone(),
                                 "data".to_string() => level_data,
-                                "creator".to_string() => user.clone()
+                                "creator".to_string() => user.clone(),
+                                "pass".to_string() => pass.clone()
                             })
                         ).await;
                         
