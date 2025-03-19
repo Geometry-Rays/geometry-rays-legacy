@@ -308,6 +308,7 @@ async fn main() {
     let mut online_level_diff: u8 = 0;
     let mut online_level_rated: bool = false;
     let mut online_level_creator = "".to_string();
+    let mut show_level_not_found: bool = false;
 
     texture_ids.insert(1, &spike_texture);
     texture_ids.insert(2, &block_texture);
@@ -1701,9 +1702,11 @@ async fn main() {
                             &mut online_level_creator,
                             &mut online_level_data
                         );
+
+                        show_level_not_found = false;
                         game_state = GameState::LevelPage
                     } else {
-                        println!("{}", level_download_result);
+                        show_level_not_found = true
                     }
                 }
             }
@@ -2445,6 +2448,16 @@ async fn main() {
             }
             GameState::SearchPage => {
                 d.clear_background(Color::BLACK);
+
+                if show_level_not_found {
+                    d.draw_text(
+                        &level_download_result,
+                        d.get_screen_width() / 2 - d.measure_text(&level_download_result, 50) / 2,
+                        d.get_screen_height() / 2 - 25,
+                        50,
+                        Color::WHITE
+                    );
+                }
 
                 download_level_button.draw(&mut d);
                 level_id_textbox.draw(level_id.clone(), &mut d);
