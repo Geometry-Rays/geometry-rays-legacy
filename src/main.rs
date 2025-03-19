@@ -1522,7 +1522,6 @@ async fn main() {
                     ).await;
                     login_result = login_result_string;
 
-
                     if login_result == "Logged in!" {
                         logged_in = true;
                         user = username.clone();
