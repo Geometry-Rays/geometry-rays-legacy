@@ -2432,6 +2432,14 @@ async fn main() {
                     );
                 }
 
+                d.draw_text(
+                    &online_level_creator,
+                    d.get_screen_width() / 2 - d.measure_text(&online_level_creator, 50) / 2,
+                    20,
+                    50,
+                    Color::WHITE
+                );
+
                 level_play_button.draw(&mut d);
                 menu_button.draw(&mut d);
             }

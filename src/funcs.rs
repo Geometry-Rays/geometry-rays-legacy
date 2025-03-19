@@ -474,7 +474,7 @@ pub fn parse_level_download_response(
     *online_level_name = name_desc[0].to_string();
     *online_level_desc = name_desc[1].to_string();
     *online_level_diff = name_desc[2].parse().unwrap();
-    *online_level_creator = name_desc[3].parse().unwrap();
+    *online_level_creator = name_desc[4].parse().unwrap();
     *online_level_data = level_download_result_parts[1].to_string();
 
     if name_desc[3] == "0" {
