@@ -405,7 +405,8 @@ pub fn load_level(
 
     song_selected: bool,
     current_song: &mut u8,
-    load_song: bool
+    load_song: bool,
+    song_if_song_not_selected: bool
 ) {
     object_grid.clear();
     let metadata_pairs: Vec<&str> = _level_metadata.split(';').collect();
@@ -439,8 +440,14 @@ pub fn load_level(
             *ground_green = colors[1].parse::<i32>().unwrap();
             *ground_blue = colors[2].parse::<i32>().unwrap();
         } else if key == "song" {
-            if !song_selected && load_song {
-                *current_song = value.parse::<u8>().unwrap();
+            if song_if_song_not_selected {
+                if !song_selected && load_song {
+                    *current_song = value.parse::<u8>().unwrap();
+                }
+            } else {
+                if load_song {
+                    *current_song = value.parse::<u8>().unwrap();
+                }
             }
         }
     }

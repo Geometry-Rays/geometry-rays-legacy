@@ -966,6 +966,7 @@ async fn main() {
                         &mut ground_blue,
                         song_selected,
                         &mut current_song,
+                        true,
                         true
                     );
 
@@ -1435,6 +1436,7 @@ async fn main() {
                         &mut ground_blue,
                         song_selected,
                         &mut current_song,
+                        false,
                         false
                     );
 
@@ -1635,10 +1637,11 @@ async fn main() {
                         &mut ground_blue,
                         song_selected,
                         &mut current_song,
-                        true
+                        true,
+                        false
                     );
 
-                    level_music_file = BufReader::new(File::open(format!("{}", main_levels[current_level].song)).expect("Failed to open MP3 file"));
+                    level_music_file = BufReader::new(File::open(format!("{}", main_levels[current_song as usize].song)).expect("Failed to open MP3 file"));
                     _level_music = Decoder::new(level_music_file).expect("Failed to decode MP3 file");
                     sink.stop();
                     sink.append(_level_music);
