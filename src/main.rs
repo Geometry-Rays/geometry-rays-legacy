@@ -232,24 +232,32 @@ async fn main() {
     let mut player = Rectangle::new(200.0, 500.0, 40.0, 40.0);
     let mut centered_player = Rectangle::new(player.x + player.width / 2.0, player.y + player.height / 2.0, player.width, player.height);
     let mut small_player = player;
+    let mut is_on_ground = true;
+    let mut world_offset = 0.0;
+    let mut rotation = 0.0;
+    let mut attempt = 1;
+    let mut on_orb: bool = false;
+    let mut kill_player: bool = false;
+    let mut texture_ids: HashMap<u32, &Texture2D> = HashMap::new();
+    let mut current_gamemode = GameMode::Cube;
+    let mut player_cam_y: i32 = 0;
+    let mut touching_block_ceiling: bool = false;
+
+    // Physics Values
     let mut velocity_y = 0.0;
     let mut gravity = 0.8;
     let default_gravity = gravity;
     let mut jump_force = -13.0;
     let default_jump_force = jump_force;
-    let mut is_on_ground = true;
-    let mut world_offset = 0.0;
     let mut movement_speed = 6.0;
     let default_movement_speed = movement_speed;
-    let mut rotation = 0.0;
-    let mut attempt = 1;
+    let ship_power: f32 = 0.7;
+    let ship_falling_speed: f32 = 0.5;
+
     let version = "1.2";
     let latest_version = std::sync::Arc::new(std::sync::Mutex::new(String::from("Loading...")));
     let mut not_done_yet_text = false;
     let mut show_debug_text = false;
-    let mut texture_ids: HashMap<u32, &Texture2D> = HashMap::new();
-    let mut kill_player: bool = false;
-    let mut on_orb: bool = false;
     let main_levels: Vec<MainLevel> = vec![
         MainLevel {
             name: "Plummet".to_string(),
@@ -280,15 +288,10 @@ async fn main() {
     ];
     let mut current_level = 0;
     let mut reset_menu_music = false;
-    let mut current_gamemode = GameMode::Cube;
-    let mut player_cam_y: i32 = 0;
-    let mut touching_block_ceiling: bool = false;
     let mut stars: u32 = 0;
     let save_data = fs::read_to_string("./save-data/save.txt")
         .expect("Failed to read save file");
     let mut in_custom_level: bool = false;
-    let ship_power: f32 = 0.7;
-    let ship_falling_speed: f32 = 0.5;
     let mut levels_completed_vec: Vec<bool> = vec![
         false,
         false,
