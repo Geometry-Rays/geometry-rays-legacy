@@ -1671,6 +1671,7 @@ async fn main() {
                 download_level_button.update(&rl, delta_time);
 
                 if menu_button.is_clicked(&rl) {
+                    show_level_not_found = false;
                     game_state = GameState::CreatorMenu
                 }
 
