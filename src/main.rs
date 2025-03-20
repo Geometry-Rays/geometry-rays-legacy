@@ -459,7 +459,6 @@ async fn main() {
     let mut _level_music = Decoder::new(level_music_file).expect("Failed to decode MP3 file");
 
     // Discord button setup
-    let padding = 20.0;
     let icon_size = 32.0;
     let discord_rect = Rectangle::new(
         20.0,
