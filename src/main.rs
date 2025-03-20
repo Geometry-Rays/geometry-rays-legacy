@@ -2548,8 +2548,6 @@ async fn main() {
     println!("{:?}", write_save_result);
 
     // Print statements to make unused variable warnings go away because rust is stupid
-    println!("{}", on_orb);
     println!("{:?}", cc_1001);
     println!("{:?}", cc_1002);
-    println!("{:?}", centered_player)
 }
