@@ -20,4 +20,4 @@
 # Credits
  Kazakh (kk_kazakh_khanate on discord) - Made art for the game
 
- [Voltaged](github.com/VoltagedDebunked) - Actually got this game started
+ [Voltaged](https://github.com/VoltagedDebunked) - Actually got this game started
