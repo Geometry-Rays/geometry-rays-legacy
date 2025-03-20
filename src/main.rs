@@ -2384,14 +2384,6 @@ async fn main() {
                 level_name_textbox.draw(level_name.clone(), &mut d);
                 level_desc_textbox.draw(level_desc.clone(), &mut d);
 
-                d.draw_text(
-                    &level_upload_result,
-                    d.get_screen_width() / 2 - d.measure_text(&level_upload_result, 50) / 2,
-                    100,
-                    50,
-                    Color::WHITE
-                );
-
                 d.draw_texture_ex(
                     &difficulties[online_level_upload_diff as usize],
                     Vector2::new(
@@ -2400,6 +2392,14 @@ async fn main() {
                     ),
                     0.0,
                     if online_level_upload_diff == 0 { 0.3 } else { 0.2 },
+                    Color::WHITE
+                );
+
+                d.draw_text(
+                    &level_upload_result,
+                    d.get_screen_width() / 2 - d.measure_text(&level_upload_result, 50) / 2,
+                    100,
+                    50,
                     Color::WHITE
                 );
             }
