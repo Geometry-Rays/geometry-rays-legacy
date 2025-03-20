@@ -2348,6 +2348,14 @@ async fn main() {
                     Color::WHITE
                 );
 
+                d.draw_text(
+                    "Use the arrow keys to choose the difficulty of your level on the upload screen!",
+                    d.get_screen_width() / 2 - d.measure_text("Use the arrow keys to choose the difficulty of your level on the upload screen!", 19) / 2,
+                    450 - editor_guide_scroll as i32,
+                    19,
+                    Color::WHITE
+                );
+
                 menu_button.draw(&mut d);
             }
             GameState::AccountPage => {
