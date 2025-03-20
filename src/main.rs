@@ -312,6 +312,7 @@ async fn main() {
     let mut online_level_rated: bool = false;
     let mut online_level_creator = "".to_string();
     let mut show_level_not_found: bool = false;
+    let mut online_level_upload_diff: u8 = 0;
 
     texture_ids.insert(1, &spike_texture);
     texture_ids.insert(2, &block_texture);
@@ -1591,7 +1592,8 @@ async fn main() {
                                 "desc".to_string() => level_desc.clone(),
                                 "data".to_string() => level_data,
                                 "creator".to_string() => user.clone(),
-                                "pass".to_string() => pass.clone()
+                                "pass".to_string() => pass.clone(),
+                                "diff".to_string() => online_level_upload_diff.to_string()
                             })
                         ).await;
                         
@@ -1619,6 +1621,14 @@ async fn main() {
 
                 level_name_textbox.input(&mut level_name, &rl);
                 level_desc_textbox.input(&mut level_desc, &rl);
+
+                if rl.is_key_pressed(KeyboardKey::KEY_LEFT) && online_level_upload_diff > 0 {
+                    online_level_upload_diff -= 1;
+                }
+
+                if rl.is_key_pressed(KeyboardKey::KEY_RIGHT) && online_level_upload_diff < 5 {
+                    online_level_upload_diff += 1;
+                }
             }
             GameState::LevelPage => {
                 level_play_button.update(&rl, delta_time);
@@ -2379,6 +2389,17 @@ async fn main() {
                     d.get_screen_width() / 2 - d.measure_text(&level_upload_result, 50) / 2,
                     100,
                     50,
+                    Color::WHITE
+                );
+
+                d.draw_texture_ex(
+                    &difficulties[online_level_upload_diff as usize],
+                    Vector2::new(
+                        d.get_screen_width() as f32 / 2.0 - difficulties[online_level_upload_diff as usize].clone().width as f32 * if online_level_upload_diff == 0 { 0.3 } else { 0.2 } / 2.0,
+                        if online_level_upload_diff == 0 { -30.0 } else { -80.0 }
+                    ),
+                    0.0,
+                    if online_level_upload_diff == 0 { 0.3 } else { 0.2 },
                     Color::WHITE
                 );
             }
