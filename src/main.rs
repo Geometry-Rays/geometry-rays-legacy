@@ -462,8 +462,8 @@ async fn main() {
     let padding = 20.0;
     let icon_size = 32.0;
     let discord_rect = Rectangle::new(
-        800.0 - icon_size - padding,
-        600.0 - icon_size - padding,
+        20.0,
+        rl.get_screen_height() as f32 - 32.0 * 2.0 - 5.0,
         icon_size,
         icon_size
     );
