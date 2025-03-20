@@ -153,7 +153,7 @@ impl TextBox {
     }
 
     pub fn input(&self, text: &mut String, rl: &RaylibHandle) {
-        if rl.is_key_pressed(KeyboardKey::KEY_BACKSPACE) && text.len() > 0 {
+        if rl.is_key_pressed(KeyboardKey::KEY_BACKSPACE) && text.len() > 0 && self.active {
             text.pop();
         }
 
