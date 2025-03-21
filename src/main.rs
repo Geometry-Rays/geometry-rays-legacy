@@ -449,6 +449,11 @@ async fn main() {
         rl.load_texture(&thread, "./Resources/difficulties/3.png").expect("Failed to load difficulty face"),
         rl.load_texture(&thread, "./Resources/difficulties/4.png").expect("Failed to load difficulty face"),
         rl.load_texture(&thread, "./Resources/difficulties/5.png").expect("Failed to load difficulty face"),
+        rl.load_texture(&thread, "./Resources/difficulties/6.png").expect("Failed to load difficulty face"),
+        rl.load_texture(&thread, "./Resources/difficulties/7.png").expect("Failed to load difficulty face"),
+        rl.load_texture(&thread, "./Resources/difficulties/8.png").expect("Failed to load difficulty face"),
+        rl.load_texture(&thread, "./Resources/difficulties/9.png").expect("Failed to load difficulty face"),
+        rl.load_texture(&thread, "./Resources/difficulties/10.png").expect("Failed to load difficulty face"),
     ];
 
     // Audio setup
