@@ -1535,6 +1535,8 @@ async fn main() {
                         user = username.clone();
                         pass = password.clone();
                     }
+
+                    register_result = "".to_string();
                 }
 
                 if register_button.is_clicked(&rl) {
@@ -1548,6 +1550,7 @@ async fn main() {
                         })
                     ).await;
                     register_result = register_result_string;
+                    login_result = "".to_string();
                 };
 
                 if username_textbox.is_clicked(&rl) {
