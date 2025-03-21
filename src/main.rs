@@ -2445,7 +2445,7 @@ async fn main() {
 
                 d.draw_text(
                     &online_level_desc,
-                    d.get_screen_width() / 2 - 394,
+                    d.get_screen_width() / 2 - d.measure_text(&online_level_desc, 30) / 2,
                     d.get_screen_height() / 2 + 100 + 10,
                     30,
                     Color::WHITE
