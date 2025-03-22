@@ -246,6 +246,7 @@ async fn main() {
     let login_url: String = format!("{}login.php", main_url).to_string();
     let upload_url: String = format!("{}upload-level.php", main_url).to_string();
     let download_url: String = format!("{}download-level.php", main_url);
+    let rate_url: String = format!("{}rate-level.php", main_url);
 
     // Variables required for the game to work
     let mut game_state = GameState::Menu;
@@ -335,6 +336,7 @@ async fn main() {
     let mut show_level_not_found: bool = false;
     let mut online_level_upload_diff: u8 = 0;
     let mut online_level_rate_diff: u8 = 0;
+    let mut level_rate_result = "".to_string();
 
     texture_ids.insert(1, &spike_texture);
     texture_ids.insert(2, &block_texture);
@@ -1778,6 +1780,22 @@ async fn main() {
                 if rl.is_key_pressed(KeyboardKey::KEY_RIGHT) && online_level_rate_diff < 10 {
                     online_level_rate_diff += 1;
                 }
+
+                if submit_rating_button.is_clicked(&rl) {
+                    level_rate_result = post_request(
+                        rate_url.clone(),
+                        Some(hashmap! {
+                            "user".to_string() => user.clone(),
+                            "pass".to_string() => pass.clone(),
+                            "diff".to_string() => format!("{}", online_level_rate_diff),
+                            "id".to_string() => level_id.clone()
+                        })
+                    ).await;
+
+                    if level_rate_result == "Rating applied!" {
+                        online_level_diff = online_level_rate_diff
+                    }
+                }
             }
         }
 
@@ -2568,6 +2586,14 @@ async fn main() {
                     ),
                     0.0,
                     if online_level_rate_diff == 0 { 0.3 } else { 0.2 },
+                    Color::WHITE
+                );
+
+                d.draw_text(
+                    &level_rate_result,
+                    d.get_screen_width() / 2 - d.measure_text(&level_rate_result, 50),
+                    d.get_screen_height() - 50,
+                    50,
                     Color::WHITE
                 );
             }
