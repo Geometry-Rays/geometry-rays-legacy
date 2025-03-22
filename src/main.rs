@@ -230,6 +230,16 @@ async fn main() {
         false
     );
 
+    let mut submit_rating_button = Button::new(
+        rl.get_screen_width() as f32 / 2.0 - 100.0,
+        rl.get_screen_height() as f32 / 2.0 - 50.0,
+        200.0,
+        100.0,
+        "Submit",
+        20,
+        false
+    );
+
     let main_url = "http://georays.puppet57.xyz/php-code/".to_string();
     let latest_version_url: String = format!("{}get-latest-version.php", main_url).to_string();
     let register_url: String = format!("{}register.php", main_url).to_string();
@@ -1755,6 +1765,7 @@ async fn main() {
             }
             GameState::LevelRate => {
                 menu_button.update(&rl, delta_time);
+                submit_rating_button.update(&rl, delta_time);
 
                 if menu_button.is_clicked(&rl) {
                     game_state = GameState::LevelPage
@@ -2547,6 +2558,7 @@ async fn main() {
             GameState::LevelRate => {
                 d.clear_background(Color::BLACK);
                 menu_button.draw(&mut d);
+                submit_rating_button.draw(&mut d);
 
                 d.draw_texture_ex(
                     &difficulties[online_level_rate_diff as usize],
