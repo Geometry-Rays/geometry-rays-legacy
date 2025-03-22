@@ -14,6 +14,7 @@ pub enum GameState {
     LevelUpload,
     LevelPage,
     SearchPage,
+    LevelRate,
 }
 
 pub struct Button {

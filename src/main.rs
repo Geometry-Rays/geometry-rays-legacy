@@ -220,6 +220,16 @@ async fn main() {
         false
     );
 
+    let mut level_rate_button = Button::new(
+        20.0,
+        rl.get_screen_height() as f32 - 120.0,
+        100.0,
+        100.0,
+        "Rate",
+        20,
+        false
+    );
+
     let main_url = "http://georays.puppet57.xyz/php-code/".to_string();
     let latest_version_url: String = format!("{}get-latest-version.php", main_url).to_string();
     let register_url: String = format!("{}register.php", main_url).to_string();
@@ -299,6 +309,7 @@ async fn main() {
     ];
     let mut logged_in: bool = false;
     let mut online_levels_beaten: Vec<u16> = vec![];
+    let mut is_mod: bool = false;
 
     let mut get_latest_version = true;
     let mut register_result = "".to_string();
@@ -313,6 +324,7 @@ async fn main() {
     let mut online_level_creator = "".to_string();
     let mut show_level_not_found: bool = false;
     let mut online_level_upload_diff: u8 = 0;
+    let mut online_level_rate_diff: u8 = 0;
 
     texture_ids.insert(1, &spike_texture);
     texture_ids.insert(2, &block_texture);
@@ -521,7 +533,10 @@ async fn main() {
         ).await;
 
         if login_result == "Logged in!" {
-            logged_in = true
+            logged_in = true;
+            if user == "Puppet" {
+                is_mod = true
+            }
         }
     }
 
@@ -1641,6 +1656,7 @@ async fn main() {
             GameState::LevelPage => {
                 level_play_button.update(&rl, delta_time);
                 menu_button.update(&rl, delta_time);
+                level_rate_button.update(&rl, delta_time);
 
                 if level_play_button.is_clicked(&rl) {
                     let parts: Vec<&str> = online_level_data.split(";;;").collect();
@@ -1687,6 +1703,10 @@ async fn main() {
                 if menu_button.is_clicked(&rl) {
                     game_state = GameState::SearchPage
                 }
+
+                if is_mod && level_rate_button.is_clicked(&rl) {
+                    game_state = GameState::LevelRate
+                }
             }
             GameState::SearchPage => {
                 menu_button.update(&rl, delta_time);
@@ -1731,6 +1751,21 @@ async fn main() {
                     } else {
                         show_level_not_found = true
                     }
+                }
+            }
+            GameState::LevelRate => {
+                menu_button.update(&rl, delta_time);
+
+                if menu_button.is_clicked(&rl) {
+                    game_state = GameState::LevelPage
+                }
+
+                if rl.is_key_pressed(KeyboardKey::KEY_LEFT) && online_level_rate_diff > 0 {
+                    online_level_rate_diff -= 1;
+                }
+
+                if rl.is_key_pressed(KeyboardKey::KEY_RIGHT) && online_level_rate_diff < 10 {
+                    online_level_rate_diff += 1;
                 }
             }
         }
@@ -2487,6 +2522,10 @@ async fn main() {
 
                 level_play_button.draw(&mut d);
                 menu_button.draw(&mut d);
+
+                if is_mod {
+                    level_rate_button.draw(&mut d);
+                }
             }
             GameState::SearchPage => {
                 d.clear_background(Color::BLACK);
@@ -2504,6 +2543,21 @@ async fn main() {
                 download_level_button.draw(&mut d);
                 level_id_textbox.draw(level_id.clone(), &mut d);
                 menu_button.draw(&mut d);
+            }
+            GameState::LevelRate => {
+                d.clear_background(Color::BLACK);
+                menu_button.draw(&mut d);
+
+                d.draw_texture_ex(
+                    &difficulties[online_level_rate_diff as usize],
+                    Vector2::new(
+                        d.get_screen_width() as f32 / 2.0 - difficulties[online_level_rate_diff as usize].clone().width as f32 * if online_level_rate_diff == 0 { 0.3 } else { 0.2 } / 2.0,
+                        if online_level_rate_diff == 0 { -30.0 } else { -80.0 }
+                    ),
+                    0.0,
+                    if online_level_rate_diff == 0 { 0.3 } else { 0.2 },
+                    Color::WHITE
+                );
             }
         }
     }
