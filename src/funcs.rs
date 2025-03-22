@@ -479,9 +479,6 @@ pub fn parse_level_download_response(
     let level_download_result_parts_empty_user: Vec<&str> = level_download_result.split(";;;;;;").collect();
     let name_desc: Vec<&str> = level_download_result_parts[0].split(";").collect();
 
-    println!("{:?}", name_desc);
-    println!("{}", level_download_result);
-
     *online_level_name = name_desc[0].to_string();
     *online_level_desc = name_desc[1].to_string();
     *online_level_diff = name_desc[2].parse().unwrap();
