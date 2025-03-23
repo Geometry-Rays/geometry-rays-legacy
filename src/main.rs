@@ -240,6 +240,16 @@ async fn main() {
         false
     );
 
+    let mut clear_level_button = Button::new(
+        rl.get_screen_width() as f32 - 120.0,
+        rl.get_screen_height() as f32 - 120.0,
+        100.0,
+        100.0,
+        "Clear Level",
+        18,
+        false
+    );
+
     let main_url = "http://georays.puppet57.xyz/php-code/".to_string();
     let latest_version_url: String = format!("{}get-latest-version.php", main_url).to_string();
     let register_url: String = format!("{}register.php", main_url).to_string();
@@ -321,6 +331,7 @@ async fn main() {
     let mut logged_in: bool = false;
     let mut online_levels_beaten: Vec<u16> = vec![];
     let mut is_mod: bool = false;
+    let default_level: &str = "version:BETA;song:0;c1001:0,0,50;c1002:0,0,100;c1004:255,255,255;bg:1;grnd:1;;;480:480:0:1";
 
     let mut get_latest_version = true;
     let mut register_result = "".to_string();
@@ -980,9 +991,14 @@ async fn main() {
                 search_button.update(&rl, delta_time);
                 keybinds_button.update(&rl, delta_time);
                 download_level_button.update(&rl, delta_time);
+                clear_level_button.update(&rl, delta_time);
 
                 if menu_button.is_clicked(&rl) {
                     game_state = GameState::Menu;
+                }
+
+                if clear_level_button.is_clicked(&rl) {
+                    level_string = default_level.to_string();
                 }
 
                 if create_button.is_clicked(&rl) {
@@ -2113,6 +2129,7 @@ async fn main() {
                 featured_button.draw(&mut d);
                 search_button.draw(&mut d);
                 keybinds_button.draw(&mut d);
+                clear_level_button.draw(&mut d);
 
                 if not_done_yet_text {
                     d.draw_text("This will be added eventually!", 250, 30, 30, Color::WHITE);
