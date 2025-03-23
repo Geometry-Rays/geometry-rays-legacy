@@ -285,7 +285,7 @@ async fn main() {
     let ship_power: f32 = 0.7;
     let ship_falling_speed: f32 = 0.5;
 
-    let version = "1.22";
+    let version = "1.23";
     let latest_version = std::sync::Arc::new(std::sync::Mutex::new(String::from("Loading...")));
     let mut not_done_yet_text = false;
     let mut show_debug_text = false;
