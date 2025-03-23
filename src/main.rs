@@ -1380,6 +1380,54 @@ async fn main() {
                     }
                 }
 
+                if rl.is_key_pressed(KeyboardKey::KEY_J) {
+                    let mut obj_index = 0;
+                    while obj_index < object_grid.len() {
+                        if object_grid[obj_index].selected {
+                            object_grid[obj_index].x -= 1;
+                            obj_index += 1;
+                        } else {
+                            obj_index += 1;
+                        }
+                    }
+                }
+
+                if rl.is_key_pressed(KeyboardKey::KEY_L) {
+                    let mut obj_index = 0;
+                    while obj_index < object_grid.len() {
+                        if object_grid[obj_index].selected {
+                            object_grid[obj_index].x += 1;
+                            obj_index += 1;
+                        } else {
+                            obj_index += 1;
+                        }
+                    }
+                }
+
+                if rl.is_key_pressed(KeyboardKey::KEY_I) {
+                    let mut obj_index = 0;
+                    while obj_index < object_grid.len() {
+                        if object_grid[obj_index].selected {
+                            object_grid[obj_index].y -= 1;
+                            obj_index += 1;
+                        } else {
+                            obj_index += 1;
+                        }
+                    }
+                }
+
+                if rl.is_key_pressed(KeyboardKey::KEY_K) {
+                    let mut obj_index = 0;
+                    while obj_index < object_grid.len() {
+                        if object_grid[obj_index].selected {
+                            object_grid[obj_index].y += 1;
+                            obj_index += 1;
+                        } else {
+                            obj_index += 1;
+                        }
+                    }
+                }
+
                 if rl.is_key_pressed(KeyboardKey::KEY_Q) {
                     let mut obj_index = 0;
                     while obj_index < object_grid.len() {
