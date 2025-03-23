@@ -2237,6 +2237,14 @@ async fn main() {
                     }
                 }
 
+                d.draw_line(
+                    200 - cam_pos_x * 5,
+                    0,
+                    200 - cam_pos_x * 5,
+                    d.get_screen_height(),
+                    Color::WHITE
+                );
+
                 // Draw ground
                 for i in 0..6 {
                     d.draw_texture_ex(
