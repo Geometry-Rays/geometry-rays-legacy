@@ -332,6 +332,7 @@ async fn main() {
     let mut online_levels_beaten: Vec<u16> = vec![];
     let mut is_mod: bool = false;
     let default_level: &str = "version:BETA;song:0;c1001:0,0,50;c1002:0,0,100;c1004:255,255,255;bg:1;grnd:1;;;480:480:0:1";
+    let mut start_pos: u16 = 0;
 
     let mut get_latest_version = true;
     let mut register_result = "".to_string();
@@ -1297,7 +1298,7 @@ async fn main() {
 
                 if playtest_button.is_clicked(&rl) {
                     player.y = 500.0;
-                    world_offset = 0.0;
+                    world_offset = -(start_pos as f32 - 200.0);
                     rotation = 0.0;
                     gravity = default_gravity;
                     jump_force = default_jump_force;
@@ -1471,6 +1472,22 @@ async fn main() {
 
                 if level_upload_button.is_clicked(&rl) {
                     game_state = GameState::LevelUpload
+                }
+
+                if rl.is_key_down(KeyboardKey::KEY_PERIOD) {
+                    if rl.is_key_down(KeyboardKey::KEY_LEFT_CONTROL) {
+                        start_pos += 25
+                    } else {
+                        start_pos += 5;
+                    }
+                }
+
+                if rl.is_key_down(KeyboardKey::KEY_COMMA) && start_pos > 0 {
+                    if rl.is_key_down(KeyboardKey::KEY_LEFT_CONTROL) {
+                        start_pos -= 25
+                    } else {
+                        start_pos -= 5;
+                    }
                 }
 
                 been_to_editor = true;
@@ -2245,9 +2262,9 @@ async fn main() {
                 }
 
                 d.draw_line(
-                    200 - cam_pos_x * 5,
+                    start_pos as i32 - cam_pos_x * 5,
                     0,
-                    200 - cam_pos_x * 5,
+                    start_pos as i32 - cam_pos_x * 5,
                     d.get_screen_height(),
                     Color::WHITE
                 );
