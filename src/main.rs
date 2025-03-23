@@ -2533,6 +2533,14 @@ async fn main() {
                     Color::WHITE
                 );
 
+                d.draw_text(
+                    "Use < and > to move the starting position of your level!",
+                    d.get_screen_width() / 2 - d.measure_text("Use < and > to move the starting position of your level!", 28) / 2,
+                    550 - editor_guide_scroll as i32,
+                    28,
+                    Color::WHITE
+                );
+
                 menu_button.draw(&mut d);
             }
             GameState::AccountPage => {
