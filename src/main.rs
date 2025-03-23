@@ -962,7 +962,14 @@ async fn main() {
                 }
 
                 if kill_player {
-                    game_state = GameState::GameOver;
+                    if from_editor {
+                        sink.stop();
+                        sink.append(menu_loop.clone());
+                        sink.play();
+                        game_state = GameState::Editor
+                    } else {
+                        game_state = GameState::GameOver
+                    }
                 }
 
                 if rl.is_key_pressed(KeyboardKey::KEY_B) {
