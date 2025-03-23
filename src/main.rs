@@ -745,13 +745,13 @@ async fn main() {
                 //     }
                 // }
 
-                small_player = player;
-                small_player.x = player.x - 10.0;
-                small_player.y = player.y - 10.0;
+                centered_player = Rectangle::new(player.x - player.width / 2.0, player.y - player.height / 2.0, player.width, player.height);
+
+                small_player = centered_player;
+                small_player.x = centered_player.x + 10.0;
+                small_player.y = centered_player.y + 10.0;
                 small_player.width = 20.0;
                 small_player.height = 20.0;
-
-                centered_player = Rectangle::new(player.x - player.width / 2.0, player.y - player.height / 2.0, player.width, player.height);
 
                 for object in &object_grid {
                     if object.x as f32 + world_offset < rl.get_screen_width() as f32 &&
