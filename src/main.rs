@@ -2493,6 +2493,14 @@ async fn main() {
                     Color::WHITE
                 );
 
+                d.draw_text(
+                    "Use IJKL to move objects off grid!",
+                    d.get_screen_width() / 2 - d.measure_text("Use IJKL to move objects off grid!", 30) / 2,
+                    500 - editor_guide_scroll as i32,
+                    30,
+                    Color::WHITE
+                );
+
                 menu_button.draw(&mut d);
             }
             GameState::AccountPage => {
