@@ -385,7 +385,9 @@ pub fn get_level_text(current_song: u8, bg_red: u8, bg_green: u8, bg_blue: u8, g
         level_string.push_str( &format!("{}:{}:{}:{};", object.y, object.x, object.rotation, object.id));
     }
 
-    level_string.pop();
+    if !object_grid.is_empty() {
+        level_string.pop();
+    }
 
     level_string
 }
@@ -456,13 +458,15 @@ pub fn load_level(
     for object in object_list {
         let xyrid: Vec<&str> = object.split(':').collect();
 
-        object_grid.push(ObjectStruct {
-            y:xyrid[0].parse::<i32>().unwrap(),
-            x:xyrid[1].parse::<i32>().unwrap(),
-            rotation:xyrid[2].parse::<i16>().unwrap(),
-            id:xyrid[3].parse::<u32>().unwrap(),
-            selected:false
-        });
+        if !_object_string.is_empty() {
+            object_grid.push(ObjectStruct {
+                y:xyrid[0].parse::<i32>().unwrap(),
+                x:xyrid[1].parse::<i32>().unwrap(),
+                rotation:xyrid[2].parse::<i16>().unwrap(),
+                id:xyrid[3].parse::<u32>().unwrap(),
+                selected:false
+            });
+        }
     }
 }
 
