@@ -8,7 +8,6 @@ raylib = "5.5.0"
 rand = "0.9.0"
 rodio = "0.20.1"
 webbrowser = "1.0.4"
-reqwest = { version = "0.12.15", features = ["socks"] }
 tokio = { version = "1.44.1", features = ["full"] }
 tokio-process = "0.2.5"
 ez-reqwest = "1.0.0"
