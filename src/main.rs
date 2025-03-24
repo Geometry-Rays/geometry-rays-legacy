@@ -6,6 +6,8 @@ use std::io::BufReader;
 use webbrowser;
 use std::collections::HashMap;
 
+use ez_reqwest::*;
+
 mod funcs;
 mod types;
 use funcs::*;
