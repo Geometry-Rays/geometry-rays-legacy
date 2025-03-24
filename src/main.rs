@@ -308,14 +308,25 @@ async fn main() {
                 .expect("Failed to load main level")
         },
 
-        MainLevel {
+       MainLevel {
             name: "Ultimate Destruction".to_string(),
             difficulty: 2,
             song: "./Resources/main-level-songs/2.mp3".to_string(),
             artist: "TMM43".to_string(),
             data: fs::read_to_string("./save-data/main-levels/2.txt")
                 .expect("Failed to load main level")
+        },
+
+       MainLevel {
+            name: "Detorium".to_string(),
+            difficulty: 4,
+            song: "./Resources/main-level-songs/3.mp3".to_string(),
+            artist: "Fluix".to_string(),
+            data: fs::read_to_string("./save-data/main-levels/3.txt")
+                .expect("Failed to load main level")
         }
+       
+       
     ];
     let mut current_level = 0;
     let mut reset_menu_music = false;
@@ -326,7 +337,8 @@ async fn main() {
     let mut levels_completed_vec: Vec<bool> = vec![
         false,
         false,
-        false
+        false,
+	false
     ];
     let mut logged_in: bool = false;
     let mut online_levels_beaten: Vec<u16> = vec![];
