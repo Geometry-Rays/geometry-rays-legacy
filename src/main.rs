@@ -2355,25 +2355,25 @@ async fn main() {
                 d.draw_rectangle(550, 20, 100, 50, Color {r:0, g:255, b:0, a:255});
                 d.draw_rectangle(675, 20, 100, 50, Color {r:0, g:0, b:255, a:255});
 
-                d.draw_rectangle_rounded_lines(Rectangle { x:425.0, y:20.0, width:100.0, height:50.0 }, 0.0, 4, 5.0, Color::BLACK);
-                d.draw_rectangle_rounded_lines(Rectangle { x:550.0, y:20.0, width:100.0, height:50.0 }, 0.0, 4, 5.0, Color::BLACK);
-                d.draw_rectangle_rounded_lines(Rectangle { x:675.0, y:20.0, width:100.0, height:50.0 }, 0.0, 4, 5.0, Color::BLACK);
+                d.draw_rectangle_rounded_lines_ex(Rectangle { x:425.0, y:20.0, width:100.0, height:50.0 }, 0.0, 4, 5.0, Color::BLACK);
+                d.draw_rectangle_rounded_lines_ex(Rectangle { x:550.0, y:20.0, width:100.0, height:50.0 }, 0.0, 4, 5.0, Color::BLACK);
+                d.draw_rectangle_rounded_lines_ex(Rectangle { x:675.0, y:20.0, width:100.0, height:50.0 }, 0.0, 4, 5.0, Color::BLACK);
 
                 d.draw_rectangle(470, 100, 10, 150, Color {r:255, g:0, b:0, a:255});
                 d.draw_rectangle(595, 100, 10, 150, Color {r:0, g:255, b:0, a:255});
                 d.draw_rectangle(720, 100, 10, 150, Color {r:0, g:0, b:255, a:255});
 
-                d.draw_rectangle_rounded_lines(Rectangle {x: 470.0, y: 100.0, width:10.0, height:150.0}, 0.0, 4, 5.0, Color::BLACK);
-                d.draw_rectangle_rounded_lines(Rectangle {x: 595.0, y: 100.0, width:10.0, height:150.0}, 0.0, 4, 5.0, Color::BLACK);
-                d.draw_rectangle_rounded_lines(Rectangle {x: 720.0, y: 100.0, width:10.0, height:150.0}, 0.0, 4, 5.0, Color::BLACK);
+                d.draw_rectangle_rounded_lines_ex(Rectangle {x: 470.0, y: 100.0, width:10.0, height:150.0}, 0.0, 4, 5.0, Color::BLACK);
+                d.draw_rectangle_rounded_lines_ex(Rectangle {x: 595.0, y: 100.0, width:10.0, height:150.0}, 0.0, 4, 5.0, Color::BLACK);
+                d.draw_rectangle_rounded_lines_ex(Rectangle {x: 720.0, y: 100.0, width:10.0, height:150.0}, 0.0, 4, 5.0, Color::BLACK);
 
                 d.draw_rectangle(450, red_bg_slider_pos as i32, 50, 50, Color::WHITE);
                 d.draw_rectangle(575, green_bg_slider_pos as i32, 50, 50, Color::WHITE);
                 d.draw_rectangle(700, blue_bg_slider_pos as i32, 50, 50, Color::WHITE);
 
-                d.draw_rectangle_rounded_lines(Rectangle {x: 450.0, y: red_bg_slider_pos as f32, width:50.0, height:50.0}, 0.0, 4, 5.0, Color::BLACK);
-                d.draw_rectangle_rounded_lines(Rectangle {x: 575.0, y: green_bg_slider_pos as f32, width:50.0, height:50.0}, 0.0, 4, 5.0, Color::BLACK);
-                d.draw_rectangle_rounded_lines(Rectangle {x: 700.0, y: blue_bg_slider_pos as f32, width:50.0, height:50.0}, 0.0, 4, 5.0, Color::BLACK);
+                d.draw_rectangle_rounded_lines_ex(Rectangle {x: 450.0, y: red_bg_slider_pos as f32, width:50.0, height:50.0}, 0.0, 4, 5.0, Color::BLACK);
+                d.draw_rectangle_rounded_lines_ex(Rectangle {x: 575.0, y: green_bg_slider_pos as f32, width:50.0, height:50.0}, 0.0, 4, 5.0, Color::BLACK);
+                d.draw_rectangle_rounded_lines_ex(Rectangle {x: 700.0, y: blue_bg_slider_pos as f32, width:50.0, height:50.0}, 0.0, 4, 5.0, Color::BLACK);
 
                 d.draw_text(&format!("{}", bg_red), 435, 25, 50, Color::BLACK);
                 d.draw_text(&format!("{}", bg_green), 560, 25, 50, Color::BLACK);
@@ -2383,25 +2383,25 @@ async fn main() {
                 d.draw_rectangle(550, 300, 100, 50, Color {r:0, g:255, b:0, a:255});
                 d.draw_rectangle(675, 300, 100, 50, Color {r:0, g:0, b:255, a:255});
 
-                d.draw_rectangle_rounded_lines(Rectangle { x:425.0, y:300.0, width:100.0, height:50.0 }, 0.0, 4, 5.0, Color::BLACK);
-                d.draw_rectangle_rounded_lines(Rectangle { x:550.0, y:300.0, width:100.0, height:50.0 }, 0.0, 4, 5.0, Color::BLACK);
-                d.draw_rectangle_rounded_lines(Rectangle { x:675.0, y:300.0, width:100.0, height:50.0 }, 0.0, 4, 5.0, Color::BLACK);
+                d.draw_rectangle_rounded_lines_ex(Rectangle { x:425.0, y:300.0, width:100.0, height:50.0 }, 0.0, 4, 5.0, Color::BLACK);
+                d.draw_rectangle_rounded_lines_ex(Rectangle { x:550.0, y:300.0, width:100.0, height:50.0 }, 0.0, 4, 5.0, Color::BLACK);
+                d.draw_rectangle_rounded_lines_ex(Rectangle { x:675.0, y:300.0, width:100.0, height:50.0 }, 0.0, 4, 5.0, Color::BLACK);
 
                 d.draw_rectangle(470, 380, 10, 150, Color {r:255, g:0, b:0, a:255});
                 d.draw_rectangle(595, 380, 10, 150, Color {r:0, g:255, b:0, a:255});
                 d.draw_rectangle(720, 380, 10, 150, Color {r:0, g:0, b:255, a:255});
 
-                d.draw_rectangle_rounded_lines(Rectangle {x: 470.0, y: 380.0, width:10.0, height:150.0}, 0.0, 4, 5.0, Color::BLACK);
-                d.draw_rectangle_rounded_lines(Rectangle {x: 595.0, y: 380.0, width:10.0, height:150.0}, 0.0, 4, 5.0, Color::BLACK);
-                d.draw_rectangle_rounded_lines(Rectangle {x: 720.0, y: 380.0, width:10.0, height:150.0}, 0.0, 4, 5.0, Color::BLACK);
+                d.draw_rectangle_rounded_lines_ex(Rectangle {x: 470.0, y: 380.0, width:10.0, height:150.0}, 0.0, 4, 5.0, Color::BLACK);
+                d.draw_rectangle_rounded_lines_ex(Rectangle {x: 595.0, y: 380.0, width:10.0, height:150.0}, 0.0, 4, 5.0, Color::BLACK);
+                d.draw_rectangle_rounded_lines_ex(Rectangle {x: 720.0, y: 380.0, width:10.0, height:150.0}, 0.0, 4, 5.0, Color::BLACK);
 
                 d.draw_rectangle(450, red_ground_slider_pos as i32, 50, 50, Color::WHITE);
                 d.draw_rectangle(575, green_ground_slider_pos as i32, 50, 50, Color::WHITE);
                 d.draw_rectangle(700, blue_ground_slider_pos as i32, 50, 50, Color::WHITE);
 
-                d.draw_rectangle_rounded_lines(Rectangle {x: 450.0, y: red_ground_slider_pos as f32, width:50.0, height:50.0}, 0.0, 4, 5.0, Color::BLACK);
-                d.draw_rectangle_rounded_lines(Rectangle {x: 575.0, y: green_ground_slider_pos as f32, width:50.0, height:50.0}, 0.0, 4, 5.0, Color::BLACK);
-                d.draw_rectangle_rounded_lines(Rectangle {x: 700.0, y: blue_ground_slider_pos as f32, width:50.0, height:50.0}, 0.0, 4, 5.0, Color::BLACK);
+                d.draw_rectangle_rounded_lines_ex(Rectangle {x: 450.0, y: red_ground_slider_pos as f32, width:50.0, height:50.0}, 0.0, 4, 5.0, Color::BLACK);
+                d.draw_rectangle_rounded_lines_ex(Rectangle {x: 575.0, y: green_ground_slider_pos as f32, width:50.0, height:50.0}, 0.0, 4, 5.0, Color::BLACK);
+                d.draw_rectangle_rounded_lines_ex(Rectangle {x: 700.0, y: blue_ground_slider_pos as f32, width:50.0, height:50.0}, 0.0, 4, 5.0, Color::BLACK);
 
                 d.draw_text(&format!("{}", ground_red), 435, 305, 50, Color::BLACK);
                 d.draw_text(&format!("{}", ground_green), 560, 305, 50, Color::BLACK);
@@ -2416,7 +2416,7 @@ async fn main() {
                 d.draw_text(&format!("{}", main_levels[current_level].difficulty), 400, 430, 50, Color::WHITE);
                 d.draw_text(&format!("{}", main_levels[current_level].artist), d.get_screen_width() / 2 - d.measure_text(&main_levels[current_level].artist, 50) / 2, 500, 50, Color::WHITE);
                 d.draw_text(&format!("Level {}", current_level + 1), d.get_screen_width() / 2 - d.measure_text(&format!("Level {}", current_level + 1), 50) / 2, 20, 50, Color::WHITE);
-                d.draw_rectangle_rounded_lines(
+                d.draw_rectangle_rounded_lines_ex(
                     Rectangle {
                         x: 150.0,
                         y: 150.0,

@@ -82,7 +82,9 @@ impl Button {
         // );
 
         // Draw button borders
-        d.draw_rectangle_rounded_lines(scaled_rect, 0.0, 4, 5.0, if self.is_disabled { Color::WHITE } else { Color::BLACK });
+        d.draw_rectangle_rounded_lines_ex(scaled_rect, 0.0, 4, 5.0, if self.is_disabled { Color::WHITE } else { Color::BLACK });
+
+        // d.draw_rectangle_lines_ex(scaled_rect, 5.0, if self.is_disabled { Color::WHITE } else { Color::BLACK });
 
         // Draw text with perfect centering
         let text_width = d.measure_text(&self.text, self.font_size);

@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-raylib = "5.0.2"
+raylib = "5.5.0"
 rand = "0.9.0"
 rodio = "0.20.1"
 webbrowser = "1.0.4"
