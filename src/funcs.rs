@@ -41,7 +41,7 @@ impl Button {
         self.is_pressed = is_pressed;
     }
 
-    pub fn draw(&self, d: &mut RaylibDrawHandle) {
+    pub fn draw(&self, use_image: bool, image: Option<&&Texture2D>, image_scale: f32, gray: bool, d: &mut RaylibDrawHandle) {
         let scale_offset_x = self.rect.width * (self.hover_scale - 1.0) * 0.5;
         let scale_offset_y = self.rect.height * (self.hover_scale - 1.0) * 0.5;
         
@@ -69,7 +69,7 @@ impl Button {
             scaled_rect.y as i32,
             scaled_rect.width as i32,
             scaled_rect.height as i32,
-            if self.is_disabled { Color::BLACK } else { self.base_color },
+            if self.is_disabled { Color::BLACK } else if gray { Color::GRAY } else { self.base_color },
         );
 
         // Old way of drawing button borders
@@ -90,24 +90,37 @@ impl Button {
         let text_width = d.measure_text(&self.text, self.font_size);
         let text_x = scaled_rect.x as i32 + ((scaled_rect.width as i32 - text_width) / 2);
         let text_y = scaled_rect.y as i32 + ((scaled_rect.height as i32 - self.font_size) / 2);
-        
-        // Draw text shadow
-        d.draw_text(
-            &self.text,
-            text_x + 1,
-            text_y + 1,
-            self.font_size,
-            Color::new(0, 0, 0, 30),
-        );
-        
-        // Draw main text
-        d.draw_text(
-            &self.text,
-            text_x,
-            text_y,
-            self.font_size,
-            if self.is_disabled { Color::WHITE } else { Color::BLACK },
-        );
+
+        if !use_image {
+            // Draw text shadow
+            d.draw_text(
+                &self.text,
+                text_x + 1,
+                text_y + 1,
+                self.font_size,
+                Color::new(0, 0, 0, 30),
+            );
+            
+            // Draw main text
+            d.draw_text(
+                &self.text,
+                text_x,
+                text_y,
+                self.font_size,
+                if self.is_disabled { Color::WHITE } else { Color::BLACK },
+            );
+        } else {
+            d.draw_texture_ex(
+                image.unwrap(),
+                Vector2 {
+                    x: self.rect.x + self.rect.width / 2.0 - image.unwrap().width as f32 * image_scale / 2.0,
+                    y: self.rect.y + self.rect.width / 2.0 - image.unwrap().height as f32 * image_scale / 2.0
+                },
+                0.0,
+                image_scale,
+                Color::WHITE
+            );
+        }
     }
 
     pub fn is_hovered(&self, mouse_pos: Vector2) -> bool {

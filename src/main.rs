@@ -1896,8 +1896,8 @@ async fn main() {
 
                 d.draw_text("Geometry Rays", 220, 150, 50, Color::WHITE);
 
-                play_button.draw(&mut d);
-                editor_button.draw(&mut d);
+                play_button.draw(false, None, 1.0, false, &mut d);
+                editor_button.draw(false, None, 1.0, false, &mut d);
 
                 d.draw_text(&format!("Version: {}", version), 10, 10, 15, Color::WHITE);
                 d.draw_text(&format!("Latest Version: {}", *latest_version.lock().unwrap()), 10, 30, 15, Color::WHITE);
@@ -1929,7 +1929,7 @@ async fn main() {
                     discord_color,
                 );
 
-                account_page_button.draw(&mut d);
+                account_page_button.draw(false, None, 1.0, false, &mut d);
             }
             GameState::Playing => {
                 d.clear_background(Color::WHITE);
@@ -2189,19 +2189,19 @@ async fn main() {
                 d.draw_text("Game Over!", 250, 150, 50, Color::WHITE);
                 d.draw_text(&format!("Attempts: {}", attempt), 330, 250, 20, Color::WHITE);
                 
-                restart_button.draw(&mut d);
+                restart_button.draw(false, None, 1.0, false, &mut d);
             }
             GameState::CreatorMenu => {
                 d.clear_background(Color::WHITE);
                 d.draw_texture_ex(&menu_bg, Vector2::new(-200.0, -250.0), 0.0, 0.8, Color { r:50, g:50, b:50, a:255 });
                 
                 // d.draw_text("Editor will be added eventually!", 50, 250, 45, Color::WHITE);
-                menu_button.draw(&mut d);
-                create_button.draw(&mut d);
-                featured_button.draw(&mut d);
-                search_button.draw(&mut d);
-                keybinds_button.draw(&mut d);
-                clear_level_button.draw(&mut d);
+                menu_button.draw(false, None, 1.0, false, &mut d);
+                create_button.draw(false, None, 1.0, false, &mut d);
+                featured_button.draw(false, None, 1.0, false, &mut d);
+                search_button.draw(false, None, 1.0, false, &mut d);
+                keybinds_button.draw(false, None, 1.0, false, &mut d);
+                clear_level_button.draw(false, None, 1.0, false, &mut d);
 
                 if not_done_yet_text {
                     d.draw_text("This will be added eventually!", 250, 30, 30, Color::WHITE);
@@ -2296,14 +2296,14 @@ async fn main() {
 
                 d.draw_line(175, 400, 175, 600, Color::WHITE);
 
-                build_tab_button.draw(&mut d);
-                edit_tab_button.draw(&mut d);
-                delete_tab_button.draw(&mut d);
-                level_options_button.draw(&mut d);
-                editor_back.draw(&mut d);
-                level_save_button.draw(&mut d);
-                playtest_button.draw(&mut d);
-                level_upload_button.draw(&mut d);
+                build_tab_button.draw(false, None, 1.0, false, &mut d);
+                edit_tab_button.draw(false, None, 1.0, false, &mut d);
+                delete_tab_button.draw(false, None, 1.0, false, &mut d);
+                level_options_button.draw(false, None, 1.0, false, &mut d);
+                editor_back.draw(false, None, 1.0, false, &mut d);
+                level_save_button.draw(false, None, 1.0, false, &mut d);
+                playtest_button.draw(false, None, 1.0, false, &mut d);
+                level_upload_button.draw(false, None, 1.0, false, &mut d);
 
                 if edit_not_done_yet {
                     d.draw_text("Click to select!", 270, 490, 40, Color::WHITE);
@@ -2311,26 +2311,28 @@ async fn main() {
 
                 // Draw all the object buttons
                 if active_tab == EditorTab::Build {
-                    obj1_button.draw(&mut d);
-                    obj2_button.draw(&mut d);
-                    obj3_button.draw(&mut d);
-                    obj4_button.draw(&mut d);
-                    obj5_button.draw(&mut d);
-                    obj6_button.draw(&mut d);
-                    obj7_button.draw(&mut d);
-                    obj8_button.draw(&mut d);
-                    obj9_button.draw(&mut d);
-                    obj10_button.draw(&mut d);
-                    obj11_button.draw(&mut d);
-                    obj12_button.draw(&mut d);
-                    obj13_button.draw(&mut d);
-                    obj14_button.draw(&mut d);
-                    obj15_button.draw(&mut d);
-                    obj16_button.draw(&mut d);
-                    obj17_button.draw(&mut d);
-                    obj18_button.draw(&mut d);
-                    obj19_button.draw(&mut d);
-                    obj20_button.draw(&mut d);
+                    let object_button_texture_scale: f32 = 0.04;
+
+                    obj1_button.draw(true, Some(texture_ids.get(&1).unwrap()), object_button_texture_scale, true, &mut d);
+                    obj2_button.draw(true, Some(texture_ids.get(&2).unwrap()), object_button_texture_scale, true, &mut d);
+                    obj3_button.draw(true, Some(texture_ids.get(&3).unwrap()), object_button_texture_scale, true, &mut d);
+                    obj4_button.draw(true, Some(texture_ids.get(&4).unwrap()), object_button_texture_scale, true, &mut d);
+                    obj5_button.draw(true, Some(texture_ids.get(&5).unwrap()), object_button_texture_scale, true, &mut d);
+                    obj6_button.draw(true, Some(texture_ids.get(&6).unwrap()), object_button_texture_scale, true, &mut d);
+                    obj7_button.draw(true, Some(texture_ids.get(&7).unwrap()), object_button_texture_scale, true, &mut d);
+                    obj8_button.draw(true, Some(texture_ids.get(&8).unwrap()), object_button_texture_scale, true, &mut d);
+                    obj9_button.draw(true, Some(texture_ids.get(&9).unwrap()), object_button_texture_scale, true, &mut d);
+                    obj10_button.draw(true, Some(texture_ids.get(&10).unwrap()), object_button_texture_scale, true, &mut d);
+                    obj11_button.draw(true, Some(texture_ids.get(&11).unwrap()), object_button_texture_scale, true, &mut d);
+                    obj12_button.draw(true, Some(texture_ids.get(&12).unwrap()), object_button_texture_scale, true, &mut d);
+                    obj13_button.draw(true, Some(texture_ids.get(&13).unwrap()), object_button_texture_scale, true, &mut d);
+                    obj14_button.draw(true, Some(texture_ids.get(&14).unwrap()), object_button_texture_scale, true, &mut d);
+                    obj15_button.draw(true, Some(texture_ids.get(&15).unwrap()), object_button_texture_scale, true, &mut d);
+                    obj16_button.draw(true, Some(texture_ids.get(&16).unwrap()), object_button_texture_scale, true, &mut d);
+                    obj17_button.draw(true, Some(texture_ids.get(&17).unwrap()), object_button_texture_scale, true, &mut d);
+                    obj18_button.draw(true, Some(texture_ids.get(&18).unwrap()), object_button_texture_scale, true, &mut d);
+                    obj19_button.draw(true, Some(texture_ids.get(&19).unwrap()), object_button_texture_scale, true, &mut d);
+                    obj20_button.draw(true, Some(texture_ids.get(&20).unwrap()), object_button_texture_scale, true, &mut d);
                 }
 
                 d.draw_text(&format!("Selected Object: {}", objects.get(&current_object).unwrap()), 10, 10, 20, Color::WHITE);
@@ -2349,7 +2351,7 @@ async fn main() {
             GameState::LevelOptions => {
                 d.clear_background(Color {r:0, g:0, b:75, a:255});
 
-                level_options_back.draw(&mut d);
+                level_options_back.draw(false, None, 1.0, false, &mut d);
 
                 d.draw_rectangle(425, 20, 100, 50, Color {r:255, g:0, b:0, a:255});
                 d.draw_rectangle(550, 20, 100, 50, Color {r:0, g:255, b:0, a:255});
@@ -2464,7 +2466,7 @@ async fn main() {
                     Color::WHITE
                 );
 
-                level_complete_back_button.draw(&mut d);
+                level_complete_back_button.draw(false, None, 1.0, false, &mut d);
             }
             GameState::EditorKeybinds => {
                 d.clear_background(Color::BLACK);
@@ -2541,14 +2543,14 @@ async fn main() {
                     Color::WHITE
                 );
 
-                menu_button.draw(&mut d);
+                menu_button.draw(false, None, 1.0, false, &mut d);
             }
             GameState::AccountPage => {
                 d.clear_background(Color::BLACK);
 
-                menu_button.draw(&mut d);
-                login_button.draw(&mut d);
-                register_button.draw(&mut d);
+                menu_button.draw(false, None, 1.0, false, &mut d);
+                login_button.draw(false, None, 1.0, false, &mut d);
+                register_button.draw(false, None, 1.0, false, &mut d);
 
                 username_textbox.draw(username.clone(), &mut d);
                 password_textbox.draw(password.clone(), &mut d);
@@ -2572,8 +2574,8 @@ async fn main() {
             GameState::LevelUpload => {
                 d.clear_background(Color::BLACK);
 
-                menu_button.draw(&mut d);
-                upload_button.draw(&mut d);
+                menu_button.draw(false, None, 1.0, false, &mut d);
+                upload_button.draw(false, None, 1.0, false, &mut d);
                 level_name_textbox.draw(level_name.clone(), &mut d);
                 level_desc_textbox.draw(level_desc.clone(), &mut d);
 
@@ -2662,11 +2664,11 @@ async fn main() {
                     Color::WHITE
                 );
 
-                level_play_button.draw(&mut d);
-                menu_button.draw(&mut d);
+                level_play_button.draw(false, None, 1.0, false, &mut d);
+                menu_button.draw(false, None, 1.0, false, &mut d);
 
                 if is_mod {
-                    level_rate_button.draw(&mut d);
+                    level_rate_button.draw(false, None, 1.0, false, &mut d);
                 }
             }
             GameState::SearchPage => {
@@ -2682,14 +2684,14 @@ async fn main() {
                     );
                 }
 
-                download_level_button.draw(&mut d);
+                download_level_button.draw(false, None, 1.0, false, &mut d);
                 level_id_textbox.draw(level_id.clone(), &mut d);
-                menu_button.draw(&mut d);
+                menu_button.draw(false, None, 1.0, false, &mut d);
             }
             GameState::LevelRate => {
                 d.clear_background(Color::BLACK);
-                menu_button.draw(&mut d);
-                submit_rating_button.draw(&mut d);
+                menu_button.draw(false, None, 1.0, false, &mut d);
+                submit_rating_button.draw(false, None, 1.0, false, &mut d);
 
                 d.draw_texture_ex(
                     &difficulties[online_level_rate_diff as usize],
