@@ -865,7 +865,8 @@ async fn main() {
                             }
                         }
 
-                        if object.id == 4 {
+                        if object.id == 4
+                        || object.id == 22 {
                             if centered_player.check_collision_recs(&Rectangle {
                                 x: object.x as f32 - 10.0 + world_offset,
                                 y: object.y as f32 - 10.0 - player_cam_y as f32,
@@ -873,10 +874,20 @@ async fn main() {
                                 height: 60.0
                             }) {
                                 if on_orb && mouse_down {
-                                    if gravity > 0.0 {
-                                        velocity_y = -13.0;
-                                    } else {
-                                        velocity_y = 13.0
+                                    if object.id == 4 {
+                                        if gravity > 0.0 {
+                                            velocity_y = -13.0;
+                                        } else {
+                                            velocity_y = 13.0
+                                        }
+                                    } else if object.id == 22 {
+                                        if gravity > 0.0 {
+                                            velocity_y = -7.0;
+                                            gravity = -default_gravity
+                                        } else {
+                                            velocity_y = 7.0;
+                                            gravity = default_gravity
+                                        }
                                     }
                                     on_orb = false
                                 }
@@ -2105,7 +2116,8 @@ async fn main() {
                                 );
                             }
     
-                            if object.id == 4 {
+                            if object.id == 4
+                            || object.id == 22 {
                                 d.draw_rectangle_lines(
                                     object.x - 10 + world_offset as i32,
                                     object.y - 10 - player_cam_y,
