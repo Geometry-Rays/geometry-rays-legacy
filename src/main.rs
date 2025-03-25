@@ -382,6 +382,8 @@ async fn main() {
     texture_ids.insert(18, &double_speed_texture);
     texture_ids.insert(19, &triple_speed_texture);
     texture_ids.insert(20, &half_speed_texture);
+    texture_ids.insert(21, &_null_texture);
+    texture_ids.insert(22, &_null_texture);
 
     // Variables for editor stuff
     let mut active_tab = EditorTab::Build;
@@ -432,6 +434,8 @@ async fn main() {
     objects.insert(18, "2x speed");
     objects.insert(19, "3x speed");
     objects.insert(20, "0.5x speed");
+    objects.insert(21, "gravity pad");
+    objects.insert(22, "gravity orb");
 
     let obj_button_off = 65.0;
     let mut obj1_button = Button::new(187.0, 415.0, 50.0, 50.0, objects.get(&1).unwrap(), 10, false);
@@ -454,6 +458,8 @@ async fn main() {
     let mut obj18_button = Button::new(187.0 + (obj_button_off * 8.0), 415.0 + obj_button_off, 50.0, 50.0, objects.get(&18).unwrap(), 10, false);
     let mut obj19_button = Button::new(187.0, 415.0 + (obj_button_off * 2.0), 50.0, 50.0, objects.get(&19).unwrap(), 10, false);
     let mut obj20_button = Button::new(187.0 + obj_button_off, 415.0 + (obj_button_off * 2.0), 50.0, 50.0, objects.get(&20).unwrap(), 10, false);
+    let mut obj21_button = Button::new(187.0 + (obj_button_off * 2.0), 415.0 + (obj_button_off * 2.0), 50.0, 50.0, objects.get(&21).unwrap(), 10, false);
+    let mut obj22_button = Button::new(187.0 + (obj_button_off * 3.0), 415.0 + (obj_button_off * 2.0), 50.0, 50.0, objects.get(&22).unwrap(), 10, false);
 
     let mut bg_red = red_bg_slider_pos - 75;
     let mut bg_green = green_bg_slider_pos - 75;
@@ -1087,6 +1093,8 @@ async fn main() {
                 obj18_button.update(&rl, delta_time);
                 obj19_button.update(&rl, delta_time);
                 obj20_button.update(&rl, delta_time);
+                obj21_button.update(&rl, delta_time);
+                obj22_button.update(&rl, delta_time);
 
                 if build_tab_button.is_clicked(&rl) {
                     active_tab = EditorTab::Build;
@@ -1190,6 +1198,14 @@ async fn main() {
 
                 else if obj20_button.is_clicked(&rl) && active_tab == EditorTab::Build {
                     current_object = 20 + _advanced_page_number;
+                }
+
+                else if obj21_button.is_clicked(&rl) && active_tab == EditorTab::Build {
+                    current_object = 21 + _advanced_page_number;
+                }
+
+                else if obj22_button.is_clicked(&rl) && active_tab == EditorTab::Build {
+                    current_object = 22 + _advanced_page_number;
                 }
 
                 else if grid_button.is_clicked(&rl) {
@@ -2345,6 +2361,8 @@ async fn main() {
                     obj18_button.draw(true, Some(texture_ids.get(&18).unwrap()), object_button_texture_scale, true, &mut d);
                     obj19_button.draw(true, Some(texture_ids.get(&19).unwrap()), object_button_texture_scale, true, &mut d);
                     obj20_button.draw(true, Some(texture_ids.get(&20).unwrap()), object_button_texture_scale, true, &mut d);
+                    obj21_button.draw(true, Some(texture_ids.get(&21).unwrap()), object_button_texture_scale, true, &mut d);
+                    obj22_button.draw(true, Some(texture_ids.get(&22).unwrap()), object_button_texture_scale, true, &mut d);
                 }
 
                 d.draw_text(&format!("Selected Object: {}", objects.get(&current_object).unwrap()), 10, 10, 20, Color::WHITE);
