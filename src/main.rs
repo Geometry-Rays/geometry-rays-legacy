@@ -849,17 +849,28 @@ async fn main() {
                             }
                         }
 
-                        if object.id == 3 {
+                        if object.id == 3
+                        || object.id == 21 {
                             if centered_player.check_collision_recs(&Rectangle {
                                 x: object.x as f32 + world_offset,
                                 y: object.y as f32 + 35.0 - player_cam_y as f32,
                                 width: 40.0,
                                 height: 5.0
                             }) {
-                                if gravity > 0.0 {
-                                    velocity_y = -15.0;
-                                } else {
-                                    velocity_y = 15.0
+                                if object.id == 3 {
+                                    if gravity > 0.0 {
+                                        velocity_y = -15.0;
+                                    } else {
+                                        velocity_y = 15.0
+                                    }
+                                } else if object.id == 21 {
+                                    if gravity > 0.0 {
+                                        velocity_y = -7.0;
+                                        gravity = -default_gravity
+                                    } else {
+                                        velocity_y = 7.0;
+                                        gravity = default_gravity
+                                    }
                                 }
                                 is_on_ground = false;
                             }
