@@ -70,6 +70,10 @@ async fn main() {
         .expect("Failed to load 2x speed portal texture");
     let triple_speed_texture = rl.load_texture(&thread, "Resources/speed/3x.png")
         .expect("Failed to load 3x speed portal texture");
+    let gravity_pad_texture = rl.load_texture(&thread, "Resources/gravity-pad.png")
+        .expect("Failed to load gravity pad texture");
+    let gravity_orb_texture = rl.load_texture(&thread, "Resources/gravity-orb.png")
+        .expect("Failed to load gravity orb texture");
 
     // Create main menu buttons
     let mut play_button = Button::new(300.0, 250.0, 200.0, 50.0, "Play", 24, false);
@@ -382,8 +386,8 @@ async fn main() {
     texture_ids.insert(18, &double_speed_texture);
     texture_ids.insert(19, &triple_speed_texture);
     texture_ids.insert(20, &half_speed_texture);
-    texture_ids.insert(21, &_null_texture);
-    texture_ids.insert(22, &_null_texture);
+    texture_ids.insert(21, &gravity_pad_texture);
+    texture_ids.insert(22, &gravity_orb_texture);
 
     // Variables for editor stuff
     let mut active_tab = EditorTab::Build;
