@@ -341,7 +341,7 @@ macro_rules! hashmap {
 
 pub fn get_level_text(current_song: u8, bg_red: u8, bg_green: u8, bg_blue: u8, ground_red: u8, ground_green: u8, ground_blue: u8, object_grid: &Vec<ObjectStruct>) -> String {
     let mut level_string = format!(
-        "version:BETA;song:{};c1001:{},{},{};c1002:{},{},{};c1004:255,255,255;bg:1;grnd:1;;;",
+        "version:1.3;song:{};c1001:{},{},{};c1002:{},{},{};c1004:255,255,255;bg:1;grnd:1;;;",
 
         current_song,
 
@@ -395,7 +395,8 @@ pub fn load_level(
                 println!("Old level version detected.");
                 println!("Please pick a level thats a newer version as that version isnt supported anymore.");
                 break;
-            } else if value == "BETA" {
+            } else if value == "BETA"
+            || value == "1.3" {
                 println!("Loading level...");
             } else {
                 println!("Level version not recognized.");
