@@ -778,7 +778,7 @@ async fn main() {
 
                 for object in &object_grid {
                     if object.x as f32 + world_offset < rl.get_screen_width() as f32 &&
-                    object.x as f32 + world_offset > -40.0 {
+                    object.x as f32 + world_offset > -40.0 && object.no_touch == 0 {
                         if object.id == 1 {
                             kill_player |= centered_player.check_collision_recs(&Rectangle {
                                 x: object.x as f32 + world_offset + 20.0,
@@ -1242,8 +1242,8 @@ async fn main() {
                             object_grid.push(ObjectStruct {
                                 y: if snapped_y < 0 { snapped_y - 40 } else { snapped_y },
                                 x: if snapped_x < 0 { snapped_x - 40 } else { snapped_x },
-                                no_touch: false,
-                                hide: false,
+                                no_touch: 0,
+                                hide: 0,
                                 id: current_object,
                                 rotation: 0,
                                 selected: false 
@@ -2017,7 +2017,7 @@ async fn main() {
                     let object_x = i.x as f32 + world_offset as f32 + 20.0;
                     let object_y = i.y as f32 - player_cam_y as f32 + 20.0;
                     if i.x as f32 + world_offset < d.get_screen_width() as f32 &&
-                    i.x as f32 + world_offset > -40.0 {
+                    i.x as f32 + world_offset > -40.0 && i.hide == 0 {
                         if from_editor || i.id != 15 {
                             if i.id != 17 && i.id != 18 && i.id != 19 && i.id != 20 {
                                 d.draw_texture_pro(

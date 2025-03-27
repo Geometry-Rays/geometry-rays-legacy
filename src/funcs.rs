@@ -355,7 +355,7 @@ pub fn get_level_text(current_song: u8, bg_red: u8, bg_green: u8, bg_blue: u8, g
     ).to_string();
 
     for object in object_grid {
-        level_string.push_str( &format!("{}:{}:{}:{};", object.y, object.x, object.rotation, object.id));
+        level_string.push_str( &format!("{}:{}:{}:{}:{}:{};", object.y, object.x, object.rotation, object.no_touch, object.hide, object.id));
     }
 
     if !object_grid.is_empty() {
@@ -441,8 +441,8 @@ pub fn load_level(
                 y: xyrid[0].parse::<i32>().unwrap(),
                 x: xyrid[1].parse::<i32>().unwrap(),
                 rotation: xyrid[2].parse::<i16>().unwrap(),
-                no_touch: if level_version == "1.3" { xyrid[3].parse().unwrap() } else { false },
-                hide: if level_version == "1.3" { xyrid[4].parse().unwrap() } else { false },
+                no_touch: if level_version == "1.3" { xyrid[3].parse().unwrap() } else { 0 },
+                hide: if level_version == "1.3" { xyrid[4].parse().unwrap() } else { 0 },
                 id: if level_version == "1.3" { xyrid[5].parse::<u32>().unwrap() } else { xyrid[3].parse().unwrap() },
                 selected: false
             });

@@ -57,8 +57,8 @@ pub struct ObjectStruct {
     pub y: i32,
     pub x: i32,
     pub rotation: i16,
-    pub no_touch: bool,
-    pub hide: bool,
+    pub no_touch: u8,
+    pub hide: u8,
     pub id: u32,
     pub selected: bool
 }
