@@ -60,7 +60,8 @@ pub struct ObjectStruct {
     pub no_touch: u8,
     pub hide: u8,
     pub id: u32,
-    pub selected: bool
+    pub selected: bool,
+    pub properties: Option<Vec<String>>
 }
 
 pub struct TextBox {

@@ -1004,6 +1004,39 @@ async fn main() {
                                 }
                             }
                         }
+
+                        if object.id == 23 {
+                            if centered_player.check_collision_recs(&Rectangle {
+                                x: object.x as f32 + world_offset,
+                                y: object.y as f32 - player_cam_y as f32,
+                                width: 40.0,
+                                height: 40.0
+                            }) {
+                                let color_trigger_red: u8 = object.properties.clone().unwrap()[0].clone().parse().unwrap();
+                                let color_trigger_green: u8 = object.properties.clone().unwrap()[1].clone().parse().unwrap();
+                                let color_trigger_blue: u8 = object.properties.clone().unwrap()[2].clone().parse().unwrap();
+                                let color_trigger_fade: f32 = object.properties.clone().unwrap()[3].clone().parse().unwrap();
+
+                                println!("{:?}", object.properties.clone().unwrap());
+
+                                bg_red = color_trigger_red;
+                                bg_green = color_trigger_green;
+                                bg_blue = color_trigger_blue;
+
+                                // let og_red = bg_red;
+                                // let og_green = bg_green;
+                                // let og_blue = bg_blue;
+
+                                // let mut index = color_trigger_fade as i16;
+                                // for _i in 0..color_trigger_fade as i32 {
+                                //     bg_red = ((og_red as i16 - index + color_trigger_red as i16) / 2) as u8;
+                                //     bg_green = ((og_green as i16 - index + color_trigger_green as i16) / 2) as u8;
+                                //     bg_blue = ((og_blue as i16 - index + color_trigger_blue as i16) / 2) as u8;
+
+                                //     index -= 1;
+                                // }
+                            }
+                        }
                     }
                 }
 
@@ -1256,7 +1289,17 @@ async fn main() {
                                 hide: 0,
                                 id: current_object,
                                 rotation: 0,
-                                selected: false 
+                                selected: false,
+                                properties: if current_object == 23 { Some(
+                                    vec![
+                                        "50".to_string(),
+                                        "50".to_string(),
+                                        "50".to_string(),
+                                        "0.50".to_string()
+                                    ]
+                                )} else {
+                                    None
+                                }
                             });
                         } else if active_tab == EditorTab::Delete {
                             let mut obj_index = 0;

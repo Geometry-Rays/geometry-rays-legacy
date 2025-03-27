@@ -355,7 +355,31 @@ pub fn get_level_text(current_song: u8, bg_red: u8, bg_green: u8, bg_blue: u8, g
     ).to_string();
 
     for object in object_grid {
-        level_string.push_str( &format!("{}:{}:{}:{}:{}:{};", object.y, object.x, object.rotation, object.no_touch, object.hide, object.id));
+        if object.id == 23 {
+            level_string.push_str(&format!(
+                "{}:{}:{}:{}:{}:{}:{}:{}:{}:{};",
+                object.y,
+                object.x,
+                object.rotation,
+                object.no_touch,
+                object.hide,
+                object.id,
+                object.properties.clone().unwrap()[0],
+                object.properties.clone().unwrap()[1],
+                object.properties.clone().unwrap()[2],
+                object.properties.clone().unwrap()[3]
+            ));
+        } else {
+            level_string.push_str(&format!(
+                "{}:{}:{}:{}:{}:{};",
+                object.y,
+                object.x,
+                object.rotation,
+                object.no_touch,
+                object.hide,
+                object.id
+            ));
+        }
     }
 
     if !object_grid.is_empty() {
@@ -435,6 +459,7 @@ pub fn load_level(
     let object_list: Vec<&str> = _object_string.split(';').collect();
     for object in object_list {
         let xyrid: Vec<&str> = object.split(':').collect();
+        let obj_id = if level_version == "1.3" { xyrid[5].parse::<u32>().unwrap() } else { xyrid[3].parse().unwrap() };
 
         if !_object_string.is_empty() {
             object_grid.push(ObjectStruct {
@@ -443,8 +468,18 @@ pub fn load_level(
                 rotation: xyrid[2].parse::<i16>().unwrap(),
                 no_touch: if level_version == "1.3" { xyrid[3].parse().unwrap() } else { 0 },
                 hide: if level_version == "1.3" { xyrid[4].parse().unwrap() } else { 0 },
-                id: if level_version == "1.3" { xyrid[5].parse::<u32>().unwrap() } else { xyrid[3].parse().unwrap() },
-                selected: false
+                id: obj_id,
+                selected: false,
+                properties: if obj_id == 23 && level_version != "BETA" {Some(
+                    vec![
+                        xyrid[6].to_string(),
+                        xyrid[7].to_string(),
+                        xyrid[8].to_string(),
+                        xyrid[9].to_string()
+                    ]
+                )} else {
+                    None
+                }
             });
         }
     }
