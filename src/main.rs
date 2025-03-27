@@ -1814,7 +1814,7 @@ async fn main() {
 
                 if level_play_button.is_clicked(&rl) {
                     let parts: Vec<&str> = online_level_data.split(";;;").collect();
-                    load_level(
+                    let level_loaded = load_level(
                         &mut parts[0].to_string(),
                         &mut parts[1].to_string(),
                         &mut object_grid,
@@ -1830,11 +1830,13 @@ async fn main() {
                         false
                     );
 
-                    level_music_file = BufReader::new(File::open(format!("{}", main_levels[current_song as usize].song)).expect("Failed to open MP3 file"));
-                    _level_music = Decoder::new(level_music_file).expect("Failed to decode MP3 file");
-                    sink.stop();
-                    sink.append(_level_music);
-                    sink.play();
+                    if level_loaded == "ok" {
+                        level_music_file = BufReader::new(File::open(format!("{}", main_levels[current_song as usize].song)).expect("Failed to open MP3 file"));
+                        _level_music = Decoder::new(level_music_file).expect("Failed to decode MP3 file");
+                        sink.stop();
+                        sink.append(_level_music);
+                        sink.play();
+                    }
 
                     player.y = 500.0;
                     world_offset = 0.0;
@@ -1848,10 +1850,12 @@ async fn main() {
                     player_cam_y = 0;
                     movement_speed = default_movement_speed;
 
-                    from_editor = false;
-                    player_path.clear();
+                    if level_loaded == "ok" {
+                        from_editor = false;
+                        player_path.clear();
 
-                    game_state = GameState::Playing;
+                        game_state = GameState::Playing;
+                    }
                 }
 
                 if menu_button.is_clicked(&rl) {

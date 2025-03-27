@@ -382,7 +382,7 @@ pub fn load_level(
     current_song: &mut u8,
     load_song: bool,
     song_if_song_not_selected: bool
-) {
+) -> String {
     object_grid.clear();
     let metadata_pairs: Vec<&str> = _level_metadata.split(';').collect();
     for pair in metadata_pairs {
@@ -401,7 +401,7 @@ pub fn load_level(
             } else {
                 println!("Level version not recognized.");
                 println!("Is this level made in a newer version?");
-                break;
+                "version_invalid".to_string();
             }
         } else if key == "c1001" {
             let colors: Vec<&str> = value.split(',').collect();
@@ -442,6 +442,8 @@ pub fn load_level(
             });
         }
     }
+
+    "ok".to_string()
 }
 
 pub fn parse_level_download_response(
