@@ -74,6 +74,8 @@ async fn main() {
         .expect("Failed to load gravity pad texture");
     let gravity_orb_texture = rl.load_texture(&thread, "Resources/gravity-orb.png")
         .expect("Failed to load gravity orb texture");
+    let color_trigger_texture = rl.load_texture(&thread, "Resources/color.png")
+        .expect("Failed to load color trigger texture");
 
     // Create main menu buttons
     let mut play_button = Button::new(300.0, 250.0, 200.0, 50.0, "Play", 24, false);
@@ -388,6 +390,7 @@ async fn main() {
     texture_ids.insert(20, &half_speed_texture);
     texture_ids.insert(21, &gravity_pad_texture);
     texture_ids.insert(22, &gravity_orb_texture);
+    texture_ids.insert(23, &color_trigger_texture);
 
     // Variables for editor stuff
     let mut active_tab = EditorTab::Build;
@@ -440,6 +443,7 @@ async fn main() {
     objects.insert(20, "0.5x speed");
     objects.insert(21, "gravity pad");
     objects.insert(22, "gravity orb");
+    objects.insert(23, "color trigger");
 
     let obj_button_off = 65.0;
     let mut obj1_button = Button::new(187.0, 415.0, 50.0, 50.0, objects.get(&1).unwrap(), 10, false);
@@ -464,6 +468,7 @@ async fn main() {
     let mut obj20_button = Button::new(187.0 + obj_button_off, 415.0 + (obj_button_off * 2.0), 50.0, 50.0, objects.get(&20).unwrap(), 10, false);
     let mut obj21_button = Button::new(187.0 + (obj_button_off * 2.0), 415.0 + (obj_button_off * 2.0), 50.0, 50.0, objects.get(&21).unwrap(), 10, false);
     let mut obj22_button = Button::new(187.0 + (obj_button_off * 3.0), 415.0 + (obj_button_off * 2.0), 50.0, 50.0, objects.get(&22).unwrap(), 10, false);
+    let mut obj23_button = Button::new(187.0 + (obj_button_off * 4.0), 415.0 + (obj_button_off * 2.0), 50.0, 50.0, objects.get(&23).unwrap(), 10, false);
 
     let mut bg_red = red_bg_slider_pos - 75;
     let mut bg_green = green_bg_slider_pos - 75;
@@ -1121,6 +1126,7 @@ async fn main() {
                 obj20_button.update(&rl, delta_time);
                 obj21_button.update(&rl, delta_time);
                 obj22_button.update(&rl, delta_time);
+                obj23_button.update(&rl, delta_time);
 
                 if build_tab_button.is_clicked(&rl) {
                     active_tab = EditorTab::Build;
@@ -1232,6 +1238,10 @@ async fn main() {
 
                 else if obj22_button.is_clicked(&rl) && active_tab == EditorTab::Build {
                     current_object = 22 + _advanced_page_number;
+                }
+
+                else if obj23_button.is_clicked(&rl) && active_tab == EditorTab::Build {
+                    current_object = 23 + _advanced_page_number;
                 }
 
                 else if grid_button.is_clicked(&rl) {
@@ -2396,6 +2406,7 @@ async fn main() {
                     obj20_button.draw(true, Some(texture_ids.get(&20).unwrap()), object_button_texture_scale, true, &mut d);
                     obj21_button.draw(true, Some(texture_ids.get(&21).unwrap()), object_button_texture_scale, true, &mut d);
                     obj22_button.draw(true, Some(texture_ids.get(&22).unwrap()), object_button_texture_scale, true, &mut d);
+                    obj23_button.draw(true, Some(texture_ids.get(&23).unwrap()), object_button_texture_scale, true, &mut d);
                 }
 
                 d.draw_text(&format!("Selected Object: {}", objects.get(&current_object).unwrap()), 10, 10, 20, Color::WHITE);
