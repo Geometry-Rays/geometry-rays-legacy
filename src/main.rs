@@ -351,6 +351,7 @@ async fn main() {
     let mut is_mod: bool = false;
     let default_level: &str = "version:1.3;song:0;c1001:0,0,50;c1002:0,0,100;c1004:255,255,255;bg:1;grnd:1;;;480:480:0:0:0:1";
     let mut start_pos: u16 = 0;
+    let in_debug_build = cfg!(debug_assertions);
 
     let mut get_latest_version = true;
     let mut register_result = "".to_string();
@@ -2060,6 +2061,16 @@ async fn main() {
                     icon_size / discord_icon.height() as f32,
                     discord_color,
                 );
+
+                if in_debug_build {
+                    d.draw_text(
+                        "Developer Build",
+                        d.get_screen_width() - d.measure_text("Developer Build", 30) - 10,
+                        d.get_screen_height() - 30,
+                        30,
+                        Color::LIME
+                    );
+                }
 
                 account_page_button.draw(false, None, 1.0, false, &mut d);
             }
