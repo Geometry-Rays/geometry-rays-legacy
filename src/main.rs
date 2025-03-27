@@ -416,6 +416,7 @@ async fn main() {
     let mut from_editor: bool = false;
     let mut player_path: Vec<Vector2> = vec![];
     let mut editor_guide_scroll: u16 = 0;
+    let mut touching_color_trigger = false;
 
     let mut red_ground_slider_pos: i32 = 355;
     let mut green_ground_slider_pos: i32  = 355;
@@ -1019,13 +1020,29 @@ async fn main() {
 
                                 println!("{:?}", object.properties.clone().unwrap());
 
-                                bg_red = color_trigger_red;
-                                bg_green = color_trigger_green;
-                                bg_blue = color_trigger_blue;
+                                let og_red = bg_red;
+                                let og_green = bg_green;
+                                let og_blue = bg_blue;
 
-                                // let og_red = bg_red;
-                                // let og_green = bg_green;
-                                // let og_blue = bg_blue;
+                                // cc_1001 = Color {
+                                //     r: ((og_red as u16 + color_trigger_red as u16) / 2) as u8,
+                                //     g: ((og_green as u16 + color_trigger_green as u16) / 2) as u8,
+                                //     b: ((og_blue as u16 + color_trigger_blue as u16) / 2) as u8,
+                                //     a: 255
+                                // };
+
+                                if !touching_color_trigger {
+                                    bg_red = ((og_red as u16 + color_trigger_red as u16) / 2) as u8;
+                                    bg_green = ((og_green as u16 + color_trigger_green as u16) / 2) as u8;
+                                    bg_blue = ((og_blue as u16 + color_trigger_blue as u16) / 2) as u8;
+                                    touching_color_trigger = true;
+                                }
+
+                                // Color {
+                                //     r: ((c1.r as u16 + c2.r as u16) / 2) as u8,
+                                //     g: ((c1.g as u16 + c2.g as u16) / 2) as u8,
+                                //     b: ((c1.b as u16 + c2.b as u16) / 2) as u8,
+                                // }
 
                                 // let mut index = color_trigger_fade as i16;
                                 // for _i in 0..color_trigger_fade as i32 {
@@ -1036,6 +1053,8 @@ async fn main() {
                                 //     index -= 1;
                                 // }
                             }
+                        } else {
+                            touching_color_trigger = false;
                         }
                     }
                 }
