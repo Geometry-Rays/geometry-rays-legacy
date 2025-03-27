@@ -383,6 +383,8 @@ pub fn load_level(
     load_song: bool,
     song_if_song_not_selected: bool
 ) -> String {
+    let mut level_version = "";
+
     object_grid.clear();
     let metadata_pairs: Vec<&str> = _level_metadata.split(';').collect();
     for pair in metadata_pairs {
@@ -403,6 +405,8 @@ pub fn load_level(
                 println!("Is this level made in a newer version?");
                 "version_invalid".to_string();
             }
+
+            level_version = value;
         } else if key == "c1001" {
             let colors: Vec<&str> = value.split(',').collect();
 
@@ -434,11 +438,13 @@ pub fn load_level(
 
         if !_object_string.is_empty() {
             object_grid.push(ObjectStruct {
-                y:xyrid[0].parse::<i32>().unwrap(),
-                x:xyrid[1].parse::<i32>().unwrap(),
-                rotation:xyrid[2].parse::<i16>().unwrap(),
-                id:xyrid[3].parse::<u32>().unwrap(),
-                selected:false
+                y: xyrid[0].parse::<i32>().unwrap(),
+                x: xyrid[1].parse::<i32>().unwrap(),
+                rotation: xyrid[2].parse::<i16>().unwrap(),
+                no_touch: if level_version == "1.3" { xyrid[3].parse().unwrap() } else { false },
+                hide: if level_version == "1.3" { xyrid[4].parse().unwrap() } else { false },
+                id: if level_version == "1.3" { xyrid[5].parse::<u32>().unwrap() } else { xyrid[3].parse().unwrap() },
+                selected: false
             });
         }
     }

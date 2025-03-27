@@ -1242,6 +1242,8 @@ async fn main() {
                             object_grid.push(ObjectStruct {
                                 y: if snapped_y < 0 { snapped_y - 40 } else { snapped_y },
                                 x: if snapped_x < 0 { snapped_x - 40 } else { snapped_x },
+                                no_touch: false,
+                                hide: false,
                                 id: current_object,
                                 rotation: 0,
                                 selected: false 
