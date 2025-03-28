@@ -1017,13 +1017,19 @@ async fn main() {
                                 let color_trigger_red: u8 = object.properties.clone().unwrap()[0].clone().parse().unwrap();
                                 let color_trigger_green: u8 = object.properties.clone().unwrap()[1].clone().parse().unwrap();
                                 let color_trigger_blue: u8 = object.properties.clone().unwrap()[2].clone().parse().unwrap();
-                                let color_trigger_fade: f32 = object.properties.clone().unwrap()[3].clone().parse().unwrap();
+                                // let color_trigger_fade: f32 = object.properties.clone().unwrap()[3].clone().parse().unwrap();
 
                                 println!("{:?}", object.properties.clone().unwrap());
 
-                                let og_red = bg_red;
-                                let og_green = bg_green;
-                                let og_blue = bg_blue;
+                                // let og_red = bg_red;
+                                // let og_green = bg_green;
+                                // let og_blue = bg_blue;
+
+                                if !touching_color_trigger {
+                                    bg_red = color_trigger_red;
+                                    bg_green = color_trigger_green;
+                                    bg_blue = color_trigger_blue;
+                                }
 
                                 // cc_1001 = Color {
                                 //     r: ((og_red as u16 + color_trigger_red as u16) / 2) as u8,
@@ -1032,12 +1038,12 @@ async fn main() {
                                 //     a: 255
                                 // };
 
-                                if !touching_color_trigger {
-                                    bg_red = ((og_red as u16 + color_trigger_red as u16) / 2) as u8;
-                                    bg_green = ((og_green as u16 + color_trigger_green as u16) / 2) as u8;
-                                    bg_blue = ((og_blue as u16 + color_trigger_blue as u16) / 2) as u8;
-                                    touching_color_trigger = true;
-                                }
+                                // if !touching_color_trigger {
+                                //     bg_red = ((og_red as u16 + color_trigger_red as u16) / 2) as u8;
+                                //     bg_green = ((og_green as u16 + color_trigger_green as u16) / 2) as u8;
+                                //     bg_blue = ((og_blue as u16 + color_trigger_blue as u16) / 2) as u8;
+                                //     touching_color_trigger = true;
+                                // }
 
                                 // Color {
                                 //     r: ((c1.r as u16 + c2.r as u16) / 2) as u8,
