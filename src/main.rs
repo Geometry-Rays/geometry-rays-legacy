@@ -2107,7 +2107,7 @@ async fn main() {
                     let object_y = i.y as f32 - player_cam_y as f32 + 20.0;
                     if i.x as f32 + world_offset < d.get_screen_width() as f32 &&
                     i.x as f32 + world_offset > -40.0 && i.hide == 0 {
-                        if from_editor || i.id != 15 {
+                        if from_editor || (i.id != 15 && i.id != 23) {
                             if i.id != 17 && i.id != 18 && i.id != 19 && i.id != 20 {
                                 d.draw_texture_pro(
                                     &texture_ids.get(&i.id).unwrap(),
