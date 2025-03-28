@@ -258,6 +258,16 @@ async fn main() {
         false
     );
 
+    let mut no_touch_toggle = Button::new(
+        rl.get_screen_width() as f32 - 95.0,
+        rl.get_screen_height() as f32 - 290.0,
+        75.0,
+        75.0,
+        "No Touch",
+        17,
+        true
+    );
+
     let main_url = "http://georays.puppet57.xyz/php-code/".to_string();
     let latest_version_url: String = format!("{}get-latest-version.php", main_url).to_string();
     let register_url: String = format!("{}register.php", main_url).to_string();
@@ -1163,6 +1173,7 @@ async fn main() {
                 level_save_button.update(&rl, delta_time);
                 playtest_button.update(&rl, delta_time);
                 level_upload_button.update(&rl, delta_time);
+                no_touch_toggle.update(&rl, delta_time);
                 obj1_button.update(&rl, delta_time);
                 obj2_button.update(&rl, delta_time);
                 obj3_button.update(&rl, delta_time);
@@ -1350,6 +1361,12 @@ async fn main() {
                                     }
 
                                     object_grid[obj_index].selected = true;
+
+                                    if object_grid[obj_index].no_touch == 1 {
+                                        no_touch_toggle.is_disabled = false;
+                                    } else {
+                                        no_touch_toggle.is_disabled = true;
+                                    }
                                     break;
                                 } else {
                                     obj_index += 1;
@@ -1622,6 +1639,24 @@ async fn main() {
                         start_pos -= 25
                     } else {
                         start_pos -= 5;
+                    }
+                }
+
+                if no_touch_toggle.is_clicked(&rl) {
+                    let mut obj_index = 0;
+                    while obj_index < object_grid.len() {
+                        if object_grid[obj_index].selected {
+                            if object_grid[obj_index].no_touch == 0 {
+                                object_grid[obj_index].no_touch = 1;
+                                no_touch_toggle.is_disabled = false
+                            } else {
+                                object_grid[obj_index].no_touch = 0;
+                                no_touch_toggle.is_disabled = true
+                            }
+                            obj_index += 1;
+                        } else {
+                            obj_index += 1;
+                        }
                     }
                 }
 
@@ -2454,6 +2489,7 @@ async fn main() {
                 level_save_button.draw(false, None, 1.0, false, &mut d);
                 playtest_button.draw(false, None, 1.0, false, &mut d);
                 level_upload_button.draw(false, None, 1.0, false, &mut d);
+                no_touch_toggle.draw(false, None, 1.0, false, &mut d);
 
                 if edit_not_done_yet {
                     d.draw_text("Click to select!", 270, 490, 40, Color::WHITE);
