@@ -2242,7 +2242,8 @@ async fn main() {
                 if show_debug_text {
                     for object in &object_grid {
                         if object.x as f32 + world_offset < d.get_screen_width() as f32 &&
-                        object.x as f32 + world_offset > -40.0 {
+                        object.x as f32 + world_offset > -40.0 &&
+                        object.no_touch == 0 {
                             if object.id == 1 {
                                 d.draw_rectangle_lines(
                                     object.x + world_offset as i32 + 15,
