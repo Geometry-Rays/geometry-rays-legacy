@@ -2050,7 +2050,7 @@ async fn main() {
                         })
                     ).await;
 
-                    if level_download_result != "Level doesn't exist!" {
+                    if level_download_result.contains(";;;;;") {
                         parse_level_download_response(
                             level_download_result.clone(),
                             &mut online_level_name,
