@@ -260,9 +260,9 @@ async fn main() {
 
     let mut no_touch_toggle = Button::new(
         rl.get_screen_width() as f32 - 95.0,
-        rl.get_screen_height() as f32 - 290.0,
-        37.0,
-        37.0,
+        rl.get_screen_height() as f32 - 300.0,
+        40.0,
+        40.0,
         "No Touch",
         17,
         true
@@ -270,9 +270,9 @@ async fn main() {
 
     let mut hide_toggle = Button::new(
         rl.get_screen_width() as f32 - 95.0,
-        rl.get_screen_height() as f32 - 250.0,
-        37.0,
-        37.0,
+        rl.get_screen_height() as f32 - 240.0,
+        40.0,
+        40.0,
         "Hide",
         17,
         true
