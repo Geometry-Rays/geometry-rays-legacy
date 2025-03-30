@@ -2461,7 +2461,7 @@ async fn main() {
                                 texture_ids.get(&i.id).unwrap().height as f32 / 2.0 * 0.05
                             ),
                             i.rotation as f32,
-                            if i.selected { Color::LIME } else { cc_1004 }
+                            if i.selected { Color::LIME } else if i.hide == 1 { Color { r:0, g:0, b:0, a:0 } } else { cc_1004 }
                         );
                     } else {
                         d.draw_texture_pro(
@@ -2483,7 +2483,7 @@ async fn main() {
                                 texture_ids.get(&i.id).unwrap().height as f32 / 2.0 * 0.1
                             ),
                             i.rotation as f32,
-                            if i.selected { Color::LIME } else { cc_1004 }
+                            if i.selected { Color::LIME } else if i.hide == 1 { Color { r:0, g:0, b:0, a:0 } } else { cc_1004 }
                         );
                     }
                 }
