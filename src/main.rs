@@ -388,6 +388,7 @@ async fn main() {
     let mut online_level_upload_diff: u8 = 0;
     let mut online_level_rate_diff: u8 = 0;
     let mut level_rate_result = "".to_string();
+    let mut show_server_down = false;
 
     texture_ids.insert(1, &spike_texture);
     texture_ids.insert(2, &block_texture);
@@ -1903,6 +1904,7 @@ async fn main() {
                 upload_button.update(&rl, delta_time);
 
                 if menu_button.is_clicked(&rl) {
+                    show_server_down = false;
                     game_state = GameState::CreatorMenu
                 }
 
@@ -1930,8 +1932,12 @@ async fn main() {
                                 "diff".to_string() => online_level_upload_diff.to_string()
                             })
                         ).await;
-                        
+
                         println!("{}", level_upload_result);
+
+                        if level_upload_result.contains("error code: 1033") {
+                            show_server_down = true
+                        }
                     } else {
                         level_upload_result = "Not logged in!".to_string();
                     }
@@ -2029,6 +2035,7 @@ async fn main() {
 
                 if menu_button.is_clicked(&rl) {
                     show_level_not_found = false;
+                    show_server_down = false;
                     game_state = GameState::CreatorMenu
                 }
 
@@ -2063,6 +2070,8 @@ async fn main() {
 
                         show_level_not_found = false;
                         game_state = GameState::LevelPage
+                    } else if level_download_result.contains("error code: 1033") {
+                        show_server_down = true
                     } else {
                         show_level_not_found = true
                     }
@@ -2823,7 +2832,7 @@ async fn main() {
                 );
 
                 d.draw_text(
-                    &level_upload_result,
+                    if show_server_down { "Server is down!" } else { &level_upload_result },
                     d.get_screen_width() / 2 - d.measure_text(&level_upload_result, 50) / 2,
                     100,
                     50,
@@ -2906,10 +2915,10 @@ async fn main() {
             GameState::SearchPage => {
                 d.clear_background(Color::BLACK);
 
-                if show_level_not_found {
+                if show_level_not_found || show_server_down {
                     d.draw_text(
-                        &level_download_result,
-                        d.get_screen_width() / 2 - d.measure_text(&level_download_result, 50) / 2,
+                        if show_server_down { "Server is down!" } else { &level_download_result },
+                        d.get_screen_width() / 2 - d.measure_text(if !show_server_down { "Server is down!" } else { &level_download_result }, 50) / 2,
                         d.get_screen_height() / 2 - 25,
                         50,
                         Color::WHITE
