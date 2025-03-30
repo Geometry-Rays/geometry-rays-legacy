@@ -1328,7 +1328,13 @@ async fn main() {
                 else if grid_button.is_clicked(&rl) {
                     // let obj_x = snapped_x;
                     // let obj_y = snapped_y;
-                    if !level_options_button.is_clicked(&rl) && !editor_back.is_clicked(&rl) && !playtest_button.is_clicked(&rl) && !level_save_button.is_clicked(&rl) && !level_upload_button.is_clicked(&rl) {
+                    if !level_options_button.is_clicked(&rl)
+                    && !editor_back.is_clicked(&rl)
+                    && !playtest_button.is_clicked(&rl)
+                    && !level_save_button.is_clicked(&rl)
+                    && !level_upload_button.is_clicked(&rl)
+                    && !no_touch_toggle.is_clicked(&rl)
+                    && !hide_toggle.is_clicked(&rl) {
                         if active_tab == EditorTab::Build {
                             object_grid.push(ObjectStruct {
                                 y: if snapped_y < 0 { snapped_y - 40 } else { snapped_y },
