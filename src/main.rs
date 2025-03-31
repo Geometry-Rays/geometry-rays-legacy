@@ -1038,7 +1038,7 @@ async fn main() {
                                 let color_trigger_red: u8 = object.properties.clone().unwrap()[0].clone().parse().unwrap();
                                 let color_trigger_green: u8 = object.properties.clone().unwrap()[1].clone().parse().unwrap();
                                 let color_trigger_blue: u8 = object.properties.clone().unwrap()[2].clone().parse().unwrap();
-                                // let color_trigger_fade: f32 = object.properties.clone().unwrap()[3].clone().parse().unwrap();
+                                let color_trigger_type: u8 = object.properties.clone().unwrap()[3].clone().parse().unwrap();
 
                                 println!("{:?}", object.properties.clone().unwrap());
 
@@ -1047,9 +1047,15 @@ async fn main() {
                                 // let og_blue = bg_blue;
 
                                 if !touching_color_trigger {
-                                    bg_red = color_trigger_red;
-                                    bg_green = color_trigger_green;
-                                    bg_blue = color_trigger_blue;
+                                    if color_trigger_type == 1 {
+                                        bg_red = color_trigger_red;
+                                        bg_green = color_trigger_green;
+                                        bg_blue = color_trigger_blue;
+                                    } else if color_trigger_type == 2 {
+                                        ground_red = color_trigger_red as i32;
+                                        ground_green = color_trigger_green as i32;
+                                        ground_blue = color_trigger_blue as i32;
+                                    }
                                 }
 
                                 // cc_1001 = Color {
