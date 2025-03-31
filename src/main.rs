@@ -672,7 +672,7 @@ async fn main() {
 
                 // Check for Discord icon click
                 if discord_rect.check_collision_point_rec(mouse_pos) && 
-                   rl.is_mouse_button_pressed(MouseButton::MOUSE_BUTTON_LEFT) {
+                rl.is_mouse_button_pressed(MouseButton::MOUSE_BUTTON_LEFT) {
                     let _ = webbrowser::open("https://discord.gg/XV9Qsvmbfj");
                 }
 
