@@ -1842,6 +1842,7 @@ async fn main() {
                 register_button.update(&rl, delta_time);
 
                 if menu_button.is_clicked(&rl) {
+                    show_server_down = false;
                     game_state = GameState::Menu
                 }
 
@@ -1861,6 +1862,8 @@ async fn main() {
                         logged_in = true;
                         user = username.clone();
                         pass = password.clone();
+                    } else if login_result.contains("error code: 1033") {
+                        show_server_down = true
                     }
 
                     register_result = "".to_string();
@@ -1878,6 +1881,10 @@ async fn main() {
                     ).await;
                     register_result = register_result_string;
                     login_result = "".to_string();
+
+                    if register_result.contains("error code: 1033") {
+                        show_server_down = true
+                    }
                 };
 
                 if username_textbox.is_clicked(&rl) {
@@ -2797,16 +2804,16 @@ async fn main() {
                 password_textbox.draw(password.clone(), &mut d);
 
                 d.draw_text(
-                    &register_result,
-                    d.get_screen_width() / 2 - d.measure_text(&register_result, 50) / 2,
+                    if show_server_down { "Server is down!" } else { &register_result },
+                    d.get_screen_width() / 2 - d.measure_text(if show_server_down { "Server is down!" } else { &register_result }, 50) / 2,
                     100,
                     50,
                     Color::WHITE
                 );
 
                 d.draw_text(
-                    &login_result,
-                    d.get_screen_width() / 2 - d.measure_text(&login_result, 50) / 2,
+                    if show_server_down { "Server is down!" } else { &login_result },
+                    d.get_screen_width() / 2 - d.measure_text(if show_server_down { "Server is down!" } else { &login_result }, 50) / 2,
                     100,
                     50,
                     Color::WHITE
