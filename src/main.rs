@@ -318,6 +318,48 @@ async fn main() {
         false
     );
 
+    let mut color_red_textbox = TextBox {
+        rect: Rectangle {
+            x: rl.get_screen_width() as f32 / 1.4 - 120.0,
+            y: 120.0,
+            width: 90.0,
+            height: 50.0
+        },
+        text: "Red".to_string(),
+        text_size: 30,
+        max_length: 3,
+        spaces_allowed: false,
+        active: false
+    };
+
+    let mut color_green_textbox = TextBox {
+        rect: Rectangle {
+            x: rl.get_screen_width() as f32 / 1.4 - 120.0,
+            y: 240.0,
+            width: 90.0,
+            height: 50.0
+        },
+        text: "Green".to_string(),
+        text_size: 30,
+        max_length: 3,
+        spaces_allowed: false,
+        active: false
+    };
+
+    let mut color_blue_textbox = TextBox {
+        rect: Rectangle {
+            x: rl.get_screen_width() as f32 / 1.4 - 120.0,
+            y: 360.0,
+            width: 90.0,
+            height: 50.0
+        },
+        text: "Blue".to_string(),
+        text_size: 30,
+        max_length: 3,
+        spaces_allowed: false,
+        active: false
+    };
+
     let main_url = "http://georays.puppet57.xyz/php-code/".to_string();
     let latest_version_url: String = format!("{}get-latest-version.php", main_url).to_string();
     let register_url: String = format!("{}register.php", main_url).to_string();
@@ -664,6 +706,10 @@ async fn main() {
     let mut level_desc: String = "".to_string();
 
     let mut level_id: String = "".to_string();
+
+    let mut color_red_text: String = "".to_string();
+    let mut color_green_text: String = "".to_string();
+    let mut color_blue_text: String = "".to_string();
 
     while !rl.window_should_close() {
         let space_down = rl.is_key_down(KeyboardKey::KEY_SPACE);
@@ -1762,6 +1808,34 @@ async fn main() {
                     set_color_red.update(&rl, delta_time);
                     set_color_green.update(&rl, delta_time);
                     set_color_blue.update(&rl, delta_time);
+
+                    if color_red_textbox.is_clicked(&rl) {
+                        color_red_textbox.active = true
+                    }
+
+                    if color_green_textbox.is_clicked(&rl) {
+                        color_green_textbox.active = true
+                    }
+
+                    if color_blue_textbox.is_clicked(&rl) {
+                        color_blue_textbox.active = true
+                    }
+
+                    if color_red_textbox.is_not_clicked(&rl) {
+                        color_red_textbox.active = false
+                    }
+
+                    if color_green_textbox.is_not_clicked(&rl) {
+                        color_green_textbox.active = false
+                    }
+
+                    if color_blue_textbox.is_not_clicked(&rl) {
+                        color_blue_textbox.active = false
+                    }
+
+                    color_red_textbox.input(&mut color_red_text, &rl);
+                    color_green_textbox.input(&mut color_green_text, &rl);
+                    color_blue_textbox.input(&mut color_blue_text, &rl);
                 }
 
                 if object_settings.is_clicked(&rl)
@@ -2695,9 +2769,9 @@ async fn main() {
                         },
                         0.0,
                         Color {
-                            r: 50,
-                            g: 50,
-                            b: 50,
+                            r: 30,
+                            g: 30,
+                            b: 30,
                             a: 255
                         }
                     );
@@ -2708,6 +2782,10 @@ async fn main() {
                         set_color_red.draw(false, None, 1.0, false, &mut d);
                         set_color_green.draw(false, None, 1.0, false, &mut d);
                         set_color_blue.draw(false, None, 1.0, false, &mut d);
+
+                        color_red_textbox.draw(color_red_text.clone(), &mut d);
+                        color_green_textbox.draw(color_green_text.clone(), &mut d);
+                        color_blue_textbox.draw(color_blue_text.clone(), &mut d);
                     }
                 }
             }
