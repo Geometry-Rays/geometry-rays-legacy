@@ -288,6 +288,36 @@ async fn main() {
         true
     );
 
+    let mut set_color_red = Button::new(
+        rl.get_screen_width() as f32 / 1.4,
+        120.0,
+        100.0,
+        100.0,
+        "Set",
+        20,
+        false
+    );
+
+    let mut set_color_green = Button::new(
+        rl.get_screen_width() as f32 / 1.4,
+        240.0,
+        100.0,
+        100.0,
+        "Set",
+        20,
+        false
+    );
+
+    let mut set_color_blue = Button::new(
+        rl.get_screen_width() as f32 / 1.4,
+        360.0,
+        100.0,
+        100.0,
+        "Set",
+        20,
+        false
+    );
+
     let main_url = "http://georays.puppet57.xyz/php-code/".to_string();
     let latest_version_url: String = format!("{}get-latest-version.php", main_url).to_string();
     let register_url: String = format!("{}register.php", main_url).to_string();
@@ -1728,6 +1758,10 @@ async fn main() {
                             }
                         }
                     }
+                } else {
+                    set_color_red.update(&rl, delta_time);
+                    set_color_green.update(&rl, delta_time);
+                    set_color_blue.update(&rl, delta_time);
                 }
 
                 if object_settings.is_clicked(&rl)
@@ -2669,6 +2703,12 @@ async fn main() {
                     );
 
                     menu_button.draw(false, None, 1.0, false, &mut d);
+
+                    if selected_object == 23 {
+                        set_color_red.draw(false, None, 1.0, false, &mut d);
+                        set_color_green.draw(false, None, 1.0, false, &mut d);
+                        set_color_blue.draw(false, None, 1.0, false, &mut d);
+                    }
                 }
             }
             GameState::LevelOptions => {
