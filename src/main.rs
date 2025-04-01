@@ -2638,6 +2638,26 @@ async fn main() {
                         d.get_screen_height(),
                         Color { r:0, g:0, b:0, a:150 }
                     );
+
+                    d.draw_rectangle_pro(
+                        Rectangle {
+                            x: d.get_screen_width() as f32 / 2.0,
+                            y: d.get_screen_height() as f32 / 2.0,
+                            width: d.get_screen_width() as f32 / 2.0 + 200.0,
+                            height: d.get_screen_width() as f32 / 2.0
+                        },
+                        Vector2 {
+                            x: (d.get_screen_width() as f32 / 2.0 + 200.0) / 2.0,
+                            y: (d.get_screen_width() as f32 / 2.0) / 2.0
+                        },
+                        0.0,
+                        Color {
+                            r: 50,
+                            g: 50,
+                            b: 50,
+                            a: 255
+                        }
+                    );
                 }
             }
             GameState::LevelOptions => {
