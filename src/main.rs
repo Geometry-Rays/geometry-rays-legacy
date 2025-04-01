@@ -278,6 +278,16 @@ async fn main() {
         true
     );
 
+    let mut object_settings = Button::new(
+        rl.get_screen_width() as f32 - 155.0,
+        (rl.get_screen_height() as f32 - 300.0 + rl.get_screen_height() as f32 - 240.0) / 2.0,
+        40.0,
+        40.0,
+        "Edit Object",
+        17,
+        true
+    );
+
     let main_url = "http://georays.puppet57.xyz/php-code/".to_string();
     let latest_version_url: String = format!("{}get-latest-version.php", main_url).to_string();
     let register_url: String = format!("{}register.php", main_url).to_string();
@@ -288,6 +298,7 @@ async fn main() {
 
     // Variables required for the game to work
     let mut game_state = GameState::Menu;
+    let mut active_popup: ActivePopup = ActivePopup::None;
     let mut player = Rectangle::new(200.0, 500.0, 40.0, 40.0);
     let mut centered_player = Rectangle::new(player.x + player.width / 2.0, player.y + player.height / 2.0, player.width, player.height);
     let mut small_player = player;
@@ -1182,525 +1193,547 @@ async fn main() {
                 }
             }
             GameState::Editor => {
-                build_tab_button.update(&rl, delta_time);
-                edit_tab_button.update(&rl, delta_time);
-                delete_tab_button.update(&rl, delta_time);
-                level_options_button.update(&rl, delta_time);
-                editor_back.update(&rl, delta_time);
-                level_save_button.update(&rl, delta_time);
-                playtest_button.update(&rl, delta_time);
-                level_upload_button.update(&rl, delta_time);
-                no_touch_toggle.update(&rl, delta_time);
-                hide_toggle.update(&rl, delta_time);
-                obj1_button.update(&rl, delta_time);
-                obj2_button.update(&rl, delta_time);
-                obj3_button.update(&rl, delta_time);
-                obj4_button.update(&rl, delta_time);
-                obj5_button.update(&rl, delta_time);
-                obj6_button.update(&rl, delta_time);
-                obj7_button.update(&rl, delta_time);
-                obj8_button.update(&rl, delta_time);
-                obj9_button.update(&rl, delta_time);
-                obj10_button.update(&rl, delta_time);
-                obj11_button.update(&rl, delta_time);
-                obj12_button.update(&rl, delta_time);
-                obj13_button.update(&rl, delta_time);
-                obj14_button.update(&rl, delta_time);
-                obj15_button.update(&rl, delta_time);
-                obj16_button.update(&rl, delta_time);
-                obj17_button.update(&rl, delta_time);
-                obj18_button.update(&rl, delta_time);
-                obj19_button.update(&rl, delta_time);
-                obj20_button.update(&rl, delta_time);
-                obj21_button.update(&rl, delta_time);
-                obj22_button.update(&rl, delta_time);
-                obj23_button.update(&rl, delta_time);
-
-                if build_tab_button.is_clicked(&rl) {
-                    active_tab = EditorTab::Build;
-                }
-
-                if edit_tab_button.is_clicked(&rl) {
-                    active_tab = EditorTab::Edit;
-                }
-
-                if delete_tab_button.is_clicked(&rl) {
-                    active_tab = EditorTab::Delete;
-                }
-
-                if one_pressed {
-                    active_tab = EditorTab::Build;
-                }
-
-                if two_pressed {
-                    active_tab = EditorTab::Edit;
-                }
-
-                if three_pressed {
-                    active_tab = EditorTab::Delete;
-                }
-                
-                if obj1_button.is_clicked(&rl) && active_tab == EditorTab::Build {
-                    current_object = 1 + _advanced_page_number;
-                }
-
-                else if obj2_button.is_clicked(&rl) && active_tab == EditorTab::Build {
-                    current_object = 2 + _advanced_page_number;
-                }
-
-                else if obj3_button.is_clicked(&rl) && active_tab == EditorTab::Build {
-                    current_object = 3 + _advanced_page_number;
-                }
-
-                else if obj4_button.is_clicked(&rl) && active_tab == EditorTab::Build {
-                    current_object = 4 + _advanced_page_number;
-                }
-
-                else if obj5_button.is_clicked(&rl) && active_tab == EditorTab::Build {
-                    current_object = 5 + _advanced_page_number;
-                }
-
-                else if obj6_button.is_clicked(&rl) && active_tab == EditorTab::Build {
-                    current_object = 6 + _advanced_page_number;
-                }
-
-                else if obj7_button.is_clicked(&rl) && active_tab == EditorTab::Build {
-                    current_object = 7 + _advanced_page_number;
-                }
-
-                else if obj8_button.is_clicked(&rl) && active_tab == EditorTab::Build {
-                    current_object = 8 + _advanced_page_number;
-                }
-
-                else if obj9_button.is_clicked(&rl) && active_tab == EditorTab::Build {
-                    current_object = 9 + _advanced_page_number;
-                }
-
-                else if obj10_button.is_clicked(&rl) && active_tab == EditorTab::Build {
-                    current_object = 10 + _advanced_page_number;
-                }
-
-                else if obj11_button.is_clicked(&rl) && active_tab == EditorTab::Build {
-                    current_object = 11 + _advanced_page_number;
-                }
-
-                else if obj12_button.is_clicked(&rl) && active_tab == EditorTab::Build {
-                    current_object = 12 + _advanced_page_number;
-                }
-
-                else if obj13_button.is_clicked(&rl) && active_tab == EditorTab::Build {
-                    current_object = 13 + _advanced_page_number;
-                }
-
-                else if obj14_button.is_clicked(&rl) && active_tab == EditorTab::Build {
-                    current_object = 14 + _advanced_page_number;
-                }
-
-                else if obj15_button.is_clicked(&rl) && active_tab == EditorTab::Build {
-                    current_object = 15 + _advanced_page_number;
-                }
-
-                else if obj16_button.is_clicked(&rl) && active_tab == EditorTab::Build {
-                    current_object = 16 + _advanced_page_number;
-                }
-
-                else if obj17_button.is_clicked(&rl) && active_tab == EditorTab::Build {
-                    current_object = 17 + _advanced_page_number;
-                }
-
-                else if obj18_button.is_clicked(&rl) && active_tab == EditorTab::Build {
-                    current_object = 18 + _advanced_page_number;
-                }
-
-                else if obj19_button.is_clicked(&rl) && active_tab == EditorTab::Build {
-                    current_object = 19 + _advanced_page_number;
-                }
-
-                else if obj20_button.is_clicked(&rl) && active_tab == EditorTab::Build {
-                    current_object = 20 + _advanced_page_number;
-                }
-
-                else if obj21_button.is_clicked(&rl) && active_tab == EditorTab::Build {
-                    current_object = 21 + _advanced_page_number;
-                }
-
-                else if obj22_button.is_clicked(&rl) && active_tab == EditorTab::Build {
-                    current_object = 22 + _advanced_page_number;
-                }
-
-                else if obj23_button.is_clicked(&rl) && active_tab == EditorTab::Build {
-                    current_object = 23 + _advanced_page_number;
-                }
-
-                else if grid_button.is_clicked(&rl) {
-                    // let obj_x = snapped_x;
-                    // let obj_y = snapped_y;
-                    if !level_options_button.is_clicked(&rl)
-                    && !editor_back.is_clicked(&rl)
-                    && !playtest_button.is_clicked(&rl)
-                    && !level_save_button.is_clicked(&rl)
-                    && !level_upload_button.is_clicked(&rl)
-                    && !no_touch_toggle.is_clicked(&rl)
-                    && !hide_toggle.is_clicked(&rl) {
-                        if active_tab == EditorTab::Build {
-                            object_grid.push(ObjectStruct {
-                                y: if snapped_y < 0 { snapped_y - 40 } else { snapped_y },
-                                x: if snapped_x < 0 { snapped_x - 40 } else { snapped_x },
-                                no_touch: 0,
-                                hide: 0,
-                                id: current_object,
-                                rotation: 0,
-                                selected: false,
-                                properties: if current_object == 23 { Some(
-                                    vec![
-                                        "50".to_string(),
-                                        "50".to_string(),
-                                        "50".to_string(),
-                                        "1".to_string()
-                                    ]
-                                )} else {
-                                    None
+                if active_popup == ActivePopup::None {
+                    build_tab_button.update(&rl, delta_time);
+                    edit_tab_button.update(&rl, delta_time);
+                    delete_tab_button.update(&rl, delta_time);
+                    level_options_button.update(&rl, delta_time);
+                    editor_back.update(&rl, delta_time);
+                    level_save_button.update(&rl, delta_time);
+                    playtest_button.update(&rl, delta_time);
+                    level_upload_button.update(&rl, delta_time);
+                    no_touch_toggle.update(&rl, delta_time);
+                    hide_toggle.update(&rl, delta_time);
+                    object_settings.update(&rl, delta_time);
+                    obj1_button.update(&rl, delta_time);
+                    obj2_button.update(&rl, delta_time);
+                    obj3_button.update(&rl, delta_time);
+                    obj4_button.update(&rl, delta_time);
+                    obj5_button.update(&rl, delta_time);
+                    obj6_button.update(&rl, delta_time);
+                    obj7_button.update(&rl, delta_time);
+                    obj8_button.update(&rl, delta_time);
+                    obj9_button.update(&rl, delta_time);
+                    obj10_button.update(&rl, delta_time);
+                    obj11_button.update(&rl, delta_time);
+                    obj12_button.update(&rl, delta_time);
+                    obj13_button.update(&rl, delta_time);
+                    obj14_button.update(&rl, delta_time);
+                    obj15_button.update(&rl, delta_time);
+                    obj16_button.update(&rl, delta_time);
+                    obj17_button.update(&rl, delta_time);
+                    obj18_button.update(&rl, delta_time);
+                    obj19_button.update(&rl, delta_time);
+                    obj20_button.update(&rl, delta_time);
+                    obj21_button.update(&rl, delta_time);
+                    obj22_button.update(&rl, delta_time);
+                    obj23_button.update(&rl, delta_time);
+    
+                    if build_tab_button.is_clicked(&rl) {
+                        active_tab = EditorTab::Build;
+                    }
+    
+                    if edit_tab_button.is_clicked(&rl) {
+                        active_tab = EditorTab::Edit;
+                    }
+    
+                    if delete_tab_button.is_clicked(&rl) {
+                        active_tab = EditorTab::Delete;
+                    }
+    
+                    if one_pressed {
+                        active_tab = EditorTab::Build;
+                    }
+    
+                    if two_pressed {
+                        active_tab = EditorTab::Edit;
+                    }
+    
+                    if three_pressed {
+                        active_tab = EditorTab::Delete;
+                    }
+                    
+                    if obj1_button.is_clicked(&rl) && active_tab == EditorTab::Build {
+                        current_object = 1 + _advanced_page_number;
+                    }
+    
+                    else if obj2_button.is_clicked(&rl) && active_tab == EditorTab::Build {
+                        current_object = 2 + _advanced_page_number;
+                    }
+    
+                    else if obj3_button.is_clicked(&rl) && active_tab == EditorTab::Build {
+                        current_object = 3 + _advanced_page_number;
+                    }
+    
+                    else if obj4_button.is_clicked(&rl) && active_tab == EditorTab::Build {
+                        current_object = 4 + _advanced_page_number;
+                    }
+    
+                    else if obj5_button.is_clicked(&rl) && active_tab == EditorTab::Build {
+                        current_object = 5 + _advanced_page_number;
+                    }
+    
+                    else if obj6_button.is_clicked(&rl) && active_tab == EditorTab::Build {
+                        current_object = 6 + _advanced_page_number;
+                    }
+    
+                    else if obj7_button.is_clicked(&rl) && active_tab == EditorTab::Build {
+                        current_object = 7 + _advanced_page_number;
+                    }
+    
+                    else if obj8_button.is_clicked(&rl) && active_tab == EditorTab::Build {
+                        current_object = 8 + _advanced_page_number;
+                    }
+    
+                    else if obj9_button.is_clicked(&rl) && active_tab == EditorTab::Build {
+                        current_object = 9 + _advanced_page_number;
+                    }
+    
+                    else if obj10_button.is_clicked(&rl) && active_tab == EditorTab::Build {
+                        current_object = 10 + _advanced_page_number;
+                    }
+    
+                    else if obj11_button.is_clicked(&rl) && active_tab == EditorTab::Build {
+                        current_object = 11 + _advanced_page_number;
+                    }
+    
+                    else if obj12_button.is_clicked(&rl) && active_tab == EditorTab::Build {
+                        current_object = 12 + _advanced_page_number;
+                    }
+    
+                    else if obj13_button.is_clicked(&rl) && active_tab == EditorTab::Build {
+                        current_object = 13 + _advanced_page_number;
+                    }
+    
+                    else if obj14_button.is_clicked(&rl) && active_tab == EditorTab::Build {
+                        current_object = 14 + _advanced_page_number;
+                    }
+    
+                    else if obj15_button.is_clicked(&rl) && active_tab == EditorTab::Build {
+                        current_object = 15 + _advanced_page_number;
+                    }
+    
+                    else if obj16_button.is_clicked(&rl) && active_tab == EditorTab::Build {
+                        current_object = 16 + _advanced_page_number;
+                    }
+    
+                    else if obj17_button.is_clicked(&rl) && active_tab == EditorTab::Build {
+                        current_object = 17 + _advanced_page_number;
+                    }
+    
+                    else if obj18_button.is_clicked(&rl) && active_tab == EditorTab::Build {
+                        current_object = 18 + _advanced_page_number;
+                    }
+    
+                    else if obj19_button.is_clicked(&rl) && active_tab == EditorTab::Build {
+                        current_object = 19 + _advanced_page_number;
+                    }
+    
+                    else if obj20_button.is_clicked(&rl) && active_tab == EditorTab::Build {
+                        current_object = 20 + _advanced_page_number;
+                    }
+    
+                    else if obj21_button.is_clicked(&rl) && active_tab == EditorTab::Build {
+                        current_object = 21 + _advanced_page_number;
+                    }
+    
+                    else if obj22_button.is_clicked(&rl) && active_tab == EditorTab::Build {
+                        current_object = 22 + _advanced_page_number;
+                    }
+    
+                    else if obj23_button.is_clicked(&rl) && active_tab == EditorTab::Build {
+                        current_object = 23 + _advanced_page_number;
+                    }
+    
+                    else if grid_button.is_clicked(&rl) {
+                        // let obj_x = snapped_x;
+                        // let obj_y = snapped_y;
+                        if !level_options_button.is_clicked(&rl)
+                        && !editor_back.is_clicked(&rl)
+                        && !playtest_button.is_clicked(&rl)
+                        && !level_save_button.is_clicked(&rl)
+                        && !level_upload_button.is_clicked(&rl)
+                        && !no_touch_toggle.is_clicked(&rl)
+                        && !hide_toggle.is_clicked(&rl) {
+                            if active_tab == EditorTab::Build {
+                                object_grid.push(ObjectStruct {
+                                    y: if snapped_y < 0 { snapped_y - 40 } else { snapped_y },
+                                    x: if snapped_x < 0 { snapped_x - 40 } else { snapped_x },
+                                    no_touch: 0,
+                                    hide: 0,
+                                    id: current_object,
+                                    rotation: 0,
+                                    selected: false,
+                                    properties: if current_object == 23 { Some(
+                                        vec![
+                                            "50".to_string(),
+                                            "50".to_string(),
+                                            "50".to_string(),
+                                            "1".to_string()
+                                        ]
+                                    )} else {
+                                        None
+                                    }
+                                });
+                            } else if active_tab == EditorTab::Delete {
+                                let mut obj_index = 0;
+                                while obj_index < object_grid.len() {
+                                    if object_grid[obj_index].x == if snapped_x < 0 { snapped_x - 40 } else { snapped_x } && object_grid[obj_index].y == if snapped_y < 0 { snapped_y - 40 } else { snapped_y } {
+                                        object_grid.remove(obj_index);
+                                        break;
+                                    } else {
+                                        obj_index += 1;
+                                    }
                                 }
-                            });
-                        } else if active_tab == EditorTab::Delete {
-                            let mut obj_index = 0;
-                            while obj_index < object_grid.len() {
-                                if object_grid[obj_index].x == if snapped_x < 0 { snapped_x - 40 } else { snapped_x } && object_grid[obj_index].y == if snapped_y < 0 { snapped_y - 40 } else { snapped_y } {
-                                    object_grid.remove(obj_index);
-                                    break;
-                                } else {
-                                    obj_index += 1;
-                                }
-                            }
-                        } else if active_tab == EditorTab::Edit {
-                            let mut obj_index = 0;
-                            while obj_index < object_grid.len() {
-                                if object_grid[obj_index].x == if snapped_x < 0 { snapped_x - 40 } else { snapped_x } && object_grid[obj_index].y == if snapped_y < 0 { snapped_y - 40 } else { snapped_y } && !object_grid[obj_index].selected {
-                                    if rl.is_key_up(KeyboardKey::KEY_LEFT_SHIFT) {
-                                        let mut objj_index = 0;
-                                        while objj_index < object_grid.len() {
-                                            object_grid[objj_index].selected = false;
-                                            objj_index += 1
+                            } else if active_tab == EditorTab::Edit {
+                                let mut obj_index = 0;
+                                while obj_index < object_grid.len() {
+                                    if object_grid[obj_index].x == if snapped_x < 0 { snapped_x - 40 } else { snapped_x } && object_grid[obj_index].y == if snapped_y < 0 { snapped_y - 40 } else { snapped_y } && !object_grid[obj_index].selected {
+                                        if rl.is_key_up(KeyboardKey::KEY_LEFT_SHIFT) {
+                                            let mut objj_index = 0;
+                                            while objj_index < object_grid.len() {
+                                                object_grid[objj_index].selected = false;
+                                                objj_index += 1
+                                            }
                                         }
-                                    }
-
-                                    object_grid[obj_index].selected = true;
-
-                                    if object_grid[obj_index].no_touch == 1 {
-                                        no_touch_toggle.is_disabled = false;
+    
+                                        object_grid[obj_index].selected = true;
+    
+                                        if object_grid[obj_index].no_touch == 1 {
+                                            no_touch_toggle.is_disabled = false;
+                                        } else {
+                                            no_touch_toggle.is_disabled = true;
+                                        }
+    
+                                        if object_grid[obj_index].hide == 1 {
+                                            hide_toggle.is_disabled = false;
+                                        } else {
+                                            hide_toggle.is_disabled = true;
+                                        }
+    
+                                        if object_grid[obj_index].id == 23 {
+                                            object_settings.is_disabled = false
+                                        } else {
+                                            object_settings.is_disabled = true
+                                        }
+                                        break;
                                     } else {
-                                        no_touch_toggle.is_disabled = true;
+                                        obj_index += 1;
                                     }
-
-                                    if object_grid[obj_index].hide == 1 {
-                                        hide_toggle.is_disabled = false;
-                                    } else {
-                                        hide_toggle.is_disabled = true;
-                                    }
-                                    break;
-                                } else {
-                                    obj_index += 1;
                                 }
                             }
                         }
                     }
-                }
-
-                if level_options_button.is_clicked(&rl) {
-                    game_state = GameState::LevelOptions;
-                }
-
-                if active_tab == EditorTab::Edit {
-                    edit_not_done_yet = true;
-                } else {
-                    edit_not_done_yet = false;
-                }
-
-                if up_arrow_down {
-                    if rl.is_key_down(KeyboardKey::KEY_LEFT_CONTROL) {
-                        cam_pos_y += 5
+    
+                    if level_options_button.is_clicked(&rl) {
+                        game_state = GameState::LevelOptions;
+                    }
+    
+                    if active_tab == EditorTab::Edit {
+                        edit_not_done_yet = true;
                     } else {
-                        cam_pos_y += 1
+                        edit_not_done_yet = false;
                     }
-                }
-
-                if down_arrow_down {
-                    if rl.is_key_down(KeyboardKey::KEY_LEFT_CONTROL) {
-                        cam_pos_y -= 5
-                    } else {
-                        cam_pos_y -= 1
-                    }
-                }
-
-                if left_arrow_down {
-                    if rl.is_key_down(KeyboardKey::KEY_LEFT_CONTROL) {
-                        cam_pos_x -= 5
-                    } else {
-                        cam_pos_x -= 1
-                    }
-                }
-
-                if right_arrow_down {
-                    if rl.is_key_down(KeyboardKey::KEY_LEFT_CONTROL) {
-                        cam_pos_x += 5
-                    } else {
-                        cam_pos_x += 1
-                    }
-                }
-
-                if editor_back.is_clicked(&rl) {
-                    let mut obj_index = 0;
-                    while obj_index < object_grid.len() {
-                        if object_grid[obj_index].selected {
-                            object_grid[obj_index].selected = false
+    
+                    if up_arrow_down {
+                        if rl.is_key_down(KeyboardKey::KEY_LEFT_CONTROL) {
+                            cam_pos_y += 5
                         } else {
-                            obj_index += 1;
+                            cam_pos_y += 1
                         }
                     }
-
-                    game_state = GameState::CreatorMenu;
-                }
-
-                if level_save_button.is_clicked(&rl) {
-                    level_string = get_level_text(
-                        current_song,
-                        bg_red,
-                        bg_green,
-                        bg_blue,
-                        ground_red as u8,
-                        ground_green as u8,
-                        ground_blue as u8,
-                        &object_grid
-                    );
-
-                    let write_result = fs::write("./save-data/levels/level.txt", &level_string);
-
-                    println!("{:?}", write_result);
-                }
-
-                if playtest_button.is_clicked(&rl) {
-                    player.y = 500.0;
-                    world_offset = -(start_pos as f32 - 200.0);
-                    rotation = 0.0;
-                    gravity = default_gravity;
-                    jump_force = default_jump_force;
-                    current_gamemode = GameMode::Cube;
-                    cc_1003 = Color::LIME;
-                    in_custom_level = true;
-                    velocity_y = 0.0;
-                    player_cam_y = 0;
-                    movement_speed = default_movement_speed;
-
-                    let mut obj_index = 0;
-                    while obj_index < object_grid.len() {
-                        if object_grid[obj_index].selected {
-                            object_grid[obj_index].selected = false
+    
+                    if down_arrow_down {
+                        if rl.is_key_down(KeyboardKey::KEY_LEFT_CONTROL) {
+                            cam_pos_y -= 5
                         } else {
-                            obj_index += 1;
+                            cam_pos_y -= 1
                         }
                     }
-
-                    level_music_file = BufReader::new(File::open(format!("{}", main_levels[current_song as usize].song)).expect("Failed to open MP3 file"));
-                    _level_music = Decoder::new(level_music_file).expect("Failed to decode MP3 file");
-                    sink.stop();
-                    sink.append(_level_music);
-                    sink.play();
-
-                    player_path.clear();
-
-                    game_state = GameState::Playing;
-                }
-
-                if rl.is_key_pressed(KeyboardKey::KEY_DELETE) {
-                    let mut obj_index = 0;
-                    while obj_index < object_grid.len() {
-                        if object_grid[obj_index].selected {
-                            object_grid.remove(obj_index);
+    
+                    if left_arrow_down {
+                        if rl.is_key_down(KeyboardKey::KEY_LEFT_CONTROL) {
+                            cam_pos_x -= 5
                         } else {
-                            obj_index += 1;
+                            cam_pos_x -= 1
                         }
                     }
-                }
-
-                if rl.is_key_pressed(KeyboardKey::KEY_A) {
-                    let mut obj_index = 0;
-                    while obj_index < object_grid.len() {
-                        if object_grid[obj_index].selected {
-                            object_grid[obj_index].x -= 40;
-                            obj_index += 1;
+    
+                    if right_arrow_down {
+                        if rl.is_key_down(KeyboardKey::KEY_LEFT_CONTROL) {
+                            cam_pos_x += 5
                         } else {
-                            obj_index += 1;
+                            cam_pos_x += 1
                         }
                     }
-                }
-
-                if rl.is_key_pressed(KeyboardKey::KEY_D) {
-                    let mut obj_index = 0;
-                    while obj_index < object_grid.len() {
-                        if object_grid[obj_index].selected {
-                            object_grid[obj_index].x += 40;
-                            obj_index += 1;
-                        } else {
-                            obj_index += 1;
-                        }
-                    }
-                }
-
-                if rl.is_key_pressed(KeyboardKey::KEY_W) {
-                    let mut obj_index = 0;
-                    while obj_index < object_grid.len() {
-                        if object_grid[obj_index].selected {
-                            object_grid[obj_index].y -= 40;
-                            obj_index += 1;
-                        } else {
-                            obj_index += 1;
-                        }
-                    }
-                }
-
-                if rl.is_key_pressed(KeyboardKey::KEY_S) {
-                    let mut obj_index = 0;
-                    while obj_index < object_grid.len() {
-                        if object_grid[obj_index].selected {
-                            object_grid[obj_index].y += 40;
-                            obj_index += 1;
-                        } else {
-                            obj_index += 1;
-                        }
-                    }
-                }
-
-                if rl.is_key_pressed(KeyboardKey::KEY_J) {
-                    let mut obj_index = 0;
-                    while obj_index < object_grid.len() {
-                        if object_grid[obj_index].selected {
-                            object_grid[obj_index].x -= 1;
-                            obj_index += 1;
-                        } else {
-                            obj_index += 1;
-                        }
-                    }
-                }
-
-                if rl.is_key_pressed(KeyboardKey::KEY_L) {
-                    let mut obj_index = 0;
-                    while obj_index < object_grid.len() {
-                        if object_grid[obj_index].selected {
-                            object_grid[obj_index].x += 1;
-                            obj_index += 1;
-                        } else {
-                            obj_index += 1;
-                        }
-                    }
-                }
-
-                if rl.is_key_pressed(KeyboardKey::KEY_I) {
-                    let mut obj_index = 0;
-                    while obj_index < object_grid.len() {
-                        if object_grid[obj_index].selected {
-                            object_grid[obj_index].y -= 1;
-                            obj_index += 1;
-                        } else {
-                            obj_index += 1;
-                        }
-                    }
-                }
-
-                if rl.is_key_pressed(KeyboardKey::KEY_K) {
-                    let mut obj_index = 0;
-                    while obj_index < object_grid.len() {
-                        if object_grid[obj_index].selected {
-                            object_grid[obj_index].y += 1;
-                            obj_index += 1;
-                        } else {
-                            obj_index += 1;
-                        }
-                    }
-                }
-
-                if rl.is_key_pressed(KeyboardKey::KEY_Q) {
-                    let mut obj_index = 0;
-                    while obj_index < object_grid.len() {
-                        if object_grid[obj_index].selected {
-                            if object_grid[obj_index].rotation != -270 {
-                                object_grid[obj_index].rotation -= 90;
+    
+                    if editor_back.is_clicked(&rl) {
+                        let mut obj_index = 0;
+                        while obj_index < object_grid.len() {
+                            if object_grid[obj_index].selected {
+                                object_grid[obj_index].selected = false
                             } else {
-                                object_grid[obj_index].rotation = 0;
+                                obj_index += 1;
                             }
-
-                            obj_index += 1;
+                        }
+    
+                        game_state = GameState::CreatorMenu;
+                    }
+    
+                    if level_save_button.is_clicked(&rl) {
+                        level_string = get_level_text(
+                            current_song,
+                            bg_red,
+                            bg_green,
+                            bg_blue,
+                            ground_red as u8,
+                            ground_green as u8,
+                            ground_blue as u8,
+                            &object_grid
+                        );
+    
+                        let write_result = fs::write("./save-data/levels/level.txt", &level_string);
+    
+                        println!("{:?}", write_result);
+                    }
+    
+                    if playtest_button.is_clicked(&rl) {
+                        player.y = 500.0;
+                        world_offset = -(start_pos as f32 - 200.0);
+                        rotation = 0.0;
+                        gravity = default_gravity;
+                        jump_force = default_jump_force;
+                        current_gamemode = GameMode::Cube;
+                        cc_1003 = Color::LIME;
+                        in_custom_level = true;
+                        velocity_y = 0.0;
+                        player_cam_y = 0;
+                        movement_speed = default_movement_speed;
+    
+                        let mut obj_index = 0;
+                        while obj_index < object_grid.len() {
+                            if object_grid[obj_index].selected {
+                                object_grid[obj_index].selected = false
+                            } else {
+                                obj_index += 1;
+                            }
+                        }
+    
+                        level_music_file = BufReader::new(File::open(format!("{}", main_levels[current_song as usize].song)).expect("Failed to open MP3 file"));
+                        _level_music = Decoder::new(level_music_file).expect("Failed to decode MP3 file");
+                        sink.stop();
+                        sink.append(_level_music);
+                        sink.play();
+    
+                        player_path.clear();
+    
+                        game_state = GameState::Playing;
+                    }
+    
+                    if rl.is_key_pressed(KeyboardKey::KEY_DELETE) {
+                        let mut obj_index = 0;
+                        while obj_index < object_grid.len() {
+                            if object_grid[obj_index].selected {
+                                object_grid.remove(obj_index);
+                            } else {
+                                obj_index += 1;
+                            }
+                        }
+                    }
+    
+                    if rl.is_key_pressed(KeyboardKey::KEY_A) {
+                        let mut obj_index = 0;
+                        while obj_index < object_grid.len() {
+                            if object_grid[obj_index].selected {
+                                object_grid[obj_index].x -= 40;
+                                obj_index += 1;
+                            } else {
+                                obj_index += 1;
+                            }
+                        }
+                    }
+    
+                    if rl.is_key_pressed(KeyboardKey::KEY_D) {
+                        let mut obj_index = 0;
+                        while obj_index < object_grid.len() {
+                            if object_grid[obj_index].selected {
+                                object_grid[obj_index].x += 40;
+                                obj_index += 1;
+                            } else {
+                                obj_index += 1;
+                            }
+                        }
+                    }
+    
+                    if rl.is_key_pressed(KeyboardKey::KEY_W) {
+                        let mut obj_index = 0;
+                        while obj_index < object_grid.len() {
+                            if object_grid[obj_index].selected {
+                                object_grid[obj_index].y -= 40;
+                                obj_index += 1;
+                            } else {
+                                obj_index += 1;
+                            }
+                        }
+                    }
+    
+                    if rl.is_key_pressed(KeyboardKey::KEY_S) {
+                        let mut obj_index = 0;
+                        while obj_index < object_grid.len() {
+                            if object_grid[obj_index].selected {
+                                object_grid[obj_index].y += 40;
+                                obj_index += 1;
+                            } else {
+                                obj_index += 1;
+                            }
+                        }
+                    }
+    
+                    if rl.is_key_pressed(KeyboardKey::KEY_J) {
+                        let mut obj_index = 0;
+                        while obj_index < object_grid.len() {
+                            if object_grid[obj_index].selected {
+                                object_grid[obj_index].x -= 1;
+                                obj_index += 1;
+                            } else {
+                                obj_index += 1;
+                            }
+                        }
+                    }
+    
+                    if rl.is_key_pressed(KeyboardKey::KEY_L) {
+                        let mut obj_index = 0;
+                        while obj_index < object_grid.len() {
+                            if object_grid[obj_index].selected {
+                                object_grid[obj_index].x += 1;
+                                obj_index += 1;
+                            } else {
+                                obj_index += 1;
+                            }
+                        }
+                    }
+    
+                    if rl.is_key_pressed(KeyboardKey::KEY_I) {
+                        let mut obj_index = 0;
+                        while obj_index < object_grid.len() {
+                            if object_grid[obj_index].selected {
+                                object_grid[obj_index].y -= 1;
+                                obj_index += 1;
+                            } else {
+                                obj_index += 1;
+                            }
+                        }
+                    }
+    
+                    if rl.is_key_pressed(KeyboardKey::KEY_K) {
+                        let mut obj_index = 0;
+                        while obj_index < object_grid.len() {
+                            if object_grid[obj_index].selected {
+                                object_grid[obj_index].y += 1;
+                                obj_index += 1;
+                            } else {
+                                obj_index += 1;
+                            }
+                        }
+                    }
+    
+                    if rl.is_key_pressed(KeyboardKey::KEY_Q) {
+                        let mut obj_index = 0;
+                        while obj_index < object_grid.len() {
+                            if object_grid[obj_index].selected {
+                                if object_grid[obj_index].rotation != -270 {
+                                    object_grid[obj_index].rotation -= 90;
+                                } else {
+                                    object_grid[obj_index].rotation = 0;
+                                }
+    
+                                obj_index += 1;
+                            } else {
+                                obj_index += 1;
+                            }
+                        }
+                    }
+    
+                    if rl.is_key_pressed(KeyboardKey::KEY_E) {
+                        let mut obj_index = 0;
+                        while obj_index < object_grid.len() {
+                            if object_grid[obj_index].selected {
+                                if object_grid[obj_index].rotation != 270 {
+                                    object_grid[obj_index].rotation += 90;
+                                } else {
+                                    object_grid[obj_index].rotation = 0;
+                                }
+    
+                                obj_index += 1;
+                            } else {
+                                obj_index += 1;
+                            }
+                        }
+                    }
+    
+                    if level_upload_button.is_clicked(&rl) {
+                        game_state = GameState::LevelUpload
+                    }
+    
+                    if rl.is_key_down(KeyboardKey::KEY_PERIOD) {
+                        if rl.is_key_down(KeyboardKey::KEY_LEFT_CONTROL) {
+                            start_pos += 25
                         } else {
-                            obj_index += 1;
+                            start_pos += 5;
+                        }
+                    }
+    
+                    if rl.is_key_down(KeyboardKey::KEY_COMMA) && start_pos > 0 {
+                        if rl.is_key_down(KeyboardKey::KEY_LEFT_CONTROL) {
+                            start_pos -= 25
+                        } else {
+                            start_pos -= 5;
+                        }
+                    }
+    
+                    if no_touch_toggle.is_clicked(&rl) {
+                        let mut obj_index = 0;
+                        while obj_index < object_grid.len() {
+                            if object_grid[obj_index].selected {
+                                if object_grid[obj_index].no_touch == 0 {
+                                    object_grid[obj_index].no_touch = 1;
+                                    no_touch_toggle.is_disabled = false
+                                } else {
+                                    object_grid[obj_index].no_touch = 0;
+                                    no_touch_toggle.is_disabled = true
+                                }
+                                obj_index += 1;
+                            } else {
+                                obj_index += 1;
+                            }
+                        }
+                    }
+    
+                    if hide_toggle.is_clicked(&rl) {
+                        let mut obj_index = 0;
+                        while obj_index < object_grid.len() {
+                            if object_grid[obj_index].selected {
+                                if object_grid[obj_index].hide == 0 {
+                                    object_grid[obj_index].hide = 1;
+                                    hide_toggle.is_disabled = false
+                                } else {
+                                    object_grid[obj_index].hide = 0;
+                                    hide_toggle.is_disabled = true
+                                }
+                                obj_index += 1;
+                            } else {
+                                obj_index += 1;
+                            }
                         }
                     }
                 }
 
-                if rl.is_key_pressed(KeyboardKey::KEY_E) {
+                if object_settings.is_clicked(&rl) {
                     let mut obj_index = 0;
                     while obj_index < object_grid.len() {
-                        if object_grid[obj_index].selected {
-                            if object_grid[obj_index].rotation != 270 {
-                                object_grid[obj_index].rotation += 90;
-                            } else {
-                                object_grid[obj_index].rotation = 0;
-                            }
-
-                            obj_index += 1;
-                        } else {
-                            obj_index += 1;
-                        }
-                    }
-                }
-
-                if level_upload_button.is_clicked(&rl) {
-                    game_state = GameState::LevelUpload
-                }
-
-                if rl.is_key_down(KeyboardKey::KEY_PERIOD) {
-                    if rl.is_key_down(KeyboardKey::KEY_LEFT_CONTROL) {
-                        start_pos += 25
-                    } else {
-                        start_pos += 5;
-                    }
-                }
-
-                if rl.is_key_down(KeyboardKey::KEY_COMMA) && start_pos > 0 {
-                    if rl.is_key_down(KeyboardKey::KEY_LEFT_CONTROL) {
-                        start_pos -= 25
-                    } else {
-                        start_pos -= 5;
-                    }
-                }
-
-                if no_touch_toggle.is_clicked(&rl) {
-                    let mut obj_index = 0;
-                    while obj_index < object_grid.len() {
-                        if object_grid[obj_index].selected {
-                            if object_grid[obj_index].no_touch == 0 {
-                                object_grid[obj_index].no_touch = 1;
-                                no_touch_toggle.is_disabled = false
-                            } else {
-                                object_grid[obj_index].no_touch = 0;
-                                no_touch_toggle.is_disabled = true
-                            }
-                            obj_index += 1;
-                        } else {
-                            obj_index += 1;
-                        }
-                    }
-                }
-
-                if hide_toggle.is_clicked(&rl) {
-                    let mut obj_index = 0;
-                    while obj_index < object_grid.len() {
-                        if object_grid[obj_index].selected {
-                            if object_grid[obj_index].hide == 0 {
-                                object_grid[obj_index].hide = 1;
-                                hide_toggle.is_disabled = false
-                            } else {
-                                object_grid[obj_index].hide = 0;
-                                hide_toggle.is_disabled = true
-                            }
+                        if object_grid[obj_index].selected
+                        && object_grid[obj_index].id == 23 {
+                            active_popup = ActivePopup::ObjectSettings;
                             obj_index += 1;
                         } else {
                             obj_index += 1;
@@ -2555,6 +2588,7 @@ async fn main() {
                 level_upload_button.draw(false, None, 1.0, false, &mut d);
                 no_touch_toggle.draw(false, None, 1.0, false, &mut d);
                 hide_toggle.draw(false, None, 1.0, false, &mut d);
+                object_settings.draw(false, None, 1.0, false, &mut d);
 
                 if edit_not_done_yet {
                     d.draw_text("Click to select!", 270, 490, 40, Color::WHITE);
@@ -2600,6 +2634,16 @@ async fn main() {
                     d.draw_text(&format!("Mouse Y: {}", mouse_y), 10, 220, 20, Color::LIME);
 
                     d.draw_text(&format!("Object Grid: {:?}", object_grid), 10, 250, 20, Color::LIME);
+                }
+
+                if active_popup == ActivePopup::ObjectSettings {
+                    d.draw_rectangle(
+                        0,
+                        0,
+                        d.get_screen_width(),
+                        d.get_screen_height(),
+                        Color { r:0, g:0, b:0, a:150 }
+                    );
                 }
             }
             GameState::LevelOptions => {

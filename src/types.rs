@@ -17,6 +17,12 @@ pub enum GameState {
     LevelRate,
 }
 
+#[derive(PartialEq)]
+pub enum ActivePopup {
+    None,
+    ObjectSettings
+}
+
 pub struct Button {
     pub rect: Rectangle,
     pub text: String,
