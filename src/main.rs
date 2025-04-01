@@ -1735,6 +1735,15 @@ async fn main() {
                     active_popup = ActivePopup::ObjectSettings
                 }
 
+                if active_popup == ActivePopup::ObjectSettings
+                && menu_button.is_clicked(&rl) {
+                    active_popup = ActivePopup::None
+                }
+
+                if active_popup == ActivePopup::ObjectSettings {
+                    menu_button.update(&rl, delta_time);
+                }
+
                 been_to_editor = true;
             }
             GameState::LevelOptions => {
@@ -2658,6 +2667,8 @@ async fn main() {
                             a: 255
                         }
                     );
+
+                    menu_button.draw(false, None, 1.0, false, &mut d);
                 }
             }
             GameState::LevelOptions => {
