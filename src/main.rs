@@ -450,6 +450,7 @@ async fn main() {
     let mut player_path: Vec<Vector2> = vec![];
     let mut editor_guide_scroll: u16 = 0;
     let mut touching_color_trigger = false;
+    let mut selected_object: u16 = 1;
 
     let mut red_ground_slider_pos: i32 = 355;
     let mut green_ground_slider_pos: i32  = 355;
@@ -1398,6 +1399,7 @@ async fn main() {
                                         }
     
                                         object_grid[obj_index].selected = true;
+                                        selected_object = object_grid[obj_index].id as u16;
     
                                         if object_grid[obj_index].no_touch == 1 {
                                             no_touch_toggle.is_disabled = false;
@@ -1728,17 +1730,9 @@ async fn main() {
                     }
                 }
 
-                if object_settings.is_clicked(&rl) {
-                    let mut obj_index = 0;
-                    while obj_index < object_grid.len() {
-                        if object_grid[obj_index].selected
-                        && object_grid[obj_index].id == 23 {
-                            active_popup = ActivePopup::ObjectSettings;
-                            obj_index += 1;
-                        } else {
-                            obj_index += 1;
-                        }
-                    }
+                if object_settings.is_clicked(&rl)
+                && selected_object == 23 {
+                    active_popup = ActivePopup::ObjectSettings
                 }
 
                 been_to_editor = true;
