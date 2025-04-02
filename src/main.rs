@@ -361,18 +361,18 @@ async fn main() {
     };
 
     let mut set_color_type_bg = Button::new(
-        100.0,
-        rl.get_screen_height() as f32 / 1.4,
+        120.0,
+        rl.get_screen_height() as f32 / 1.6,
         100.0,
         100.0,
         "Background",
-        20,
+        15,
         false
     );
 
     let mut set_color_type_grnd = Button::new(
-        220.0,
-        rl.get_screen_height() as f32 / 1.4,
+        240.0,
+        rl.get_screen_height() as f32 / 1.6,
         100.0,
         100.0,
         "Ground",
