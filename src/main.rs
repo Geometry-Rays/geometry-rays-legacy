@@ -360,6 +360,26 @@ async fn main() {
         active: false
     };
 
+    let mut set_color_type_bg = Button::new(
+        100.0,
+        rl.get_screen_height() as f32 / 1.4,
+        100.0,
+        100.0,
+        "Background",
+        20,
+        false
+    );
+
+    let mut set_color_type_grnd = Button::new(
+        220.0,
+        rl.get_screen_height() as f32 / 1.4,
+        100.0,
+        100.0,
+        "Ground",
+        20,
+        true
+    );
+
     let main_url = "http://georays.puppet57.xyz/php-code/".to_string();
     let latest_version_url: String = format!("{}get-latest-version.php", main_url).to_string();
     let register_url: String = format!("{}register.php", main_url).to_string();
@@ -1808,6 +1828,8 @@ async fn main() {
                     set_color_red.update(&rl, delta_time);
                     set_color_green.update(&rl, delta_time);
                     set_color_blue.update(&rl, delta_time);
+                    set_color_type_bg.update(&rl, delta_time);
+                    set_color_type_grnd.update(&rl, delta_time);
 
                     if color_red_textbox.is_clicked(&rl) {
                         color_red_textbox.active = true
@@ -1871,6 +1893,38 @@ async fn main() {
                             if object_grid[obj_index].selected {
                                 if let Some(properties) = object_grid[obj_index].properties.as_mut() {
                                     properties[2] = color_blue_text.clone()
+                                }
+                                obj_index += 1;
+                            } else {
+                                obj_index += 1;
+                            }
+                        }
+                    }
+
+                    if set_color_type_bg.is_clicked(&rl) {
+                        let mut obj_index = 0;
+                        while obj_index < object_grid.len() {
+                            if object_grid[obj_index].selected {
+                                if let Some(properties) = object_grid[obj_index].properties.as_mut() {
+                                    properties[3] = "1".to_string();
+                                    set_color_type_bg.is_disabled = false;
+                                    set_color_type_grnd.is_disabled = true
+                                }
+                                obj_index += 1;
+                            } else {
+                                obj_index += 1;
+                            }
+                        }
+                    }
+
+                    if set_color_type_grnd.is_clicked(&rl) {
+                        let mut obj_index = 0;
+                        while obj_index < object_grid.len() {
+                            if object_grid[obj_index].selected {
+                                if let Some(properties) = object_grid[obj_index].properties.as_mut() {
+                                    properties[3] = "2".to_string();
+                                    set_color_type_bg.is_disabled = true;
+                                    set_color_type_grnd.is_disabled = false
                                 }
                                 obj_index += 1;
                             } else {
@@ -2828,6 +2882,9 @@ async fn main() {
                         color_red_textbox.draw(color_red_text.clone(), &mut d);
                         color_green_textbox.draw(color_green_text.clone(), &mut d);
                         color_blue_textbox.draw(color_blue_text.clone(), &mut d);
+
+                        set_color_type_bg.draw(false, None, 1.0, false, &mut d);
+                        set_color_type_grnd.draw(false, None, 1.0, false, &mut d);
                     }
                 }
             }
