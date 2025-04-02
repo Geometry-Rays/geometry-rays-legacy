@@ -3255,7 +3255,8 @@ async fn main() {
         }
     }
 
-    if been_to_editor {
+    if been_to_editor &&
+    game_state == GameState::Editor {
         level_string = get_level_text(
             current_song,
             bg_red,

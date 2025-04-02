@@ -1,5 +1,6 @@
 use raylib::prelude::*;
 
+#[derive(PartialEq)]
 pub enum GameState {
     Menu,
     Playing,
