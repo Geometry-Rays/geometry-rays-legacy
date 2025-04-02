@@ -1862,7 +1862,10 @@ async fn main() {
                     if set_color_red.is_clicked(&rl) {
                         let mut obj_index = 0;
                         while obj_index < object_grid.len() {
-                            if object_grid[obj_index].selected {
+                            if object_grid[obj_index].selected
+                            && object_grid[obj_index].id == 23
+                            && color_red_text.parse::<u16>().unwrap() <= 255
+                            && color_red_text.parse::<i16>().unwrap() >= 0 {
                                 if let Some(properties) = object_grid[obj_index].properties.as_mut() {
                                     properties[0] = color_red_text.clone()
                                 }
@@ -1876,7 +1879,10 @@ async fn main() {
                     if set_color_green.is_clicked(&rl) {
                         let mut obj_index = 0;
                         while obj_index < object_grid.len() {
-                            if object_grid[obj_index].selected {
+                            if object_grid[obj_index].selected
+                            && object_grid[obj_index].id == 23
+                            && color_green_text.parse::<u16>().unwrap() <= 255
+                            && color_green_text.parse::<i16>().unwrap() >= 0 {
                                 if let Some(properties) = object_grid[obj_index].properties.as_mut() {
                                     properties[1] = color_green_text.clone()
                                 }
@@ -1890,7 +1896,10 @@ async fn main() {
                     if set_color_blue.is_clicked(&rl) {
                         let mut obj_index = 0;
                         while obj_index < object_grid.len() {
-                            if object_grid[obj_index].selected {
+                            if object_grid[obj_index].selected
+                            && object_grid[obj_index].id == 23
+                            && color_blue_text.parse::<u16>().unwrap() <= 255
+                            && color_blue_text.parse::<i16>().unwrap() >= 0 {
                                 if let Some(properties) = object_grid[obj_index].properties.as_mut() {
                                     properties[2] = color_blue_text.clone()
                                 }
