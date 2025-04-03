@@ -320,9 +320,9 @@ async fn main() {
 
     let mut color_red_textbox = TextBox {
         rect: Rectangle {
-            x: rl.get_screen_width() as f32 / 1.4 - 120.0,
-            y: 120.0,
-            width: 90.0,
+            x: rl.get_screen_width() as f32 / 1.4 - 140.0,
+            y: 120.0 + 50.0 / 2.0,
+            width: 110.0,
             height: 50.0
         },
         text: "Red".to_string(),
@@ -334,9 +334,9 @@ async fn main() {
 
     let mut color_green_textbox = TextBox {
         rect: Rectangle {
-            x: rl.get_screen_width() as f32 / 1.4 - 120.0,
-            y: 240.0,
-            width: 90.0,
+            x: rl.get_screen_width() as f32 / 1.4 - 140.0,
+            y: 240.0 + 50.0 / 2.0,
+            width: 110.0,
             height: 50.0
         },
         text: "Green".to_string(),
@@ -348,9 +348,9 @@ async fn main() {
 
     let mut color_blue_textbox = TextBox {
         rect: Rectangle {
-            x: rl.get_screen_width() as f32 / 1.4 - 120.0,
-            y: 360.0,
-            width: 90.0,
+            x: rl.get_screen_width() as f32 / 1.4 - 140.0,
+            y: 360.0 + 50.0 / 2.0,
+            width: 110.0,
             height: 50.0
         },
         text: "Blue".to_string(),
