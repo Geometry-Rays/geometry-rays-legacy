@@ -1148,7 +1148,7 @@ async fn main() {
                                 let color_trigger_blue: u8 = object.properties.clone().unwrap()[2].clone().parse().unwrap();
                                 let color_trigger_type: u8 = object.properties.clone().unwrap()[3].clone().parse().unwrap();
 
-                                println!("{:?}", object.properties.clone().unwrap());
+                                // println!("{:?}", object.properties.clone().unwrap());
 
                                 // let og_red = bg_red;
                                 // let og_green = bg_green;
