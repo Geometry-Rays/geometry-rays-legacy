@@ -2013,7 +2013,7 @@ async fn main() {
                     }
                 }
 
-                if rl.is_key_pressed(KeyboardKey::KEY_SPACE) {
+                if rl.is_key_pressed(KeyboardKey::KEY_ENTER) {
                     parts = main_levels[current_level].data.split(";;;").collect();
                     _level_metadata = parts[0];
                     _object_string = parts[1];
@@ -2999,7 +2999,7 @@ async fn main() {
                 );
 
                 d.draw_text(
-                    "Press Space to Play!",
+                    "Press Enter to Play!",
                     20,
                     20,
                     20,
