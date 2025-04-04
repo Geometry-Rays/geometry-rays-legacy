@@ -1475,7 +1475,8 @@ async fn main() {
                             } else if active_tab == EditorTab::Delete {
                                 let mut obj_index = 0;
                                 while obj_index < object_grid.len() {
-                                    if object_grid[obj_index].x == if snapped_x < 0 { snapped_x - 40 } else { snapped_x } && object_grid[obj_index].y == if snapped_y < 0 { snapped_y - 40 } else { snapped_y } {
+                                    if object_grid[obj_index].x == if snapped_x < 0 { snapped_x - 40 } else { snapped_x }
+                                    && object_grid[obj_index].y == if snapped_y < 0 { snapped_y - 40 } else { snapped_y } {
                                         object_grid.remove(obj_index);
                                         break;
                                     } else {
