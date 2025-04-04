@@ -109,7 +109,7 @@ async fn main() {
     let mut build_tab_button = Button::new(12.0, 415.0, 150.0, 50.0, "Build", 20, false);
     let mut edit_tab_button = Button::new(12.0, 475.0, 150.0, 50.0, "Edit", 20, false);
     let mut delete_tab_button = Button::new(12.0, 535.0, 150.0, 50.0, "Delete", 20, false);
-    let grid_button = Button::new(0.0, 0.0, 800.0, 400.0, "", 20, false);
+    let grid_button = Button::new(0.0, 0.0, rl.get_screen_width() as f32, 400.0, "", 20, false);
     let mut editor_back = Button::new(675.0, 20.0, 100.0, 50.0, "Back to Menu", 13, false);
     let mut level_options_button = Button::new(675.0, 90.0, 100.0, 50.0, "Level Options", 13, false);
     let mut level_save_button = Button::new(675.0, 160.0, 100.0, 50.0, "Save", 20, false);
