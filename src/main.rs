@@ -78,8 +78,8 @@ async fn main() {
         .expect("Failed to load color trigger texture");
 
     // Create main menu buttons
-    let mut play_button = Button::new(300.0, 250.0, 200.0, 50.0, "Play", 24, false);
-    let mut editor_button = Button::new(300.0, 320.0, 200.0, 50.0, "Custom Levels", 24, false);
+    let mut play_button = Button::new(rl.get_screen_width() as f32 / 2.0 - 100.0, 250.0, 200.0, 50.0, "Play", 24, false);
+    let mut editor_button = Button::new(rl.get_screen_width() as f32 / 2.0 - 100.0, 320.0, 200.0, 50.0, "Custom Levels", 24, false);
     let mut restart_button = Button::new(300.0, 320.0, 200.0, 50.0, "Restart", 24, false);
     let mut account_page_button = Button::new(rl.get_screen_width() as f32 - 220.0, 20.0, 200.0, 50.0, "Account Page", 24, false);
 
@@ -2381,9 +2381,9 @@ async fn main() {
         match game_state {
             GameState::Menu => {
                 d.clear_background(Color::WHITE);
-                d.draw_texture_ex(&menu_bg, Vector2::new(-200.0, -250.0), 0.0, 0.8, Color { r:50, g:50, b:50, a:255 });
+                d.draw_texture_ex(&menu_bg, Vector2::new(-150.0, -80.0), 0.0, 0.8, Color { r:50, g:50, b:50, a:255 });
 
-                d.draw_text("Geometry Rays", 220, 150, 50, Color::WHITE);
+                d.draw_text("Geometry Rays", d.get_screen_width() / 2 - d.measure_text("Geometry Rays", 50) / 2, 150, 50, Color::WHITE);
 
                 play_button.draw(false, None, 1.0, false, &mut d);
                 editor_button.draw(false, None, 1.0, false, &mut d);
@@ -2395,13 +2395,13 @@ async fn main() {
                 d.draw_text(&format!("Made by Thepuppet57"), 10, d.get_screen_height() - 30, 25, Color::WHITE);
 
                 d.draw_rectangle_pro(
-                    Rectangle::new(360.0, 60.0, 100.0, 100.0),
-                    Vector2::new(40.0 / 2.0, 40.0 / 2.0),
+                    Rectangle::new(d.get_screen_width() as f32 / 2.0, 90.0, 100.0, 100.0),
+                    Vector2::new(50.0, 50.0),
                     0.0,
                     Color::BLACK,
                 );
 
-                d.draw_texture_ex(&logo, Vector2::new(350.0, 50.0), 0.0, 0.1, Color::WHITE);
+                d.draw_texture_ex(&logo, Vector2::new(d.get_screen_width() as f32 / 2.0 - 40.0, 50.0), 0.0, 0.1, Color::WHITE);
 
                 // Draw Discord icon with hover effect
                 let discord_color = if discord_rect.check_collision_point_rec(mouse_pos) {
