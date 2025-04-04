@@ -1864,6 +1864,7 @@ async fn main() {
                         while obj_index < object_grid.len() {
                             if object_grid[obj_index].selected
                             && object_grid[obj_index].id == 23
+                            && color_red_text.len() > 0
                             && color_red_text.parse::<u16>().unwrap() <= 255
                             && color_red_text.parse::<i16>().unwrap() >= 0 {
                                 if let Some(properties) = object_grid[obj_index].properties.as_mut() {
@@ -1881,6 +1882,7 @@ async fn main() {
                         while obj_index < object_grid.len() {
                             if object_grid[obj_index].selected
                             && object_grid[obj_index].id == 23
+                            && color_green_text.len() > 0
                             && color_green_text.parse::<u16>().unwrap() <= 255
                             && color_green_text.parse::<i16>().unwrap() >= 0 {
                                 if let Some(properties) = object_grid[obj_index].properties.as_mut() {
@@ -1898,6 +1900,7 @@ async fn main() {
                         while obj_index < object_grid.len() {
                             if object_grid[obj_index].selected
                             && object_grid[obj_index].id == 23
+                            && color_blue_text.len() > 0
                             && color_blue_text.parse::<u16>().unwrap() <= 255
                             && color_blue_text.parse::<i16>().unwrap() >= 0 {
                                 if let Some(properties) = object_grid[obj_index].properties.as_mut() {
