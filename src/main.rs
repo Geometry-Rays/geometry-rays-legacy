@@ -1485,7 +1485,9 @@ async fn main() {
                             } else if active_tab == EditorTab::Edit {
                                 let mut obj_index = 0;
                                 while obj_index < object_grid.len() {
-                                    if object_grid[obj_index].x == if snapped_x < 0 { snapped_x - 40 } else { snapped_x } && object_grid[obj_index].y == if snapped_y < 0 { snapped_y - 40 } else { snapped_y } && !object_grid[obj_index].selected {
+                                    if object_grid[obj_index].x == if snapped_x < 0 { snapped_x - 40 } else { snapped_x }
+                                    && object_grid[obj_index].y == if snapped_y < 0 { snapped_y - 40 } else { snapped_y }
+                                    && !object_grid[obj_index].selected {
                                         if rl.is_key_up(KeyboardKey::KEY_LEFT_SHIFT) {
                                             let mut objj_index = 0;
                                             while objj_index < object_grid.len() {
