@@ -85,9 +85,9 @@ async fn main() {
 
     // Create online level buttons
     let mut menu_button = Button::new(20.0, 20.0, 200.0, 50.0, "Back to Menu", 24, false);
-    let mut create_button = Button::new(120.0, 230.0, 150.0, 150.0, "Create", 30, false);
-    let mut featured_button = Button::new(320.0, 230.0, 150.0, 150.0, "Featured", 30, true);
-    let mut search_button = Button::new(520.0, 230.0, 150.0, 150.0, "Search", 30, false);
+    let mut create_button = Button::new(rl.get_screen_width() as f32 / 2.0 - 75.0 - 170.0, rl.get_screen_height() as f32 / 2.0 - 75.0, 150.0, 150.0, "Create", 30, false);
+    let mut featured_button = Button::new(rl.get_screen_width() as f32 / 2.0 - 75.0, rl.get_screen_height() as f32 / 2.0 - 75.0, 150.0, 150.0, "Featured", 30, true);
+    let mut search_button = Button::new(rl.get_screen_width() as f32 / 2.0 - 75.0 + 170.0, rl.get_screen_height() as f32 / 2.0 - 75.0, 150.0, 150.0, "Search", 30, false);
     let mut keybinds_button = Button::new(rl.get_screen_width() as f32 - 220.0, 20.0, 200.0, 50.0, "Editor Keybinds", 24, false);
     let mut download_level_button = Button::new(rl.get_screen_width() as f32 - 220.0, 80.0, 200.0, 50.0, "Download Level", 24, false);
 
@@ -2694,7 +2694,7 @@ async fn main() {
             }
             GameState::CreatorMenu => {
                 d.clear_background(Color::WHITE);
-                d.draw_texture_ex(&menu_bg, Vector2::new(-200.0, -250.0), 0.0, 0.8, Color { r:50, g:50, b:50, a:255 });
+                d.draw_texture_ex(&menu_bg, Vector2::new(-150.0, -90.0), 0.0, 0.8, Color { r:50, g:50, b:50, a:255 });
                 
                 // d.draw_text("Editor will be added eventually!", 50, 250, 45, Color::WHITE);
                 menu_button.draw(false, None, 1.0, false, &mut d);
