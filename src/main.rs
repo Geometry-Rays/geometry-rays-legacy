@@ -475,6 +475,7 @@ async fn main() {
     let default_level: &str = "version:1.3;song:0;c1001:0,0,50;c1002:0,0,100;c1004:255,255,255;bg:1;grnd:1;;;480:480:0:0:0:1";
     let mut start_pos: u16 = 0;
     let in_debug_build = cfg!(debug_assertions);
+    let mut cached_levels: HashMap<String, String> = HashMap::new();
 
     let mut get_latest_version = true;
     let mut register_result = "".to_string();
@@ -2318,14 +2319,9 @@ async fn main() {
                 level_id_textbox.input(&mut level_id, &rl);
 
                 if download_level_button.is_clicked(&rl) && level_id.len() > 0 {
-                    level_download_result = get_request(
-                        download_url.clone(),
-                        Some(hashmap! {
-                            "id".to_string() => level_id.clone()
-                        })
-                    ).await;
+                    if cached_levels.contains_key(&level_id) {
+                        level_download_result = cached_levels.get(&level_id).unwrap().to_string();
 
-                    if level_download_result.contains(";;;;;") {
                         parse_level_download_response(
                             level_download_result.clone(),
                             &mut online_level_name,
@@ -2338,10 +2334,33 @@ async fn main() {
 
                         show_level_not_found = false;
                         game_state = GameState::LevelPage
-                    } else if level_download_result.contains("error code: 1033") {
-                        show_server_down = true
                     } else {
-                        show_level_not_found = true
+                        level_download_result = get_request(
+                            download_url.clone(),
+                            Some(hashmap! {
+                                "id".to_string() => level_id.clone()
+                            })
+                        ).await;
+
+                        if level_download_result.contains(";;;;;") {
+                            parse_level_download_response(
+                                level_download_result.clone(),
+                                &mut online_level_name,
+                                &mut online_level_desc,
+                                &mut online_level_diff,
+                                &mut online_level_rated,
+                                &mut online_level_creator,
+                                &mut online_level_data
+                            );
+
+                            show_level_not_found = false;
+                            cached_levels.insert(level_id.clone(), level_download_result.clone());
+                            game_state = GameState::LevelPage
+                        } else if level_download_result.contains("error code: 1033") {
+                            show_server_down = true
+                        } else {
+                            show_level_not_found = true
+                        }
                     }
                 }
             }
