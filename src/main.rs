@@ -1558,6 +1558,13 @@ async fn main() {
                     }
 
                     if level_options_button.is_clicked(&rl) {
+                        if current_mode == "1" {
+                            set_level_type_normal.is_disabled = false;
+                            set_level_type_plat.is_disabled = true;
+                        } else if current_mode == "2" {
+                            set_level_type_normal.is_disabled = true;
+                            set_level_type_plat.is_disabled = false;
+                        }
                         game_state = GameState::LevelOptions;
                     }
 
