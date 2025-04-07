@@ -472,7 +472,7 @@ async fn main() {
     let mut logged_in: bool = false;
     let mut online_levels_beaten: Vec<u16> = vec![];
     let mut is_mod: bool = false;
-    let default_level: &str = "version:1.3;song:0;c1001:0,0,50;c1002:0,0,100;c1004:255,255,255;bg:1;grnd:1;;;480:480:0:0:0:1";
+    let default_level: &str = "version:1.3;mode:1;song:0;c1001:0,0,50;c1002:0,0,100;c1004:255,255,255;bg:1;grnd:1;;;480:480:0:0:0:1";
     let mut start_pos: u16 = 0;
     let in_debug_build = cfg!(debug_assertions);
     let mut cached_levels: HashMap<String, String> = HashMap::new();
