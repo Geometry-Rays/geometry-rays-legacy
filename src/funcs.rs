@@ -339,10 +339,11 @@ macro_rules! hashmap {
     }
 }
 
-pub fn get_level_text(current_song: u8, bg_red: u8, bg_green: u8, bg_blue: u8, ground_red: u8, ground_green: u8, ground_blue: u8, object_grid: &Vec<ObjectStruct>) -> String {
+pub fn get_level_text(current_mode: &str, current_song: u8, bg_red: u8, bg_green: u8, bg_blue: u8, ground_red: u8, ground_green: u8, ground_blue: u8, object_grid: &Vec<ObjectStruct>) -> String {
     let mut level_string = format!(
-        "version:1.3;song:{};c1001:{},{},{};c1002:{},{},{};c1004:255,255,255;bg:1;grnd:1;;;",
+        "version:1.3;mode:{};song:{};c1001:{},{},{};c1002:{},{},{};c1004:255,255,255;bg:1;grnd:1;;;",
 
+        current_mode,
         current_song,
 
         bg_red,
@@ -402,6 +403,8 @@ pub fn load_level(
     ground_green: &mut i32,
     ground_blue: &mut i32,
 
+    current_mode: &mut String,
+
     song_selected: bool,
     current_song: &mut u8,
     load_song: bool,
@@ -411,6 +414,7 @@ pub fn load_level(
 
     object_grid.clear();
     let metadata_pairs: Vec<&str> = _level_metadata.split(';').collect();
+    *current_mode = "1".to_string();
     for pair in metadata_pairs {
         let key_value: Vec<&str> = pair.split(':').collect();
         let key = key_value[0];
@@ -453,6 +457,8 @@ pub fn load_level(
                     *current_song = value.parse::<u8>().unwrap();
                 }
             }
+        } else if key == "mode" {
+            *current_mode = value.to_string();
         }
     }
 

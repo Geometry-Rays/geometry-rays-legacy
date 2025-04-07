@@ -476,6 +476,7 @@ async fn main() {
     let mut start_pos: u16 = 0;
     let in_debug_build = cfg!(debug_assertions);
     let mut cached_levels: HashMap<String, String> = HashMap::new();
+    let mut current_mode: String = "1".to_string();
 
     let mut get_latest_version = true;
     let mut register_result = "".to_string();
@@ -855,7 +856,15 @@ async fn main() {
                     }
                 }
 
-                world_offset -= movement_speed;
+                if current_mode == "1" {
+                    world_offset -= movement_speed;
+                } else if current_mode == "2" {
+                    if rl.is_key_down(KeyboardKey::KEY_RIGHT) {
+                        world_offset -= movement_speed;
+                    } else if rl.is_key_down(KeyboardKey::KEY_LEFT) {
+                        world_offset += movement_speed;
+                    }
+                }
                 if current_gamemode == GameMode::Cube && velocity_y < 20.0 && velocity_y > -20.0 {
                     velocity_y += gravity;
                 }
@@ -1267,6 +1276,7 @@ async fn main() {
                         &mut ground_red,
                         &mut ground_green,
                         &mut ground_blue,
+                        &mut current_mode,
                         song_selected,
                         &mut current_song,
                         true,
@@ -1584,6 +1594,7 @@ async fn main() {
 
                     if level_save_button.is_clicked(&rl) {
                         level_string = get_level_text(
+                            &current_mode,
                             current_song,
                             bg_red,
                             bg_green,
@@ -2031,6 +2042,7 @@ async fn main() {
                         &mut ground_red,
                         &mut ground_green,
                         &mut ground_blue,
+                        &mut current_mode,
                         song_selected,
                         &mut current_song,
                         false,
@@ -2180,6 +2192,7 @@ async fn main() {
                 if upload_button.is_clicked(&rl) {
                     if logged_in {
                         let level_data = get_level_text(
+                            current_mode.as_str(),
                             current_song,
                             bg_red,
                             bg_green,
@@ -2256,6 +2269,7 @@ async fn main() {
                         &mut ground_red,
                         &mut ground_green,
                         &mut ground_blue,
+                        &mut current_mode,
                         song_selected,
                         &mut current_song,
                         true,
@@ -3292,6 +3306,7 @@ async fn main() {
     if been_to_editor &&
     game_state == GameState::Editor {
         level_string = get_level_text(
+            current_mode.as_str(),
             current_song,
             bg_red,
             bg_green,
