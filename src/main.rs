@@ -497,6 +497,7 @@ async fn main() {
     let in_debug_build = cfg!(debug_assertions);
     let mut cached_levels: HashMap<String, String> = HashMap::new();
     let mut current_mode: String = "1".to_string();
+    let mut moving_direction: u8 = 0;
 
     let mut get_latest_version = true;
     let mut register_result = "".to_string();
@@ -881,8 +882,12 @@ async fn main() {
                 } else if current_mode == "2" {
                     if rl.is_key_down(KeyboardKey::KEY_RIGHT) {
                         world_offset -= movement_speed;
+                        moving_direction = 1
                     } else if rl.is_key_down(KeyboardKey::KEY_LEFT) {
                         world_offset += movement_speed;
+                        moving_direction = 2
+                    } else {
+                        moving_direction = 0
                     }
                 }
                 if current_gamemode == GameMode::Cube && velocity_y < 20.0 && velocity_y > -20.0 {
@@ -897,9 +902,19 @@ async fn main() {
                     rotation = 0.0;
                 } else {
                     if gravity > 0.0 {
-                        rotation += 5.0;
+                        if moving_direction == 1
+                        || current_mode == "1" {
+                            rotation += 5.0;
+                        } else if moving_direction == 2 {
+                            rotation -= 5.0;
+                        }
                     } else {
-                        rotation -= 5.0;
+                        if moving_direction == 1
+                        || current_mode == "1" {
+                            rotation -= 5.0;
+                        } else if moving_direction == 2 {
+                            rotation += 5.0;
+                        }
                     }
                 }
 
