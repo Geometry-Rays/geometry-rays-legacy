@@ -907,6 +907,8 @@ async fn main() {
                             rotation += 5.0;
                         } else if moving_direction == 2 {
                             rotation -= 5.0;
+                        } else {
+                            rotation = 0.0;
                         }
                     } else {
                         if moving_direction == 1
@@ -914,6 +916,8 @@ async fn main() {
                             rotation -= 5.0;
                         } else if moving_direction == 2 {
                             rotation += 5.0;
+                        } else {
+                            rotation = 0.0;
                         }
                     }
                 }
