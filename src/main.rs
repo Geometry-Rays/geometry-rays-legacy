@@ -380,6 +380,26 @@ async fn main() {
         true
     );
 
+    let mut set_level_type_normal = Button::new(
+        20.0,
+        rl.get_screen_height() as f32 - 120.0,
+        100.0,
+        100.0,
+        "Normal",
+        20,
+        false
+    );
+
+    let mut set_level_type_plat = Button::new(
+        140.0,
+        rl.get_screen_height() as f32 - 120.0,
+        100.0,
+        100.0,
+        "Platformer",
+        15,
+        true
+    );
+
     let main_url = "http://georays.puppet57.xyz/php-code/".to_string();
     let latest_version_url: String = format!("{}get-latest-version.php", main_url).to_string();
     let register_url: String = format!("{}register.php", main_url).to_string();
@@ -1979,6 +1999,8 @@ async fn main() {
             }
             GameState::LevelOptions => {
                 level_options_back.update(&rl, delta_time);
+                set_level_type_normal.update(&rl, delta_time);
+                set_level_type_plat.update(&rl, delta_time);
 
                 if level_options_back.is_clicked(&rl) {
                     game_state = GameState::Editor;
@@ -2013,6 +2035,18 @@ async fn main() {
                 if blue_ground_slider.is_clicked(&rl) {
                     blue_ground_slider_pos = mouse_y - 25;
                     ground_blue = blue_ground_slider_pos - 355;
+                }
+
+                if set_level_type_normal.is_clicked(&rl) {
+                    set_level_type_normal.is_disabled = false;
+                    set_level_type_plat.is_disabled = true;
+                    current_mode = "1".to_string();
+                }
+
+                if set_level_type_plat.is_clicked(&rl) {
+                    set_level_type_normal.is_disabled = true;
+                    set_level_type_plat.is_disabled = false;
+                    current_mode = "2".to_string();
                 }
             }
             GameState::LevelSelect => {
@@ -2999,6 +3033,9 @@ async fn main() {
 
                 d.draw_rectangle(300, 20, 75, 50, cc_1001);
                 d.draw_rectangle(300, 300, 75, 50, cc_1002);
+
+                set_level_type_normal.draw(false, None, 1.0, false, &mut d);
+                set_level_type_plat.draw(false, None, 1.0, false, &mut d);
             }
             GameState::LevelSelect => {
                 d.clear_background(Color::BLACK);
