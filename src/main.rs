@@ -960,12 +960,28 @@ async fn main() {
                         object.id == 12 ||
                         object.id == 13 ||
                         object.id == 14 {
-                            kill_player |= small_player.check_collision_recs(&Rectangle {
+                            if current_mode == "1" {
+                                kill_player |= small_player.check_collision_recs(&Rectangle {
+                                    x: object.x as f32 + world_offset,
+                                    y: object.y as f32 + 10.0 - player_cam_y as f32,
+                                    width: 3.0,
+                                    height: 20.0
+                                });
+                            } else if centered_player.check_collision_recs(&Rectangle {
                                 x: object.x as f32 + world_offset,
-                                y: object.y as f32 + 10.0 - player_cam_y as f32,
+                                y: object.y as f32 + 30.0,
                                 width: 3.0,
-                                height: 20.0
-                            });
+                                height: 10.0
+                            }) {
+                                world_offset = -(object.x as f32 - 220.0)
+                            } else if centered_player.check_collision_recs(&Rectangle {
+                                x: object.x as f32 + 40.0 + world_offset,
+                                y: object.y as f32 + 30.0,
+                                width: 3.0,
+                                height: 10.0
+                            }) {
+                                world_offset = -(object.x as f32 - 140.0)
+                            }
 
                             if centered_player.check_collision_recs(&Rectangle {
                                 x: object.x as f32 + world_offset + 3.0,
@@ -2604,20 +2620,38 @@ async fn main() {
                                     Color::RED
                                 );
                             }
-    
+
                             if object.id == 2 ||
                             object.id == 10 ||
                             object.id == 11 ||
                             object.id == 12 ||
                             object.id == 13 ||
                             object.id == 14 {
-                                d.draw_rectangle_lines(
-                                    object.x + world_offset as i32,
-                                    object.y + 10 - player_cam_y,
-                                    3,
-                                    20,
-                                    Color::RED
-                                );
+                                if current_mode == "1" {
+                                    d.draw_rectangle_lines(
+                                        object.x + world_offset as i32,
+                                        object.y + 10 - player_cam_y,
+                                        3,
+                                        20,
+                                        Color::RED
+                                    );
+                                } else {
+                                    d.draw_rectangle_lines(
+                                        object.x + world_offset as i32,
+                                        object.y + 30,
+                                        3,
+                                        10,
+                                        Color::BLUEVIOLET
+                                    );
+
+                                    d.draw_rectangle_lines(
+                                        object.x + 40 + world_offset as i32,
+                                        object.y + 30,
+                                        3,
+                                        10,
+                                        Color::BLUEVIOLET
+                                    );
+                                }
     
                                 d.draw_rectangle_lines(
                                     object.x + world_offset as i32 + 3,
