@@ -466,15 +466,15 @@ pub fn load_level(
     let object_list: Vec<&str> = _object_string.split(';').collect();
     for object in object_list {
         let xyrid: Vec<&str> = object.split(':').collect();
-        let obj_id = if level_version == "1.3" { xyrid[5].parse::<u32>().unwrap() } else { xyrid[3].parse().unwrap() };
+        let obj_id = if level_version == "BETA" { xyrid[3].parse().unwrap() } else { xyrid[5].parse::<u32>().unwrap() };
 
         if !_object_string.is_empty() {
             object_grid.push(ObjectStruct {
                 y: xyrid[0].parse::<i32>().unwrap(),
                 x: xyrid[1].parse::<i32>().unwrap(),
                 rotation: xyrid[2].parse::<i16>().unwrap(),
-                no_touch: if level_version == "1.3" { xyrid[3].parse().unwrap() } else { 0 },
-                hide: if level_version == "1.3" { xyrid[4].parse().unwrap() } else { 0 },
+                no_touch: if level_version == "BETA" { 0 } else { xyrid[4].parse().unwrap() },
+                hide: if level_version == "BETA" { 0 } else { xyrid[4].parse().unwrap() },
                 id: obj_id,
                 selected: false,
                 properties: if obj_id == 23 && level_version != "BETA" {Some(
