@@ -432,7 +432,7 @@ pub fn load_level(
             } else {
                 println!("Level version not recognized.");
                 println!("Is this level made in a newer version?");
-                "version_invalid".to_string();
+                return "version_invalid".to_string();
             }
 
             level_version = value;
@@ -491,7 +491,7 @@ pub fn load_level(
         }
     }
 
-    "ok".to_string()
+    return "ok".to_string()
 }
 
 pub fn parse_level_download_response(
