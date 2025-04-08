@@ -3391,8 +3391,8 @@ async fn main() {
 
                 d.draw_text(
                     &level_rate_result,
-                    d.get_screen_width() / 2 - d.measure_text(&level_rate_result, 50),
-                    d.get_screen_height() - 50,
+                    d.get_screen_width() / 2 - d.measure_text(&level_rate_result, 50) / 2,
+                    d.get_screen_height() - 100,
                     50,
                     Color::WHITE
                 );
