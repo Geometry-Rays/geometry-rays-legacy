@@ -13,6 +13,7 @@ mod types;
 use funcs::*;
 use types::*;
 
+// Importing functions used for the editor and the playing state
 #[allow(non_snake_case)]
 mod MenuLogic;
 use MenuLogic::editor;
@@ -20,11 +21,13 @@ use MenuLogic::playing;
 
 #[tokio::main]
 async fn main() {
+    // Initializing raylib
     let (mut rl, thread) = raylib::init()
         .size(800, 600)
         .title("Geometry Rays")
         .build();
 
+    // Initializing audio
     let (_stream, stream_handle) = OutputStream::try_default().unwrap();
     let sink = Sink::try_new(&stream_handle).unwrap();
 
@@ -181,8 +184,7 @@ async fn main() {
         false
     );
 
-
-
+    // This is where I completely gave up on sorting these.
     let mut level_name_textbox = TextBox {
         rect: Rectangle {
             x: rl.get_screen_width() as f32 / 2.0 - 20.0 * 30.0 / 1.9 / 2.0,
@@ -405,6 +407,7 @@ async fn main() {
         true
     );
 
+    // Url's for server requests
     let main_url = "http://georays.puppet57.xyz/php-code/".to_string();
     let latest_version_url: String = format!("{}get-latest-version.php", main_url).to_string();
     let register_url: String = format!("{}register.php", main_url).to_string();
@@ -441,6 +444,7 @@ async fn main() {
     let ship_power: f32 = 0.7;
     let ship_falling_speed: f32 = 0.5;
 
+    // More important variables I didn't feel like sorting
     let version = "1.41";
     let latest_version = std::sync::Arc::new(std::sync::Mutex::new(String::from("Loading...")));
     let mut not_done_yet_text = false;
@@ -504,6 +508,7 @@ async fn main() {
     let mut current_mode: String = "1".to_string();
     let mut moving_direction: u8 = 0;
 
+    // Variables for server stuff
     let mut get_latest_version = true;
     let mut register_result = "".to_string();
     let mut login_result = "".to_string();
@@ -600,6 +605,7 @@ async fn main() {
     objects.push("gravity orb");
     objects.push("color trigger");
 
+    // The buttons used for selecting what object to place
     let obj_button_off = 65.0;
     let mut obj1_button = Button::new(187.0, 415.0, 50.0, 50.0, objects.get(1).unwrap(), 10, false);
     let mut obj2_button = Button::new(187.0 + (obj_button_off), 415.0, 50.0, 50.0, objects.get(2).unwrap(), 10, false);
@@ -660,6 +666,7 @@ async fn main() {
     let star_texture = rl.load_texture(&thread, "Resources/star.png")
         .expect("Failed to load star texture");
     
+    // The vector used for difficulty icons
     let difficulties: Vec<Texture2D> = vec![
         rl.load_texture(&thread, "./Resources/difficulties/0.png").expect("Failed to load difficulty face"),
         rl.load_texture(&thread, "./Resources/difficulties/1.png").expect("Failed to load difficulty face"),
@@ -691,6 +698,8 @@ async fn main() {
         icon_size
     );
 
+    // This reads your save data
+    // So basically it loads your stars and stuff
     let values_levels: Vec<&str> = save_data.split(";;;").collect();
     let save_pairs: Vec<&str> = values_levels[0].split(";").collect();
     let levels_completed: Vec<&str> = values_levels[1].split(";").collect();
@@ -717,6 +726,7 @@ async fn main() {
         }
     }
 
+    // This is for checking what main levels you have completed
     let level_index: u8 = 0;
     for level in levels_completed {
         let key_value: Vec<&str> = level.split(":").collect();
@@ -725,10 +735,13 @@ async fn main() {
         }
     }
 
+    // This is for checking what online levels you have completed
     for level in online_levels_completed {
         online_levels_beaten.push(level.parse().unwrap());
     }
 
+    // This is for auto login
+    // Auto login only runs if you have already logged in using the login page
     if user != "0" && pass != "0" {
         login_result = post_request(
             login_url.clone(),
@@ -759,7 +772,10 @@ async fn main() {
     let mut color_green_text: String = "".to_string();
     let mut color_blue_text: String = "".to_string();
 
+    // Main game loop
     while !rl.window_should_close() {
+        // All of these are variables that are set every frame
+        // I don't really put variables here anymore
         let space_down = rl.is_key_down(KeyboardKey::KEY_SPACE);
         let mouse_down = rl.is_mouse_button_down(MouseButton::MOUSE_BUTTON_LEFT);
         let delta_time = rl.get_frame_time();
@@ -791,6 +807,9 @@ async fn main() {
                 play_button.update(&rl, delta_time);
                 editor_button.update(&rl, delta_time);
 
+                // This is for getting the latest version of the game
+                // This is the only server request in the game that is on its own thread
+                // This was absolute hell to code so thats why
                 if *latest_version.lock().unwrap() == "Loading..." && get_latest_version {
                     let latest_version_clone = std::sync::Arc::clone(&latest_version);
                     let latest_version_url = latest_version_url.to_owned();
@@ -849,6 +868,8 @@ async fn main() {
                     kill_player = false;
                 }
 
+                // This calls the function that handles physics
+                // You can find the function in src/MenuLogic/playing.rs
                 playing::physics_handle(
                     &mut player,
                     current_gamemode,
@@ -899,6 +920,7 @@ async fn main() {
                 small_player.width = 20.0;
                 small_player.height = 20.0;
 
+                // This is for checking if the player is touching an object
                 for object in &object_grid {
                     if object.x as f32 + world_offset < rl.get_screen_width() as f32 &&
                     object.x as f32 + world_offset > -40.0 && object.no_touch == 0 {
@@ -1208,6 +1230,7 @@ async fn main() {
                     player_path.push(Vector2 { x: 200.0 - world_offset, y: player.y + player_cam_y as f32 });
                 }
 
+                // This just makes it so if the player is dead then it goes to the game over screen
                 if kill_player {
                     if from_editor {
                         sink.stop();
@@ -1235,6 +1258,9 @@ async fn main() {
 
                 if restart_button.is_clicked(&rl) {
                     game_state = GameState::Menu;
+
+                    // The attempt counter is due for an update honestly
+                    // I need to make it reset every time you go to another level
                     attempt += 1;
                 }
             }
@@ -1354,6 +1380,7 @@ async fn main() {
                         active_tab = EditorTab::Delete;
                     }
 
+                    // This just checks if any of the buttons for selecting an object to place is clicked
                     if obj1_button.is_clicked(&rl) && active_tab == EditorTab::Build {
                         current_object = 1 + _advanced_page_number;
                     }
@@ -1446,6 +1473,8 @@ async fn main() {
                         current_object = 23 + _advanced_page_number;
                     }
 
+                    // This checks if the user has clicked on the grid
+                    // If the user has then it places/edits/deletes an object
                     else if grid_button.is_clicked(&rl) {
                         // let obj_x = snapped_x;
                         // let obj_y = snapped_y;
@@ -1534,6 +1563,7 @@ async fn main() {
                         game_state = GameState::CreatorMenu;
                     }
 
+                    // This just handles saving the level when the save button is clicked
                     if level_save_button.is_clicked(&rl) {
                         level_string = get_level_text(
                             &current_mode,
@@ -1552,6 +1582,7 @@ async fn main() {
                         println!("{:?}", write_result);
                     }
 
+                    // This handles playtesting the level
                     if playtest_button.is_clicked(&rl) {
                         player.y = 500.0;
                         world_offset = -(start_pos as f32 - 200.0);
@@ -1585,6 +1616,7 @@ async fn main() {
                         game_state = GameState::Playing;
                     }
 
+                    // This function checks for most of the keybinds in the editor (not all)
                     editor::keybinds_manager(&mut object_grid, &rl, &mut start_pos);
 
                     if level_upload_button.is_clicked(&rl) {
@@ -1627,6 +1659,7 @@ async fn main() {
                         }
                     }
                 } else {
+                    // This is all the code for the edit object popup
                     set_color_red.update(&rl, delta_time);
                     set_color_green.update(&rl, delta_time);
                     set_color_blue.update(&rl, delta_time);
@@ -1661,6 +1694,7 @@ async fn main() {
                     color_green_textbox.input(&mut color_green_text, &rl);
                     color_blue_textbox.input(&mut color_blue_text, &rl);
 
+                    // These all handle setting the properties of a color trigger
                     if set_color_red.is_clicked(&rl) {
                         let mut obj_index = 0;
                         while obj_index < object_grid.len() {
@@ -1773,6 +1807,7 @@ async fn main() {
                     game_state = GameState::Editor;
                 }
 
+                // These handle the sliders for setting the colors of your level
                 if red_bg_slider.is_clicked(&rl) {
                     red_bg_slider_pos = mouse_y as u8 - 25;
                     bg_red = red_bg_slider_pos - 75;
@@ -1804,6 +1839,7 @@ async fn main() {
                     ground_blue = blue_ground_slider_pos - 355;
                 }
 
+                // These handle setting the level to normal and platformer
                 if set_level_type_normal.is_clicked(&rl) {
                     set_level_type_normal.is_disabled = false;
                     set_level_type_plat.is_disabled = true;
@@ -1829,6 +1865,7 @@ async fn main() {
                     }
                 }
 
+                // This handles entering a level when enter is pressed
                 if rl.is_key_pressed(KeyboardKey::KEY_ENTER) {
                     parts = main_levels[current_level].data.split(";;;").collect();
                     _level_metadata = parts[0];
@@ -1885,6 +1922,9 @@ async fn main() {
                     game_state = GameState::Menu;
                 }
 
+                // This handles setting the song for if you make a custom level
+                // There would be a better way to do this but I'm lazy
+                // I really don't feel like coding in buttons to change the song or whatever
                 if rl.is_key_pressed(KeyboardKey::KEY_S) {
                     current_song = current_level as u8;
                     song_selected = true;
@@ -1904,6 +1944,7 @@ async fn main() {
                     game_state = GameState::CreatorMenu
                 }
 
+                // This handles scrolling
                 if rl.get_mouse_wheel_move() < 0.0 {
                     editor_guide_scroll += 50
                 } else if rl.get_mouse_wheel_move() > 0.0 &&
@@ -1921,6 +1962,7 @@ async fn main() {
                     game_state = GameState::Menu
                 }
 
+                // This handles logging in to your account
                 if login_button.is_clicked(&rl) {
                     let login_url = login_url.to_owned();
 
@@ -1944,6 +1986,7 @@ async fn main() {
                     register_result = "".to_string();
                 }
 
+                // This handles registering an account
                 if register_button.is_clicked(&rl) {
                     let register_url = register_url.to_owned();
 
@@ -1990,7 +2033,9 @@ async fn main() {
                     game_state = GameState::CreatorMenu
                 }
 
+                // This handles uploading a level
                 if upload_button.is_clicked(&rl) {
+                    // You can only upload a level if your logged into an account
                     if logged_in {
                         let level_data = get_level_text(
                             current_mode.as_str(),
@@ -2003,7 +2048,7 @@ async fn main() {
                             ground_blue as u8,
                             &object_grid
                         );
-    
+
                         level_upload_result = post_request(
                             upload_url.clone(),
                             Some(hashmap! {
@@ -2058,6 +2103,7 @@ async fn main() {
                 menu_button.update(&rl, delta_time);
                 level_rate_button.update(&rl, delta_time);
 
+                // This handles entering the level if the play button is clicked
                 if level_play_button.is_clicked(&rl) {
                     let parts: Vec<&str> = online_level_data.split(";;;").collect();
                     let level_loaded = load_level(
@@ -2097,6 +2143,7 @@ async fn main() {
                     player_cam_y = 0;
                     movement_speed = default_movement_speed;
 
+                    // This makes sure that it only enters the level if the level works with the version of the client
                     if level_loaded == "ok" {
                         from_editor = false;
                         player_path.clear();
@@ -2133,7 +2180,11 @@ async fn main() {
 
                 level_id_textbox.input(&mut level_id, &rl);
 
+                // This handles downloading online levels
+                // This also handles parsing the server response
                 if download_level_button.is_clicked(&rl) && level_id.len() > 0 {
+                    // This checks if the level your trying to download has already been downloaded
+                    // This speeds up stuff a lot
                     if cached_levels.contains_key(&level_id) {
                         level_download_result = cached_levels.get(&level_id).unwrap().to_string();
 
@@ -2195,6 +2246,9 @@ async fn main() {
                     online_level_rate_diff += 1;
                 }
 
+                // Handles rating a level
+                // Only I (Puppet) can rate levels at the moment
+                // It's enforced on the server too dw :3
                 if submit_rating_button.is_clicked(&rl) {
                     level_rate_result = post_request(
                         rate_url.clone(),
@@ -2289,6 +2343,7 @@ async fn main() {
                     );
                 }
 
+                // This handles rendering all the objects
                 for i in &object_grid {
                     let object_x = i.x as f32 + world_offset as f32 + 20.0;
                     let object_y = i.y as f32 - player_cam_y as f32 + 20.0;
@@ -2350,6 +2405,7 @@ async fn main() {
                 //     d.draw_texture_ex(&texture_ids.get(&1).unwrap(), Vector2::new(actual_x, 480.0), 0.0, 0.05, cc_1004);
                 // }
 
+                // This handles rendering all the hitboxes if debug mode is on
                 if show_debug_text {
                     for object in &object_grid {
                         if object.x as f32 + world_offset < d.get_screen_width() as f32 &&
@@ -2544,13 +2600,13 @@ async fn main() {
 
                 d.draw_text("Game Over!", 250, 150, 50, Color::WHITE);
                 d.draw_text(&format!("Attempts: {}", attempt), 330, 250, 20, Color::WHITE);
-                
+
                 restart_button.draw(false, None, 1.0, false, &mut d);
             }
             GameState::CreatorMenu => {
                 d.clear_background(Color::WHITE);
                 d.draw_texture_ex(&menu_bg, Vector2::new(-150.0, -90.0), 0.0, 0.8, Color { r:50, g:50, b:50, a:255 });
-                
+
                 // d.draw_text("Editor will be added eventually!", 50, 250, 45, Color::WHITE);
                 menu_button.draw(false, None, 1.0, false, &mut d);
                 create_button.draw(false, None, 1.0, false, &mut d);
@@ -2567,6 +2623,7 @@ async fn main() {
                 d.clear_background(Color::WHITE);
                 d.draw_texture_ex(&game_bg, Vector2::new(0.0, -150.0), 0.0, 0.7, cc_1001);
 
+                // This handles rendering all the objects
                 for i in &object_grid {
                     let object_x = i.x as f32 - cam_pos_x as f32 * 5.0 + 20.0;
                     let object_y = i.y as f32 + cam_pos_y as f32 * 5.0 + 20.0;
@@ -2617,6 +2674,7 @@ async fn main() {
                     }
                 }
 
+                // This handles rendering the line that shows where the level starts
                 d.draw_line(
                     start_pos as i32 - cam_pos_x * 5,
                     0,
@@ -2639,6 +2697,7 @@ async fn main() {
                 d.draw_rectangle_gradient_v(0, cam_pos_y * 5 + 590, 800, 100, Color { r:0, g:0, b:0, a:0 } , Color::BLACK);
                 d.draw_rectangle(0, cam_pos_y * 5 + 690, 800, 500, Color::BLACK);
 
+                // This handles drawing the player path if your playtesting a level
                 for point in &player_path {
                     d.draw_circle(
                         point.x as i32 - cam_pos_x * 5,
@@ -2672,6 +2731,7 @@ async fn main() {
                 if active_tab == EditorTab::Build {
                     let object_button_texture_scale: f32 = 0.04;
 
+                    // This handles drawing the buttons used for selecting an object to place
                     obj1_button.draw(true, Some(texture_ids.get(1).unwrap()), object_button_texture_scale, true, &mut d);
                     obj2_button.draw(true, Some(texture_ids.get(2).unwrap()), object_button_texture_scale, true, &mut d);
                     obj3_button.draw(true, Some(texture_ids.get(3).unwrap()), object_button_texture_scale, true, &mut d);
@@ -2710,6 +2770,7 @@ async fn main() {
                     d.draw_text(&format!("Object Grid: {:?}", object_grid), 10, 250, 20, Color::LIME);
                 }
 
+                // This handles rendering the stuff in the object settings popup
                 if active_popup == ActivePopup::ObjectSettings {
                     d.draw_rectangle(
                         0,
@@ -3125,6 +3186,7 @@ async fn main() {
         }
     }
 
+    // Saving the level your editing and saving your stars and such
     if been_to_editor &&
     game_state == GameState::Editor {
         level_string = get_level_text(
