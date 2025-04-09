@@ -45,6 +45,7 @@ pub struct MainLevel {
 }
 
 #[derive(PartialEq)]
+#[derive(Clone, Copy)]
 pub enum GameMode {
     Cube,
     Ship
