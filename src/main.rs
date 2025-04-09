@@ -425,7 +425,7 @@ async fn main() {
     let mut attempt = 1;
     let mut on_orb: bool = false;
     let mut kill_player: bool = false;
-    let mut texture_ids: HashMap<u32, &Texture2D> = HashMap::new();
+    let mut texture_ids: Vec<&Texture2D> = vec![&_null_texture];
     let mut current_gamemode = GameMode::Cube;
     let mut player_cam_y: i32 = 0;
     let mut touching_block_ceiling: bool = false;
@@ -521,29 +521,29 @@ async fn main() {
     let mut level_rate_result = "".to_string();
     let mut show_server_down = false;
 
-    texture_ids.insert(1, &spike_texture);
-    texture_ids.insert(2, &block_texture);
-    texture_ids.insert(3, &pad_texture);
-    texture_ids.insert(4, &orb_texture);
-    texture_ids.insert(5, &upside_down_portal_texture);
-    texture_ids.insert(6, &right_side_up_portal_texture);
-    texture_ids.insert(7, &short_spike_texture);
-    texture_ids.insert(8, &cube_portal_texture);
-    texture_ids.insert(9, &ship_portal_texture);
-    texture_ids.insert(10, &outline_block1);
-    texture_ids.insert(11, &outline_block2);
-    texture_ids.insert(12, &outline_block3);
-    texture_ids.insert(13, &outline_block4);
-    texture_ids.insert(14, &outline_block5);
-    texture_ids.insert(15, &end_trigger_texture);
-    texture_ids.insert(16, &black_block_texture);
-    texture_ids.insert(17, &normal_speed_texture);
-    texture_ids.insert(18, &double_speed_texture);
-    texture_ids.insert(19, &triple_speed_texture);
-    texture_ids.insert(20, &half_speed_texture);
-    texture_ids.insert(21, &gravity_pad_texture);
-    texture_ids.insert(22, &gravity_orb_texture);
-    texture_ids.insert(23, &color_trigger_texture);
+    texture_ids.push(&spike_texture);
+    texture_ids.push(&block_texture);
+    texture_ids.push(&pad_texture);
+    texture_ids.push(&orb_texture);
+    texture_ids.push(&upside_down_portal_texture);
+    texture_ids.push(&right_side_up_portal_texture);
+    texture_ids.push(&short_spike_texture);
+    texture_ids.push(&cube_portal_texture);
+    texture_ids.push(&ship_portal_texture);
+    texture_ids.push(&outline_block1);
+    texture_ids.push(&outline_block2);
+    texture_ids.push(&outline_block3);
+    texture_ids.push(&outline_block4);
+    texture_ids.push(&outline_block5);
+    texture_ids.push(&end_trigger_texture);
+    texture_ids.push(&black_block_texture);
+    texture_ids.push(&normal_speed_texture);
+    texture_ids.push(&double_speed_texture);
+    texture_ids.push(&triple_speed_texture);
+    texture_ids.push(&half_speed_texture);
+    texture_ids.push(&gravity_pad_texture);
+    texture_ids.push(&gravity_orb_texture);
+    texture_ids.push(&color_trigger_texture);
 
     // Variables for editor stuff
     let mut active_tab = EditorTab::Build;
@@ -2297,44 +2297,44 @@ async fn main() {
                         if from_editor || (i.id != 15 && i.id != 23) {
                             if i.id != 17 && i.id != 18 && i.id != 19 && i.id != 20 {
                                 d.draw_texture_pro(
-                                    &texture_ids.get(&i.id).unwrap(),
+                                    &texture_ids.get(i.id as usize).unwrap(),
                                     Rectangle::new(
                                         0.0,
                                         0.0,
-                                        texture_ids.get(&i.id).unwrap().width as f32,
-                                        texture_ids.get(&i.id).unwrap().height as f32
+                                        texture_ids.get(i.id as usize).unwrap().width as f32,
+                                        texture_ids.get(i.id as usize).unwrap().height as f32
                                     ),
                                     Rectangle::new(
                                         object_x,
                                         object_y,
-                                        texture_ids.get(&i.id).unwrap().width as f32 * 0.05,
-                                        texture_ids.get(&i.id).unwrap().height as f32 * 0.05
+                                        texture_ids.get(i.id as usize).unwrap().width as f32 * 0.05,
+                                        texture_ids.get(i.id as usize).unwrap().height as f32 * 0.05
                                     ),
                                     Vector2::new(
-                                        texture_ids.get(&i.id).unwrap().width as f32 / 2.0 * 0.05,
-                                        texture_ids.get(&i.id).unwrap().height as f32 / 2.0 * 0.05
+                                        texture_ids.get(i.id as usize).unwrap().width as f32 / 2.0 * 0.05,
+                                        texture_ids.get(i.id as usize).unwrap().height as f32 / 2.0 * 0.05
                                     ),
                                     i.rotation as f32,
                                     cc_1004
                                 );
                             } else {
                                 d.draw_texture_pro(
-                                    &texture_ids.get(&i.id).unwrap(),
+                                    &texture_ids.get(i.id as usize).unwrap(),
                                     Rectangle::new(
                                         0.0,
                                         0.0,
-                                        texture_ids.get(&i.id).unwrap().width as f32,
-                                        texture_ids.get(&i.id).unwrap().height as f32
+                                        texture_ids.get(i.id as usize).unwrap().width as f32,
+                                        texture_ids.get(i.id as usize).unwrap().height as f32
                                     ),
                                     Rectangle::new(
                                         object_x + 10.0,
                                         object_y,
-                                        texture_ids.get(&i.id).unwrap().width as f32 * 0.1,
-                                        texture_ids.get(&i.id).unwrap().height as f32 * 0.1
+                                        texture_ids.get(i.id as usize).unwrap().width as f32 * 0.1,
+                                        texture_ids.get(i.id as usize).unwrap().height as f32 * 0.1
                                     ),
                                     Vector2::new(
-                                        texture_ids.get(&i.id).unwrap().width as f32 / 2.0 * 0.1,
-                                        texture_ids.get(&i.id).unwrap().height as f32 / 2.0 * 0.1
+                                        texture_ids.get(i.id as usize).unwrap().width as f32 / 2.0 * 0.1,
+                                        texture_ids.get(i.id as usize).unwrap().height as f32 / 2.0 * 0.1
                                     ),
                                     i.rotation as f32,
                                     cc_1004
@@ -2572,44 +2572,44 @@ async fn main() {
                     let object_y = i.y as f32 + cam_pos_y as f32 * 5.0 + 20.0;
                     if i.id != 17 && i.id != 18 && i.id != 19 && i.id != 20 {
                         d.draw_texture_pro(
-                            &texture_ids.get(&i.id).unwrap(),
+                            &texture_ids.get(i.id as usize).unwrap(),
                             Rectangle::new(
                                 0.0,
                                 0.0,
-                                texture_ids.get(&i.id).unwrap().width as f32,
-                                texture_ids.get(&i.id).unwrap().height as f32
+                                texture_ids.get(i.id as usize).unwrap().width as f32,
+                                texture_ids.get(i.id as usize).unwrap().height as f32
                             ),
                             Rectangle::new(
                                 object_x,
                                 object_y,
-                                texture_ids.get(&i.id).unwrap().width as f32 * 0.05,
-                                texture_ids.get(&i.id).unwrap().height as f32 * 0.05
+                                texture_ids.get(i.id as usize).unwrap().width as f32 * 0.05,
+                                texture_ids.get(i.id as usize).unwrap().height as f32 * 0.05
                             ),
                             Vector2::new(
-                                texture_ids.get(&i.id).unwrap().width as f32 / 2.0 * 0.05,
-                                texture_ids.get(&i.id).unwrap().height as f32 / 2.0 * 0.05
+                                texture_ids.get(i.id as usize).unwrap().width as f32 / 2.0 * 0.05,
+                                texture_ids.get(i.id as usize).unwrap().height as f32 / 2.0 * 0.05
                             ),
                             i.rotation as f32,
                             if i.selected { Color::LIME } else if i.hide == 1 { Color { r:0, g:0, b:0, a:0 } } else { cc_1004 }
                         );
                     } else {
                         d.draw_texture_pro(
-                            &texture_ids.get(&i.id).unwrap(),
+                            &texture_ids.get(i.id as usize).unwrap(),
                             Rectangle::new(
                                 0.0,
                                 0.0,
-                                texture_ids.get(&i.id).unwrap().width as f32,
-                                texture_ids.get(&i.id).unwrap().height as f32
+                                texture_ids.get(i.id as usize).unwrap().width as f32,
+                                texture_ids.get(i.id as usize).unwrap().height as f32
                             ),
                             Rectangle::new(
                                 object_x + 10.0,
                                 object_y,
-                                texture_ids.get(&i.id).unwrap().width as f32 * 0.1,
-                                texture_ids.get(&i.id).unwrap().height as f32 * 0.1
+                                texture_ids.get(i.id as usize).unwrap().width as f32 * 0.1,
+                                texture_ids.get(i.id as usize).unwrap().height as f32 * 0.1
                             ),
                             Vector2::new(
-                                texture_ids.get(&i.id).unwrap().width as f32 / 2.0 * 0.1,
-                                texture_ids.get(&i.id).unwrap().height as f32 / 2.0 * 0.1
+                                texture_ids.get(i.id as usize).unwrap().width as f32 / 2.0 * 0.1,
+                                texture_ids.get(i.id as usize).unwrap().height as f32 / 2.0 * 0.1
                             ),
                             i.rotation as f32,
                             if i.selected { Color::LIME } else if i.hide == 1 { Color { r:0, g:0, b:0, a:0 } } else { cc_1004 }
@@ -2672,29 +2672,29 @@ async fn main() {
                 if active_tab == EditorTab::Build {
                     let object_button_texture_scale: f32 = 0.04;
 
-                    obj1_button.draw(true, Some(texture_ids.get(&1).unwrap()), object_button_texture_scale, true, &mut d);
-                    obj2_button.draw(true, Some(texture_ids.get(&2).unwrap()), object_button_texture_scale, true, &mut d);
-                    obj3_button.draw(true, Some(texture_ids.get(&3).unwrap()), object_button_texture_scale, true, &mut d);
-                    obj4_button.draw(true, Some(texture_ids.get(&4).unwrap()), object_button_texture_scale, true, &mut d);
-                    obj5_button.draw(true, Some(texture_ids.get(&5).unwrap()), object_button_texture_scale, true, &mut d);
-                    obj6_button.draw(true, Some(texture_ids.get(&6).unwrap()), object_button_texture_scale, true, &mut d);
-                    obj7_button.draw(true, Some(texture_ids.get(&7).unwrap()), object_button_texture_scale, true, &mut d);
-                    obj8_button.draw(true, Some(texture_ids.get(&8).unwrap()), object_button_texture_scale, true, &mut d);
-                    obj9_button.draw(true, Some(texture_ids.get(&9).unwrap()), object_button_texture_scale, true, &mut d);
-                    obj10_button.draw(true, Some(texture_ids.get(&10).unwrap()), object_button_texture_scale, true, &mut d);
-                    obj11_button.draw(true, Some(texture_ids.get(&11).unwrap()), object_button_texture_scale, true, &mut d);
-                    obj12_button.draw(true, Some(texture_ids.get(&12).unwrap()), object_button_texture_scale, true, &mut d);
-                    obj13_button.draw(true, Some(texture_ids.get(&13).unwrap()), object_button_texture_scale, true, &mut d);
-                    obj14_button.draw(true, Some(texture_ids.get(&14).unwrap()), object_button_texture_scale, true, &mut d);
-                    obj15_button.draw(true, Some(texture_ids.get(&15).unwrap()), object_button_texture_scale, true, &mut d);
-                    obj16_button.draw(true, Some(texture_ids.get(&16).unwrap()), object_button_texture_scale, true, &mut d);
-                    obj17_button.draw(true, Some(texture_ids.get(&17).unwrap()), object_button_texture_scale, true, &mut d);
-                    obj18_button.draw(true, Some(texture_ids.get(&18).unwrap()), object_button_texture_scale, true, &mut d);
-                    obj19_button.draw(true, Some(texture_ids.get(&19).unwrap()), object_button_texture_scale, true, &mut d);
-                    obj20_button.draw(true, Some(texture_ids.get(&20).unwrap()), object_button_texture_scale, true, &mut d);
-                    obj21_button.draw(true, Some(texture_ids.get(&21).unwrap()), object_button_texture_scale, true, &mut d);
-                    obj22_button.draw(true, Some(texture_ids.get(&22).unwrap()), object_button_texture_scale, true, &mut d);
-                    obj23_button.draw(true, Some(texture_ids.get(&23).unwrap()), object_button_texture_scale, true, &mut d);
+                    obj1_button.draw(true, Some(texture_ids.get(1).unwrap()), object_button_texture_scale, true, &mut d);
+                    obj2_button.draw(true, Some(texture_ids.get(2).unwrap()), object_button_texture_scale, true, &mut d);
+                    obj3_button.draw(true, Some(texture_ids.get(3).unwrap()), object_button_texture_scale, true, &mut d);
+                    obj4_button.draw(true, Some(texture_ids.get(4).unwrap()), object_button_texture_scale, true, &mut d);
+                    obj5_button.draw(true, Some(texture_ids.get(5).unwrap()), object_button_texture_scale, true, &mut d);
+                    obj6_button.draw(true, Some(texture_ids.get(6).unwrap()), object_button_texture_scale, true, &mut d);
+                    obj7_button.draw(true, Some(texture_ids.get(7).unwrap()), object_button_texture_scale, true, &mut d);
+                    obj8_button.draw(true, Some(texture_ids.get(8).unwrap()), object_button_texture_scale, true, &mut d);
+                    obj9_button.draw(true, Some(texture_ids.get(9).unwrap()), object_button_texture_scale, true, &mut d);
+                    obj10_button.draw(true, Some(texture_ids.get(10).unwrap()), object_button_texture_scale, true, &mut d);
+                    obj11_button.draw(true, Some(texture_ids.get(11).unwrap()), object_button_texture_scale, true, &mut d);
+                    obj12_button.draw(true, Some(texture_ids.get(12).unwrap()), object_button_texture_scale, true, &mut d);
+                    obj13_button.draw(true, Some(texture_ids.get(13).unwrap()), object_button_texture_scale, true, &mut d);
+                    obj14_button.draw(true, Some(texture_ids.get(14).unwrap()), object_button_texture_scale, true, &mut d);
+                    obj15_button.draw(true, Some(texture_ids.get(15).unwrap()), object_button_texture_scale, true, &mut d);
+                    obj16_button.draw(true, Some(texture_ids.get(16).unwrap()), object_button_texture_scale, true, &mut d);
+                    obj17_button.draw(true, Some(texture_ids.get(17).unwrap()), object_button_texture_scale, true, &mut d);
+                    obj18_button.draw(true, Some(texture_ids.get(18).unwrap()), object_button_texture_scale, true, &mut d);
+                    obj19_button.draw(true, Some(texture_ids.get(19).unwrap()), object_button_texture_scale, true, &mut d);
+                    obj20_button.draw(true, Some(texture_ids.get(20).unwrap()), object_button_texture_scale, true, &mut d);
+                    obj21_button.draw(true, Some(texture_ids.get(21).unwrap()), object_button_texture_scale, true, &mut d);
+                    obj22_button.draw(true, Some(texture_ids.get(22).unwrap()), object_button_texture_scale, true, &mut d);
+                    obj23_button.draw(true, Some(texture_ids.get(23).unwrap()), object_button_texture_scale, true, &mut d);
                 }
 
                 d.draw_text(&format!("Selected Object: {}", objects.get(&current_object).unwrap()), 10, 10, 20, Color::WHITE);
