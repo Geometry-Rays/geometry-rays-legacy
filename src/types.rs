@@ -52,6 +52,7 @@ pub enum GameMode {
 
 // Enums, Structs, And functions that are used by the editor
 #[derive(PartialEq)]
+#[derive(Clone, Copy)]
 pub enum EditorTab {
     Build,
     Edit,

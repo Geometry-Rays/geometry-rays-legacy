@@ -13,6 +13,10 @@ mod types;
 use funcs::*;
 use types::*;
 
+#[allow(non_snake_case)]
+mod MenuLogic;
+use MenuLogic::editor;
+
 #[tokio::main]
 async fn main() {
     let (mut rl, thread) = raylib::init()
@@ -1415,7 +1419,7 @@ async fn main() {
                     if three_pressed {
                         active_tab = EditorTab::Delete;
                     }
-                    
+
                     if obj1_button.is_clicked(&rl) && active_tab == EditorTab::Build {
                         current_object = 1 + _advanced_page_number;
                     }
@@ -1518,77 +1522,19 @@ async fn main() {
                         && !level_upload_button.is_clicked(&rl)
                         && !no_touch_toggle.is_clicked(&rl)
                         && !hide_toggle.is_clicked(&rl) {
-                            if active_tab == EditorTab::Build {
-                                object_grid.push(ObjectStruct {
-                                    y: if snapped_y < 0 { snapped_y - 40 } else { snapped_y },
-                                    x: if snapped_x < 0 { snapped_x - 40 } else { snapped_x },
-                                    no_touch: 0,
-                                    hide: 0,
-                                    id: current_object,
-                                    rotation: 0,
-                                    selected: false,
-                                    properties: if current_object == 23 { Some(
-                                        vec![
-                                            "50".to_string(),
-                                            "50".to_string(),
-                                            "50".to_string(),
-                                            "1".to_string()
-                                        ]
-                                    )} else {
-                                        None
-                                    }
-                                });
-                            } else if active_tab == EditorTab::Delete {
-                                let mut obj_index = 0;
-                                while obj_index < object_grid.len() {
-                                    if object_grid[obj_index].x == if snapped_x < 0 { snapped_x - 40 } else { snapped_x }
-                                    && object_grid[obj_index].y == if snapped_y < 0 { snapped_y - 40 } else { snapped_y } {
-                                        object_grid.remove(obj_index);
-                                        break;
-                                    } else {
-                                        obj_index += 1;
-                                    }
-                                }
-                            } else if active_tab == EditorTab::Edit {
-                                let mut obj_index = 0;
-                                while obj_index < object_grid.len() {
-                                    if object_grid[obj_index].x == if snapped_x < 0 { snapped_x - 40 } else { snapped_x }
-                                    && object_grid[obj_index].y == if snapped_y < 0 { snapped_y - 40 } else { snapped_y }
-                                    && !object_grid[obj_index].selected {
-                                        if rl.is_key_up(KeyboardKey::KEY_LEFT_SHIFT) {
-                                            let mut objj_index = 0;
-                                            while objj_index < object_grid.len() {
-                                                object_grid[objj_index].selected = false;
-                                                objj_index += 1
-                                            }
-                                        }
-
-                                        object_grid[obj_index].selected = true;
-                                        selected_object = object_grid[obj_index].id as u16;
-
-                                        if object_grid[obj_index].no_touch == 1 {
-                                            no_touch_toggle.is_disabled = false;
-                                        } else {
-                                            no_touch_toggle.is_disabled = true;
-                                        }
-
-                                        if object_grid[obj_index].hide == 1 {
-                                            hide_toggle.is_disabled = false;
-                                        } else {
-                                            hide_toggle.is_disabled = true;
-                                        }
-
-                                        if object_grid[obj_index].id == 23 {
-                                            object_settings.is_disabled = false
-                                        } else {
-                                            object_settings.is_disabled = true
-                                        }
-                                        break;
-                                    } else {
-                                        obj_index += 1;
-                                    }
-                                }
-                            }
+                            // Calls the function for handling object related stuff
+                            editor::object_ped(
+                                &mut object_grid,
+                                active_tab,
+                                snapped_x,
+                                snapped_y,
+                                current_object,
+                                &mut selected_object,
+                                &mut no_touch_toggle,
+                                &mut hide_toggle,
+                                &mut object_settings,
+                                &rl
+                            );
                         }
                     }
 
@@ -1705,165 +1651,10 @@ async fn main() {
                         game_state = GameState::Playing;
                     }
 
-                    if rl.is_key_pressed(KeyboardKey::KEY_DELETE) {
-                        let mut obj_index = 0;
-                        while obj_index < object_grid.len() {
-                            if object_grid[obj_index].selected {
-                                object_grid.remove(obj_index);
-                            } else {
-                                obj_index += 1;
-                            }
-                        }
-                    }
-
-                    if rl.is_key_pressed(KeyboardKey::KEY_A) {
-                        let mut obj_index = 0;
-                        while obj_index < object_grid.len() {
-                            if object_grid[obj_index].selected {
-                                object_grid[obj_index].x -= 40;
-                                obj_index += 1;
-                            } else {
-                                obj_index += 1;
-                            }
-                        }
-                    }
-
-                    if rl.is_key_pressed(KeyboardKey::KEY_D) {
-                        let mut obj_index = 0;
-                        while obj_index < object_grid.len() {
-                            if object_grid[obj_index].selected {
-                                object_grid[obj_index].x += 40;
-                                obj_index += 1;
-                            } else {
-                                obj_index += 1;
-                            }
-                        }
-                    }
-
-                    if rl.is_key_pressed(KeyboardKey::KEY_W) {
-                        let mut obj_index = 0;
-                        while obj_index < object_grid.len() {
-                            if object_grid[obj_index].selected {
-                                object_grid[obj_index].y -= 40;
-                                obj_index += 1;
-                            } else {
-                                obj_index += 1;
-                            }
-                        }
-                    }
-
-                    if rl.is_key_pressed(KeyboardKey::KEY_S) {
-                        let mut obj_index = 0;
-                        while obj_index < object_grid.len() {
-                            if object_grid[obj_index].selected {
-                                object_grid[obj_index].y += 40;
-                                obj_index += 1;
-                            } else {
-                                obj_index += 1;
-                            }
-                        }
-                    }
-
-                    if rl.is_key_pressed(KeyboardKey::KEY_J) {
-                        let mut obj_index = 0;
-                        while obj_index < object_grid.len() {
-                            if object_grid[obj_index].selected {
-                                object_grid[obj_index].x -= 1;
-                                obj_index += 1;
-                            } else {
-                                obj_index += 1;
-                            }
-                        }
-                    }
-
-                    if rl.is_key_pressed(KeyboardKey::KEY_L) {
-                        let mut obj_index = 0;
-                        while obj_index < object_grid.len() {
-                            if object_grid[obj_index].selected {
-                                object_grid[obj_index].x += 1;
-                                obj_index += 1;
-                            } else {
-                                obj_index += 1;
-                            }
-                        }
-                    }
-
-                    if rl.is_key_pressed(KeyboardKey::KEY_I) {
-                        let mut obj_index = 0;
-                        while obj_index < object_grid.len() {
-                            if object_grid[obj_index].selected {
-                                object_grid[obj_index].y -= 1;
-                                obj_index += 1;
-                            } else {
-                                obj_index += 1;
-                            }
-                        }
-                    }
-
-                    if rl.is_key_pressed(KeyboardKey::KEY_K) {
-                        let mut obj_index = 0;
-                        while obj_index < object_grid.len() {
-                            if object_grid[obj_index].selected {
-                                object_grid[obj_index].y += 1;
-                                obj_index += 1;
-                            } else {
-                                obj_index += 1;
-                            }
-                        }
-                    }
-
-                    if rl.is_key_pressed(KeyboardKey::KEY_Q) {
-                        let mut obj_index = 0;
-                        while obj_index < object_grid.len() {
-                            if object_grid[obj_index].selected {
-                                if object_grid[obj_index].rotation != -270 {
-                                    object_grid[obj_index].rotation -= 90;
-                                } else {
-                                    object_grid[obj_index].rotation = 0;
-                                }
-
-                                obj_index += 1;
-                            } else {
-                                obj_index += 1;
-                            }
-                        }
-                    }
-
-                    if rl.is_key_pressed(KeyboardKey::KEY_E) {
-                        let mut obj_index = 0;
-                        while obj_index < object_grid.len() {
-                            if object_grid[obj_index].selected {
-                                if object_grid[obj_index].rotation != 270 {
-                                    object_grid[obj_index].rotation += 90;
-                                } else {
-                                    object_grid[obj_index].rotation = 0;
-                                }
-
-                                obj_index += 1;
-                            } else {
-                                obj_index += 1;
-                            }
-                        }
-                    }
+                    editor::keybinds_manager(&mut object_grid, &rl, &mut start_pos);
 
                     if level_upload_button.is_clicked(&rl) {
                         game_state = GameState::LevelUpload
-                    }
-
-                    if rl.is_key_down(KeyboardKey::KEY_PERIOD) {
-                        if rl.is_key_down(KeyboardKey::KEY_LEFT_CONTROL) {
-                            start_pos += 25
-                        } else {
-                            start_pos += 5;
-                        }
-                    }
-
-                    if rl.is_key_down(KeyboardKey::KEY_COMMA) && start_pos > 0 {
-                        if rl.is_key_down(KeyboardKey::KEY_LEFT_CONTROL) {
-                            start_pos -= 25
-                        } else {
-                            start_pos -= 5;
-                        }
                     }
 
                     if no_touch_toggle.is_clicked(&rl) {
