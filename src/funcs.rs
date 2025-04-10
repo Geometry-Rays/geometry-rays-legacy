@@ -322,6 +322,8 @@ impl TextBox {
     }
 }
 
+// This is just a macro I use for making hashmaps
+// I don't feel like using HashMap::from() lol
 #[macro_export]
 macro_rules! hashmap {
     ( $( $x:expr => $x1:expr ),* ) => {
@@ -339,6 +341,7 @@ macro_rules! hashmap {
     }
 }
 
+// Function used for converting a level into text
 pub fn get_level_text(current_mode: &str, current_song: u8, bg_red: u8, bg_green: u8, bg_blue: u8, ground_red: u8, ground_green: u8, ground_blue: u8, object_grid: &Vec<ObjectStruct>) -> String {
     let mut level_string = format!(
         "version:1.4;mode:{};song:{};c1001:{},{},{};c1002:{},{},{};c1004:255,255,255;bg:1;grnd:1;;;",
@@ -390,6 +393,7 @@ pub fn get_level_text(current_mode: &str, current_song: u8, bg_red: u8, bg_green
     level_string
 }
 
+// The function for loading levels
 pub fn load_level(
     _level_metadata: &mut String,
     _object_string: &mut String,
@@ -412,6 +416,7 @@ pub fn load_level(
 ) -> String {
     let mut level_version = "";
 
+    // This handles the level metadata
     object_grid.clear();
     let metadata_pairs: Vec<&str> = _level_metadata.split(';').collect();
     *current_mode = "1".to_string();
@@ -463,6 +468,7 @@ pub fn load_level(
         }
     }
 
+    // This handles loading all the objects
     let object_list: Vec<&str> = _object_string.split(';').collect();
     for object in object_list {
         let xyrid: Vec<&str> = object.split(':').collect();
@@ -494,6 +500,7 @@ pub fn load_level(
     return "ok".to_string()
 }
 
+// This is the function for parsing the level download response from the servers
 pub fn parse_level_download_response(
     level_download_result: String,
     online_level_name: &mut String,
