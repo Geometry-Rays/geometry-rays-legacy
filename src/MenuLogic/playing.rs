@@ -82,7 +82,7 @@ pub fn physics_handle(
 
     // This handles the ground logic and the player rotation
     if player.y >= 500.0 - *player_cam_y as f32 {
-        player.y = 500.0;
+        player.y = 500.0 - *player_cam_y as f32;
         *velocity_y = 0.0;
         *is_on_ground = true;
         *rotation = 0.0;
