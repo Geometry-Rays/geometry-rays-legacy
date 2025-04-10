@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-raylib = "5.5.0"
+raylib = "5.5.1"
 rodio = "0.20.1"
 webbrowser = "1.0.4"
 tokio = { version = "1.44.1", features = ["full"] }
