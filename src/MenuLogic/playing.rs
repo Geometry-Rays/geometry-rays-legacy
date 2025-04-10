@@ -23,11 +23,15 @@ pub fn physics_handle(
     rl: &RaylibHandle
 ) {
     if current_gamemode == GameMode::Cube {
+        // This is what handles jumping if your in the cube
         if *is_on_ground && (space_down || mouse_down) {
             *velocity_y = jump_force;
             *is_on_ground = false;
         }
     } else if current_gamemode == GameMode::Ship {
+        // This is what handles flying up and down in the ship
+        // Back before I made the ship I planned on your gravity just changing if your holding
+        // But I didn't go with that because then the ship physics would suck
         if !touching_block_ceiling {
             if mouse_down || space_down {
                 if gravity > 0.0 {
@@ -55,6 +59,7 @@ pub fn physics_handle(
         }
     }
 
+    // This handles moving forward and backward
     if current_mode == "1" {
         *world_offset -= movement_speed;
     } else if current_mode == "2" {
@@ -68,17 +73,22 @@ pub fn physics_handle(
             *moving_direction = 0
         }
     }
+
+    // This handles making the player fall down
     if current_gamemode == GameMode::Cube && *velocity_y < 20.0 && *velocity_y > -20.0 {
         *velocity_y += gravity;
     }
     player.y += *velocity_y as f32;
 
+    // This handles the ground logic and the player rotation
     if player.y >= 500.0 - *player_cam_y as f32 {
         player.y = 500.0;
         *velocity_y = 0.0;
         *is_on_ground = true;
         *rotation = 0.0;
     } else {
+        // If in platformer the player only rotates if they are moving
+        // They rotate different directions based on gravity and direction
         if gravity > 0.0 {
             if *moving_direction == 1
             || current_mode == "1" {
@@ -100,6 +110,7 @@ pub fn physics_handle(
         }
     }
 
+    // This handles moving the camera up or down if the player is in a certain spot on the screen
     if player.y >= 501.0 {
         *player_cam_y += *velocity_y as i32;
         player.y = 502.0
