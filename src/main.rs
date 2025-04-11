@@ -52,9 +52,9 @@ async fn main() {
         .expect("Failed to load right side up portal texture");
     let short_spike_texture = rl.load_texture(&thread, "Resources/short-spike.png")
         .expect("Failed to load short spike texture");
-    let cube_portal_texture = rl.load_texture(&thread, "Resources/cube-portal.png")
+    let cube_portal_texture = rl.load_texture(&thread, "Resources/gamemode-portals/cube-portal.png")
         .expect("Failed to load cube portal texture");
-    let ship_portal_texture = rl.load_texture(&thread, "Resources/ship-portal.png")
+    let ship_portal_texture = rl.load_texture(&thread, "Resources/gamemode-portals/ship-portal.png")
         .expect("Failed to load ship portal texture");
     let outline_block1 = rl.load_texture(&thread, "Resources/blocks/outline-block.png")
         .expect("Failed to load outline block");
