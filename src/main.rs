@@ -447,7 +447,7 @@ async fn main() {
     let ship_falling_speed: f32 = 0.5;
 
     // More important variables I didn't feel like sorting
-    let version = "1.41";
+    let version = "1.5";
     let latest_version = std::sync::Arc::new(std::sync::Mutex::new(String::from("Loading...")));
     let mut not_done_yet_text = false;
     let mut show_debug_text = false;
@@ -503,7 +503,7 @@ async fn main() {
     let mut logged_in: bool = false;
     let mut online_levels_beaten: Vec<u16> = vec![];
     let mut is_mod: bool = false;
-    let default_level: &str = "version:1.4;mode:1;song:0;c1001:0,0,50;c1002:0,0,100;c1004:255,255,255;bg:1;grnd:1;;;480:480:0:0:0:1";
+    let default_level: &str = "version:1.5;mode:1;song:0;c1001:0,0,50;c1002:0,0,100;c1004:255,255,255;bg:1;grnd:1;;;480:480:0:0:0:1";
     let mut start_pos: u16 = 0;
     let in_debug_build = cfg!(debug_assertions);
     let mut cached_levels: HashMap<String, String> = HashMap::new();

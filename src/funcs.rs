@@ -344,7 +344,7 @@ macro_rules! hashmap {
 // Function used for converting a level into text
 pub fn get_level_text(current_mode: &str, current_song: u8, bg_red: u8, bg_green: u8, bg_blue: u8, ground_red: u8, ground_green: u8, ground_blue: u8, object_grid: &Vec<ObjectStruct>) -> String {
     let mut level_string = format!(
-        "version:1.4;mode:{};song:{};c1001:{},{},{};c1002:{},{},{};c1004:255,255,255;bg:1;grnd:1;;;",
+        "version:1.5;mode:{};song:{};c1001:{},{},{};c1002:{},{},{};c1004:255,255,255;bg:1;grnd:1;;;",
 
         current_mode,
         current_song,
@@ -432,7 +432,8 @@ pub fn load_level(
                 break;
             } else if value == "BETA"
             || value == "1.3"
-            || value == "1.4" {
+            || value == "1.4"
+            || value == "1.5" {
                 println!("Loading level...");
             } else {
                 println!("Level version not recognized.");
