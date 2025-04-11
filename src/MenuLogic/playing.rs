@@ -82,7 +82,11 @@ pub fn physics_handle(
 
     // This handles making the player fall down
     if (current_gamemode == GameMode::Cube || current_gamemode == GameMode::Ball) && *velocity_y < 20.0 && *velocity_y > -20.0 {
-        *velocity_y += *gravity;
+        if current_gamemode == GameMode::Cube {
+            *velocity_y += *gravity;
+        } else {
+            *velocity_y += *gravity - if *gravity > 0.0 { 0.2 } else { -0.2 };
+        }
     }
     player.y += *velocity_y as f32;
 
