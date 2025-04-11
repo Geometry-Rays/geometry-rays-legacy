@@ -883,7 +883,7 @@ async fn main() {
                     mouse_down,
                     &mut velocity_y,
                     jump_force,
-                    gravity,
+                    &mut gravity,
                     touching_block_ceiling,
                     ship_power,
                     ship_falling_speed,
@@ -1105,7 +1105,9 @@ async fn main() {
                             });
                         }
 
-                        if object.id == 8 || object.id == 9 {
+                        if object.id == 8
+                        || object.id == 9
+                        || object.id == 24 {
                             if centered_player.check_collision_recs(&Rectangle {
                                 x: object.x as f32 + world_offset + if object.rotation == 0 || object.rotation == 180 || object.rotation == -180 { 10.0 } else { -20.0 },
                                 y: object.y as f32 - if object.rotation == 0 || object.rotation == 180 || object.rotation == -180 { 11.0 } else { -11.0 } - player_cam_y as f32,
@@ -1116,9 +1118,13 @@ async fn main() {
                                     current_gamemode = GameMode::Cube;
                                     cc_1003 = Color::LIME;
                                     is_on_ground = false
-                                } else {
+                                } else if object.id == 9 {
                                     current_gamemode = GameMode::Ship;
                                     cc_1003 = Color::MAGENTA;
+                                    is_on_ground = false
+                                } else if object.id == 24 {
+                                    current_gamemode = GameMode::Ball;
+                                    cc_1003 = Color::RED;
                                     is_on_ground = false
                                 }
                             }

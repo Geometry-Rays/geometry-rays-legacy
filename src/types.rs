@@ -48,7 +48,8 @@ pub struct MainLevel {
 #[derive(Clone, Copy)]
 pub enum GameMode {
     Cube,
-    Ship
+    Ship,
+    Ball
 }
 
 // Enums, Structs, And functions that are used by the editor

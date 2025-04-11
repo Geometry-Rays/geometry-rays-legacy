@@ -9,7 +9,7 @@ pub fn physics_handle(
     mouse_down: bool,
     velocity_y: &mut f32,
     jump_force: f32,
-    gravity: f32,
+    gravity: &mut f32,
     touching_block_ceiling: bool,
     ship_power: f32,
     ship_falling_speed: f32,
@@ -34,7 +34,7 @@ pub fn physics_handle(
         // But I didn't go with that because then the ship physics would suck
         if !touching_block_ceiling {
             if mouse_down || space_down {
-                if gravity > 0.0 {
+                if *gravity > 0.0 {
                     if *velocity_y > -10.0 {
                         *velocity_y -= ship_power
                     }
@@ -44,7 +44,7 @@ pub fn physics_handle(
                     }
                 }
             } else {
-                if gravity > 0.0 {
+                if *gravity > 0.0 {
                     if *velocity_y < 10.0 {
                         *velocity_y += ship_falling_speed
                     }
@@ -56,6 +56,12 @@ pub fn physics_handle(
             }
         } else {
             *velocity_y = 0.0
+        }
+    } else if current_gamemode == GameMode::Ball {
+        // This is what handles changing gravity if your in the ball
+        if *is_on_ground && (space_down || mouse_down) {
+            *gravity = -*gravity;
+            *is_on_ground = false;
         }
     }
 
@@ -75,8 +81,8 @@ pub fn physics_handle(
     }
 
     // This handles making the player fall down
-    if current_gamemode == GameMode::Cube && *velocity_y < 20.0 && *velocity_y > -20.0 {
-        *velocity_y += gravity;
+    if (current_gamemode == GameMode::Cube || current_gamemode == GameMode::Ball) && *velocity_y < 20.0 && *velocity_y > -20.0 {
+        *velocity_y += *gravity;
     }
     player.y += *velocity_y as f32;
 
@@ -89,7 +95,7 @@ pub fn physics_handle(
     } else {
         // If in platformer the player only rotates if they are moving
         // They rotate different directions based on gravity and direction
-        if gravity > 0.0 {
+        if *gravity > 0.0 {
             if *moving_direction == 1
             || current_mode == "1" {
                 *rotation += 5.0;
