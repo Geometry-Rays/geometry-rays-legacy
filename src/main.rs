@@ -509,6 +509,7 @@ async fn main() {
     let mut cached_levels: HashMap<String, String> = HashMap::new();
     let mut current_mode: String = "1".to_string();
     let mut moving_direction: u8 = 0;
+    let mut bg_offset: f32 = 0.0;
 
     // Variables for server stuff
     let mut get_latest_version = true;
@@ -2339,15 +2340,21 @@ async fn main() {
             }
             GameState::Playing => {
                 d.clear_background(Color::WHITE);
-                d.draw_texture_ex(&game_bg, Vector2::new(0.0, -150.0), 0.0, 0.7, cc_1001);
-                
+                d.draw_texture_ex(&game_bg, Vector2::new(bg_offset, -150.0), 0.0, 0.7, cc_1001);
+                d.draw_texture_ex(&game_bg, Vector2::new(bg_offset + 1344.0, -150.0), 0.0, 0.7, cc_1001);
+                if bg_offset > -1344.0 {
+                    bg_offset -= 1.0;
+                } else {
+                    bg_offset = 0.0;
+                }
+
                 d.draw_rectangle_pro(
                     player,
                     Vector2::new(player.width / 2.0, player.height / 2.0),
                     rotation,
                     cc_1003,
                 );
-                
+
                 // Draw ground
                 for i in 0..6 {
                     d.draw_texture_ex(
