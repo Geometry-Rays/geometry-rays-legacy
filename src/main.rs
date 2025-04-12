@@ -2374,8 +2374,8 @@ async fn main() {
                     );
                 }
 
-                if grnd_offset > -150.0
-                && grnd_offset < 150.0 {
+                if grnd_offset > -140.0
+                && grnd_offset < 140.0 {
                     if current_mode == "1"
                     || moving_direction == 1 {
                         grnd_offset -= movement_speed
