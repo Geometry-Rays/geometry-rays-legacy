@@ -2343,7 +2343,7 @@ async fn main() {
                 d.draw_texture_ex(&game_bg, Vector2::new(bg_offset, -150.0), 0.0, 0.7, cc_1001);
                 d.draw_texture_ex(&game_bg, Vector2::new(bg_offset + 1344.0, -150.0), 0.0, 0.7, cc_1001);
                 if bg_offset > -1344.0 {
-                    bg_offset -= 1.0;
+                    bg_offset -= movement_speed / 7.0;
                 } else {
                     bg_offset = 0.0;
                 }
