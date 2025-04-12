@@ -510,6 +510,7 @@ async fn main() {
     let mut current_mode: String = "1".to_string();
     let mut moving_direction: u8 = 0;
     let mut bg_offset: f32 = 0.0;
+    let mut grnd_offset: f32 = 0.0;
 
     // Variables for server stuff
     let mut get_latest_version = true;
@@ -2363,14 +2364,26 @@ async fn main() {
                 );
 
                 // Draw ground
-                for i in 0..6 {
+                for i in -1..7 {
                     d.draw_texture_ex(
                         &ground_texture,
-                        Vector2::new(i as f32 * 150.0, 520.0 - player_cam_y as f32),
+                        Vector2::new(i as f32 * 150.0 + grnd_offset, 520.0 - player_cam_y as f32),
                         0.0,
                         0.2,
                         cc_1002,
                     );
+                }
+
+                if grnd_offset > -150.0
+                && grnd_offset < 150.0 {
+                    if current_mode == "1"
+                    || moving_direction == 1 {
+                        grnd_offset -= movement_speed
+                    } else if moving_direction == 2 {
+                        grnd_offset += movement_speed
+                    }
+                } else {
+                    grnd_offset = 0.0
                 }
 
                 // This handles rendering all the objects
