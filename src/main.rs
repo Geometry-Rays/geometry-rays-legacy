@@ -2342,8 +2342,15 @@ async fn main() {
                 d.clear_background(Color::WHITE);
                 d.draw_texture_ex(&game_bg, Vector2::new(bg_offset, -150.0), 0.0, 0.7, cc_1001);
                 d.draw_texture_ex(&game_bg, Vector2::new(bg_offset + 1344.0, -150.0), 0.0, 0.7, cc_1001);
-                if bg_offset > -1344.0 {
-                    bg_offset -= movement_speed / 7.0;
+                d.draw_texture_ex(&game_bg, Vector2::new(bg_offset - 1344.0, -150.0), 0.0, 0.7, cc_1001);
+                if bg_offset > -1344.0
+                && bg_offset < 1344.0 {
+                    if current_mode == "1"
+                    || moving_direction == 1 {
+                        bg_offset -= movement_speed / 7.0;
+                    } else if moving_direction == 2 {
+                        bg_offset += movement_speed / 7.0;
+                    }
                 } else {
                     bg_offset = 0.0;
                 }
