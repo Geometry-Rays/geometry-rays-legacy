@@ -3,6 +3,8 @@ use rodio::{Decoder, OutputStream, Sink, Source};
 use std::fs::File;
 use std::fs;
 use std::io::BufReader;
+use std::sync::Arc;
+use std::sync::Mutex;
 use webbrowser;
 use std::collections::HashMap;
 
@@ -448,7 +450,7 @@ async fn main() {
 
     // More important variables I didn't feel like sorting
     let version = "1.51";
-    let latest_version = std::sync::Arc::new(std::sync::Mutex::new(String::from("Loading...")));
+    let latest_version = Arc::new(Mutex::new(String::from("Loading...")));
     let mut not_done_yet_text = false;
     let mut show_debug_text = false;
     let main_levels: Vec<MainLevel> = vec![
