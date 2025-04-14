@@ -16,6 +16,7 @@ pub enum GameState {
     LevelPage,
     SearchPage,
     LevelRate,
+    OptionsMenu,
 }
 
 #[derive(PartialEq)]
