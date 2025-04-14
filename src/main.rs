@@ -460,7 +460,7 @@ async fn main() {
     let ship_falling_speed: f32 = 0.5;
 
     // More important variables I didn't feel like sorting
-    let version = "1.51";
+    let version = "1.52";
     let latest_version = Arc::new(Mutex::new(String::from("Loading...")));
     let mut not_done_yet_text = false;
     let mut show_debug_text = false;
