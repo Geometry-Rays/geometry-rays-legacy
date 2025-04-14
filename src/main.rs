@@ -412,6 +412,16 @@ async fn main() {
         true
     );
 
+    let mut legacy_grnd_bg_toggle = Button::new(
+        rl.get_screen_width() as f32 / 2.0 - 65.0,
+        140.0,
+        130.0,
+        130.0,
+        "Grnd & bg moving",
+        15,
+        false
+    );
+
     // Url's for server requests
     let main_url = "http://georays.puppet57.xyz/php-code/".to_string();
     let latest_version_url: String = format!("{}get-latest-version.php", main_url).to_string();
@@ -514,6 +524,9 @@ async fn main() {
     let mut moving_direction: u8 = 0;
     let mut bg_offset: f32 = 0.0;
     let mut grnd_offset: f32 = 0.0;
+    let mut options: Vec<bool> = vec![
+        true
+    ];
 
     // Variables for server stuff
     let mut get_latest_version = true;
@@ -2294,8 +2307,20 @@ async fn main() {
             GameState::OptionsMenu => {
                 menu_button.update(&rl, delta_time);
 
+                legacy_grnd_bg_toggle.update(&rl, delta_time);
+
                 if menu_button.is_clicked(&rl) {
                     game_state = GameState::Menu
+                }
+
+                if legacy_grnd_bg_toggle.is_clicked(&rl) {
+                    if options[0] {
+                        options[0] = false;
+                        legacy_grnd_bg_toggle.is_disabled = true
+                    } else {
+                        options[0] = true;
+                        legacy_grnd_bg_toggle.is_disabled = false
+                    }
                 }
             }
         }
@@ -2361,7 +2386,8 @@ async fn main() {
                 d.draw_texture_ex(&game_bg, Vector2::new(bg_offset + 1344.0, -150.0), 0.0, 0.7, cc_1001);
                 d.draw_texture_ex(&game_bg, Vector2::new(bg_offset - 1344.0, -150.0), 0.0, 0.7, cc_1001);
                 if bg_offset > -1344.0
-                && bg_offset < 1344.0 {
+                && bg_offset < 1344.0
+                && options[0] {
                     if current_mode == "1"
                     || moving_direction == 1 {
                         bg_offset -= movement_speed / 7.0;
@@ -2391,7 +2417,8 @@ async fn main() {
                 }
 
                 if grnd_offset > -140.0
-                && grnd_offset < 140.0 {
+                && grnd_offset < 140.0
+                && options[0] {
                     if current_mode == "1"
                     || moving_direction == 1 {
                         grnd_offset -= movement_speed
@@ -3247,6 +3274,8 @@ async fn main() {
                 d.clear_background(Color::BLACK);
 
                 menu_button.draw(false, None, 1.0, false, &mut d);
+
+                legacy_grnd_bg_toggle.draw(false, None, 1.0, false, &mut d);
             }
         }
     }
