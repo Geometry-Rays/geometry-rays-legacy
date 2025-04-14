@@ -976,14 +976,14 @@ async fn main() {
                                 });
                             } else if centered_player.check_collision_recs(&Rectangle {
                                 x: object.x as f32 + world_offset,
-                                y: object.y as f32 + 20.0,
+                                y: object.y as f32 + 20.0 - player_cam_y as f32,
                                 width: 3.0,
                                 height: 10.0
                             }) {
                                 world_offset = -(object.x as f32 - 220.0)
                             } else if centered_player.check_collision_recs(&Rectangle {
                                 x: object.x as f32 + 40.0 + world_offset,
-                                y: object.y as f32 + 20.0,
+                                y: object.y as f32 + 20.0 - player_cam_y as f32,
                                 width: 3.0,
                                 height: 10.0
                             }) {
@@ -2524,7 +2524,7 @@ async fn main() {
                                 } else {
                                     d.draw_rectangle_lines(
                                         object.x + world_offset as i32,
-                                        object.y + 20,
+                                        object.y + 20 - player_cam_y,
                                         3,
                                         10,
                                         Color::BLUEVIOLET
@@ -2532,7 +2532,7 @@ async fn main() {
 
                                     d.draw_rectangle_lines(
                                         object.x + 40 + world_offset as i32,
-                                        object.y + 20,
+                                        object.y + 20 - player_cam_y,
                                         3,
                                         10,
                                         Color::BLUEVIOLET
