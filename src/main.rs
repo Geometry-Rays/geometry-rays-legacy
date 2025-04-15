@@ -1277,7 +1277,14 @@ async fn main() {
                 }
 
                 if rl.is_key_pressed(KeyboardKey::KEY_B) {
-                    game_state = GameState::LevelSelect;
+                    if from_editor {
+                        sink.stop();
+                        sink.append(menu_loop.clone());
+                        sink.play();
+                        game_state = GameState::Editor
+                    } else {
+                        game_state = GameState::LevelSelect
+                    }
                 }
 
                 if rl.is_mouse_button_released(MouseButton::MOUSE_BUTTON_LEFT) ||
