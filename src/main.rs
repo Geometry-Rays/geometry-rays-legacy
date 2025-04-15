@@ -2605,7 +2605,9 @@ async fn main() {
                                 );
                             }
     
-                            if object.id == 8 || object.id == 9 {
+                            if object.id == 8
+                            || object.id == 9
+                            || object.id == 24 {
                                 d.draw_rectangle_lines(
                                     object.x + world_offset as i32 + if object.rotation == 0 || object.rotation == 180 || object.rotation == -180 { 10 } else { -20 },
                                     object.y - if object.rotation == 0 || object.rotation == 180 || object.rotation == -180 { 11 } else { -11 } - player_cam_y,
