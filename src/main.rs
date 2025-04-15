@@ -1391,27 +1391,22 @@ async fn main() {
                     obj23_button.update(&rl, delta_time);
                     obj24_button.update(&rl, delta_time);
 
-                    if build_tab_button.is_clicked(&rl) {
-                        active_tab = EditorTab::Build;
-                    }
-
-                    if edit_tab_button.is_clicked(&rl) {
-                        active_tab = EditorTab::Edit;
-                    }
-
                     if delete_tab_button.is_clicked(&rl) {
                         active_tab = EditorTab::Delete;
                     }
 
-                    if one_pressed {
+                    if one_pressed
+                    || build_tab_button.is_clicked(&rl) {
                         active_tab = EditorTab::Build;
                     }
 
-                    if two_pressed {
+                    if two_pressed
+                    || edit_tab_button.is_clicked(&rl) {
                         active_tab = EditorTab::Edit;
                     }
 
-                    if three_pressed {
+                    if three_pressed
+                    || delete_tab_button.is_clicked(&rl) {
                         active_tab = EditorTab::Delete;
                     }
 
