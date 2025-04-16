@@ -21,3 +21,10 @@
  Line 1901 to 2724 are for the rendering of the game.
 
  Everything past all that is for saving your level and stars and stuff when exiting the game.
+
+# Notes
+ If you need to check if the player has died then use the "kill_player" variable.
+
+ If you need to update the physics then go to src/MenuLogic/playing.rs
+
+ Be careful updating stuff like physics.
