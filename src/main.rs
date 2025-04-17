@@ -2544,12 +2544,15 @@ async fn main() {
 
                 // This handles drawing the player path if your playtesting a level
                 for point in &player_path {
-                    d.draw_circle(
-                        point.x as i32 - cam_pos_x * 5,
-                        point.y as i32 + cam_pos_y * 5,
-                        5.0,
-                        Color::GREEN
-                    );
+                    if point.x as i32 - cam_pos_x * 5 < d.get_screen_width() &&
+                    point.x as i32 - cam_pos_x * 5 > -10 {
+                        d.draw_circle(
+                            point.x as i32 - cam_pos_x * 5,
+                            point.y as i32 + cam_pos_y * 5,
+                            5.0,
+                            Color::GREEN
+                        );
+                    }
                 }
 
                 d.draw_rectangle(0, 400, 800, 200, Color { r:30, g:30, b:30, a:100 });
