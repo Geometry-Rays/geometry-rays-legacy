@@ -1006,7 +1006,7 @@ async fn main() {
                     }
                 }
 
-                if from_editor {
+                if from_editor || current_gamemode == GameMode::Wave {
                     player_path.push(Vector2 { x: 200.0 - world_offset, y: player.y + player_cam_y as f32 });
                 }
 
@@ -2412,7 +2412,7 @@ async fn main() {
                     );
                 }
 
-                if from_editor {
+                if from_editor || current_gamemode == GameMode::Wave {
                     for point in &player_path {
                         if point.x as f32 + world_offset < d.get_screen_width() as f32 &&
                         point.x as f32 + world_offset > 60.0 {
@@ -2420,7 +2420,11 @@ async fn main() {
                                 point.x as i32 + world_offset as i32,
                                 point.y as i32 - player_cam_y,
                                 5.0,
-                                Color::GREEN
+                                if current_gamemode == GameMode::Wave && !from_editor {
+                                    Color::BLUE
+                                } else {
+                                    Color::GREEN
+                                }
                             );
                         }
                     }
