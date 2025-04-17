@@ -13,6 +13,7 @@ pub fn physics_handle(
     touching_block_ceiling: bool,
     ship_power: f32,
     ship_falling_speed: f32,
+    wave_velocity: f32,
     current_mode: String,
     world_offset: &mut f32,
     movement_speed: f32,
@@ -62,6 +63,20 @@ pub fn physics_handle(
         if *is_on_ground && (space_down || mouse_down) {
             *gravity = -*gravity;
             *is_on_ground = false;
+        }
+    } else if current_gamemode == GameMode::Wave {
+        if *gravity > 0.0 {
+            if space_down || mouse_down {
+                *velocity_y = -wave_velocity
+            } else {
+                *velocity_y = wave_velocity
+            }
+        } else {
+            if space_down || mouse_down {
+                *velocity_y = wave_velocity
+            } else {
+                *velocity_y = -wave_velocity
+            }
         }
     }
 
@@ -360,7 +375,8 @@ pub fn hitbox_collision(
 
     if object.id == 8
     || object.id == 9
-    || object.id == 24 {
+    || object.id == 24
+    || object.id == 25 {
         if centered_player.check_collision_recs(&Rectangle {
             x: object.x as f32 + *world_offset + if object.rotation == 0 || object.rotation == 180 || object.rotation == -180 { 10.0 } else { -20.0 },
             y: object.y as f32 - if object.rotation == 0 || object.rotation == 180 || object.rotation == -180 { 11.0 } else { -11.0 } - player_cam_y as f32,
@@ -378,6 +394,10 @@ pub fn hitbox_collision(
             } else if object.id == 24 {
                 *current_gamemode = GameMode::Ball;
                 *cc_1003 = Color::RED;
+                *is_on_ground = false
+            } else if object.id == 25 {
+                *current_gamemode = GameMode::Wave;
+                *cc_1003 = Color::CYAN;
                 *is_on_ground = false
             }
         }

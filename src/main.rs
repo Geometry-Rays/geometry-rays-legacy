@@ -460,6 +460,7 @@ async fn main() {
     let default_movement_speed = movement_speed;
     let ship_power: f32 = 0.7;
     let ship_falling_speed: f32 = 0.5;
+    let wave_velocity: f32 = 7.0;
 
     // More important variables I didn't feel like sorting
     let version = "1.52";
@@ -915,6 +916,7 @@ async fn main() {
                     touching_block_ceiling,
                     ship_power,
                     ship_falling_speed,
+                    wave_velocity,
                     current_mode.clone(),
                     &mut world_offset,
                     movement_speed,

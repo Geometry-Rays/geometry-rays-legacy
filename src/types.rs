@@ -50,7 +50,8 @@ pub struct MainLevel {
 pub enum GameMode {
     Cube,
     Ship,
-    Ball
+    Ball,
+    Wave
 }
 
 // Enums, Structs, And functions that are used by the editor
