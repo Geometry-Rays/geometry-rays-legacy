@@ -395,7 +395,7 @@ pub fn hitbox_collision(
                 *current_gamemode = GameMode::Ball;
                 *cc_1003 = Color::RED;
                 *is_on_ground = false
-            } else if object.id == 25 {
+            } else if object.id == 25 && current_mode == "1" {
                 *current_gamemode = GameMode::Wave;
                 *cc_1003 = Color::CYAN;
                 *is_on_ground = false
