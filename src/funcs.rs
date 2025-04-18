@@ -481,7 +481,7 @@ pub fn load_level(
                 y: xyrid[0].parse::<i32>().unwrap(),
                 x: xyrid[1].parse::<i32>().unwrap(),
                 rotation: xyrid[2].parse::<i16>().unwrap(),
-                no_touch: if level_version == "BETA" { 0 } else { xyrid[4].parse().unwrap() },
+                no_touch: if level_version == "BETA" { 0 } else { xyrid[3].parse().unwrap() },
                 hide: if level_version == "BETA" { 0 } else { xyrid[4].parse().unwrap() },
                 id: obj_id,
                 selected: false,
