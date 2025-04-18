@@ -460,7 +460,7 @@ async fn main() {
     let default_movement_speed = movement_speed;
     let ship_power: f32 = 0.7;
     let ship_falling_speed: f32 = 0.5;
-    let wave_velocity: f32 = 7.0;
+    let wave_velocity: f32 = 1.1;
 
     // More important variables I didn't feel like sorting
     let version = "1.6";

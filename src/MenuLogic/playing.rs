@@ -67,15 +67,15 @@ pub fn physics_handle(
     } else if current_gamemode == GameMode::Wave {
         if *gravity > 0.0 {
             if space_down || mouse_down {
-                *velocity_y = -wave_velocity
+                *velocity_y = -(wave_velocity * movement_speed)
             } else {
-                *velocity_y = wave_velocity
+                *velocity_y = wave_velocity * movement_speed
             }
         } else {
             if space_down || mouse_down {
-                *velocity_y = wave_velocity
+                *velocity_y = wave_velocity * movement_speed
             } else {
-                *velocity_y = -wave_velocity
+                *velocity_y = -(wave_velocity * movement_speed)
             }
         }
     }
