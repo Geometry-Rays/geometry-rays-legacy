@@ -1729,7 +1729,7 @@ async fn main() {
             GameState::LevelComplete => {
                 level_complete_back_button.update(&rl, delta_time);
 
-                if level_complete_back_button.is_pressed {
+                if level_complete_back_button.is_clicked(&rl) {
                     game_state = GameState::Menu;
                 }
             }
