@@ -84,3 +84,8 @@ pub struct TextBox {
     pub spaces_allowed: bool,
     pub active: bool
 }
+
+pub struct ObjButton {
+    pub btn: Button,
+    pub obj_id: u32
+}

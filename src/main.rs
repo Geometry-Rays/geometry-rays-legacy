@@ -638,32 +638,137 @@ async fn main() {
 
     // The buttons used for selecting what object to place
     let obj_button_off = 65.0;
-    let mut obj1_button = Button::new(187.0, 415.0, 50.0, 50.0, objects.get(1).unwrap(), 10, false);
-    let mut obj2_button = Button::new(187.0 + (obj_button_off), 415.0, 50.0, 50.0, objects.get(2).unwrap(), 10, false);
-    let mut obj3_button = Button::new(187.0 + (obj_button_off * 2.0), 415.0, 50.0, 50.0, objects.get(3).unwrap(), 10, false);
-    let mut obj4_button = Button::new(187.0 + (obj_button_off * 3.0), 415.0, 50.0, 50.0, objects.get(4).unwrap(), 10, false);
-    let mut obj5_button = Button::new(187.0 + (obj_button_off * 4.0), 415.0, 50.0, 50.0, objects.get(5).unwrap(), 10, false);
-    let mut obj6_button = Button::new(187.0 + (obj_button_off * 5.0), 415.0, 50.0, 50.0, objects.get(6).unwrap(), 10, false);
-    let mut obj7_button = Button::new(187.0 + (obj_button_off * 6.0), 415.0, 50.0, 50.0, objects.get(7).unwrap(), 10, false);
-    let mut obj8_button = Button::new(187.0 + (obj_button_off * 7.0), 415.0, 50.0, 50.0, objects.get(8).unwrap(), 10, false);
-    let mut obj9_button = Button::new(187.0 + (obj_button_off * 8.0), 415.0, 50.0, 50.0, objects.get(9).unwrap(), 10, false);
-    let mut obj10_button = Button::new(187.0, 415.0 + obj_button_off, 50.0, 50.0, objects.get(10).unwrap(), 10, false);
-    let mut obj11_button = Button::new(187.0 + obj_button_off, 415.0 + obj_button_off, 50.0, 50.0, objects.get(11).unwrap(), 10, false);
-    let mut obj12_button = Button::new(187.0 + (obj_button_off * 2.0), 415.0 + obj_button_off, 50.0, 50.0, objects.get(12).unwrap(), 10, false);
-    let mut obj13_button = Button::new(187.0 + (obj_button_off * 3.0), 415.0 + obj_button_off, 50.0, 50.0, objects.get(13).unwrap(), 10, false);
-    let mut obj14_button = Button::new(187.0 + (obj_button_off * 4.0), 415.0 + obj_button_off, 50.0, 50.0, objects.get(14).unwrap(), 10, false);
-    let mut obj15_button = Button::new(187.0 + (obj_button_off * 5.0), 415.0 + obj_button_off, 50.0, 50.0, objects.get(15).unwrap(), 10, false);
-    let mut obj16_button = Button::new(187.0 + (obj_button_off * 6.0), 415.0 + obj_button_off, 50.0, 50.0, objects.get(16).unwrap(), 10, false);
-    let mut obj17_button = Button::new(187.0 + (obj_button_off * 7.0), 415.0 + obj_button_off, 50.0, 50.0, objects.get(17).unwrap(), 10, false);
-    let mut obj18_button = Button::new(187.0 + (obj_button_off * 8.0), 415.0 + obj_button_off, 50.0, 50.0, objects.get(18).unwrap(), 10, false);
-    let mut obj19_button = Button::new(187.0, 415.0 + (obj_button_off * 2.0), 50.0, 50.0, objects.get(19).unwrap(), 10, false);
-    let mut obj20_button = Button::new(187.0 + obj_button_off, 415.0 + (obj_button_off * 2.0), 50.0, 50.0, objects.get(20).unwrap(), 10, false);
-    let mut obj21_button = Button::new(187.0 + (obj_button_off * 2.0), 415.0 + (obj_button_off * 2.0), 50.0, 50.0, objects.get(21).unwrap(), 10, false);
-    let mut obj22_button = Button::new(187.0 + (obj_button_off * 3.0), 415.0 + (obj_button_off * 2.0), 50.0, 50.0, objects.get(22).unwrap(), 10, false);
-    let mut obj23_button = Button::new(187.0 + (obj_button_off * 4.0), 415.0 + (obj_button_off * 2.0), 50.0, 50.0, objects.get(23).unwrap(), 10, false);
-    let mut obj24_button = Button::new(187.0 + (obj_button_off * 5.0), 415.0 + (obj_button_off * 2.0), 50.0, 50.0, objects.get(24).unwrap(), 10, false);
-    let mut obj25_button = Button::new(187.0 + (obj_button_off * 6.0), 415.0 + (obj_button_off * 2.0), 50.0, 50.0, objects.get(25).unwrap(), 10, false);
-    let mut obj26_button = Button::new(187.0 + (obj_button_off * 7.0), 415.0 + (obj_button_off * 2.0), 50.0, 50.0, objects.get(26).unwrap(), 10, false);
+    let mut obj_btns_vec: Vec<ObjButton> = vec![
+        ObjButton {
+            btn: Button::new(187.0, 415.0, 50.0, 50.0, objects.get(1).unwrap(), 10, false),
+            obj_id: 1
+        },
+
+        ObjButton {
+            btn: Button::new(187.0 + (obj_button_off), 415.0, 50.0, 50.0, objects.get(2).unwrap(), 10, false),
+            obj_id: 2
+        },
+
+        ObjButton {
+            btn: Button::new(187.0 + (obj_button_off * 2.0), 415.0, 50.0, 50.0, objects.get(3).unwrap(), 10, false),
+            obj_id: 3
+        },
+
+        ObjButton {
+            btn: Button::new(187.0 + (obj_button_off * 3.0), 415.0, 50.0, 50.0, objects.get(4).unwrap(), 10, false),
+            obj_id: 4
+        },
+
+        ObjButton {
+            btn: Button::new(187.0 + (obj_button_off * 4.0), 415.0, 50.0, 50.0, objects.get(5).unwrap(), 10, false),
+            obj_id: 5
+        },
+
+        ObjButton {
+            btn: Button::new(187.0 + (obj_button_off * 5.0), 415.0, 50.0, 50.0, objects.get(6).unwrap(), 10, false),
+            obj_id: 6
+        },
+
+        ObjButton {
+            btn: Button::new(187.0 + (obj_button_off * 6.0), 415.0, 50.0, 50.0, objects.get(7).unwrap(), 10, false),
+            obj_id: 7
+        },
+
+        ObjButton {
+            btn: Button::new(187.0 + (obj_button_off * 7.0), 415.0, 50.0, 50.0, objects.get(8).unwrap(), 10, false),
+            obj_id: 8
+        },
+
+        ObjButton {
+            btn: Button::new(187.0 + (obj_button_off * 8.0), 415.0, 50.0, 50.0, objects.get(9).unwrap(), 10, false),
+            obj_id: 9
+        },
+
+        ObjButton {
+            btn: Button::new(187.0, 415.0 + obj_button_off, 50.0, 50.0, objects.get(10).unwrap(), 10, false),
+            obj_id: 10
+        },
+
+        ObjButton {
+            btn: Button::new(187.0 + obj_button_off, 415.0 + obj_button_off, 50.0, 50.0, objects.get(11).unwrap(), 10, false),
+            obj_id: 11
+        },
+
+        ObjButton {
+            btn: Button::new(187.0 + (obj_button_off * 2.0), 415.0 + obj_button_off, 50.0, 50.0, objects.get(12).unwrap(), 10, false),
+            obj_id: 12
+        },
+
+        ObjButton {
+            btn: Button::new(187.0 + (obj_button_off * 3.0), 415.0 + obj_button_off, 50.0, 50.0, objects.get(13).unwrap(), 10, false),
+            obj_id: 13
+        },
+
+        ObjButton {
+            btn: Button::new(187.0 + (obj_button_off * 4.0), 415.0 + obj_button_off, 50.0, 50.0, objects.get(14).unwrap(), 10, false),
+            obj_id: 14
+        },
+
+        ObjButton {
+            btn: Button::new(187.0 + (obj_button_off * 5.0), 415.0 + obj_button_off, 50.0, 50.0, objects.get(15).unwrap(), 10, false),
+            obj_id: 15
+        },
+
+        ObjButton {
+            btn: Button::new(187.0 + (obj_button_off * 6.0), 415.0 + obj_button_off, 50.0, 50.0, objects.get(16).unwrap(), 10, false),
+            obj_id: 16
+        },
+
+        ObjButton {
+            btn: Button::new(187.0 + (obj_button_off * 7.0), 415.0 + obj_button_off, 50.0, 50.0, objects.get(17).unwrap(), 10, false),
+            obj_id: 17
+        },
+
+        ObjButton {
+            btn: Button::new(187.0 + (obj_button_off * 8.0), 415.0 + obj_button_off, 50.0, 50.0, objects.get(18).unwrap(), 10, false),
+            obj_id: 18
+        },
+
+        ObjButton {
+            btn: Button::new(187.0, 415.0 + (obj_button_off * 2.0), 50.0, 50.0, objects.get(19).unwrap(), 10, false),
+            obj_id: 19
+        },
+
+        ObjButton {
+            btn: Button::new(187.0 + obj_button_off, 415.0 + (obj_button_off * 2.0), 50.0, 50.0, objects.get(20).unwrap(), 10, false),
+            obj_id: 20
+        },
+
+        ObjButton {
+            btn: Button::new(187.0 + (obj_button_off * 2.0), 415.0 + (obj_button_off * 2.0), 50.0, 50.0, objects.get(21).unwrap(), 10, false),
+            obj_id: 21
+        },
+
+        ObjButton {
+            btn: Button::new(187.0 + (obj_button_off * 3.0), 415.0 + (obj_button_off * 2.0), 50.0, 50.0, objects.get(22).unwrap(), 10, false),
+            obj_id: 22
+        },
+
+        ObjButton {
+            btn: Button::new(187.0 + (obj_button_off * 4.0), 415.0 + (obj_button_off * 2.0), 50.0, 50.0, objects.get(23).unwrap(), 10, false),
+            obj_id: 23
+        },
+
+        ObjButton {
+            btn: Button::new(187.0 + (obj_button_off * 5.0), 415.0 + (obj_button_off * 2.0), 50.0, 50.0, objects.get(24).unwrap(), 10, false),
+            obj_id: 24
+        },
+
+        ObjButton {
+            btn: Button::new(187.0 + (obj_button_off * 6.0), 415.0 + (obj_button_off * 2.0), 50.0, 50.0, objects.get(25).unwrap(), 10, false),
+            obj_id: 25
+        },
+
+        ObjButton {
+            btn: Button::new(187.0 + (obj_button_off * 7.0), 415.0 + (obj_button_off * 2.0), 50.0, 50.0, objects.get(26).unwrap(), 10, false),
+            obj_id: 26
+        },
+    ];
 
     let mut bg_red = red_bg_slider_pos - 75;
     let mut bg_green = green_bg_slider_pos - 75;
@@ -1118,32 +1223,10 @@ async fn main() {
                     no_touch_toggle.update(&rl, delta_time);
                     hide_toggle.update(&rl, delta_time);
                     object_settings.update(&rl, delta_time);
-                    obj1_button.update(&rl, delta_time);
-                    obj2_button.update(&rl, delta_time);
-                    obj3_button.update(&rl, delta_time);
-                    obj4_button.update(&rl, delta_time);
-                    obj5_button.update(&rl, delta_time);
-                    obj6_button.update(&rl, delta_time);
-                    obj7_button.update(&rl, delta_time);
-                    obj8_button.update(&rl, delta_time);
-                    obj9_button.update(&rl, delta_time);
-                    obj10_button.update(&rl, delta_time);
-                    obj11_button.update(&rl, delta_time);
-                    obj12_button.update(&rl, delta_time);
-                    obj13_button.update(&rl, delta_time);
-                    obj14_button.update(&rl, delta_time);
-                    obj15_button.update(&rl, delta_time);
-                    obj16_button.update(&rl, delta_time);
-                    obj17_button.update(&rl, delta_time);
-                    obj18_button.update(&rl, delta_time);
-                    obj19_button.update(&rl, delta_time);
-                    obj20_button.update(&rl, delta_time);
-                    obj21_button.update(&rl, delta_time);
-                    obj22_button.update(&rl, delta_time);
-                    obj23_button.update(&rl, delta_time);
-                    obj24_button.update(&rl, delta_time);
-                    obj25_button.update(&rl, delta_time);
-                    obj26_button.update(&rl, delta_time);
+
+                    for obj_btn in &mut obj_btns_vec {
+                        obj_btn.btn.update(&rl, delta_time);
+                    }
 
                     if delete_tab_button.is_clicked(&rl) {
                         active_tab = EditorTab::Delete;
@@ -1165,113 +1248,15 @@ async fn main() {
                     }
 
                     // This just checks if any of the buttons for selecting an object to place is clicked
-                    if obj1_button.is_clicked(&rl) && active_tab == EditorTab::Build {
-                        current_object = 1 + _advanced_page_number;
-                    }
-
-                    else if obj2_button.is_clicked(&rl) && active_tab == EditorTab::Build {
-                        current_object = 2 + _advanced_page_number;
-                    }
-
-                    else if obj3_button.is_clicked(&rl) && active_tab == EditorTab::Build {
-                        current_object = 3 + _advanced_page_number;
-                    }
-
-                    else if obj4_button.is_clicked(&rl) && active_tab == EditorTab::Build {
-                        current_object = 4 + _advanced_page_number;
-                    }
-
-                    else if obj5_button.is_clicked(&rl) && active_tab == EditorTab::Build {
-                        current_object = 5 + _advanced_page_number;
-                    }
-
-                    else if obj6_button.is_clicked(&rl) && active_tab == EditorTab::Build {
-                        current_object = 6 + _advanced_page_number;
-                    }
-
-                    else if obj7_button.is_clicked(&rl) && active_tab == EditorTab::Build {
-                        current_object = 7 + _advanced_page_number;
-                    }
-
-                    else if obj8_button.is_clicked(&rl) && active_tab == EditorTab::Build {
-                        current_object = 8 + _advanced_page_number;
-                    }
-
-                    else if obj9_button.is_clicked(&rl) && active_tab == EditorTab::Build {
-                        current_object = 9 + _advanced_page_number;
-                    }
-
-                    else if obj10_button.is_clicked(&rl) && active_tab == EditorTab::Build {
-                        current_object = 10 + _advanced_page_number;
-                    }
-
-                    else if obj11_button.is_clicked(&rl) && active_tab == EditorTab::Build {
-                        current_object = 11 + _advanced_page_number;
-                    }
-
-                    else if obj12_button.is_clicked(&rl) && active_tab == EditorTab::Build {
-                        current_object = 12 + _advanced_page_number;
-                    }
-
-                    else if obj13_button.is_clicked(&rl) && active_tab == EditorTab::Build {
-                        current_object = 13 + _advanced_page_number;
-                    }
-
-                    else if obj14_button.is_clicked(&rl) && active_tab == EditorTab::Build {
-                        current_object = 14 + _advanced_page_number;
-                    }
-
-                    else if obj15_button.is_clicked(&rl) && active_tab == EditorTab::Build {
-                        current_object = 15 + _advanced_page_number;
-                    }
-
-                    else if obj16_button.is_clicked(&rl) && active_tab == EditorTab::Build {
-                        current_object = 16 + _advanced_page_number;
-                    }
-
-                    else if obj17_button.is_clicked(&rl) && active_tab == EditorTab::Build {
-                        current_object = 17 + _advanced_page_number;
-                    }
-
-                    else if obj18_button.is_clicked(&rl) && active_tab == EditorTab::Build {
-                        current_object = 18 + _advanced_page_number;
-                    }
-
-                    else if obj19_button.is_clicked(&rl) && active_tab == EditorTab::Build {
-                        current_object = 19 + _advanced_page_number;
-                    }
-
-                    else if obj20_button.is_clicked(&rl) && active_tab == EditorTab::Build {
-                        current_object = 20 + _advanced_page_number;
-                    }
-
-                    else if obj21_button.is_clicked(&rl) && active_tab == EditorTab::Build {
-                        current_object = 21 + _advanced_page_number;
-                    }
-
-                    else if obj22_button.is_clicked(&rl) && active_tab == EditorTab::Build {
-                        current_object = 22 + _advanced_page_number;
-                    }
-
-                    else if obj23_button.is_clicked(&rl) && active_tab == EditorTab::Build {
-                        current_object = 23 + _advanced_page_number;
-                    }
-
-                    else if obj24_button.is_clicked(&rl) && active_tab == EditorTab::Build {
-                        current_object = 24 + _advanced_page_number;
-                    }
-
-                    else if obj25_button.is_clicked(&rl) && active_tab == EditorTab::Build {
-                        current_object = 25 + _advanced_page_number;
-                    }
-
-                    else if obj26_button.is_clicked(&rl) && active_tab == EditorTab::Build {
-                        current_object = 26 + _advanced_page_number;
+                    for obj_btn in &obj_btns_vec {
+                        if obj_btn.btn.is_clicked(&rl) && active_tab == EditorTab::Build {
+                            current_object = obj_btn.obj_id + _advanced_page_number
+                        }
                     }
 
                     // This checks if the user has clicked on the grid
                     // If the user has then it places/edits/deletes an object
-                    else if grid_button.is_clicked(&rl) {
+                    if grid_button.is_clicked(&rl) {
                         // let obj_x = snapped_x;
                         // let obj_y = snapped_y;
                         if !level_options_button.is_clicked(&rl)
@@ -2584,32 +2569,9 @@ async fn main() {
                     let object_button_texture_scale: f32 = 0.04;
 
                     // This handles drawing the buttons used for selecting an object to place
-                    obj1_button.draw(true, Some(texture_ids.get(1).unwrap()), object_button_texture_scale, true, &mut d);
-                    obj2_button.draw(true, Some(texture_ids.get(2).unwrap()), object_button_texture_scale, true, &mut d);
-                    obj3_button.draw(true, Some(texture_ids.get(3).unwrap()), object_button_texture_scale, true, &mut d);
-                    obj4_button.draw(true, Some(texture_ids.get(4).unwrap()), object_button_texture_scale, true, &mut d);
-                    obj5_button.draw(true, Some(texture_ids.get(5).unwrap()), object_button_texture_scale, true, &mut d);
-                    obj6_button.draw(true, Some(texture_ids.get(6).unwrap()), object_button_texture_scale, true, &mut d);
-                    obj7_button.draw(true, Some(texture_ids.get(7).unwrap()), object_button_texture_scale, true, &mut d);
-                    obj8_button.draw(true, Some(texture_ids.get(8).unwrap()), object_button_texture_scale, true, &mut d);
-                    obj9_button.draw(true, Some(texture_ids.get(9).unwrap()), object_button_texture_scale, true, &mut d);
-                    obj10_button.draw(true, Some(texture_ids.get(10).unwrap()), object_button_texture_scale, true, &mut d);
-                    obj11_button.draw(true, Some(texture_ids.get(11).unwrap()), object_button_texture_scale, true, &mut d);
-                    obj12_button.draw(true, Some(texture_ids.get(12).unwrap()), object_button_texture_scale, true, &mut d);
-                    obj13_button.draw(true, Some(texture_ids.get(13).unwrap()), object_button_texture_scale, true, &mut d);
-                    obj14_button.draw(true, Some(texture_ids.get(14).unwrap()), object_button_texture_scale, true, &mut d);
-                    obj15_button.draw(true, Some(texture_ids.get(15).unwrap()), object_button_texture_scale, true, &mut d);
-                    obj16_button.draw(true, Some(texture_ids.get(16).unwrap()), object_button_texture_scale, true, &mut d);
-                    obj17_button.draw(true, Some(texture_ids.get(17).unwrap()), object_button_texture_scale, true, &mut d);
-                    obj18_button.draw(true, Some(texture_ids.get(18).unwrap()), object_button_texture_scale, true, &mut d);
-                    obj19_button.draw(true, Some(texture_ids.get(19).unwrap()), object_button_texture_scale, true, &mut d);
-                    obj20_button.draw(true, Some(texture_ids.get(20).unwrap()), object_button_texture_scale, true, &mut d);
-                    obj21_button.draw(true, Some(texture_ids.get(21).unwrap()), object_button_texture_scale, true, &mut d);
-                    obj22_button.draw(true, Some(texture_ids.get(22).unwrap()), object_button_texture_scale, true, &mut d);
-                    obj23_button.draw(true, Some(texture_ids.get(23).unwrap()), object_button_texture_scale, true, &mut d);
-                    obj24_button.draw(true, Some(texture_ids.get(24).unwrap()), object_button_texture_scale, true, &mut d);
-                    obj25_button.draw(true, Some(texture_ids.get(25).unwrap()), object_button_texture_scale, true, &mut d);
-                    obj26_button.draw(true, Some(texture_ids.get(26).unwrap()), object_button_texture_scale, true, &mut d);
+                    for obj_btn in &obj_btns_vec {
+                        obj_btn.btn.draw(true, Some(texture_ids.get(obj_btn.obj_id as usize).unwrap()), object_button_texture_scale, true, &mut d);
+                    }
                 }
 
                 d.draw_text(&format!("Selected Object: {}", objects.get(current_object as usize).unwrap()), 10, 10, 20, Color::WHITE);
