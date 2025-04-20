@@ -867,12 +867,6 @@ async fn main() {
 
                 if play_button.is_clicked(&rl) {
                     game_state = GameState::LevelSelect;
-                    player.y = 500.0;
-                    world_offset = 0.0;
-                    rotation = 0.0;
-                    gravity = 0.8;
-                    jump_force = default_jump_force;
-                    current_gamemode = GameMode::Cube;
                 }
 
                 if editor_button.is_clicked(&rl) {
