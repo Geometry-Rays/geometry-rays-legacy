@@ -90,6 +90,8 @@ async fn main() {
         .expect("Failed to load ball portal texture");
     let wave_portal_texture = rl.load_texture(&thread, "Resources/gamemode-portals/wave-portal.png")
         .expect("Failed to load wave portal texture");
+    let death_orb_texture = rl.load_texture(&thread, "Resources/death-orb.png")
+        .expect("Failed to load death orb texture");
 
     // Create main menu buttons
     let mut play_button = Button::new(rl.get_screen_width() as f32 / 2.0 - 100.0, 250.0, 200.0, 50.0, "Play", 24, false);
@@ -574,6 +576,7 @@ async fn main() {
     texture_ids.push(&color_trigger_texture);
     texture_ids.push(&ball_portal_texture);
     texture_ids.push(&wave_portal_texture);
+    texture_ids.push(&death_orb_texture);
 
     // Variables for editor stuff
     let mut active_tab = EditorTab::Build;
@@ -631,6 +634,7 @@ async fn main() {
     objects.push("color trigger");
     objects.push("ball portal");
     objects.push("wave portal");
+    objects.push("death orb");
 
     // The buttons used for selecting what object to place
     let obj_button_off = 65.0;
@@ -659,6 +663,7 @@ async fn main() {
     let mut obj23_button = Button::new(187.0 + (obj_button_off * 4.0), 415.0 + (obj_button_off * 2.0), 50.0, 50.0, objects.get(23).unwrap(), 10, false);
     let mut obj24_button = Button::new(187.0 + (obj_button_off * 5.0), 415.0 + (obj_button_off * 2.0), 50.0, 50.0, objects.get(24).unwrap(), 10, false);
     let mut obj25_button = Button::new(187.0 + (obj_button_off * 6.0), 415.0 + (obj_button_off * 2.0), 50.0, 50.0, objects.get(25).unwrap(), 10, false);
+    let mut obj26_button = Button::new(187.0 + (obj_button_off * 7.0), 415.0 + (obj_button_off * 2.0), 50.0, 50.0, objects.get(26).unwrap(), 10, false);
 
     let mut bg_red = red_bg_slider_pos - 75;
     let mut bg_green = green_bg_slider_pos - 75;
@@ -1144,6 +1149,7 @@ async fn main() {
                     obj23_button.update(&rl, delta_time);
                     obj24_button.update(&rl, delta_time);
                     obj25_button.update(&rl, delta_time);
+                    obj26_button.update(&rl, delta_time);
 
                     if delete_tab_button.is_clicked(&rl) {
                         active_tab = EditorTab::Delete;
@@ -1263,6 +1269,10 @@ async fn main() {
 
                     else if obj25_button.is_clicked(&rl) && active_tab == EditorTab::Build {
                         current_object = 25 + _advanced_page_number;
+                    }
+
+                    else if obj26_button.is_clicked(&rl) && active_tab == EditorTab::Build {
+                        current_object = 26 + _advanced_page_number;
                     }
 
                     // This checks if the user has clicked on the grid
@@ -2605,6 +2615,7 @@ async fn main() {
                     obj23_button.draw(true, Some(texture_ids.get(23).unwrap()), object_button_texture_scale, true, &mut d);
                     obj24_button.draw(true, Some(texture_ids.get(24).unwrap()), object_button_texture_scale, true, &mut d);
                     obj25_button.draw(true, Some(texture_ids.get(25).unwrap()), object_button_texture_scale, true, &mut d);
+                    obj26_button.draw(true, Some(texture_ids.get(26).unwrap()), object_button_texture_scale, true, &mut d);
                 }
 
                 d.draw_text(&format!("Selected Object: {}", objects.get(current_object as usize).unwrap()), 10, 10, 20, Color::WHITE);

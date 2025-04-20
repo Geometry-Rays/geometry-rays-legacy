@@ -315,7 +315,8 @@ pub fn hitbox_collision(
     }
 
     if object.id == 4
-    || object.id == 22 {
+    || object.id == 22
+    || object.id == 26 {
         if centered_player.check_collision_recs(&Rectangle {
             x: object.x as f32 - 10.0 + *world_offset,
             y: object.y as f32 - 10.0 - player_cam_y as f32,
@@ -337,6 +338,8 @@ pub fn hitbox_collision(
                         *velocity_y = 7.0;
                         *gravity = default_gravity
                     }
+                } else if object.id == 26 {
+                    *kill_player = true
                 }
                 *on_orb = false
             }
