@@ -473,7 +473,7 @@ async fn main() {
         MainLevel {
             name: "Plummet".to_string(),
             difficulty: 1,
-            song: "./Resources/main-level-songs/0.mp3".to_string(),
+            song: "./Music/0.mp3".to_string(),
             artist: "1f1n1ty".to_string(),
             data: fs::read_to_string("./save-data/main-levels/0.txt")
                 .expect("Failed to load main level")
@@ -482,7 +482,7 @@ async fn main() {
         MainLevel {
             name: "Color Blockade".to_string(),
             difficulty: 3,
-            song: "./Resources/main-level-songs/1.mp3".to_string(),
+            song: "./Music/1.mp3".to_string(),
             artist: "Waterflame".to_string(),
             data: fs::read_to_string("./save-data/main-levels/1.txt")
                 .expect("Failed to load main level")
@@ -491,7 +491,7 @@ async fn main() {
         MainLevel {
             name: "Ultimate Destruction".to_string(),
             difficulty: 2,
-            song: "./Resources/main-level-songs/2.mp3".to_string(),
+            song: "./Music/2.mp3".to_string(),
             artist: "TMM43".to_string(),
             data: fs::read_to_string("./save-data/main-levels/2.txt")
                 .expect("Failed to load main level")
@@ -500,7 +500,7 @@ async fn main() {
         MainLevel {
             name: "Detorium".to_string(),
             difficulty: 4,
-            song: "./Resources/main-level-songs/3.mp3".to_string(),
+            song: "./Music/3.mp3".to_string(),
             artist: "Fluix".to_string(),
             data: fs::read_to_string("./save-data/main-levels/3.txt")
                 .expect("Failed to load main level")
@@ -825,7 +825,7 @@ async fn main() {
     let menu_loop = Decoder::new(menu_loop_file).expect("Failed to decode MP3 file").repeat_infinite();
     sink.append(menu_loop.clone());
 
-    let mut level_music_file = BufReader::new(File::open("Resources/main-level-songs/0.mp3").expect("Failed to open MP3 file"));
+    let mut level_music_file = BufReader::new(File::open("./Music/0.mp3").expect("Failed to open MP3 file"));
     let mut _level_music = Decoder::new(level_music_file).expect("Failed to decode MP3 file");
 
     // Discord button setup
