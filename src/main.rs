@@ -937,6 +937,9 @@ async fn main() {
         let snapped_x = ((mouse_x + (snapped_cam_x * 5)) / grid_size) * grid_size;
         let snapped_y = ((mouse_y - (snapped_cam_y * 5)) / grid_size) * grid_size;
 
+        // This updates the bg and ground colors based on the variables in these color structs
+        // Idk why I didn't just make it update cc_1001.r or whatever
+        // But I don't feel like changing it
         cc_1001 = Color { r:bg_red, g:bg_green, b:bg_blue, a:255 };
         cc_1002 = Color { r:ground_red as u8, g:ground_green as u8, b:ground_blue as u8, a:255 };
 
