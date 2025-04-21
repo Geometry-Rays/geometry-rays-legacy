@@ -944,6 +944,9 @@ async fn main() {
         cc_1002 = Color { r:ground_red as u8, g:ground_green as u8, b:ground_blue as u8, a:255 };
 
         // Update buttons based on game state
+        // Idk what the hell the comment above this one means
+        // But anyways this is the logic for the game yippe
+        // Also idk when the first comment here was added
         match game_state {
             GameState::Menu => {
                 play_button.update(&rl, delta_time);
@@ -1054,8 +1057,10 @@ async fn main() {
                 //     }
                 // }
 
+                // Updating the centered player hitbox
                 centered_player = Rectangle::new(player.x - player.width / 2.0, player.y - player.height / 2.0, player.width, player.height);
 
+                // Updating the secondary player hitbox used for blocks
                 small_player = centered_player;
                 small_player.x = centered_player.x + 15.0;
                 small_player.y = centered_player.y + 10.0;
@@ -1113,8 +1118,15 @@ async fn main() {
                     }
                 }
 
+                // This adds points to the player path
+                // This only happens when playtesting a level in the editor or while in wave
                 if from_editor || current_gamemode == GameMode::Wave {
-                    player_path.push(Vector2 { x: 200.0 - world_offset, y: player.y + player_cam_y as f32 });
+                    player_path.push(
+                        Vector2 {
+                            x: 200.0 - world_offset,
+                            y: player.y + player_cam_y as f32
+                        }
+                    );
                 }
 
                 // This just makes it so if the player is dead then it goes to the game over screen
@@ -1227,6 +1239,7 @@ async fn main() {
                     hide_toggle.update(&rl, delta_time);
                     object_settings.update(&rl, delta_time);
 
+                    // Scales all the object buttons based on if they are being hovered
                     for obj_btn in &mut obj_btns_vec {
                         obj_btn.btn.update(&rl, delta_time);
                     }
@@ -1389,6 +1402,7 @@ async fn main() {
                             }
                         }
 
+                        // This handles stopping the menu music and starting the level music
                         level_music_file = BufReader::new(File::open(format!("{}", main_levels[current_song as usize].song)).expect("Failed to open MP3 file"));
                         _level_music = Decoder::new(level_music_file).expect("Failed to decode MP3 file");
                         sink.stop();
