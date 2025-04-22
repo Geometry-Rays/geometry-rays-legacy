@@ -2136,6 +2136,16 @@ async fn main() {
                     );
                 }
 
+                if show_debug_text {
+                    d.draw_text(
+                        "Debug Mode",
+                        d.get_screen_width() - d.measure_text("Debug Mode", 30) - 10,
+                        if in_debug_build { d.get_screen_height() - 70 } else { d.get_screen_height() - 30 },
+                        30,
+                        Color::LIME
+                    );
+                }
+
                 account_page_button.draw(false, None, 1.0, false, &mut d);
                 settings_button.draw(false, None, 1.0, false, &mut d);
             }
