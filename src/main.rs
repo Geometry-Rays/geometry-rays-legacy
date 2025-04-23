@@ -426,6 +426,16 @@ async fn main() {
         false
     );
 
+    let mut game_over_screen_toggle = Button::new(
+        rl.get_screen_width() as f32 / 2.0 - 65.0,
+        290.0,
+        130.0,
+        130.0,
+        "Game over screen",
+        15,
+        true
+    );
+
     // Url's for server requests
     let main_url = "http://georays.puppet57.xyz/php-code/".to_string();
     let latest_version_url: String = format!("{}get-latest-version.php", main_url).to_string();
@@ -530,7 +540,8 @@ async fn main() {
     let mut bg_offset: f32 = 0.0;
     let mut grnd_offset: f32 = 0.0;
     let mut options: Vec<bool> = vec![
-        true
+        true,
+        false
     ];
 
     // Variables for server stuff
@@ -1137,22 +1148,25 @@ async fn main() {
                         sink.play();
                         game_state = GameState::Editor
                     } else {
-                        // game_state = GameState::GameOver
-                        player.y = 500.0;
-                        world_offset = 0.0;
-                        rotation = 0.0;
-                        gravity = default_gravity;
-                        jump_force = default_jump_force;
-                        current_gamemode = GameMode::Cube;
-                        cc_1003 = Color::LIME;
-                        in_custom_level = false;
-                        velocity_y = 0.0;
-                        player_cam_y = 0;
-                        movement_speed = default_movement_speed;
+                        if options[1] {
+                            game_state = GameState::GameOver
+                        } else {
+                            player.y = 500.0;
+                            world_offset = 0.0;
+                            rotation = 0.0;
+                            gravity = default_gravity;
+                            jump_force = default_jump_force;
+                            current_gamemode = GameMode::Cube;
+                            cc_1003 = Color::LIME;
+                            in_custom_level = false;
+                            velocity_y = 0.0;
+                            player_cam_y = 0;
+                            movement_speed = default_movement_speed;
 
-                        player_path.clear();
+                            player_path.clear();
 
-                        let _ = sink.try_seek(std::time::Duration::from_secs(0));
+                            let _ = sink.try_seek(std::time::Duration::from_secs(0));
+                        }
                     }
                 }
 
@@ -2082,6 +2096,7 @@ async fn main() {
                 menu_button.update(&rl, delta_time);
 
                 legacy_grnd_bg_toggle.update(&rl, delta_time);
+                game_over_screen_toggle.update(&rl, delta_time);
 
                 if menu_button.is_clicked(&rl) {
                     game_state = GameState::Menu
@@ -2094,6 +2109,16 @@ async fn main() {
                     } else {
                         options[0] = true;
                         legacy_grnd_bg_toggle.is_disabled = false
+                    }
+                }
+
+                if game_over_screen_toggle.is_clicked(&rl) {
+                    if options[1] {
+                        options[1] = false;
+                        game_over_screen_toggle.is_disabled = true
+                    } else {
+                        options[1] = true;
+                        game_over_screen_toggle.is_disabled = false
                     }
                 }
             }
@@ -3048,6 +3073,7 @@ async fn main() {
                 menu_button.draw(false, None, 1.0, false, &mut d);
 
                 legacy_grnd_bg_toggle.draw(false, None, 1.0, false, &mut d);
+                game_over_screen_toggle.draw(false, None, 1.0, false, &mut d);
             }
         }
     }
