@@ -1137,7 +1137,22 @@ async fn main() {
                         sink.play();
                         game_state = GameState::Editor
                     } else {
-                        game_state = GameState::GameOver
+                        // game_state = GameState::GameOver
+                        player.y = 500.0;
+                        world_offset = 0.0;
+                        rotation = 0.0;
+                        gravity = default_gravity;
+                        jump_force = default_jump_force;
+                        current_gamemode = GameMode::Cube;
+                        cc_1003 = Color::LIME;
+                        in_custom_level = false;
+                        velocity_y = 0.0;
+                        player_cam_y = 0;
+                        movement_speed = default_movement_speed;
+
+                        player_path.clear();
+
+                        let _ = sink.try_seek(std::time::Duration::from_secs(0));
                     }
                 }
 
