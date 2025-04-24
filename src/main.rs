@@ -514,6 +514,15 @@ async fn main() {
             artist: "Fluix".to_string(),
             data: fs::read_to_string("./save-data/main-levels/3.txt")
                 .expect("Failed to load main level")
+        },
+
+        MainLevel {
+            name: "Foundry".to_string(),
+            difficulty: 1,
+            song: "./Music/4.mp3".to_string(),
+            artist: "Fluix".to_string(),
+            data: fs::read_to_string("./save-data/main-levels/4.txt")
+                .expect("Failed to load main level")
         }
     ];
     let mut current_level = 0;
@@ -523,6 +532,7 @@ async fn main() {
         .expect("Failed to read save file");
     let mut in_custom_level: bool = false;
     let mut levels_completed_vec: Vec<bool> = vec![
+        false,
         false,
         false,
         false,
