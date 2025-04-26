@@ -304,10 +304,12 @@ pub fn hitbox_collision(
             } else if object.id == 21 {
                 if *gravity > 0.0 {
                     *velocity_y = -7.0;
-                    *gravity = -default_gravity
+                    *gravity = -default_gravity;
+                    *jump_force = -default_jump_force
                 } else {
                     *velocity_y = 7.0;
-                    *gravity = default_gravity
+                    *gravity = default_gravity;
+                    *jump_force = default_jump_force
                 }
             }
             *is_on_ground = false;
@@ -333,10 +335,12 @@ pub fn hitbox_collision(
                 } else if object.id == 22 {
                     if *gravity > 0.0 {
                         *velocity_y = -7.0;
-                        *gravity = -default_gravity
+                        *gravity = -default_gravity;
+                        *jump_force = -default_jump_force
                     } else {
                         *velocity_y = 7.0;
-                        *gravity = default_gravity
+                        *gravity = default_gravity;
+                        *jump_force = default_jump_force
                     }
                 } else if object.id == 26 {
                     *kill_player = true
