@@ -102,9 +102,9 @@ async fn main() {
 
     // Create online level buttons
     let mut menu_button = Button::new(20.0, 20.0, 200.0, 50.0, "Back to Menu", 24, false);
-    let mut create_button = Button::new(rl.get_screen_width() as f32 / 2.0 - 75.0 - 170.0, rl.get_screen_height() as f32 / 2.0 - 75.0, 150.0, 150.0, "Create", 30, false);
-    let mut featured_button = Button::new(rl.get_screen_width() as f32 / 2.0 - 75.0, rl.get_screen_height() as f32 / 2.0 - 75.0, 150.0, 150.0, "Featured", 30, true);
-    let mut search_button = Button::new(rl.get_screen_width() as f32 / 2.0 - 75.0 + 170.0, rl.get_screen_height() as f32 / 2.0 - 75.0, 150.0, 150.0, "Search", 30, false);
+    let mut create_button = Button::new(rl.get_screen_width() as f32 / 2.0 - 75.0 - 200.0, rl.get_screen_height() as f32 / 2.0 - 75.0, 175.0, 175.0, "Create", 30, false);
+    let mut featured_button = Button::new(rl.get_screen_width() as f32 / 2.0 - 75.0, rl.get_screen_height() as f32 / 2.0 - 75.0, 175.0, 175.0, "Featured", 30, true);
+    let mut search_button = Button::new(rl.get_screen_width() as f32 / 2.0 - 75.0 + 200.0, rl.get_screen_height() as f32 / 2.0 - 75.0, 175.0, 175.0, "Search", 30, false);
     let mut keybinds_button = Button::new(rl.get_screen_width() as f32 - 220.0, 20.0, 200.0, 50.0, "Editor Keybinds", 24, false);
     let mut download_level_button = Button::new(rl.get_screen_width() as f32 - 220.0, 80.0, 200.0, 50.0, "Download Level", 24, false);
 
