@@ -17,12 +17,6 @@
  
  Website: http://georays.puppet57.xyz
 
- If you want to contact me for geometry rays related stuff ping me in the discord.
-
- If you want to contact me for non geometry rays related stuff dm me on discord with: marineacousticimgay
-
- I genuinely dont care what you message me unless its insults or unhinged stuff (for example don't flash me or something like that)
-
 # Credits
  Kazakh (kk_kazakh_khanate on discord) - Made art for the game
 
