@@ -23,13 +23,13 @@ use MenuLogic::playing;
 
 #[tokio::main]
 async fn main() {
-    // Initializing raylib
+    println!("Initializing raylib...");
     let (mut rl, thread) = raylib::init()
         .size(800, 600)
         .title("Geometry Rays")
         .build();
 
-    // Initializing audio
+        println!("Initializing audio...");
     let (_stream, stream_handle) = OutputStream::try_default().unwrap();
     let sink = Sink::try_new(&stream_handle).unwrap();
 
@@ -37,7 +37,7 @@ async fn main() {
     let logo_image = Image::load_image("Resources/logo.png").expect("Failed to load image");
     rl.set_window_icon(&logo_image);
 
-    // Loading the textures for objects here so that they can be referenced in texture_ids
+    println!("Loading object textures to be used in texture_ids");
     let _null_texture = rl.load_texture(&thread, "Resources/null.png")
         .expect("Failed to load null texture");
     let spike_texture = rl.load_texture(&thread, "Resources/spike.png")
@@ -445,7 +445,7 @@ async fn main() {
     let download_url: String = format!("{}download-level.php", main_url);
     let rate_url: String = format!("{}rate-level.php", main_url);
 
-    // Variables required for the game to work
+    println!("Getting random stuff ready...");
     let mut game_state = GameState::Menu;
     let mut active_popup: ActivePopup = ActivePopup::None;
     let mut player = Rectangle::new(200.0, 500.0, 40.0, 40.0);
@@ -462,7 +462,7 @@ async fn main() {
     let mut player_cam_y: i32 = 0;
     let mut touching_block_ceiling: bool = false;
 
-    // Physics Values
+    println!("Getting physics ready...");
     let mut velocity_y = 0.0;
     let mut gravity = 0.8;
     let default_gravity = gravity;
@@ -474,7 +474,7 @@ async fn main() {
     let ship_falling_speed: f32 = 0.5;
     let wave_velocity: f32 = 1.1;
 
-    // More important variables I didn't feel like sorting
+    println!("Getting even more variables ready...");
     let version = "1.6";
     let latest_version = Arc::new(Mutex::new(String::from("Loading...")));
     let mut not_done_yet_text = false;
@@ -599,7 +599,7 @@ async fn main() {
     texture_ids.push(&wave_portal_texture);
     texture_ids.push(&death_orb_texture);
 
-    // Variables for editor stuff
+    println!("Getting the editor ready...");
     let mut active_tab = EditorTab::Build;
     let mut edit_not_done_yet = false;
     let mut objects: Vec<&str> = vec!["null"];
@@ -812,7 +812,7 @@ async fn main() {
     let mut cc_1003 = Color::LIME;
     let cc_1004 = Color::WHITE;
 
-    // Load textures
+    println!("Loading textures...");
     let game_bg = rl.load_texture(&thread, "Resources/default-bg.png")
         .expect("Failed to load background texture");
     let menu_bg = rl.load_texture(&thread, "Resources/default-bg-no-gradient.png")
@@ -841,7 +841,7 @@ async fn main() {
         rl.load_texture(&thread, "./Resources/difficulties/10.png").expect("Failed to load difficulty face"),
     ];
 
-    // Audio setup
+    println!("Loading audio files...");
     let menu_loop_file = BufReader::new(File::open("Resources/menu-loop.mp3").expect("Failed to open MP3 file"));
     let menu_loop = Decoder::new(menu_loop_file).expect("Failed to decode MP3 file").repeat_infinite();
     sink.append(menu_loop.clone());
@@ -858,8 +858,7 @@ async fn main() {
         icon_size
     );
 
-    // This reads your save data
-    // So basically it loads your stars and stuff
+    println!("Loading save data...");
     let values_levels: Vec<&str> = save_data.split(";;;").collect();
     let save_pairs: Vec<&str> = values_levels[0].split(";").collect();
     let levels_completed: Vec<&str> = values_levels[1].split(";").collect();
@@ -903,6 +902,7 @@ async fn main() {
     // This is for auto login
     // Auto login only runs if you have already logged in using the login page
     if user != "0" && pass != "0" {
+        println!("Logging in...");
         login_result = post_request(
             login_url.clone(),
             Some(hashmap! {
