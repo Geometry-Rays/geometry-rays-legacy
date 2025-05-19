@@ -617,7 +617,6 @@ async fn main() {
     let mut parts: Vec<&str> = level_string.split(";;;").collect();
     let mut _level_metadata = parts[0];
     let mut _object_string = parts[1];
-    let mut been_to_editor: bool = false;
     let mut current_song: u8 = 0;
     let mut song_selected: bool = false;
     let mut from_editor: bool = false;
@@ -1632,8 +1631,6 @@ async fn main() {
                 if active_popup == ActivePopup::ObjectSettings {
                     menu_button.update(&rl, delta_time);
                 }
-
-                been_to_editor = true;
             }
             GameState::LevelOptions => {
                 level_options_back.update(&rl, delta_time);
@@ -3089,8 +3086,7 @@ async fn main() {
     }
 
     // Saving the level your editing and saving your stars and such
-    if been_to_editor &&
-    game_state == GameState::Editor {
+    if game_state == GameState::Editor {
         level_string = get_level_text(
             current_mode.as_str(),
             current_song,
