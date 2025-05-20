@@ -1151,6 +1151,7 @@ async fn main() {
 
                 // This just makes it so if the player is dead then it goes to the game over screen
                 if kill_player {
+                    attempt += 1;
                     if from_editor {
                         sink.stop();
                         sink.append(menu_loop.clone());
@@ -1202,9 +1203,6 @@ async fn main() {
 
                 if restart_button.is_clicked(&rl) {
                     game_state = GameState::Menu;
-
-                    // The attempt counter is due for an update honestly
-                    // I need to make it reset every time you go to another level
                     attempt += 1;
                 }
             }
@@ -1449,6 +1447,7 @@ async fn main() {
 
                         player_path.clear();
 
+                        attempt = 1;
                         game_state = GameState::Playing;
                     }
 
@@ -1742,6 +1741,7 @@ async fn main() {
                     from_editor = false;
                     player_path.clear();
 
+                    attempt = 1;
                     game_state = GameState::Playing;
                 }
 
@@ -1982,6 +1982,7 @@ async fn main() {
                         from_editor = false;
                         player_path.clear();
 
+                        attempt = 1;
                         game_state = GameState::Playing;
                     }
                 }
