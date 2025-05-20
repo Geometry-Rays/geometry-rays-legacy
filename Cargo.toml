@@ -7,5 +7,5 @@ edition = "2024"
 raylib = "5.5.1"
 rodio = "0.20.1"
 webbrowser = "1.0.4"
-tokio = { version = "1.44.1", features = ["full"] }
+tokio = { version = "1.45.0", features = ["full"] }
 ez-reqwest = "1.0.0"
