@@ -1,7 +1,6 @@
-/target/
-/.vscode/
-/.idea/
-*.lock
-geometry-rays
-*.exe
-*.zip
+/target
+Cargo.lock
+/Geometry-Rays
+/Geometry-Rays.zip
+/geometry-rays
+/geometry-rays.exe
