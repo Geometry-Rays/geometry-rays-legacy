@@ -475,7 +475,7 @@ async fn main() {
     let wave_velocity: f32 = 1.1;
 
     println!("Getting even more variables ready...");
-    let version = "1.6";
+    let version = "1.61";
     let latest_version = Arc::new(Mutex::new(String::from("Loading...")));
     let mut not_done_yet_text = false;
     let mut show_debug_text = false;
