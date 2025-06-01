@@ -3,7 +3,7 @@
 
  You will however be able to play it indefinitely. You just won't get new features.
 
- Please check out [the new client](https://github.com/Geometry-Rays/geometry-rays-fyre) :)
+ Please check out [the new client](https://github.com/Geometry-Rays/geometry-rays) :)
 
 # Geometry Rays
  Recreation of [Geometry Dash](https://store.steampowered.com/app/322170/Geometry_Dash) made in rust bindings of raylib.
