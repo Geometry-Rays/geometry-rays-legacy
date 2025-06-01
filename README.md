@@ -1,3 +1,10 @@
+# Note
+ This client has been deprecated and will probably never get new updates
+
+ You will however be able to play it indefinitely. You just won't get new features.
+
+ Please check out [the new client](https://github.com/Geometry-Rays/geometry-rays-fyre) :)
+
 # Geometry Rays
  Recreation of [Geometry Dash](https://store.steampowered.com/app/322170/Geometry_Dash) made in rust bindings of raylib.
 
